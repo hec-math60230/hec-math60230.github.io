@@ -1,0 +1,206 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 2px solid #dee2e6;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #002654;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: #6c757d;
+}
+
+/* Language sections */
+.lang-section {
+    margin-bottom: 2.5rem;
+}
+
+.lang-section h2 {
+    font-size: 1.75rem;
+    color: #002654;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.course-title {
+    font-size: 1.1rem;
+    color: #495057;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+/* Content blocks */
+.content-block {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.content-block h3 {
+    font-size: 1.25rem;
+    color: #002654;
+    margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+    color: #0066cc;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover {
+    color: #004499;
+    text-decoration: underline;
+}
+
+/* Tip box */
+.tip {
+    background: #e7f3ff;
+    padding: 0.75rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #004085;
+    margin-bottom: 1rem;
+    border-left: 3px solid #0066cc;
+}
+
+kbd {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    font-family: monospace;
+    font-size: 0.85em;
+}
+
+/* Slides list */
+.slides-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.75rem;
+}
+
+.slides-list li {
+    text-align: center;
+}
+
+.slides-list a {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: #002654;
+    color: #fff;
+    border-radius: 4px;
+    font-weight: 500;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.slides-list a:hover {
+    background: #003d82;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.slides-list .disabled {
+    display: block;
+    padding: 0.75rem 1rem;
+    background: #e9ecef;
+    color: #868e96;
+    border-radius: 4px;
+    cursor: not-allowed;
+}
+
+/* Section divider */
+.section-divider {
+    border: none;
+    border-top: 1px solid #dee2e6;
+    margin: 2.5rem 0;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid #dee2e6;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+footer p {
+    margin-bottom: 0.5rem;
+}
+
+footer a {
+    color: #6c757d;
+}
+
+footer a:hover {
+    color: #495057;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5rem 1rem;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .lang-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .content-block {
+        padding: 1rem;
+    }
+
+    .slides-list {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 0.5rem;
+    }
+
+    .slides-list a,
+    .slides-list .disabled {
+        padding: 0.6rem 0.75rem;
+        font-size: 0.9rem;
+    }
+}
