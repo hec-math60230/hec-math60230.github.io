@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Development Environment and Tools – Empirical Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../python/git/index.html" rel="next">
+<link href="../../python/logging/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/tools/index.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Empirical Finance</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/install/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/oop/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/testing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/logging/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/tools/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/git/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#fonts-for-coding" id="toc-fonts-for-coding" class="nav-link active" data-scroll-target="#fonts-for-coding"><span class="header-section-number">7.1</span> Fonts for Coding</a></li>
+  <li><a href="#vs-code-setup" id="toc-vs-code-setup" class="nav-link" data-scroll-target="#vs-code-setup"><span class="header-section-number">7.2</span> VS Code Setup</a>
+  <ul class="collapse">
+  <li><a href="#theme-and-colors" id="toc-theme-and-colors" class="nav-link" data-scroll-target="#theme-and-colors"><span class="header-section-number">7.2.1</span> Theme and colors</a></li>
+  <li><a href="#configuring-your-font" id="toc-configuring-your-font" class="nav-link" data-scroll-target="#configuring-your-font"><span class="header-section-number">7.2.2</span> Configuring your font</a></li>
+  <li><a href="#disabling-the-minimap" id="toc-disabling-the-minimap" class="nav-link" data-scroll-target="#disabling-the-minimap"><span class="header-section-number">7.2.3</span> Disabling the minimap</a></li>
+  <li><a href="#adding-a-ruler" id="toc-adding-a-ruler" class="nav-link" data-scroll-target="#adding-a-ruler"><span class="header-section-number">7.2.4</span> Adding a ruler</a></li>
+  </ul></li>
+  <li><a href="#extensions" id="toc-extensions" class="nav-link" data-scroll-target="#extensions"><span class="header-section-number">7.3</span> Extensions</a>
+  <ul class="collapse">
+  <li><a href="#essential-extensions" id="toc-essential-extensions" class="nav-link" data-scroll-target="#essential-extensions"><span class="header-section-number">7.3.1</span> Essential extensions</a></li>
+  <li><a href="#data-science-extensions" id="toc-data-science-extensions" class="nav-link" data-scroll-target="#data-science-extensions"><span class="header-section-number">7.3.2</span> Data science extensions</a></li>
+  <li><a href="#git-extensions" id="toc-git-extensions" class="nav-link" data-scroll-target="#git-extensions"><span class="header-section-number">7.3.3</span> Git extensions</a></li>
+  <li><a href="#ai-coding-assistant" id="toc-ai-coding-assistant" class="nav-link" data-scroll-target="#ai-coding-assistant"><span class="header-section-number">7.3.4</span> AI coding assistant</a></li>
+  <li><a href="#productivity-extensions" id="toc-productivity-extensions" class="nav-link" data-scroll-target="#productivity-extensions"><span class="header-section-number">7.3.5</span> Productivity extensions</a></li>
+  <li><a href="#dev-containers" id="toc-dev-containers" class="nav-link" data-scroll-target="#dev-containers"><span class="header-section-number">7.3.6</span> Dev containers</a></li>
+  </ul></li>
+  <li><a href="#complete-settings-reference" id="toc-complete-settings-reference" class="nav-link" data-scroll-target="#complete-settings-reference"><span class="header-section-number">7.4</span> Complete Settings Reference</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/tools/index.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This chapter covers setting up Visual Studio Code (VS Code) for Python data science work. A well-configured development environment makes coding more pleasant and efficient. We’ll cover fonts, themes, extensions for formatting and linting, data exploration tools, and productivity enhancements.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><i class="fa-brands fa-youtube" aria-label="youtube"></i> Videos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter follows my VS Code configuration video for data science.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/2K9Ow0jti_4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+<section id="fonts-for-coding" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="fonts-for-coding"><span class="header-section-number">7.1</span> Fonts for Coding</h2>
+<p>Before opening VS Code, choose a good programming font. The right font makes code more readable and reduces eye strain during long sessions. Programming fonts have specific characteristics:</p>
+<ul>
+<li><strong>Monospace</strong>: Every character has the same width, essential for code alignment</li>
+<li><strong>Distinguishable characters</strong>: Clear differences between similar characters like <code>1</code>, <code>l</code>, <code>I</code> and <code>0</code>, <code>O</code></li>
+<li><strong>Ligatures</strong> (optional): Special combined glyphs for common character sequences</li>
+</ul>
+<p>Ligatures are combined symbols that appear when certain characters follow each other. For example, <code>-&gt;</code> becomes a proper arrow →, <code>!=</code> becomes a not-equal symbol ≠, and <code>&gt;=</code> becomes a greater-than-or-equal symbol ≥. The underlying characters don’t change—your code still contains <code>-&gt;</code>. Ligatures simply render more elegantly on screen. Whether to use ligatures is a personal choice; some developers love them, others find them distracting.</p>
+<p>Here are some recommended programming fonts:</p>
+<ul>
+<li><a href="https://github.com/tonsky/FiraCode">FiraCode</a>: A popular programming font with excellent readability and comprehensive ligature support. It’s the font used throughout this book.</li>
+<li><a href="https://www.jetbrains.com/lp/mono/">JetBrains Mono</a>: Designed specifically for developers by JetBrains (makers of PyCharm), featuring increased letter height for better readability and distinctive character shapes.</li>
+<li><a href="https://monaspace.githubnext.com/">Monaspace</a>: A family of programming fonts published by GitHub with several variants optimized for different use cases.</li>
+<li><a href="https://rubjo.github.io/victor-mono/">Victor Mono</a>: Particularly nice-looking in terminal applications, with a distinctive style that some developers prefer.</li>
+</ul>
+<p>All of these fonts are also available as <a href="https://www.nerdfonts.com/">Nerd Fonts</a> versions. Nerd Fonts are patched versions that include additional icons and symbols. While they don’t add anything when coding in an editor, they make many terminal-based tools look nicer by enabling icons for file types, git status, and other visual indicators.</p>
+<p>Pick the font that feels right to you, install it on your system, and we’ll configure it in VS Code below.</p>
+</section>
+<section id="vs-code-setup" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="vs-code-setup"><span class="header-section-number">7.2</span> VS Code Setup</h2>
+<p>In this section, I present how I configure VS Code for research and data science work. These are my personal preferences—feel free to adapt them to your own workflow.</p>
+<section id="theme-and-colors" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="theme-and-colors"><span class="header-section-number">7.2.1</span> Theme and colors</h3>
+<p>A good color theme makes your editor pleasant to look at during long coding sessions. My favorite is <strong>Catppuccin</strong>, which offers four variants: one light and three dark.</p>
+<p>To install:</p>
+<ol type="1">
+<li>Open the Extensions panel (<code>Ctrl+Shift+X</code> or <code>Cmd+Shift+X</code> on Mac)</li>
+<li>Search for “Catppuccin for VSCode”</li>
+<li>Install the extension</li>
+<li>Choose your preferred variant (I use Mocha, the darkest)</li>
+</ol>
+<p>Also install <strong>Catppuccin Icons for VS Code</strong> to get matching file icons in the explorer.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consistent theming
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Catppuccin is available for many applications beyond VS Code. If you like the color scheme, check out their website to theme your terminal, browser, and other tools consistently.</p>
+</div>
+</div>
+</section>
+<section id="configuring-your-font" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="configuring-your-font"><span class="header-section-number">7.2.2</span> Configuring your font</h3>
+<p>To set your chosen font in VS Code:</p>
+<ol type="1">
+<li>Open Settings (<code>Ctrl+,</code> or <code>Cmd+,</code> on Mac)</li>
+<li>Search for “font”</li>
+<li>In “Editor: Font Family”, enter your font name (e.g., <code>Fira Code</code>)</li>
+</ol>
+<p>To enable ligatures, you need to edit the settings JSON directly:</p>
+<ol type="1">
+<li>In Settings, search for “Font Ligatures”</li>
+<li>Click “Edit in settings.json”</li>
+<li>Add or modify:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.fontFamily"</span><span class="fu">:</span> <span class="st">"Fira Code"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.fontLigatures"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Set <code>fontLigatures</code> to <code>false</code> if you prefer not to use them.</p>
+</section>
+<section id="disabling-the-minimap" class="level3" data-number="7.2.3">
+<h3 data-number="7.2.3" class="anchored" data-anchor-id="disabling-the-minimap"><span class="header-section-number">7.2.3</span> Disabling the minimap</h3>
+<p>The minimap (the code preview on the right side of the editor) takes up space without adding much value for most workflows. To disable it:</p>
+<ol type="1">
+<li>Open Settings</li>
+<li>Search for “minimap”</li>
+<li>Uncheck “Editor: Minimap: Enabled”</li>
+</ol>
+</section>
+<section id="adding-a-ruler" class="level3" data-number="7.2.4">
+<h3 data-number="7.2.4" class="anchored" data-anchor-id="adding-a-ruler"><span class="header-section-number">7.2.4</span> Adding a ruler</h3>
+<p>Ruff (which we’ll install next) limits lines to 88 characters by default. Adding a visual ruler helps you see this limit:</p>
+<ol type="1">
+<li>Open Settings and search for “rulers”</li>
+<li>Click “Edit in settings.json”</li>
+<li>Add:</li>
+</ol>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.rulers"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">88</span><span class="ot">]</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This displays a vertical line at column 88, making it easy to arrange multiple files side by side.</p>
+</section>
+</section>
+<section id="extensions" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="extensions"><span class="header-section-number">7.3</span> Extensions</h2>
+<section id="essential-extensions" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="essential-extensions"><span class="header-section-number">7.3.1</span> Essential extensions</h3>
+<section id="python-extension" class="level4" data-number="7.3.1.1">
+<h4 data-number="7.3.1.1" class="anchored" data-anchor-id="python-extension"><span class="header-section-number">7.3.1.1</span> Python extension</h4>
+<p>The Python extension is fundamental for Python development in VS Code. It provides:</p>
+<ul>
+<li>IntelliSense (smart code completion)</li>
+<li>Linting and error detection</li>
+<li>Debugging support</li>
+<li>Jupyter notebook integration</li>
+<li>Test runner integration</li>
+</ul>
+<p>Install it from the Extensions panel by searching for “Python” (by Microsoft).</p>
+</section>
+<section id="ruff-for-formatting-and-linting" class="level4" data-number="7.3.1.2">
+<h4 data-number="7.3.1.2" class="anchored" data-anchor-id="ruff-for-formatting-and-linting"><span class="header-section-number">7.3.1.2</span> Ruff for formatting and linting</h4>
+<p><a href="https://docs.astral.sh/ruff/">Ruff</a> is a fast Python linter and formatter. Install the Ruff extension from the Extensions panel.</p>
+<p>To configure automatic formatting on save, add to your settings.json:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"[python]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"charliermarsh.ruff"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.codeActionsOnSave"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"source.organizeImports"</span><span class="fu">:</span> <span class="st">"explicit"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This configuration:</p>
+<ul>
+<li>Formats your Python code automatically when you save</li>
+<li>Uses Ruff as the default formatter</li>
+<li>Organizes imports (alphabetically, grouped by standard library, third-party, and local imports)</li>
+<li>Removes unused imports</li>
+</ul>
+<p>To enable formatting for Jupyter notebooks as well:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"notebook.formatOnSave.enabled"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>What Ruff does
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ruff doesn’t change your code’s behavior—it reformats it to follow consistent conventions. For example, it fixes spacing, line breaks, and quote styles. It also removes unused imports and organizes your import statements.</p>
+</div>
+</div>
+</section>
+<section id="markdown" class="level4" data-number="7.3.1.3">
+<h4 data-number="7.3.1.3" class="anchored" data-anchor-id="markdown"><span class="header-section-number">7.3.1.3</span> Markdown</h4>
+<p>If you write Markdown documents (notes, README files, documentation), these extensions are useful:</p>
+<ul>
+<li><strong>markdownlint</strong>: Catches formatting issues and enforces consistent style.</li>
+<li><strong>Markdown All-in-One</strong>: Adds productivity features like keyboard shortcuts, table of contents generation, and list editing.</li>
+<li><strong>Markdown Preview Mermaid Support</strong>: Previews Mermaid diagrams in Markdown files. Mermaid is a standard diagramming format supported by GitHub and many documentation tools.</li>
+</ul>
+</section>
+</section>
+<section id="data-science-extensions" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="data-science-extensions"><span class="header-section-number">7.3.2</span> Data science extensions</h3>
+<ul>
+<li><strong>Rainbow CSV</strong>: Colorizes CSV files when you open them in VS Code, making it easier to distinguish columns in raw data files.</li>
+<li><strong>Data Wrangler</strong>: A powerful extension for exploring and cleaning pandas DataFrames interactively. When you load data with pandas, you can click “View Data” to open an interactive data explorer, filter and sort data visually, and generate Python code that replicates your data transformations. This extension is particularly valuable for data cleaning and initial data exploration.</li>
+</ul>
+</section>
+<section id="git-extensions" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="git-extensions"><span class="header-section-number">7.3.3</span> Git extensions</h3>
+<p>VS Code has built-in Git support, but these extensions enhance it:</p>
+<ul>
+<li><strong>Git Graph</strong>: Provides a visual representation of your repository’s branch structure and commit history. It’s essential for understanding complex branching scenarios.</li>
+<li><strong>GitLens</strong>: By GitKraken, adds inline blame annotations showing who changed each line, detailed commit information, and file and line history. The free version includes many useful features; premium features require a subscription.</li>
+</ul>
+</section>
+<section id="ai-coding-assistant" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="ai-coding-assistant"><span class="header-section-number">7.3.4</span> AI coding assistant</h3>
+<p><strong>GitHub Copilot</strong> provides AI-powered code suggestions as you type. Install the GitHub Copilot extension and sign in with your GitHub account. A free tier is available with some limitations. Students and academics can apply for GitHub Education, which includes Copilot access.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>AI tools require verification
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>While AI assistants can boost productivity, always verify the code they generate. AI models can produce plausible-looking but incorrect code, especially for domain-specific tasks like financial calculations.</p>
+</div>
+</div>
+</section>
+<section id="productivity-extensions" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="productivity-extensions"><span class="header-section-number">7.3.5</span> Productivity extensions</h3>
+<ul>
+<li><strong>TODO Tree</strong>: Scans your project for comments containing <code>TODO</code> or <code>FIXME</code> and displays them in a sidebar panel. This helps you track tasks and issues scattered throughout your codebase.</li>
+<li><strong>Even Better TOML</strong>: Adds syntax highlighting and validation for TOML files. TOML is the standard format for Python configuration files (<code>pyproject.toml</code>), so this extension is useful for any Python project.</li>
+<li><strong>Vim</strong> (VSCodeVim): For keyboard-driven editing without touching the mouse. Vim bindings have a steep learning curve but dramatically increase editing speed once mastered. If you’re new to Vim, also install <strong>Learn Vim</strong>, which provides an interactive tutorial.</li>
+</ul>
+</section>
+<section id="dev-containers" class="level3" data-number="7.3.6">
+<h3 data-number="7.3.6" class="anchored" data-anchor-id="dev-containers"><span class="header-section-number">7.3.6</span> Dev containers</h3>
+<p>The <strong>Dev Containers</strong> extension lets you develop inside containerized environments, isolating your project dependencies and keeping your system clean. See the <a href="../../python/devcontainers/index.html">Dev Containers chapter</a> for details on setting this up.</p>
+</section>
+</section>
+<section id="complete-settings-reference" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="complete-settings-reference"><span class="header-section-number">7.4</span> Complete Settings Reference</h2>
+<p>Here’s a complete <code>settings.json</code> incorporating the configurations discussed:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.fontFamily"</span><span class="fu">:</span> <span class="st">"Fira Code"</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.fontLigatures"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.minimap.enabled"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.rulers"</span><span class="fu">:</span> <span class="ot">[</span><span class="dv">88</span><span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"[python]"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.formatOnSave"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.defaultFormatter"</span><span class="fu">:</span> <span class="st">"charliermarsh.ruff"</span><span class="fu">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"editor.codeActionsOnSave"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"source.organizeImports"</span><span class="fu">:</span> <span class="st">"explicit"</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="fu">}</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">},</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"notebook.formatOnSave.enabled"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>You can access your settings file by opening the Command Palette (<code>Ctrl+Shift+P</code> or <code>Cmd+Shift+P</code>) and selecting “Preferences: Open User Settings (JSON)”.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../python/logging/index.html" class="pagination-link" aria-label="Logging and Configuration">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../python/git/index.html" class="pagination-link" aria-label="Version Control using Git and GitHub">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vincentgregoire.com">
+<p>© 2026 Vincent Grégoire</p>
+</a>
+  </li>  
+    <li class="nav-item">
+  - 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+<p>Licensed under CC BY-NC-ND 4.0</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

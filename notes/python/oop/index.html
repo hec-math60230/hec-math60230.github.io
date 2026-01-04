@@ -1,0 +1,1756 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Object-Oriented Programming Basics – Empirical Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../python/code-quality/index.html" rel="next">
+<link href="../../python/python-basics/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/oop/index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Empirical Finance</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/install/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/oop/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/testing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/logging/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/tools/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/git/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#classes-and-objects" id="toc-classes-and-objects" class="nav-link active" data-scroll-target="#classes-and-objects"><span class="header-section-number">3.1</span> Classes and Objects</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-class" id="toc-what-is-a-class" class="nav-link" data-scroll-target="#what-is-a-class"><span class="header-section-number">3.1.1</span> What is a Class?</a></li>
+  <li><a href="#attributes-and-methods" id="toc-attributes-and-methods" class="nav-link" data-scroll-target="#attributes-and-methods"><span class="header-section-number">3.1.2</span> Attributes and Methods</a></li>
+  <li><a href="#adding-more-functionality" id="toc-adding-more-functionality" class="nav-link" data-scroll-target="#adding-more-functionality"><span class="header-section-number">3.1.3</span> Adding More Functionality</a></li>
+  <li><a href="#a-more-complex-example-portfolio-class" id="toc-a-more-complex-example-portfolio-class" class="nav-link" data-scroll-target="#a-more-complex-example-portfolio-class"><span class="header-section-number">3.1.4</span> A More Complex Example: Portfolio Class</a></li>
+  <li><a href="#string-representations-__repr__-vs.-__str__" id="toc-string-representations-__repr__-vs.-__str__" class="nav-link" data-scroll-target="#string-representations-__repr__-vs.-__str__"><span class="header-section-number">3.1.5</span> String Representations: <code>__repr__</code> vs.&nbsp;<code>__str__</code></a></li>
+  <li><a href="#rich-display-in-jupyter-and-quarto" id="toc-rich-display-in-jupyter-and-quarto" class="nav-link" data-scroll-target="#rich-display-in-jupyter-and-quarto"><span class="header-section-number">3.1.6</span> Rich Display in Jupyter and Quarto</a></li>
+  <li><a href="#class-variables-vs.-instance-variables" id="toc-class-variables-vs.-instance-variables" class="nav-link" data-scroll-target="#class-variables-vs.-instance-variables"><span class="header-section-number">3.1.7</span> Class Variables vs.&nbsp;Instance Variables</a></li>
+  <li><a href="#property-decorators" id="toc-property-decorators" class="nav-link" data-scroll-target="#property-decorators"><span class="header-section-number">3.1.8</span> Property Decorators</a></li>
+  </ul></li>
+  <li><a href="#when-oop-is-useful-in-research-code" id="toc-when-oop-is-useful-in-research-code" class="nav-link" data-scroll-target="#when-oop-is-useful-in-research-code"><span class="header-section-number">3.2</span> When OOP is Useful in Research Code</a>
+  <ul class="collapse">
+  <li><a href="#scenario-1-managing-complex-state" id="toc-scenario-1-managing-complex-state" class="nav-link" data-scroll-target="#scenario-1-managing-complex-state"><span class="header-section-number">3.2.1</span> Scenario 1: Managing Complex State</a></li>
+  <li><a href="#scenario-2-multiple-related-variants" id="toc-scenario-2-multiple-related-variants" class="nav-link" data-scroll-target="#scenario-2-multiple-related-variants"><span class="header-section-number">3.2.2</span> Scenario 2: Multiple Related Variants</a></li>
+  <li><a href="#scenario-3-encapsulating-complex-data-structures" id="toc-scenario-3-encapsulating-complex-data-structures" class="nav-link" data-scroll-target="#scenario-3-encapsulating-complex-data-structures"><span class="header-section-number">3.2.3</span> Scenario 3: Encapsulating Complex Data Structures</a></li>
+  <li><a href="#scenario-4-building-reusable-components" id="toc-scenario-4-building-reusable-components" class="nav-link" data-scroll-target="#scenario-4-building-reusable-components"><span class="header-section-number">3.2.4</span> Scenario 4: Building Reusable Components</a></li>
+  <li><a href="#when-to-avoid-oop" id="toc-when-to-avoid-oop" class="nav-link" data-scroll-target="#when-to-avoid-oop"><span class="header-section-number">3.2.5</span> When to Avoid OOP</a></li>
+  </ul></li>
+  <li><a href="#data-classes" id="toc-data-classes" class="nav-link" data-scroll-target="#data-classes"><span class="header-section-number">3.3</span> Data Classes</a>
+  <ul class="collapse">
+  <li><a href="#basic-data-classes" id="toc-basic-data-classes" class="nav-link" data-scroll-target="#basic-data-classes"><span class="header-section-number">3.3.1</span> Basic Data Classes</a></li>
+  <li><a href="#default-values" id="toc-default-values" class="nav-link" data-scroll-target="#default-values"><span class="header-section-number">3.3.2</span> Default Values</a></li>
+  <li><a href="#immutable-data-classes" id="toc-immutable-data-classes" class="nav-link" data-scroll-target="#immutable-data-classes"><span class="header-section-number">3.3.3</span> Immutable Data Classes</a></li>
+  <li><a href="#data-classes-vs.-regular-classes" id="toc-data-classes-vs.-regular-classes" class="nav-link" data-scroll-target="#data-classes-vs.-regular-classes"><span class="header-section-number">3.3.4</span> Data Classes vs.&nbsp;Regular Classes</a></li>
+  <li><a href="#data-classes-and-type-checking" id="toc-data-classes-and-type-checking" class="nav-link" data-scroll-target="#data-classes-and-type-checking"><span class="header-section-number">3.3.5</span> Data Classes and Type Checking</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/oop/index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-object-oriented-programming-basics" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Object-Oriented Programming (OOP) is a programming paradigm that organizes code around “objects” rather than functions and logic. While Python fully supports OOP, you don’t need to use it for everything you do. In fact, for many data analysis tasks, a procedural or functional approach is simpler and more appropriate.</p>
+<p>That said, understanding the basics of OOP is valuable for several reasons. First, many of the libraries you’ll use in empirical finance are built using OOP principles, so understanding these concepts will help you use them more effectively. Second, there are certain situations in research code where OOP can make your code cleaner, more organized, and easier to maintain. Finally, OOP provides a way to model real-world entities and relationships in your code, which can be particularly useful when working with financial concepts like trades and limit order books.</p>
+<p>In this chapter, we’ll cover the fundamentals of OOP in Python, focusing on practical applications relevant to empirical finance. We’ll start with the basic concepts of classes and objects, then discuss when OOP is genuinely useful in research code, and finally introduce Python’s data classes, which provide a streamlined way to work with structured data.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A Pragmatic Approach
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter takes a pragmatic approach to OOP. We won’t cover every feature or delve into advanced design patterns. Instead, we’ll focus on the subset of OOP that’s most useful for research code in finance. If you find yourself writing highly object-oriented code with deep inheritance hierarchies, you are most likely overengineering your research scripts.</p>
+</div>
+</div>
+<section id="classes-and-objects" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="classes-and-objects"><span class="header-section-number">3.1</span> Classes and Objects</h2>
+<p>At its core, object-oriented programming is about creating custom data types that bundle together related data and the functions that operate on that data. Let’s break down the key concepts.</p>
+<section id="what-is-a-class" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="what-is-a-class"><span class="header-section-number">3.1.1</span> What is a Class?</h3>
+<p>A class is essentially a blueprint or template for creating objects. It defines what data an object will hold (attributes) and what operations can be performed on that data (methods). Think of a class as a cookie cutter and objects as the cookies made from that cutter.</p>
+<p>Let’s start with a simple example. Suppose you’re working on a project that involves tracking individual trades. Each trade has certain properties: a ticker symbol, a quantity, a price, and whether it’s a buy or sell. You could represent each trade as a dictionary:</p>
+<div id="7429b2a4" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ticker"</span>: <span class="st">"AAPL"</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quantity"</span>: <span class="dv">100</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"price"</span>: <span class="fl">150.50</span>,</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"side"</span>: <span class="st">"buy"</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> {</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ticker"</span>: <span class="st">"MSFT"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"quantity"</span>: <span class="dv">50</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"price"</span>: <span class="fl">280.25</span>,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"side"</span>: <span class="st">"sell"</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This works, but it has some limitations. There’s no guarantee that every trade dictionary has the same keys. You might accidentally misspell a key, or forget to include one. And if you want to calculate the total value of a trade, you need to write that logic separately.</p>
+<p>A class provides a better solution. Here’s how we might define a <code>Trade</code> class:</p>
+<div id="1b1e8de8" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-2"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-2-1"><a href="#annotated-cell-2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="1">1</button><span id="annotated-cell-2-2" class="code-annotation-target"><a href="#annotated-cell-2-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker: <span class="bu">str</span>, quantity: <span class="bu">int</span>, price: <span class="bu">float</span>, side: <span class="bu">str</span>):</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="2">2</button><span id="annotated-cell-2-3" class="code-annotation-target"><a href="#annotated-cell-2-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="annotated-cell-2-4"><a href="#annotated-cell-2-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="annotated-cell-2-5"><a href="#annotated-cell-2-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="annotated-cell-2-6"><a href="#annotated-cell-2-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="annotated-cell-2-7"><a href="#annotated-cell-2-7" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="3">3</button><span id="annotated-cell-2-8" class="code-annotation-target"><a href="#annotated-cell-2-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="annotated-cell-2-9"><a href="#annotated-cell-2-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="annotated-cell-2-10"><a href="#annotated-cell-2-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="annotated-cell-2-11"><a href="#annotated-cell-2-11" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-2" data-target-annotation="4">4</button><span id="annotated-cell-2-12" class="code-annotation-target"><a href="#annotated-cell-2-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="annotated-cell-2-13"><a href="#annotated-cell-2-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Return a string representation of the trade."""</span></span>
+<span id="annotated-cell-2-14"><a href="#annotated-cell-2-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">}</span><span class="ss">)"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-2" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="2" data-code-annotation="1">We define the class with <code>class Trade:</code>. By convention, class names use CamelCase. The <code>__init__</code> method is a special method called a <em>constructor</em>. It runs automatically when you create a new object from the class. The <code>self</code> parameter refers to the instance being created.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="3" data-code-annotation="2">Inside <code>__init__</code>, we set attributes on the object using <code>self.attribute_name</code>. These become the object’s data.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="8" data-code-annotation="3">The <code>value</code> method is a regular method that calculates the trade’s total value. Like all methods, it takes <code>self</code> as its first parameter.</span>
+</dd>
+<dt data-target-cell="annotated-cell-2" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-2" data-code-lines="12" data-code-annotation="4">The <code>__repr__</code> method is another special method that defines how the object should be displayed. Methods that start and end with double underscores are called “dunder” (double underscore) methods or magic methods.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Now we can create trades as objects:</p>
+<div id="f39de42e" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(<span class="st">"MSFT"</span>, <span class="dv">50</span>, <span class="fl">280.25</span>, <span class="st">"sell"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade1)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade value: $</span><span class="sc">{</span>trade1<span class="sc">.</span>value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade(AAPL, 100, $150.5, buy)
+Trade value: $15050.00</code></pre>
+</div>
+</div>
+<p>This is cleaner and more robust. Every <code>Trade</code> object is guaranteed to have the required attributes, and the logic for calculating value is bundled with the data.</p>
+</section>
+<section id="attributes-and-methods" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="attributes-and-methods"><span class="header-section-number">3.1.2</span> Attributes and Methods</h3>
+<p>Let’s clarify some terminology:</p>
+<ul>
+<li><p><strong>Attributes</strong> are variables that belong to an object. In our example, <code>ticker</code>, <code>quantity</code>, <code>price</code>, and <code>side</code> are attributes.</p></li>
+<li><p><strong>Methods</strong> are functions that belong to a class. They operate on the object’s data. In our example, <code>value()</code> is a method.</p></li>
+<li><p><strong>Instance</strong> refers to a specific object created from a class. <code>trade1</code> and <code>trade2</code> are instances of the <code>Trade</code> class.</p></li>
+</ul>
+<p>You access attributes and call methods using dot notation:</p>
+<div id="c8954b59" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade1.ticker)      <span class="co"># Accessing an attribute</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade1.value())     <span class="co"># Calling a method</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>AAPL
+15050.0</code></pre>
+</div>
+</div>
+</section>
+<section id="adding-more-functionality" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="adding-more-functionality"><span class="header-section-number">3.1.3</span> Adding More Functionality</h3>
+<p>Let’s expand our <code>Trade</code> class to include more useful functionality. Suppose we want to compare trades and calculate profit and loss:</p>
+<div id="101b9e73" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker: <span class="bu">str</span>, quantity: <span class="bu">int</span>, price: <span class="bu">float</span>, side: <span class="bu">str</span>):</span>
+<span id="annotated-cell-5-3"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="annotated-cell-5-4"><a href="#annotated-cell-5-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="annotated-cell-5-5"><a href="#annotated-cell-5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="annotated-cell-5-6"><a href="#annotated-cell-5-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="annotated-cell-5-7"><a href="#annotated-cell-5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-8"><a href="#annotated-cell-5-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="annotated-cell-5-9"><a href="#annotated-cell-5-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="annotated-cell-5-10"><a href="#annotated-cell-5-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="annotated-cell-5-11"><a href="#annotated-cell-5-11" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-12" class="code-annotation-target"><a href="#annotated-cell-5-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> pnl(<span class="va">self</span>, current_price: <span class="bu">float</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="annotated-cell-5-13"><a href="#annotated-cell-5-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate profit/loss relative to a current price."""</span></span>
+<span id="annotated-cell-5-14"><a href="#annotated-cell-5-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.side <span class="op">==</span> <span class="st">"buy"</span>:</span>
+<span id="annotated-cell-5-15"><a href="#annotated-cell-5-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> (current_price <span class="op">-</span> <span class="va">self</span>.price)</span>
+<span id="annotated-cell-5-16"><a href="#annotated-cell-5-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:  <span class="co"># sell</span></span>
+<span id="annotated-cell-5-17"><a href="#annotated-cell-5-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> (<span class="va">self</span>.price <span class="op">-</span> current_price)</span>
+<span id="annotated-cell-5-18"><a href="#annotated-cell-5-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-5-19"><a href="#annotated-cell-5-19" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="annotated-cell-5-20"><a href="#annotated-cell-5-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="annotated-cell-5-21"><a href="#annotated-cell-5-21" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="2">2</button><span id="annotated-cell-5-22" class="code-annotation-target"><a href="#annotated-cell-5-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__eq__</span>(<span class="va">self</span>, other: <span class="bu">object</span>) <span class="op">-&gt;</span> <span class="bu">bool</span>:</span>
+<span id="annotated-cell-5-23"><a href="#annotated-cell-5-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Check if two trades are equal."""</span></span>
+<span id="annotated-cell-5-24"><a href="#annotated-cell-5-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(other, Trade):</span>
+<span id="annotated-cell-5-25"><a href="#annotated-cell-5-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> <span class="va">NotImplemented</span></span>
+<span id="annotated-cell-5-26"><a href="#annotated-cell-5-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.ticker <span class="op">==</span> other.ticker <span class="kw">and</span></span>
+<span id="annotated-cell-5-27"><a href="#annotated-cell-5-27" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.quantity <span class="op">==</span> other.quantity <span class="kw">and</span></span>
+<span id="annotated-cell-5-28"><a href="#annotated-cell-5-28" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.price <span class="op">==</span> other.price <span class="kw">and</span></span>
+<span id="annotated-cell-5-29"><a href="#annotated-cell-5-29" aria-hidden="true" tabindex="-1"></a>                <span class="va">self</span>.side <span class="op">==</span> other.side)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-5" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="12" data-code-annotation="1">The <code>pnl</code> method calculates the profit or loss based on a current market price. The logic differs for buys (profit when price goes up) and sells (profit when price goes down).</span>
+</dd>
+<dt data-target-cell="annotated-cell-5" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-5" data-code-lines="22" data-code-annotation="2">The <code>__eq__</code> method defines what it means for two <code>Trade</code> objects to be equal. Here, two trades are equal if all their attributes match.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>The <code>__eq__</code> method is one of several special comparison methods Python supports. Others include <code>__ne__</code> (not equal, <code>!=</code>), <code>__lt__</code> (less than, <code>&lt;</code>), <code>__le__</code> (less than or equal, <code>&lt;=</code>), <code>__gt__</code> (greater than, <code>&gt;</code>), and <code>__ge__</code> (greater than or equal, <code>&gt;=</code>). For a complete list of these “rich comparison” methods and other special methods, see the <a href="https://docs.python.org/3/reference/datamodel.html#basic-customization">Python documentation on basic customization</a>.</p>
+<p>Now we can do more with our trades:</p>
+<div id="c48d9fb6" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>trade <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade value: $</span><span class="sc">{</span>trade<span class="sc">.</span>value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate P&amp;L at a current price</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>current_price <span class="op">=</span> <span class="fl">160.00</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>pnl <span class="op">=</span> trade.pnl(current_price)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"P&amp;L at $</span><span class="sc">{</span>current_price<span class="sc">:.2f}</span><span class="ss">: $</span><span class="sc">{</span>pnl<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Test equality</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>trade3 <span class="op">=</span> Trade(<span class="st">"MSFT"</span>, <span class="dv">50</span>, <span class="fl">280.25</span>, <span class="st">"sell"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"trade == trade2: </span><span class="sc">{</span>trade <span class="op">==</span> trade2<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># Same attributes</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"trade == trade3: </span><span class="sc">{</span>trade <span class="op">==</span> trade3<span class="sc">}</span><span class="ss">"</span>)  <span class="co"># Different attributes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade value: $15050.00
+P&amp;L at $160.00: $950.00
+trade == trade2: True
+trade == trade3: False</code></pre>
+</div>
+</div>
+</section>
+<section id="a-more-complex-example-portfolio-class" class="level3" data-number="3.1.4">
+<h3 data-number="3.1.4" class="anchored" data-anchor-id="a-more-complex-example-portfolio-class"><span class="header-section-number">3.1.4</span> A More Complex Example: Portfolio Class</h3>
+<p>Let’s build a more sophisticated example: a <code>Portfolio</code> class that manages a collection of trades. This demonstrates how objects can contain other objects:</p>
+<div id="d7320b4f" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Portfolio:</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name):</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.trades <span class="op">=</span> []</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> add_trade(<span class="va">self</span>, trade):</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Add a trade to the portfolio."""</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.trades.append(trade)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> total_value(<span class="va">self</span>):</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of all trades."""</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">sum</span>(trade.value() <span class="cf">for</span> trade <span class="kw">in</span> <span class="va">self</span>.trades)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> positions(<span class="va">self</span>):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate net position for each ticker."""</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        positions <span class="op">=</span> {}</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> trade <span class="kw">in</span> <span class="va">self</span>.trades:</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> trade.ticker <span class="kw">not</span> <span class="kw">in</span> positions:</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>                positions[trade.ticker] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> trade.side <span class="op">==</span> <span class="st">"buy"</span>:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>                positions[trade.ticker] <span class="op">+=</span> trade.quantity</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            <span class="cf">else</span>:  <span class="co"># sell</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>                positions[trade.ticker] <span class="op">-=</span> trade.quantity</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> positions</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>):</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Portfolio('</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">', </span><span class="sc">{</span><span class="bu">len</span>(<span class="va">self</span>.trades)<span class="sc">}</span><span class="ss"> trades)"</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> summary(<span class="va">self</span>):</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Print a summary of the portfolio."""</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Portfolio: </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Total trades: </span><span class="sc">{</span><span class="bu">len</span>(<span class="va">self</span>.trades)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Total value: $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>total_value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Positions:"</span>)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> ticker, quantity <span class="kw">in</span> <span class="va">self</span>.positions().items():</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>            <span class="bu">print</span>(<span class="ss">f"  </span><span class="sc">{</span>ticker<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>quantity<span class="sc">}</span><span class="ss"> shares"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can use our <code>Portfolio</code> class:</p>
+<div id="63f14720" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a portfolio</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>portfolio <span class="op">=</span> Portfolio(<span class="st">"My Research Portfolio"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Add some trades</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>portfolio.add_trade(Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>portfolio.add_trade(Trade(<span class="st">"AAPL"</span>, <span class="dv">50</span>, <span class="fl">155.00</span>, <span class="st">"buy"</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>portfolio.add_trade(Trade(<span class="st">"MSFT"</span>, <span class="dv">75</span>, <span class="fl">280.25</span>, <span class="st">"buy"</span>))</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>portfolio.add_trade(Trade(<span class="st">"AAPL"</span>, <span class="dv">25</span>, <span class="fl">152.00</span>, <span class="st">"sell"</span>))</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co"># View summary</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>portfolio.summary()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Portfolio: My Research Portfolio
+Total trades: 4
+Total value: $47618.75
+
+Positions:
+  AAPL: 125 shares
+  MSFT: 75 shares</code></pre>
+</div>
+</div>
+<p>This example shows how OOP allows you to build up layers of abstraction. A <code>Portfolio</code> is a collection of <code>Trade</code> objects, and both have methods that make sense for their level of abstraction.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>When to Use Classes vs.&nbsp;Functions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t create a class just to group functions together. If your class only has one or two methods and no meaningful state (attributes), it should probably just be a function. Classes are most useful when you need to maintain state across multiple operations.</p>
+</div>
+</div>
+</section>
+<section id="string-representations-__repr__-vs.-__str__" class="level3" data-number="3.1.5">
+<h3 data-number="3.1.5" class="anchored" data-anchor-id="string-representations-__repr__-vs.-__str__"><span class="header-section-number">3.1.5</span> String Representations: <code>__repr__</code> vs.&nbsp;<code>__str__</code></h3>
+<p>Python provides two different methods for converting objects to strings: <code>__repr__</code> and <code>__str__</code>. Understanding the difference between them helps you write more useful classes.</p>
+<ul>
+<li><p><code>__repr__</code> is meant to produce an unambiguous representation of the object, primarily for developers and debugging. Ideally, it should look like a valid Python expression that could recreate the object.</p></li>
+<li><p><code>__str__</code> is meant to produce a readable, user-friendly string. It’s what gets displayed when you use <code>print()</code> on an object.</p></li>
+</ul>
+<p>If you only implement one, implement <code>__repr__</code>. Python will use it as a fallback for <code>__str__</code> if <code>__str__</code> isn’t defined. Here’s an example showing both:</p>
+<div id="919dddc0" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker: <span class="bu">str</span>, quantity: <span class="bu">int</span>, price: <span class="bu">float</span>, side: <span class="bu">str</span>):</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Unambiguous representation for developers."""</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">!r}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">!r}</span><span class="ss">)"</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__str__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""User-friendly representation."""</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> <span class="st">"Buy"</span> <span class="cf">if</span> <span class="va">self</span>.side <span class="op">==</span> <span class="st">"buy"</span> <span class="cf">else</span> <span class="st">"Sell"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"</span><span class="sc">{</span>action<span class="sc">}</span><span class="ss"> </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss"> shares of </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss"> @ $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span><span class="ss">"</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>trade <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># __str__ is used by print()</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a><span class="co"># __repr__ is used in the REPL and for debugging</span></span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">repr</span>(trade))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Buy 100 shares of AAPL @ $150.50
+Trade('AAPL', 100, 150.5, 'buy')</code></pre>
+</div>
+</div>
+</section>
+<section id="rich-display-in-jupyter-and-quarto" class="level3" data-number="3.1.6">
+<h3 data-number="3.1.6" class="anchored" data-anchor-id="rich-display-in-jupyter-and-quarto"><span class="header-section-number">3.1.6</span> Rich Display in Jupyter and Quarto</h3>
+<p>Jupyter notebooks (and Quarto, a publishing system for creating documents from notebooks and other sources) support special methods for rich display. These methods allow your objects to render as HTML, Markdown, or LaTeX instead of plain text:</p>
+<ul>
+<li><code>_repr_html_()</code> returns HTML that will be rendered in the notebook</li>
+<li><code>_repr_markdown_()</code> returns Markdown text</li>
+<li><code>_repr_latex_()</code> returns LaTeX for mathematical notation</li>
+</ul>
+<p>Here’s a simple example:</p>
+<div id="1380c72c" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker: <span class="bu">str</span>, quantity: <span class="bu">int</span>, price: <span class="bu">float</span>, side: <span class="bu">str</span>):</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">!r}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">!r}</span><span class="ss">)"</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _repr_html_(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Rich HTML display for Jupyter/Quarto."""</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        color <span class="op">=</span> <span class="st">"green"</span> <span class="cf">if</span> <span class="va">self</span>.side <span class="op">==</span> <span class="st">"buy"</span> <span class="cf">else</span> <span class="st">"red"</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"""</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: fit-content;"&gt;</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="ss">            &lt;strong&gt;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss">&lt;/strong&gt;&lt;br&gt;</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="ss">            &lt;span style="color: </span><span class="sc">{</span>color<span class="sc">}</span><span class="ss">;"&gt;</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">.</span>upper()<span class="sc">}</span><span class="ss">&lt;/span&gt;</span></span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="ss">            </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss"> shares @ $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;/div&gt;</span></span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a><span class="ss">        """</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _repr_latex_(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Rich LaTeX display for PDF output."""</span></span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a>        action <span class="op">=</span> <span class="st">"Buy"</span> <span class="cf">if</span> <span class="va">self</span>.side <span class="op">==</span> <span class="st">"buy"</span> <span class="cf">else</span> <span class="st">"Sell"</span></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>            <span class="vs">rf"</span><span class="ch">\t</span><span class="vs">extbf</span><span class="ch">{{</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ch">}}</span><span class="vs">: "</span></span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>            <span class="vs">rf"</span><span class="sc">{</span>action<span class="sc">}</span><span class="vs"> </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="vs"> shares @ </span><span class="ch">\$</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span><span class="vs">"</span></span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>trade <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a>trade  <span class="co"># In Jupyter/Quarto, this displays as formatted HTML or LaTeX</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+
+        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 5px; width: fit-content;">
+            <strong>AAPL</strong><br>
+            <span style="color: green;">BUY</span>
+            100 shares @ $150.50
+        </div>
+        
+</div>
+</div>
+<p>Many of the data analysis libraries you’ll use later in this course, such as pandas, use these methods to display data frames as nicely formatted tables.</p>
+</section>
+<section id="class-variables-vs.-instance-variables" class="level3" data-number="3.1.7">
+<h3 data-number="3.1.7" class="anchored" data-anchor-id="class-variables-vs.-instance-variables"><span class="header-section-number">3.1.7</span> Class Variables vs.&nbsp;Instance Variables</h3>
+<p>So far, we’ve been working with instance variables—attributes that are unique to each object. Python also supports class variables, which are shared by all instances of a class:</p>
+<div id="86dce963" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Class variable</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    commission_rate <span class="op">=</span> <span class="fl">0.001</span>  <span class="co"># 0.1% commission</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker, quantity, price, side):</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Instance variables</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>):</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> net_value(<span class="va">self</span>):</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate value after commission."""</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        gross_value <span class="op">=</span> <span class="va">self</span>.value()</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>        commission <span class="op">=</span> gross_value <span class="op">*</span> Trade.commission_rate</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> gross_value <span class="op">-</span> commission</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>):</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="co"># All trades share the same commission rate</span></span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(<span class="st">"MSFT"</span>, <span class="dv">50</span>, <span class="fl">280.25</span>, <span class="st">"sell"</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade 1 net value: $</span><span class="sc">{</span>trade1<span class="sc">.</span>net_value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade 2 net value: $</span><span class="sc">{</span>trade2<span class="sc">.</span>net_value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Changing the class variable affects all instances</span></span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>Trade.commission_rate <span class="op">=</span> <span class="fl">0.002</span></span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade 1 net value (new rate): $</span><span class="sc">{</span>trade1<span class="sc">.</span>net_value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade 1 net value: $15034.95
+Trade 2 net value: $13998.49
+Trade 1 net value (new rate): $15019.90</code></pre>
+</div>
+</div>
+<p>Class variables are useful for values that should be consistent across all instances, like constants, default settings, or shared configuration.</p>
+</section>
+<section id="property-decorators" class="level3" data-number="3.1.8">
+<h3 data-number="3.1.8" class="anchored" data-anchor-id="property-decorators"><span class="header-section-number">3.1.8</span> Property Decorators</h3>
+<p>Sometimes you want to compute a value on-the-fly rather than storing it as an attribute. Python’s <code>@property</code> decorator makes this look like a simple attribute access:</p>
+<div id="f285a40a" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, ticker, quantity, price, side):</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.ticker <span class="op">=</span> ticker</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.quantity <span class="op">=</span> quantity</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.price <span class="op">=</span> price</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.side <span class="op">=</span> side</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>):</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> is_buy(<span class="va">self</span>):</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Check if this is a buy trade."""</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.side <span class="op">==</span> <span class="st">"buy"</span></span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>):</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"Trade(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>ticker<span class="sc">}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>quantity<span class="sc">}</span><span class="ss">, $</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>price<span class="sc">:.2f}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>side<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>trade <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a><span class="co"># No parentheses needed - looks like an attribute</span></span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Trade value: $</span><span class="sc">{</span>trade<span class="sc">.</span>value<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Is buy: </span><span class="sc">{</span>trade<span class="sc">.</span>is_buy<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade value: $15050.00
+Is buy: True</code></pre>
+</div>
+</div>
+<p>The advantage of using <code>@property</code> is that it allows you to start with a simple attribute and later change it to a computed value without changing how the class is used. It also makes the code more readable when the value is conceptually an attribute rather than an action.</p>
+</section>
+</section>
+<section id="when-oop-is-useful-in-research-code" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="when-oop-is-useful-in-research-code"><span class="header-section-number">3.2</span> When OOP is Useful in Research Code</h2>
+<p>Now that you understand the basics of classes and objects, an important question remains: when should you actually use OOP in your research code?</p>
+<p>The truth is, many data analysis tasks in empirical finance don’t require OOP. A straightforward script that loads data, performs some analysis, and generates output can be perfectly fine without defining any classes. In fact, overusing OOP can make simple tasks more complicated than they need to be.</p>
+<p>However, there are several scenarios where OOP becomes genuinely useful in research code.</p>
+<section id="scenario-1-managing-complex-state" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="scenario-1-managing-complex-state"><span class="header-section-number">3.2.1</span> Scenario 1: Managing Complex State</h3>
+<p>If you find yourself passing around many related variables to multiple functions, a class might be appropriate. Consider a simulation configuration that needs to be loaded, validated, and used across multiple functions:</p>
+<p><strong>Without OOP:</strong></p>
+<div id="801464e5" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_simulation_config(filepath):</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filepath) <span class="im">as</span> f:</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> json.load(f)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">"name"</span>: data[<span class="st">"name"</span>],</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">"n_simulations"</span>: data[<span class="st">"n_simulations"</span>],</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"initial_value"</span>: data[<span class="st">"initial_value"</span>],</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"drift"</span>: data[<span class="st">"drift"</span>],</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"volatility"</span>: data[<span class="st">"volatility"</span>],</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"results"</span>: <span class="va">None</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_config(config):</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> config[<span class="st">"n_simulations"</span>] <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n_simulations must be positive"</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> config[<span class="st">"initial_value"</span>] <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"initial_value must be positive"</span>)</span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> config[<span class="st">"volatility"</span>] <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"volatility must be non-negative"</span>)</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> config</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> run_simulation(config):</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> config[<span class="st">"n_simulations"</span>] <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Invalid config"</span>)</span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Simulation logic would go here...</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>    config[<span class="st">"results"</span>] <span class="op">=</span> {<span class="st">"mean"</span>: <span class="fl">105.2</span>, <span class="st">"std"</span>: <span class="fl">12.3</span>}</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> config</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage - must remember the correct sequence of function calls</span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> load_simulation_config(<span class="st">"sim_config.json"</span>)</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> validate_config(config)</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> run_simulation(config)</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(config[<span class="st">"results"</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>With OOP:</strong></p>
+<div id="4d5c54cc" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pprint</span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-5"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimulationConfig:</span>
+<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(</span>
+<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>,</span>
+<span id="annotated-cell-14-8"><a href="#annotated-cell-14-8" aria-hidden="true" tabindex="-1"></a>        name: <span class="bu">str</span>,</span>
+<span id="annotated-cell-14-9"><a href="#annotated-cell-14-9" aria-hidden="true" tabindex="-1"></a>        n_simulations: <span class="bu">int</span>,</span>
+<span id="annotated-cell-14-10"><a href="#annotated-cell-14-10" aria-hidden="true" tabindex="-1"></a>        initial_value: <span class="bu">float</span>,</span>
+<span id="annotated-cell-14-11"><a href="#annotated-cell-14-11" aria-hidden="true" tabindex="-1"></a>        drift: <span class="bu">float</span>,</span>
+<span id="annotated-cell-14-12"><a href="#annotated-cell-14-12" aria-hidden="true" tabindex="-1"></a>        volatility: <span class="bu">float</span>,</span>
+<span id="annotated-cell-14-13"><a href="#annotated-cell-14-13" aria-hidden="true" tabindex="-1"></a>    ):</span>
+<span id="annotated-cell-14-14"><a href="#annotated-cell-14-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="annotated-cell-14-15"><a href="#annotated-cell-14-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.n_simulations <span class="op">=</span> n_simulations</span>
+<span id="annotated-cell-14-16"><a href="#annotated-cell-14-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.initial_value <span class="op">=</span> initial_value</span>
+<span id="annotated-cell-14-17"><a href="#annotated-cell-14-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.drift <span class="op">=</span> drift</span>
+<span id="annotated-cell-14-18"><a href="#annotated-cell-14-18" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.volatility <span class="op">=</span> volatility</span>
+<span id="annotated-cell-14-19"><a href="#annotated-cell-14-19" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.results: <span class="bu">dict</span> <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span></span>
+<span id="annotated-cell-14-20"><a href="#annotated-cell-14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-21"><a href="#annotated-cell-14-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Validation happens automatically on creation</span></span>
+<span id="annotated-cell-14-22"><a href="#annotated-cell-14-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._validate()</span>
+<span id="annotated-cell-14-23"><a href="#annotated-cell-14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-24"><a href="#annotated-cell-14-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _validate(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="annotated-cell-14-25"><a href="#annotated-cell-14-25" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Validate the configuration parameters."""</span></span>
+<span id="annotated-cell-14-26"><a href="#annotated-cell-14-26" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.n_simulations <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="annotated-cell-14-27"><a href="#annotated-cell-14-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"n_simulations must be positive"</span>)</span>
+<span id="annotated-cell-14-28"><a href="#annotated-cell-14-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.initial_value <span class="op">&lt;=</span> <span class="dv">0</span>:</span>
+<span id="annotated-cell-14-29"><a href="#annotated-cell-14-29" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"initial_value must be positive"</span>)</span>
+<span id="annotated-cell-14-30"><a href="#annotated-cell-14-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.volatility <span class="op">&lt;</span> <span class="dv">0</span>:</span>
+<span id="annotated-cell-14-31"><a href="#annotated-cell-14-31" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"volatility must be non-negative"</span>)</span>
+<span id="annotated-cell-14-32"><a href="#annotated-cell-14-32" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="2">2</button><span id="annotated-cell-14-33" class="code-annotation-target"><a href="#annotated-cell-14-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">@classmethod</span></span>
+<span id="annotated-cell-14-34"><a href="#annotated-cell-14-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> from_json(cls, filepath: <span class="bu">str</span> <span class="op">|</span> Path) <span class="op">-&gt;</span> <span class="st">"SimulationConfig"</span>:</span>
+<span id="annotated-cell-14-35"><a href="#annotated-cell-14-35" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Create a SimulationConfig from a JSON file."""</span></span>
+<span id="annotated-cell-14-36"><a href="#annotated-cell-14-36" aria-hidden="true" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(filepath) <span class="im">as</span> f:</span>
+<span id="annotated-cell-14-37"><a href="#annotated-cell-14-37" aria-hidden="true" tabindex="-1"></a>            data <span class="op">=</span> json.load(f)</span>
+<span id="annotated-cell-14-38"><a href="#annotated-cell-14-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> cls(</span>
+<span id="annotated-cell-14-39"><a href="#annotated-cell-14-39" aria-hidden="true" tabindex="-1"></a>            name<span class="op">=</span>data[<span class="st">"name"</span>],</span>
+<span id="annotated-cell-14-40"><a href="#annotated-cell-14-40" aria-hidden="true" tabindex="-1"></a>            n_simulations<span class="op">=</span>data[<span class="st">"n_simulations"</span>],</span>
+<span id="annotated-cell-14-41"><a href="#annotated-cell-14-41" aria-hidden="true" tabindex="-1"></a>            initial_value<span class="op">=</span>data[<span class="st">"initial_value"</span>],</span>
+<span id="annotated-cell-14-42"><a href="#annotated-cell-14-42" aria-hidden="true" tabindex="-1"></a>            drift<span class="op">=</span>data[<span class="st">"drift"</span>],</span>
+<span id="annotated-cell-14-43"><a href="#annotated-cell-14-43" aria-hidden="true" tabindex="-1"></a>            volatility<span class="op">=</span>data[<span class="st">"volatility"</span>],</span>
+<span id="annotated-cell-14-44"><a href="#annotated-cell-14-44" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="annotated-cell-14-45"><a href="#annotated-cell-14-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-46"><a href="#annotated-cell-14-46" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> run(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="st">"SimulationConfig"</span>:</span>
+<span id="annotated-cell-14-47"><a href="#annotated-cell-14-47" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Run the simulation."""</span></span>
+<span id="annotated-cell-14-48"><a href="#annotated-cell-14-48" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Simulation logic would go here...</span></span>
+<span id="annotated-cell-14-49"><a href="#annotated-cell-14-49" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.results <span class="op">=</span> {<span class="st">"mean"</span>: <span class="fl">105.2</span>, <span class="st">"std"</span>: <span class="fl">12.3</span>}</span>
+<span id="annotated-cell-14-50"><a href="#annotated-cell-14-50" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span></span>
+<span id="annotated-cell-14-51"><a href="#annotated-cell-14-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-52"><a href="#annotated-cell-14-52" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="annotated-cell-14-53"><a href="#annotated-cell-14-53" aria-hidden="true" tabindex="-1"></a>        status <span class="op">=</span> <span class="st">"completed"</span> <span class="cf">if</span> <span class="va">self</span>.results <span class="cf">else</span> <span class="st">"not run"</span></span>
+<span id="annotated-cell-14-54"><a href="#annotated-cell-14-54" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"SimulationConfig(</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">!r}</span><span class="ss">, </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>n_simulations<span class="sc">}</span><span class="ss"> sims, </span><span class="sc">{</span>status<span class="sc">}</span><span class="ss">)"</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="3" data-code-annotation="1">The <code>pprint</code> (pretty print) module from Python’s standard library formats complex data structures like dictionaries and lists in a more readable way, with proper indentation and line breaks. This is especially useful when displaying nested structures or long lists.</span>
+</dd>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="33" data-code-annotation="2">The <code>@classmethod</code> decorator creates a <em>class method</em>—a method that receives the class itself (conventionally named <code>cls</code>) as its first argument instead of an instance. Class methods are often used as alternative constructors, like <code>from_json()</code> here. In contrast, a <code>@staticmethod</code> doesn’t receive any implicit first argument and behaves like a regular function that happens to live inside a class.</span>
+</dd>
+</dl>
+</div>
+</div>
+<p>Now we can use the class:</p>
+<div id="41d59cdf" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load from file using the class method</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> SimulationConfig.from_json(<span class="st">"sim_config.json"</span>)</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Or create directly</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>config <span class="op">=</span> SimulationConfig(</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"Test Simulation"</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    n_simulations<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    initial_value<span class="op">=</span><span class="fl">100.0</span>,</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    drift<span class="op">=</span><span class="fl">0.05</span>,</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    volatility<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Run and display results</span></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>config.run()</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>pprint.pprint(config.results)  <span class="co"># Pretty print the results dictionary</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="0ab34c41" class="cell" data-execution_count="16">
+<div class="cell-output cell-output-stdout">
+<pre><code>{'mean': 105.2, 'std': 12.3}</code></pre>
+</div>
+</div>
+<p>The OOP version is cleaner because the state is bundled together, and you don’t need to pass around a configuration dictionary. The simulation object maintains its own state, making the code more organized and less error-prone.</p>
+<p>Beyond reducing errors, the class also makes your code more clearly <em>defined</em>. With a dictionary, nothing prevents you from accessing a misspelled key like <code>config["n_simulaitons"]</code>—you’ll only discover the typo at runtime. With a class, your editor (like VS Code) can immediately flag <code>config.n_simulaitons</code> as an error because it knows exactly which attributes <code>SimulationConfig</code> has. This kind of immediate feedback makes development faster and catches bugs before you even run the code.</p>
+</section>
+<section id="scenario-2-multiple-related-variants" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="scenario-2-multiple-related-variants"><span class="header-section-number">3.2.2</span> Scenario 2: Multiple Related Variants</h3>
+<p>If you need to implement several variants of a similar concept, OOP with inheritance can reduce code duplication. For example, different return calculation methods:</p>
+<div id="2f0d2379" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Returns:</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Base class for return calculations."""</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, prices: <span class="bu">list</span>[<span class="bu">float</span>]):</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.prices <span class="op">=</span> prices</span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"Subclasses must implement calculate()"</span>)</span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> SimpleReturns(Returns):</span>
+<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate simple returns: (P_t / P_{t-1}) - 1"""</span></span>
+<span id="cb21-14"><a href="#cb21-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-15"><a href="#cb21-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb21-16"><a href="#cb21-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [</span>
+<span id="cb21-17"><a href="#cb21-17" aria-hidden="true" tabindex="-1"></a>            (<span class="va">self</span>.prices[i] <span class="op">/</span> <span class="va">self</span>.prices[i <span class="op">-</span> <span class="dv">1</span>]) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb21-18"><a href="#cb21-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(<span class="va">self</span>.prices))</span>
+<span id="cb21-19"><a href="#cb21-19" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb21-20"><a href="#cb21-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-21"><a href="#cb21-21" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> LogReturns(Returns):</span>
+<span id="cb21-22"><a href="#cb21-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate log returns: log(P_t / P_{t-1})"""</span></span>
+<span id="cb21-23"><a href="#cb21-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-24"><a href="#cb21-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb21-25"><a href="#cb21-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [</span>
+<span id="cb21-26"><a href="#cb21-26" aria-hidden="true" tabindex="-1"></a>            math.log(<span class="va">self</span>.prices[i] <span class="op">/</span> <span class="va">self</span>.prices[i <span class="op">-</span> <span class="dv">1</span>])</span>
+<span id="cb21-27"><a href="#cb21-27" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(<span class="va">self</span>.prices))</span>
+<span id="cb21-28"><a href="#cb21-28" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb21-29"><a href="#cb21-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-30"><a href="#cb21-30" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> ExcessReturns(Returns):</span>
+<span id="cb21-31"><a href="#cb21-31" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate excess returns over risk-free rate."""</span></span>
+<span id="cb21-32"><a href="#cb21-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-33"><a href="#cb21-33" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, prices: <span class="bu">list</span>[<span class="bu">float</span>], risk_free_rate: <span class="bu">float</span>):</span>
+<span id="cb21-34"><a href="#cb21-34" aria-hidden="true" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(prices)</span>
+<span id="cb21-35"><a href="#cb21-35" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.risk_free_rate <span class="op">=</span> risk_free_rate</span>
+<span id="cb21-36"><a href="#cb21-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-37"><a href="#cb21-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> calculate(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb21-38"><a href="#cb21-38" aria-hidden="true" tabindex="-1"></a>        simple_returns <span class="op">=</span> [</span>
+<span id="cb21-39"><a href="#cb21-39" aria-hidden="true" tabindex="-1"></a>            (<span class="va">self</span>.prices[i] <span class="op">/</span> <span class="va">self</span>.prices[i <span class="op">-</span> <span class="dv">1</span>]) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb21-40"><a href="#cb21-40" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="bu">len</span>(<span class="va">self</span>.prices))</span>
+<span id="cb21-41"><a href="#cb21-41" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb21-42"><a href="#cb21-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [r <span class="op">-</span> <span class="va">self</span>.risk_free_rate <span class="cf">for</span> r <span class="kw">in</span> simple_returns]</span>
+<span id="cb21-43"><a href="#cb21-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-44"><a href="#cb21-44" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage</span></span>
+<span id="cb21-45"><a href="#cb21-45" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> [<span class="fl">100.0</span>, <span class="fl">102.0</span>, <span class="fl">101.0</span>, <span class="fl">105.0</span>, <span class="fl">108.0</span>]</span>
+<span id="cb21-46"><a href="#cb21-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-47"><a href="#cb21-47" aria-hidden="true" tabindex="-1"></a>simple <span class="op">=</span> SimpleReturns(prices)</span>
+<span id="cb21-48"><a href="#cb21-48" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Simple returns:"</span>, [<span class="ss">f"</span><span class="sc">{</span>r<span class="sc">:.4f}</span><span class="ss">"</span> <span class="cf">for</span> r <span class="kw">in</span> simple.calculate()])</span>
+<span id="cb21-49"><a href="#cb21-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-50"><a href="#cb21-50" aria-hidden="true" tabindex="-1"></a>log_ret <span class="op">=</span> LogReturns(prices)</span>
+<span id="cb21-51"><a href="#cb21-51" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Log returns:"</span>, [<span class="ss">f"</span><span class="sc">{</span>r<span class="sc">:.4f}</span><span class="ss">"</span> <span class="cf">for</span> r <span class="kw">in</span> log_ret.calculate()])</span>
+<span id="cb21-52"><a href="#cb21-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-53"><a href="#cb21-53" aria-hidden="true" tabindex="-1"></a>excess <span class="op">=</span> ExcessReturns(prices, risk_free_rate<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="cb21-54"><a href="#cb21-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Excess returns:"</span>, [<span class="ss">f"</span><span class="sc">{</span>r<span class="sc">:.4f}</span><span class="ss">"</span> <span class="cf">for</span> r <span class="kw">in</span> excess.calculate()])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Simple returns: ['0.0200', '-0.0098', '0.0396', '0.0286']
+Log returns: ['0.0198', '-0.0099', '0.0388', '0.0282']
+Excess returns: ['0.0190', '-0.0108', '0.0386', '0.0276']</code></pre>
+</div>
+</div>
+<p>This pattern is useful when you want to ensure different variants share a common interface or when you want to write code that works with any of the variants.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Don’t Overuse Inheritance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Inheritance can create tight coupling between classes and make code harder to understand. Often, composition (having one class use another as an attribute) is a better choice. Only use inheritance when you have a genuine “is-a” relationship and need to substitute one type for another.</p>
+<p>For cases where you want classes to share a common interface without inheritance, Python 3.8+ offers <em>Protocols</em> (from the <code>typing</code> module). A Protocol defines what methods and attributes a class should have, without requiring the class to explicitly inherit from anything. This is sometimes called “structural subtyping” or “duck typing with type hints.”</p>
+</div>
+</div>
+</section>
+<section id="scenario-3-encapsulating-complex-data-structures" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="scenario-3-encapsulating-complex-data-structures"><span class="header-section-number">3.2.3</span> Scenario 3: Encapsulating Complex Data Structures</h3>
+<p>When working with complex data structures that need validation or computed properties, classes provide a clean way to manage this complexity:</p>
+<div id="da10331d" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EventStudyWindow:</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Represents an event study window with validation."""</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, event_date, estimation_start, estimation_end,</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>                 event_start, event_end):</span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.event_date <span class="op">=</span> event_date</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.estimation_start <span class="op">=</span> estimation_start</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.estimation_end <span class="op">=</span> estimation_end</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.event_start <span class="op">=</span> event_start</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.event_end <span class="op">=</span> event_end</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Validate the window</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>._validate()</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> _validate(<span class="va">self</span>):</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Validate that the window makes sense."""</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.estimation_end <span class="op">&gt;=</span> <span class="va">self</span>.event_date:</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Estimation window must end before event date"</span>)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.event_start <span class="op">&gt;</span> <span class="va">self</span>.event_date:</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Event window start must be at or before event date"</span>)</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.event_end <span class="op">&lt;</span> <span class="va">self</span>.event_date:</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Event window end must be at or after event date"</span>)</span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> estimation_length(<span class="va">self</span>):</span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Length of the estimation window in days."""</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.estimation_end <span class="op">-</span> <span class="va">self</span>.estimation_start).days</span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> event_length(<span class="va">self</span>):</span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Length of the event window in days."""</span></span>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="va">self</span>.event_end <span class="op">-</span> <span class="va">self</span>.event_start).days</span>
+<span id="cb23-35"><a href="#cb23-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-36"><a href="#cb23-36" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>):</span>
+<span id="cb23-37"><a href="#cb23-37" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="ss">f"EventStudyWindow(event=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>event_date<span class="sc">}</span><span class="ss">, "</span></span>
+<span id="cb23-38"><a href="#cb23-38" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"estimation=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>estimation_length<span class="sc">}</span><span class="ss"> days, "</span></span>
+<span id="cb23-39"><a href="#cb23-39" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"event_window=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>event_length<span class="sc">}</span><span class="ss"> days)"</span>)</span>
+<span id="cb23-40"><a href="#cb23-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-41"><a href="#cb23-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage</span></span>
+<span id="cb23-42"><a href="#cb23-42" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date, timedelta</span>
+<span id="cb23-43"><a href="#cb23-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-44"><a href="#cb23-44" aria-hidden="true" tabindex="-1"></a>event_date <span class="op">=</span> date(<span class="dv">2024</span>, <span class="dv">6</span>, <span class="dv">15</span>)</span>
+<span id="cb23-45"><a href="#cb23-45" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> EventStudyWindow(</span>
+<span id="cb23-46"><a href="#cb23-46" aria-hidden="true" tabindex="-1"></a>    event_date<span class="op">=</span>event_date,</span>
+<span id="cb23-47"><a href="#cb23-47" aria-hidden="true" tabindex="-1"></a>    estimation_start<span class="op">=</span>event_date <span class="op">-</span> timedelta(days<span class="op">=</span><span class="dv">260</span>),</span>
+<span id="cb23-48"><a href="#cb23-48" aria-hidden="true" tabindex="-1"></a>    estimation_end<span class="op">=</span>event_date <span class="op">-</span> timedelta(days<span class="op">=</span><span class="dv">10</span>),</span>
+<span id="cb23-49"><a href="#cb23-49" aria-hidden="true" tabindex="-1"></a>    event_start<span class="op">=</span>event_date <span class="op">-</span> timedelta(days<span class="op">=</span><span class="dv">1</span>),</span>
+<span id="cb23-50"><a href="#cb23-50" aria-hidden="true" tabindex="-1"></a>    event_end<span class="op">=</span>event_date <span class="op">+</span> timedelta(days<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb23-51"><a href="#cb23-51" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb23-52"><a href="#cb23-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-53"><a href="#cb23-53" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(window)</span>
+<span id="cb23-54"><a href="#cb23-54" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Estimation period: </span><span class="sc">{</span>window<span class="sc">.</span>estimation_length<span class="sc">}</span><span class="ss"> days"</span>)</span>
+<span id="cb23-55"><a href="#cb23-55" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Event window: </span><span class="sc">{</span>window<span class="sc">.</span>event_length<span class="sc">}</span><span class="ss"> days"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>EventStudyWindow(event=2024-06-15, estimation=250 days, event_window=2 days)
+Estimation period: 250 days
+Event window: 2 days</code></pre>
+</div>
+</div>
+<p>The class encapsulates both the data and the logic for validation and computation, making it easier to work with event study windows correctly.</p>
+</section>
+<section id="scenario-4-building-reusable-components" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="scenario-4-building-reusable-components"><span class="header-section-number">3.2.4</span> Scenario 4: Building Reusable Components</h3>
+<p>If you’re building functionality that will be reused across multiple projects, classes provide a clean interface:</p>
+<div id="bf95a961" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> statistics</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> RollingWindow:</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate rolling window statistics."""</span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data: <span class="bu">list</span>[<span class="bu">float</span>], window_size: <span class="bu">int</span>):</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data <span class="op">=</span> data</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.window_size <span class="op">=</span> window_size</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">len</span>(<span class="va">self</span>.data) <span class="op">&lt;</span> window_size:</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Data must be longer than window size"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> mean(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate rolling mean."""</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>            statistics.mean(<span class="va">self</span>.data[i : i <span class="op">+</span> <span class="va">self</span>.window_size])</span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(<span class="va">self</span>) )</span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> std(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate rolling standard deviation."""</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [</span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>            statistics.stdev(<span class="va">self</span>.data[i : i <span class="op">+</span> <span class="va">self</span>.window_size])</span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(<span class="va">self</span>))</span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> sharpe(<span class="va">self</span>, risk_free_rate: <span class="bu">float</span> <span class="op">=</span> <span class="dv">0</span>) <span class="op">-&gt;</span> <span class="bu">list</span>[<span class="bu">float</span>]:</span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate rolling Sharpe ratio."""</span></span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a>        means <span class="op">=</span> <span class="va">self</span>.mean()</span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a>        stds <span class="op">=</span> <span class="va">self</span>.std()</span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> [(m <span class="op">-</span> risk_free_rate) <span class="op">/</span> s <span class="cf">for</span> m, s <span class="kw">in</span> <span class="bu">zip</span>(means, stds)]</span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.data) <span class="op">-</span> <span class="va">self</span>.window_size <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__repr__</span>(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"RollingWindow(data_length=</span><span class="sc">{</span><span class="bu">len</span>(<span class="va">self</span>.data)<span class="sc">}</span><span class="ss">, window=</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>window_size<span class="sc">}</span><span class="ss">)"</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate some sample returns</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>random.seed(<span class="dv">42</span>)</span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> [random.gauss(<span class="fl">0.001</span>, <span class="fl">0.02</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">100</span>)]</span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a>rolling <span class="op">=</span> RollingWindow(returns, window_size<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-45"><a href="#cb25-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rolling windows: </span><span class="sc">{</span><span class="bu">len</span>(rolling)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb25-46"><a href="#cb25-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean rolling mean: </span><span class="sc">{</span>statistics<span class="sc">.</span>mean(rolling.mean())<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb25-47"><a href="#cb25-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Mean rolling Sharpe: </span><span class="sc">{</span>statistics<span class="sc">.</span>mean(rolling.sharpe())<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rolling windows: 91
+Mean rolling mean: 0.0019
+Mean rolling Sharpe: 0.1290</code></pre>
+</div>
+</div>
+</section>
+<section id="when-to-avoid-oop" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="when-to-avoid-oop"><span class="header-section-number">3.2.5</span> When to Avoid OOP</h3>
+<p>Just as important as knowing when to use OOP is knowing when not to use it. Avoid OOP when:</p>
+<ol type="1">
+<li><p><strong>You’re doing one-off analysis:</strong> If you’re exploring data or doing a quick calculation, a simple script is fine.</p></li>
+<li><p><strong>Your code is primarily a sequence of transformations:</strong> Data pipelines that transform data step-by-step are often clearer as functions rather than classes.</p></li>
+<li><p><strong>You’re wrapping a single function:</strong> Don’t create a class with only one method. Just use a function.</p></li>
+<li><p><strong>It makes the code more complex:</strong> If OOP is making your code harder to understand, you’re probably not in a situation where it helps.</p></li>
+</ol>
+<p>Remember: the goal is clarity and maintainability, not using OOP for its own sake.</p>
+</section>
+</section>
+<section id="data-classes" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="data-classes"><span class="header-section-number">3.3</span> Data Classes</h2>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><i class="fa-brands fa-youtube" aria-label="youtube"></i> Video
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The following video provides a good introduction to data classes.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/CvQ7e6yUtnw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+<p>Python 3.7 introduced data classes, which provide a streamlined way to create classes that are primarily used to store data. They automatically generate common methods like <code>__init__</code>, <code>__repr__</code>, and <code>__eq__</code>, reducing boilerplate code significantly.</p>
+<section id="basic-data-classes" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="basic-data-classes"><span class="header-section-number">3.3.1</span> Basic Data Classes</h3>
+<p>Let’s revisit our <code>Trade</code> class, but this time using a data class:</p>
+<div id="8ef0d19e" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>    ticker: <span class="bu">str</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>    quantity: <span class="bu">int</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>    price: <span class="bu">float</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>    side: <span class="bu">str</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">float</span>:</span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Create trades</span></span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>trade3 <span class="op">=</span> Trade(<span class="st">"MSFT"</span>, <span class="dv">50</span>, <span class="fl">280.25</span>, <span class="st">"sell"</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade1)</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Value: $</span><span class="sc">{</span>trade1<span class="sc">.</span>value<span class="sc">:.2f}</span><span class="ss">"</span>) </span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"trade1 == trade2: </span><span class="sc">{</span>trade1 <span class="op">==</span> trade2<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"trade1 == trade3: </span><span class="sc">{</span>trade1 <span class="op">==</span> trade3<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade(ticker='AAPL', quantity=100, price=150.5, side='buy')
+Value: $15050.00
+trade1 == trade2: True
+trade1 == trade3: False</code></pre>
+</div>
+</div>
+<p>With just the <code>@dataclass</code> decorator and type annotations, we get:</p>
+<ul>
+<li>An <code>__init__</code> method that accepts all the attributes</li>
+<li>A <code>__repr__</code> method that shows a useful string representation</li>
+<li>An <code>__eq__</code> method that compares instances by their attributes</li>
+</ul>
+<p>This is much less code than writing these methods manually, and it’s less error-prone.</p>
+</section>
+<section id="default-values" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="default-values"><span class="header-section-number">3.3.2</span> Default Values</h3>
+<p>Data classes make it easy to specify default values:</p>
+<div id="b0f53bf2" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Optional</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    ticker: <span class="bu">str</span></span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    quantity: <span class="bu">int</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    price: <span class="bu">float</span></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    side: <span class="bu">str</span> <span class="op">=</span> <span class="st">"buy"</span>  <span class="co"># default value</span></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>    commission: <span class="bu">float</span> <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    notes: Optional[<span class="bu">str</span>] <span class="op">=</span> <span class="va">None</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>):</span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate the total value of the trade."""</span></span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> net_value(<span class="va">self</span>):</span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>        <span class="co">"""Calculate value after commission."""</span></span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.value() <span class="op">-</span> <span class="va">self</span>.commission</span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Use defaults</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>)</span>
+<span id="cb29-23"><a href="#cb29-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade1)</span>
+<span id="cb29-24"><a href="#cb29-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Override defaults</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(<span class="st">"MSFT"</span>, <span class="dv">50</span>, <span class="fl">280.25</span>, side<span class="op">=</span><span class="st">"sell"</span>, commission<span class="op">=</span><span class="fl">14.00</span>)</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade2)</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Net value: $</span><span class="sc">{</span>trade2<span class="sc">.</span>net_value()<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade(ticker='AAPL', quantity=100, price=150.5, side='buy', commission=0.0, notes=None)
+Trade(ticker='MSFT', quantity=50, price=280.25, side='sell', commission=14.0, notes=None)
+Net value: $13998.50</code></pre>
+</div>
+</div>
+</section>
+<section id="immutable-data-classes" class="level3" data-number="3.3.3">
+<h3 data-number="3.3.3" class="anchored" data-anchor-id="immutable-data-classes"><span class="header-section-number">3.3.3</span> Immutable Data Classes</h3>
+<p>You can make a data class immutable by setting <code>frozen=True</code>. This means that once created, the attributes cannot be changed:</p>
+<div id="82b3b780" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span>(frozen<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    ticker: <span class="bu">str</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    quantity: <span class="bu">int</span></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    price: <span class="bu">float</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    side: <span class="bu">str</span></span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> value(<span class="va">self</span>):</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.quantity <span class="op">*</span> <span class="va">self</span>.price</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>trade <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(trade)</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a><span class="co"># This would raise an error:</span></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a><span class="co"># trade.price = 160.00  # FrozenInstanceError</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Trade(ticker='AAPL', quantity=100, price=150.5, side='buy')</code></pre>
+</div>
+</div>
+<p>Immutable data classes are useful when you want to ensure that data doesn’t change unexpectedly, or when you need to use instances as dictionary keys or in sets.</p>
+</section>
+<section id="data-classes-vs.-regular-classes" class="level3" data-number="3.3.4">
+<h3 data-number="3.3.4" class="anchored" data-anchor-id="data-classes-vs.-regular-classes"><span class="header-section-number">3.3.4</span> Data Classes vs.&nbsp;Regular Classes</h3>
+<p>When should you use a data class instead of a regular class?</p>
+<p>Use data classes when:</p>
+<ul>
+<li>Your class is primarily for storing data</li>
+<li>You want automatic generation of common methods</li>
+<li>You want type hints for all attributes</li>
+<li>You need value-based equality (comparing by content, not identity)</li>
+</ul>
+<p>Use regular classes when:</p>
+<ul>
+<li>You need more control over initialization</li>
+<li>The class has complex behavior with little data</li>
+<li>You need inheritance from non-dataclass parents</li>
+</ul>
+</section>
+<section id="data-classes-and-type-checking" class="level3" data-number="3.3.5">
+<h3 data-number="3.3.5" class="anchored" data-anchor-id="data-classes-and-type-checking"><span class="header-section-number">3.3.5</span> Data Classes and Type Checking</h3>
+<p>Data classes work particularly well with static type checkers. The type annotations are not just documentation—they can be validated by tools like <code>ty</code> (a fast type checker from Astral, the creators of <code>uv</code> and <code>ruff</code>) or directly in VS Code.</p>
+<div id="5b63cfa2" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> dataclasses <span class="im">import</span> dataclass</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="at">@dataclass</span></span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Trade:</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    ticker: <span class="bu">str</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    quantity: <span class="bu">int</span></span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    price: <span class="bu">float</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    side: <span class="bu">str</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a><span class="co"># These work fine</span></span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>trade1 <span class="op">=</span> Trade(<span class="st">"AAPL"</span>, <span class="dv">100</span>, <span class="fl">150.50</span>, <span class="st">"buy"</span>)</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>trade2 <span class="op">=</span> Trade(ticker<span class="op">=</span><span class="st">"MSFT"</span>, quantity<span class="op">=</span><span class="dv">50</span>, price<span class="op">=</span><span class="fl">280.25</span>, side<span class="op">=</span><span class="st">"sell"</span>)</span>
+<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Runtime Python won't stop these, but type checkers will flag them:</span></span>
+<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a><span class="co"># trade3 = Trade(ticker="AAPL", quantity="100", price=150.50, side="buy")  # wrong type</span></span>
+<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a><span class="co"># trade4 = Trade("AAPL", 100, 150.50)  # missing argument</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The real advantage is that VS Code (with the Python or Pylance extension) can highlight these errors as you type, before you even save the file. This immediate feedback helps catch bugs early and makes development faster.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Pydantic for Data Validation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you need runtime data validation (not just static type checking), consider <a href="https://docs.pydantic.dev/">Pydantic</a>. It’s a third-party library that offers functionality similar to dataclasses but validates data types at runtime, converts values to the correct types when possible, and provides detailed error messages when validation fails. Pydantic is particularly useful when working with external data sources like JSON files or API responses.</p>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../python/python-basics/index.html" class="pagination-link" aria-label="Python Syntax">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../python/code-quality/index.html" class="pagination-link" aria-label="Code Quality and Documentation">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vincentgregoire.com">
+<p>© 2026 Vincent Grégoire</p>
+</a>
+  </li>  
+    <li class="nav-item">
+  - 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+<p>Licensed under CC BY-NC-ND 4.0</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>9&nbsp; Using AI for Coding in Empirical Research – Empirical Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../python/devcontainers/index.html" rel="next">
+<link href="../../python/git/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/ai-for-coding/index.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Empirical Finance</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/install/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/oop/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/testing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/logging/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/tools/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/git/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#why-this-chapter-exists" id="toc-why-this-chapter-exists" class="nav-link active" data-scroll-target="#why-this-chapter-exists"><span class="header-section-number">9.1</span> Why This Chapter Exists</a></li>
+  <li><a href="#ai-skill-formation-and-career-constraints" id="toc-ai-skill-formation-and-career-constraints" class="nav-link" data-scroll-target="#ai-skill-formation-and-career-constraints"><span class="header-section-number">9.2</span> AI, Skill Formation, and Career Constraints</a>
+  <ul class="collapse">
+  <li><a href="#the-industry-reality" id="toc-the-industry-reality" class="nav-link" data-scroll-target="#the-industry-reality"><span class="header-section-number">9.2.1</span> The industry reality</a></li>
+  <li><a href="#building-transferable-skills" id="toc-building-transferable-skills" class="nav-link" data-scroll-target="#building-transferable-skills"><span class="header-section-number">9.2.2</span> Building transferable skills</a></li>
+  </ul></li>
+  <li><a href="#ethical-academic-and-scientific-constraints" id="toc-ethical-academic-and-scientific-constraints" class="nav-link" data-scroll-target="#ethical-academic-and-scientific-constraints"><span class="header-section-number">9.3</span> Ethical, Academic, and Scientific Constraints</a>
+  <ul class="collapse">
+  <li><a href="#academic-integrity-and-authorship" id="toc-academic-integrity-and-authorship" class="nav-link" data-scroll-target="#academic-integrity-and-authorship"><span class="header-section-number">9.3.1</span> Academic integrity and authorship</a></li>
+  <li><a href="#reproducibility-and-auditability" id="toc-reproducibility-and-auditability" class="nav-link" data-scroll-target="#reproducibility-and-auditability"><span class="header-section-number">9.3.2</span> Reproducibility and auditability</a></li>
+  <li><a href="#data-confidentiality" id="toc-data-confidentiality" class="nav-link" data-scroll-target="#data-confidentiality"><span class="header-section-number">9.3.3</span> Data confidentiality</a></li>
+  </ul></li>
+  <li><a href="#mental-models-for-using-ai-effectively" id="toc-mental-models-for-using-ai-effectively" class="nav-link" data-scroll-target="#mental-models-for-using-ai-effectively"><span class="header-section-number">9.4</span> Mental Models for Using AI Effectively</a>
+  <ul class="collapse">
+  <li><a href="#ai-as-a-junior-assistant" id="toc-ai-as-a-junior-assistant" class="nav-link" data-scroll-target="#ai-as-a-junior-assistant"><span class="header-section-number">9.4.1</span> AI as a junior assistant</a></li>
+  <li><a href="#why-precise-prompts-matter" id="toc-why-precise-prompts-matter" class="nav-link" data-scroll-target="#why-precise-prompts-matter"><span class="header-section-number">9.4.2</span> Why precise prompts matter</a></li>
+  <li><a href="#the-iteration-loop" id="toc-the-iteration-loop" class="nav-link" data-scroll-target="#the-iteration-loop"><span class="header-section-number">9.4.3</span> The iteration loop</a></li>
+  <li><a href="#treat-every-response-as-a-hypothesis" id="toc-treat-every-response-as-a-hypothesis" class="nav-link" data-scroll-target="#treat-every-response-as-a-hypothesis"><span class="header-section-number">9.4.4</span> Treat every response as a hypothesis</a></li>
+  </ul></li>
+  <li><a href="#general-purpose-chatbots-for-research-coding" id="toc-general-purpose-chatbots-for-research-coding" class="nav-link" data-scroll-target="#general-purpose-chatbots-for-research-coding"><span class="header-section-number">9.5</span> General-Purpose Chatbots for Research Coding</a>
+  <ul class="collapse">
+  <li><a href="#what-they-are-good-at" id="toc-what-they-are-good-at" class="nav-link" data-scroll-target="#what-they-are-good-at"><span class="header-section-number">9.5.1</span> What they are good at</a></li>
+  <li><a href="#what-they-are-bad-at" id="toc-what-they-are-bad-at" class="nav-link" data-scroll-target="#what-they-are-bad-at"><span class="header-section-number">9.5.2</span> What they are bad at</a></li>
+  <li><a href="#typical-research-uses" id="toc-typical-research-uses" class="nav-link" data-scroll-target="#typical-research-uses"><span class="header-section-number">9.5.3</span> Typical research uses</a></li>
+  </ul></li>
+  <li><a href="#in-editor-code-completion-and-inline-assistance" id="toc-in-editor-code-completion-and-inline-assistance" class="nav-link" data-scroll-target="#in-editor-code-completion-and-inline-assistance"><span class="header-section-number">9.6</span> In-Editor Code Completion and Inline Assistance</a>
+  <ul class="collapse">
+  <li><a href="#how-completion-differs-from-chat" id="toc-how-completion-differs-from-chat" class="nav-link" data-scroll-target="#how-completion-differs-from-chat"><span class="header-section-number">9.6.1</span> How completion differs from chat</a></li>
+  <li><a href="#why-this-is-often-safer-for-beginners" id="toc-why-this-is-often-safer-for-beginners" class="nav-link" data-scroll-target="#why-this-is-often-safer-for-beginners"><span class="header-section-number">9.6.2</span> Why this is often safer for beginners</a></li>
+  <li><a href="#common-risks" id="toc-common-risks" class="nav-link" data-scroll-target="#common-risks"><span class="header-section-number">9.6.3</span> Common risks</a></li>
+  <li><a href="#improving-suggestions-with-context" id="toc-improving-suggestions-with-context" class="nav-link" data-scroll-target="#improving-suggestions-with-context"><span class="header-section-number">9.6.4</span> Improving suggestions with context</a></li>
+  <li><a href="#when-to-accept-a-suggestion" id="toc-when-to-accept-a-suggestion" class="nav-link" data-scroll-target="#when-to-accept-a-suggestion"><span class="header-section-number">9.6.5</span> When to accept a suggestion</a></li>
+  </ul></li>
+  <li><a href="#coding-agents" id="toc-coding-agents" class="nav-link" data-scroll-target="#coding-agents"><span class="header-section-number">9.7</span> Coding Agents</a>
+  <ul class="collapse">
+  <li><a href="#what-coding-agents-actually-do" id="toc-what-coding-agents-actually-do" class="nav-link" data-scroll-target="#what-coding-agents-actually-do"><span class="header-section-number">9.7.1</span> What coding agents actually do</a></li>
+  <li><a href="#why-they-are-dangerous-for-novice-programmers" id="toc-why-they-are-dangerous-for-novice-programmers" class="nav-link" data-scroll-target="#why-they-are-dangerous-for-novice-programmers"><span class="header-section-number">9.7.2</span> Why they are dangerous for novice programmers</a></li>
+  <li><a href="#appropriate-research-use-cases" id="toc-appropriate-research-use-cases" class="nav-link" data-scroll-target="#appropriate-research-use-cases"><span class="header-section-number">9.7.3</span> Appropriate research use cases</a></li>
+  <li><a href="#inappropriate-use-cases" id="toc-inappropriate-use-cases" class="nav-link" data-scroll-target="#inappropriate-use-cases"><span class="header-section-number">9.7.4</span> Inappropriate use cases</a></li>
+  <li><a href="#version-control-is-essential" id="toc-version-control-is-essential" class="nav-link" data-scroll-target="#version-control-is-essential"><span class="header-section-number">9.7.5</span> Version control is essential</a></li>
+  <li><a href="#security-and-permissions" id="toc-security-and-permissions" class="nav-link" data-scroll-target="#security-and-permissions"><span class="header-section-number">9.7.6</span> Security and permissions</a></li>
+  </ul></li>
+  <li><a href="#ai-assisted-workflow-for-research" id="toc-ai-assisted-workflow-for-research" class="nav-link" data-scroll-target="#ai-assisted-workflow-for-research"><span class="header-section-number">9.8</span> AI-Assisted Workflow for Research</a>
+  <ul class="collapse">
+  <li><a href="#start-from-human-written-pseudocode" id="toc-start-from-human-written-pseudocode" class="nav-link" data-scroll-target="#start-from-human-written-pseudocode"><span class="header-section-number">9.8.1</span> Start from human-written pseudocode</a></li>
+  <li><a href="#use-ai-to-reduce-syntax-friction-not-to-invent-logic" id="toc-use-ai-to-reduce-syntax-friction-not-to-invent-logic" class="nav-link" data-scroll-target="#use-ai-to-reduce-syntax-friction-not-to-invent-logic"><span class="header-section-number">9.8.2</span> Use AI to reduce syntax friction, not to invent logic</a></li>
+  <li><a href="#run-and-test-after-every-ai-assisted-change" id="toc-run-and-test-after-every-ai-assisted-change" class="nav-link" data-scroll-target="#run-and-test-after-every-ai-assisted-change"><span class="header-section-number">9.8.3</span> Run and test after every AI-assisted change</a></li>
+  <li><a href="#use-version-control-aggressively-between-iterations" id="toc-use-version-control-aggressively-between-iterations" class="nav-link" data-scroll-target="#use-version-control-aggressively-between-iterations"><span class="header-section-number">9.8.4</span> Use version control aggressively between iterations</a></li>
+  <li><a href="#never-merge-ai-generated-code-you-cannot-explain-line-by-line" id="toc-never-merge-ai-generated-code-you-cannot-explain-line-by-line" class="nav-link" data-scroll-target="#never-merge-ai-generated-code-you-cannot-explain-line-by-line"><span class="header-section-number">9.8.5</span> Never merge AI-generated code you cannot explain line by line</a></li>
+  </ul></li>
+  <li><a href="#local-and-open-models" id="toc-local-and-open-models" class="nav-link" data-scroll-target="#local-and-open-models"><span class="header-section-number">9.9</span> Local and Open Models</a></li>
+  <li><a href="#summary-rules-you-should-actually-follow" id="toc-summary-rules-you-should-actually-follow" class="nav-link" data-scroll-target="#summary-rules-you-should-actually-follow"><span class="header-section-number">9.10</span> Summary: Rules You Should Actually Follow</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../python/index.html">Python</a></li><li class="breadcrumb-item"><a href="../../python/ai-for-coding/index.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-ai-coding" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Artificial intelligence tools have transformed how programmers write code. Large language models can explain syntax, generate functions from natural language descriptions, and debug error messages in seconds. For students learning Python for empirical finance research, these tools offer an appealing shortcut: why struggle with cryptic error messages when an AI can explain them? Why write boilerplate code by hand when an AI can generate it instantly?</p>
+<p>This chapter addresses a fundamental tension. AI coding tools can genuinely accelerate your work and reduce frustration, but they can also undermine the skill formation that makes you a capable researcher. The difference between these outcomes depends entirely on how you use these tools. Used wisely, AI becomes a force multiplier for your growing expertise. Used carelessly, it becomes a crutch that prevents you from developing the understanding you need.</p>
+<p>We begin with the core trade-offs, then cover the practical landscape of AI coding tools, and conclude with a workflow designed to help you benefit from AI assistance while still building genuine programming competence.</p>
+<section id="why-this-chapter-exists" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="why-this-chapter-exists"><span class="header-section-number">9.1</span> Why This Chapter Exists</h2>
+<p>The premise of this chapter is straightforward: AI can accelerate learning, but it cannot replace it. If you cannot read, understand, and debug the code that AI produces, you are flying blind. Learning Python remains non-negotiable for credible empirical research. AI shifts where your effort goes, not whether effort is required.</p>
+<p>Consider what happens when an AI writes code for you. The tool produces syntactically correct Python that might even run without errors on your first attempt. But what happens when you need to modify that code for a different dataset? What happens when it produces incorrect results that look plausible? What happens when a collaborator asks you to explain your methodology? If you cannot answer these questions, the AI-generated code is a liability rather than an asset.</p>
+<p>The goal of this chapter is not to discourage you from using AI tools. They are genuinely useful, and most professional programmers now use them in some capacity. The goal is to help you use these tools in ways that build rather than erode your capabilities. This requires understanding what AI tools can and cannot do, recognizing when to rely on them and when to step back, and developing habits that keep you in control of your own code.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>AI does not understand your research
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AI coding assistants have no conception of what makes empirical research valid. They cannot distinguish between code that runs and code that correctly implements your methodology. They cannot verify that your variable definitions match your research design. They cannot ensure that your sample selection avoids look-ahead bias. These judgments require domain expertise that only you can provide.</p>
+</div>
+</div>
+</section>
+<section id="ai-skill-formation-and-career-constraints" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="ai-skill-formation-and-career-constraints"><span class="header-section-number">9.2</span> AI, Skill Formation, and Career Constraints</h2>
+<p>The most important reason to develop genuine Python skills, even when AI tools are available, is that over-reliance on AI slows long-run skill acquisition. Programming proficiency comes from struggling with problems, making mistakes, and building mental models of how code works. When AI removes that struggle, it also removes the learning.</p>
+<p>Think about the difference between using a calculator for arithmetic and understanding how arithmetic works. Calculators are faster and more reliable for computation, but if you never learned arithmetic, you cannot estimate whether an answer is reasonable. You cannot catch errors. You cannot extend the calculation in ways the calculator does not support. The same dynamic applies to AI and coding. AI can produce code faster than you can type it, but if you never developed the underlying understanding, you cannot evaluate, modify, or debug what it produces.</p>
+<section id="the-industry-reality" class="level3" data-number="9.2.1">
+<h3 data-number="9.2.1" class="anchored" data-anchor-id="the-industry-reality"><span class="header-section-number">9.2.1</span> The industry reality</h3>
+<p>Many financial institutions restrict or prohibit external AI tools. Banks, asset managers, and hedge funds handle sensitive data and proprietary strategies. Sending code snippets or error messages to external AI services creates compliance and security risks that many firms will not accept. Some institutions run air-gapped systems where internet access is simply unavailable. Others have policies that prohibit sharing any code or data with third parties, including AI providers.</p>
+<p>If you are targeting industry roles after your degree, this matters. Code you write with AI assistance still needs to be maintained without it. When you join a firm with restrictive policies, you need to be able to read, understand, and modify code on your own. The skills you develop now determine whether you will be effective in those environments.</p>
+<p>Even in academic settings, AI dependence creates problems. Universities and journals increasingly have policies that restrict or require disclosure of AI use in research. Peer reviewers may ask you to explain or modify your methodology. Collaborators may need to extend your code. You may need to debug issues years after the original analysis. In all these cases, you need genuine understanding of what your code does and why.</p>
+</section>
+<section id="building-transferable-skills" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="building-transferable-skills"><span class="header-section-number">9.2.2</span> Building transferable skills</h3>
+<p>The bottom line is that AI is a supplement, not a crutch. The goal is to develop skills that remain valuable regardless of what tools are available. This means understanding Python syntax, data structures, and control flow well enough to write code from scratch when necessary. It means being able to read and understand code you did not write. It means having mental models of how your analysis works that go beyond the specific implementation.</p>
+<p>When you use AI tools, pay attention to whether you are learning or just producing output. If you find yourself repeatedly asking the AI to solve similar problems, that is a signal to step back and build understanding. If you cannot explain what the AI-generated code does, you should not use it.</p>
+</section>
+</section>
+<section id="ethical-academic-and-scientific-constraints" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="ethical-academic-and-scientific-constraints"><span class="header-section-number">9.3</span> Ethical, Academic, and Scientific Constraints</h2>
+<p>Before discussing how to use AI tools effectively, we need to address the constraints that govern their use in academic and professional settings. These are not optional guidelines. They are requirements that determine whether your work is acceptable.</p>
+<section id="academic-integrity-and-authorship" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="academic-integrity-and-authorship"><span class="header-section-number">9.3.1</span> Academic integrity and authorship</h3>
+<p>The fundamental principle is simple: responsibility for correctness always lies with the researcher. When you submit code as part of a research project or assignment, you are asserting that the code correctly implements your methodology and that you understand what it does. AI assistance does not change this responsibility. If AI-generated code contains errors that invalidate your results, you bear the consequences.</p>
+<p>Different institutions and courses have different policies about AI use. Some prohibit it entirely for certain assignments. Others permit it with disclosure requirements. The specific rules vary, but the underlying principle is consistent: you must be able to explain and defend every line of code you submit. If you cannot, the work is not genuinely yours, regardless of how it was produced.</p>
+</section>
+<section id="reproducibility-and-auditability" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="reproducibility-and-auditability"><span class="header-section-number">9.3.2</span> Reproducibility and auditability</h3>
+<p>Empirical research must be reproducible. Other researchers should be able to examine your methodology, run your code, and verify your results. This requires that your code be inspectable and explainable. AI-generated code that you do not understand fails this requirement, even if it produces the correct output.</p>
+<p>When reviewers or collaborators ask about your implementation, you need to be able to explain why you made specific choices. Why did you winsorize at the 1st and 99th percentiles rather than the 5th and 95th? Why did you cluster standard errors at the firm level rather than the industry level? These questions require understanding that goes beyond the code itself to the research design it implements.</p>
+</section>
+<section id="data-confidentiality" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="data-confidentiality"><span class="header-section-number">9.3.3</span> Data confidentiality</h3>
+<p>Never paste proprietary data, credentials, or restricted information into AI tools. This applies to actual data values, but also to code that reveals the structure of proprietary datasets or the logic of trading strategies. Most AI tools send your input to external servers for processing. Even tools that claim privacy protections may retain data for training or analysis.</p>
+<p>In practice, this means being careful about what you share. Error messages that include data values should be sanitized before sharing. Code that implements proprietary methodology should be described in general terms rather than pasted directly. When in doubt, assume that anything you share with an AI tool could become public.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Caution</span>A simple rule for submissions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you would not submit work without AI, you should not submit it with AI. AI can help you produce better work faster, but it cannot make you capable of work you could not otherwise do. When you submit code, you are asserting that you could have written it yourself given sufficient time. If that is not true, the submission is not appropriate.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="mental-models-for-using-ai-effectively" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="mental-models-for-using-ai-effectively"><span class="header-section-number">9.4</span> Mental Models for Using AI Effectively</h2>
+<p>The key to using AI tools effectively is having the right mental model for what they are and what they can do. This section provides frameworks for thinking about AI that will help you use it productively, especially as a beginner.</p>
+<section id="ai-as-a-junior-assistant" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="ai-as-a-junior-assistant"><span class="header-section-number">9.4.1</span> AI as a junior assistant</h3>
+<p>The most useful mental model is to think of AI as a junior assistant that writes drafts quickly and carelessly. Like a junior employee, AI can produce output fast, but that output requires review and correction. The assistant has broad knowledge but limited judgment. They will confidently produce work that contains subtle errors. They will follow instructions literally even when those instructions are ambiguous or misguided.</p>
+<p>This mental model has several implications. First, you should expect to review and edit everything the AI produces. Just as you would not submit a junior employee’s first draft, you should not use AI-generated code without careful examination. Second, the quality of your instructions matters enormously. Vague requests produce vague outputs. Specific, well-structured prompts produce better results. Third, you remain responsible for the final product. The assistant helps, but you make the decisions.</p>
+</section>
+<section id="why-precise-prompts-matter" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="why-precise-prompts-matter"><span class="header-section-number">9.4.2</span> Why precise prompts matter</h3>
+<p>Precise prompts matter more than model choice. The difference between a good prompt and a bad prompt often exceeds the difference between AI models. A well-crafted prompt includes context about what you are trying to accomplish, specific requirements for the output, and examples of what success looks like. A poor prompt leaves the AI guessing about your intentions.</p>
+<p>Consider the difference between these prompts:</p>
+<ul>
+<li>Poor: “Write code to calculate returns”</li>
+<li>Better: “Write a Python function that calculates simple returns from a list of prices. The function should take a list of floats representing daily closing prices and return a list of floats representing daily returns. Handle the edge case of the first day, which has no previous price, by returning None for that position.”</li>
+</ul>
+<p>The second prompt specifies the input format, output format, programming language, and edge case handling. It gives the AI enough information to produce something useful. The first prompt leaves all these decisions to the AI, which may or may not match your needs.</p>
+</section>
+<section id="the-iteration-loop" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="the-iteration-loop"><span class="header-section-number">9.4.3</span> The iteration loop</h3>
+<p>Effective AI use follows an iteration loop: prompt, inspect, test, revise. You start with a prompt describing what you need. You inspect the output to understand what the AI produced. You test the code to verify it works correctly. You revise either the prompt or the code based on what you learned.</p>
+<div class="cell" data-format="pdf" data-fig-width="6" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-ai-iteration-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ai-iteration-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-ai-iteration-loop">flowchart LR
+    A[Prompt] --&gt; B[Inspect]
+    B --&gt; C[Test]
+    C --&gt; D{Works?}
+    D --&gt;|No| E[Revise]
+    E --&gt; A
+    D --&gt;|Yes| F[Done]
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ai-iteration-loop-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.1: The AI-assisted coding iteration loop
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>This loop emphasizes that AI assistance is not a one-shot process. You should expect multiple iterations, especially for complex tasks. Each iteration teaches you something about both the problem and the AI’s capabilities. Over time, you learn to write better prompts and to anticipate where AI is likely to make mistakes.</p>
+</section>
+<section id="treat-every-response-as-a-hypothesis" class="level3" data-number="9.4.4">
+<h3 data-number="9.4.4" class="anchored" data-anchor-id="treat-every-response-as-a-hypothesis"><span class="header-section-number">9.4.4</span> Treat every response as a hypothesis</h3>
+<p>Perhaps the most important mental model is to treat every AI response as a hypothesis, not an answer. The AI is proposing a solution that might be correct. Your job is to test that hypothesis by reading the code, understanding what it does, and verifying that it behaves correctly.</p>
+<p>This mindset prevents the most dangerous failure mode: accepting AI output without verification. When you treat AI responses as hypotheses, you naturally engage your critical faculties. You ask questions. You check assumptions. You test edge cases. This engagement is precisely what builds understanding.</p>
+</section>
+</section>
+<section id="general-purpose-chatbots-for-research-coding" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="general-purpose-chatbots-for-research-coding"><span class="header-section-number">9.5</span> General-Purpose Chatbots for Research Coding</h2>
+<p>General-purpose AI chatbots are the most familiar category of AI coding tools. These are web-based interfaces where you type questions in natural language and receive conversational responses. The major tools in this category include <a href="https://chatgpt.com/">OpenAI ChatGPT</a>, <a href="https://claude.com/product/overview">Anthropic Claude</a>, <a href="https://gemini.google.com/app">Google Gemini</a>, and <a href="https://copilot.microsoft.com/">Microsoft Copilot</a> in chat mode. Each has different strengths and pricing, but for most research coding tasks, the differences are less important than how you use them. For research coding, they serve as explanation-first tools: they excel at helping you understand rather than at producing production-ready code.</p>
+<section id="what-they-are-good-at" class="level3" data-number="9.5.1">
+<h3 data-number="9.5.1" class="anchored" data-anchor-id="what-they-are-good-at"><span class="header-section-number">9.5.1</span> What they are good at</h3>
+<p>Chatbots excel at explaining syntax and error messages. When you encounter a Python error that you do not understand, a chatbot can explain what went wrong in plain language. It can describe what the error message means, why it occurred, and how to fix it. This is often faster and more helpful than searching documentation or Stack Overflow.</p>
+<p>They are also good at translating ideas into rough code sketches. If you have a conceptual understanding of what you want to do but are unsure how to express it in Python, a chatbot can provide a starting point. The code may need refinement, but it gives you something concrete to work with and learn from.</p>
+<p>Clarifying library usage is another strength. Python has thousands of packages with varying documentation quality. A chatbot can explain how to use a specific function, what parameters it accepts, and what it returns. It can compare alternatives and explain trade-offs. This is particularly helpful when learning new libraries.</p>
+</section>
+<section id="what-they-are-bad-at" class="level3" data-number="9.5.2">
+<h3 data-number="9.5.2" class="anchored" data-anchor-id="what-they-are-bad-at"><span class="header-section-number">9.5.2</span> What they are bad at</h3>
+<p>Chatbots are poor at designing correct empirical workflows. They do not understand your research question, your data structure, or the methodological requirements of your field. The most recent models, especially those with reasoning capabilities, are improving in this area, but not yet to the point where you can trust them to be reliable without verification. They can produce code that runs but implements the wrong analysis. Detecting these errors requires domain expertise that the chatbot lacks.</p>
+<p>They also struggle with understanding your project context by default. Each conversation with a chatbot starts fresh. The AI does not know what code you have already written, what data you are working with, or what you have tried before. You need to provide this context explicitly, which is time-consuming and error-prone.</p>
+</section>
+<section id="typical-research-uses" class="level3" data-number="9.5.3">
+<h3 data-number="9.5.3" class="anchored" data-anchor-id="typical-research-uses"><span class="header-section-number">9.5.3</span> Typical research uses</h3>
+<p>For empirical finance research, chatbots are most useful for:</p>
+<ul>
+<li><strong>Debugging tracebacks</strong>: Paste an error message and ask for an explanation. The chatbot can often identify the problem and suggest fixes.</li>
+<li><strong>Refactoring simple logic</strong>: Describe what your current code does and ask for a cleaner implementation. Review the suggestion carefully before adopting it.</li>
+<li><strong>Learning new concepts</strong>: Ask for explanations of Python features, statistical methods, or library functions. Use the chatbot as an interactive tutorial.</li>
+<li><strong>Generating boilerplate</strong>: Request template code for common patterns like reading CSV files or setting up matplotlib figures. Customize for your specific needs.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Using chatbots for learning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Chatbots make excellent tutors. When you do not understand a piece of code, ask the AI to explain it line by line. When you are confused about a concept, ask for multiple examples at different difficulty levels. When you get stuck on a problem, ask for hints rather than solutions. This approach builds understanding rather than dependence.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="in-editor-code-completion-and-inline-assistance" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="in-editor-code-completion-and-inline-assistance"><span class="header-section-number">9.6</span> In-Editor Code Completion and Inline Assistance</h2>
+<p>In-editor completion tools provide a different kind of AI assistance. Rather than conversational interaction, they offer continuous, low-friction suggestions as you type. The major tools in this category are <a href="https://github.com/features/copilot">GitHub Copilot</a>, which integrates with Visual Studio Code and other editors, and <a href="https://cursor.com/">Cursor</a>, an editor with deep AI integration built in. Cursor is a fork of VS Code, so it offers a familiar interface and supports most VS Code extensions, excluding those published by Microsoft. These tools analyze your current file and context to predict what you are likely to write next, then offer to complete it for you.</p>
+<p>If you have used auto-complete on your phone, you already understand the basic experience. The AI predicts what you are likely to type next and offers to complete it for you. Most of the time the suggestions are helpful and save keystrokes. But occasionally the AI makes silly mistakes, inserting words that are grammatically correct but contextually wrong. Code completion works the same way: usually helpful, occasionally nonsensical, and always requiring your judgment about whether to accept.</p>
+<section id="how-completion-differs-from-chat" class="level3" data-number="9.6.1">
+<h3 data-number="9.6.1" class="anchored" data-anchor-id="how-completion-differs-from-chat"><span class="header-section-number">9.6.1</span> How completion differs from chat</h3>
+<p>The interaction model is fundamentally different from chatbots. With a chatbot, you formulate a request, submit it, wait for a response, then evaluate and possibly revise. With completion tools, suggestions appear automatically as you type. You accept with a keystroke or ignore by continuing to type. The feedback loop is measured in seconds rather than minutes.</p>
+<p>This difference has important implications. Completion tools are embedded in your normal workflow. You do not need to context-switch to another application. The AI sees your entire file and often your entire project, so it has much more context than a chatbot conversation. Suggestions are smaller and more incremental, completing lines or functions rather than generating entire programs.</p>
+</section>
+<section id="why-this-is-often-safer-for-beginners" class="level3" data-number="9.6.2">
+<h3 data-number="9.6.2" class="anchored" data-anchor-id="why-this-is-often-safer-for-beginners"><span class="header-section-number">9.6.2</span> Why this is often safer for beginners</h3>
+<p>In-editor completion is often safer for beginners because it produces smaller changes that are easier to evaluate. When a chatbot generates a 50-line function, understanding and verifying it requires significant effort. When a completion tool suggests finishing the line you are already writing, you can evaluate it immediately. The suggestion is within the context you already understand.</p>
+<p>The immediate visual context also helps. You see the suggestion alongside your existing code. You can compare it to what you were planning to write. Obvious errors are more apparent because they conflict with the surrounding code that you wrote and understand.</p>
+</section>
+<section id="common-risks" class="level3" data-number="9.6.3">
+<h3 data-number="9.6.3" class="anchored" data-anchor-id="common-risks"><span class="header-section-number">9.6.3</span> Common risks</h3>
+<p>The primary risk with completion tools is silent logical errors. The AI might suggest syntactically correct code that does not do what you intend. Because suggestions appear quickly and accepting them is easy, you might accept code without fully processing what it does. This is especially dangerous for statistical operations where the code runs without errors but produces incorrect results.</p>
+<p>Over-engineered suggestions are another issue. The AI might suggest more complex solutions than necessary, introducing abstractions or edge case handling that you do not need. This complexity makes the code harder to understand and maintain. Simpler code that you fully understand is usually better than sophisticated code that you do not.</p>
+</section>
+<section id="improving-suggestions-with-context" class="level3" data-number="9.6.4">
+<h3 data-number="9.6.4" class="anchored" data-anchor-id="improving-suggestions-with-context"><span class="header-section-number">9.6.4</span> Improving suggestions with context</h3>
+<p>Completion tools work better when they have more context about your code. The AI analyzes your file and project to understand what you are trying to do, and richer context leads to better suggestions.</p>
+<p>Type hints and docstrings, discussed in <a href="../code-quality/index.html" class="quarto-xref"><span>Chapter 4</span></a>, serve double duty here. They make your code more readable for humans and more understandable for AI. When you declare that a function takes a <code>pd.DataFrame</code> and returns a <code>float</code>, the AI can suggest code that correctly uses DataFrame methods and returns an appropriate value. When you write a docstring explaining that a function calculates annualized volatility from daily returns, the AI understands the domain and can suggest relevant implementations.</p>
+<p>This creates a virtuous cycle. Writing type hints and docstrings is good practice regardless of AI tools. But if you use completion tools, that investment pays additional dividends through better suggestions. The same practices that make your code maintainable also make it more AI-friendly.</p>
+<p>Conversely, poorly documented code with no type hints gives the AI little to work with. Suggestions will be more generic and less likely to match your intent. If you find that completion suggestions are consistently unhelpful, consider whether adding context to your code might improve them.</p>
+</section>
+<section id="when-to-accept-a-suggestion" class="level3" data-number="9.6.5">
+<h3 data-number="9.6.5" class="anchored" data-anchor-id="when-to-accept-a-suggestion"><span class="header-section-number">9.6.5</span> When to accept a suggestion</h3>
+<p>A useful rule of thumb: accept a suggestion when you could have written it yourself, just more slowly. This standard ensures that you understand what you are accepting. The AI is saving you keystrokes, not doing your thinking.</p>
+<p>If a suggestion surprises you, pause before accepting. Either you are learning something new (good), or the suggestion is wrong (bad). Either way, the surprise is a signal that you should engage more deeply rather than just accepting. Take time to understand why the AI suggested what it did.</p>
+</section>
+</section>
+<section id="coding-agents" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="coding-agents"><span class="header-section-number">9.7</span> Coding Agents</h2>
+<p>Coding agents represent the most powerful and most dangerous category of AI coding tools. Unlike completion tools that suggest small changes, agents can make extensive modifications across multiple files. Unlike chatbots that produce isolated code snippets, agents can execute code, observe results, and iterate. The major tools in this category include <a href="https://github.com/features/copilot">GitHub Copilot</a> in agent mode, Anthropic’s <a href="https://claude.com/product/claude-code">Claude Code</a>, and <a href="https://openai.com/codex/">OpenAI Codex</a>. Both Claude Code and OpenAI Codex are available as command-line tools and as VS Code extensions. <a href="https://cursor.com/">Cursor</a> also includes deep agent integration. These tools evolve rapidly, so specific recommendations become outdated quickly, but at the time of writing, Claude Code with the Opus 4.5 model is my tool of choice.</p>
+<p>For all AI coding tools, but especially agents, reading the product documentation is essential to achieve the best results. Each tool behaves differently, with its own strengths, limitations, and recommended workflows. Adapting your approach to the specific tool you use will greatly improve the quality of the output you get. Time spent learning the tool’s features and best practices pays off quickly.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><i class="fa-brands fa-youtube" aria-label="youtube"></i> Video
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In this video, I go through an example use case of Claude Code with a financial research application.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/huD0FzgwK1k" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+<section id="what-coding-agents-actually-do" class="level3" data-number="9.7.1">
+<h3 data-number="9.7.1" class="anchored" data-anchor-id="what-coding-agents-actually-do"><span class="header-section-number">9.7.1</span> What coding agents actually do</h3>
+<p>Agents operate with a significant degree of autonomy. You describe a goal, and the agent takes a series of actions to achieve it: writing code, running tests, reading error messages, and revising its approach. Some agents can browse documentation, search codebases, and even interact with external services. They do in minutes what might take you hours.</p>
+<p>This capability is transformative for experienced developers who can evaluate agent output quickly. An agent can implement a feature, write tests, and handle edge cases while the developer reviews and directs. The human remains in control but operates at a higher level of abstraction.</p>
+</section>
+<section id="why-they-are-dangerous-for-novice-programmers" class="level3" data-number="9.7.2">
+<h3 data-number="9.7.2" class="anchored" data-anchor-id="why-they-are-dangerous-for-novice-programmers"><span class="header-section-number">9.7.2</span> Why they are dangerous for novice programmers</h3>
+<p>For novice programmers, agents are dangerous precisely because of their power. An agent might modify your code in ways you do not understand. It might introduce bugs that are difficult to detect because you do not know what was changed. It might solve problems in ways that work but that you cannot maintain or extend.</p>
+<p>The core issue is verification. When an agent makes changes across multiple files, verifying correctness requires understanding all those files. A novice lacks this understanding. They may accept changes that seem to work but contain subtle errors. They may lose track of what their code does and why. They may find themselves unable to make further modifications without agent assistance.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>The danger of “fix everything” requests
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Never ask an agent to “fix everything” or “make it work” on code you do not understand. This request gives the agent maximum autonomy with minimum oversight. You have no way to evaluate whether the resulting changes are correct. Even if the code runs, it may not implement what you intended. Even if it produces plausible output, that output may be wrong.</p>
+</div>
+</div>
+</section>
+<section id="appropriate-research-use-cases" class="level3" data-number="9.7.3">
+<h3 data-number="9.7.3" class="anchored" data-anchor-id="appropriate-research-use-cases"><span class="header-section-number">9.7.3</span> Appropriate research use cases</h3>
+<p>Agents are appropriate when you already understand the code being modified. Useful applications include:</p>
+<ul>
+<li><strong>Refactoring code you already understand</strong>: If you know what the code does and want to improve its structure, an agent can help. You can verify that the refactored version preserves the original behavior.</li>
+<li><strong>Generating tests or documentation drafts</strong>: Agents can produce initial test cases or docstrings that you then review and refine. The human provides the specification; the agent provides the implementation.</li>
+<li><strong>Applying consistent changes across files</strong>: When you need to rename a variable, update a function signature, or apply a similar change in many places, agents can do this quickly and reliably.</li>
+<li><strong>Rapid prototyping</strong>: Agents can quickly produce working code to test whether an idea is feasible or to explore how a library works. Treat this as throw-away code for learning and experimentation, not as the foundation for your actual analysis.</li>
+</ul>
+</section>
+<section id="inappropriate-use-cases" class="level3" data-number="9.7.4">
+<h3 data-number="9.7.4" class="anchored" data-anchor-id="inappropriate-use-cases"><span class="header-section-number">9.7.4</span> Inappropriate use cases</h3>
+<p>Agents are inappropriate when you cannot verify their output:</p>
+<ul>
+<li><strong>Writing core empirical logic</strong>: The code that implements your research methodology must be code you understand. Agents should not write this code for you.</li>
+<li><strong>Modifying unfamiliar code</strong>: If you do not understand code before the agent modifies it, you definitely will not understand it after.</li>
+<li><strong>Debugging without understanding</strong>: When code does not work, the solution is understanding, not automation. An agent might fix the symptom while leaving the underlying problem.</li>
+</ul>
+</section>
+<section id="version-control-is-essential" class="level3" data-number="9.7.5">
+<h3 data-number="9.7.5" class="anchored" data-anchor-id="version-control-is-essential"><span class="header-section-number">9.7.5</span> Version control is essential</h3>
+<p>Using version control with Git is not optional when working with coding agents. Agents make extensive changes across multiple files, and you need the ability to review those changes before accepting them and to revert if something goes wrong. Git’s diff tools let you see exactly what the agent modified, line by line. Without version control, you have no systematic way to understand or undo what the agent did.</p>
+<p>Commit frequently when working with agents. Before asking the agent to make changes, ensure your working directory is clean. After the agent finishes, review the diff carefully before committing. If the changes are wrong, you can discard them and try a different approach.</p>
+<p>For advanced workflows, Git’s <code>worktree</code> feature lets you maintain multiple working directories from the same repository, each on a different branch. This enables running multiple agents in parallel on separate tasks without conflicts. Each agent works in its own worktree, and you merge the results when ready.</p>
+<div class="callout callout-style-default callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span><i class="fa-brands fa-youtube" aria-label="youtube"></i> Video
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a quick introduction to git worktrees, see this video.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/8vsRb2mTBA8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</div>
+</div>
+</section>
+<section id="security-and-permissions" class="level3" data-number="9.7.6">
+<h3 data-number="9.7.6" class="anchored" data-anchor-id="security-and-permissions"><span class="header-section-number">9.7.6</span> Security and permissions</h3>
+<p>Coding agents require significant permissions to do their work. They need to read your files, write new code, and often execute commands. This power creates security risks that you should take seriously.</p>
+<p>Be cautious about what you allow agents to access. An agent with permission to execute arbitrary shell commands could potentially damage your system, exfiltrate data, or install malicious software. Most agents have safety measures, but these are not foolproof. Never run agents with elevated privileges, and be wary of granting access to sensitive directories or credentials.</p>
+<p>Development containers, discussed in <a href="../devcontainers/index.html" class="quarto-xref"><span>Chapter 10</span></a>, provide an effective safety layer. By running agents inside a container, you isolate them from your main system. Even if something goes wrong, the damage is contained. The container can be reset to a clean state, and your host system remains protected. For any serious agent use, especially with less-established tools, running in a devcontainer is a sensible precaution.</p>
+</section>
+</section>
+<section id="ai-assisted-workflow-for-research" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="ai-assisted-workflow-for-research"><span class="header-section-number">9.8</span> AI-Assisted Workflow for Research</h2>
+<p>This section presents a workflow designed to help you benefit from AI assistance while maintaining understanding and control. The principles apply regardless of which specific tools you use.</p>
+<section id="start-from-human-written-pseudocode" class="level3" data-number="9.8.1">
+<h3 data-number="9.8.1" class="anchored" data-anchor-id="start-from-human-written-pseudocode"><span class="header-section-number">9.8.1</span> Start from human-written pseudocode</h3>
+<p>Before asking AI for help, write pseudocode describing what you want to accomplish. This forces you to think through the logic before delegating to AI. The pseudocode becomes both your specification for the AI and your reference for evaluating its output.</p>
+<p>Pseudocode does not need to be syntactically correct Python. It should describe the steps of your computation in terms you understand:</p>
+<pre><code># Calculate portfolio returns for each month
+# For each month:
+#   Get the weights at the start of the month
+#   Get the stock returns during the month
+#   Multiply each weight by its corresponding return
+#   Sum to get portfolio return
+# Return the list of monthly portfolio returns</code></pre>
+<p>With this pseudocode, you can ask AI to help implement specific steps. You have a clear reference for whether the implementation matches your intention.</p>
+</section>
+<section id="use-ai-to-reduce-syntax-friction-not-to-invent-logic" class="level3" data-number="9.8.2">
+<h3 data-number="9.8.2" class="anchored" data-anchor-id="use-ai-to-reduce-syntax-friction-not-to-invent-logic"><span class="header-section-number">9.8.2</span> Use AI to reduce syntax friction, not to invent logic</h3>
+<p>AI should help you express ideas you already have, not generate ideas for you. If you do not know what analysis to run, AI cannot tell you. If you know what analysis to run but are unsure of the Python syntax, AI can help.</p>
+<p>This distinction keeps you in the role of researcher rather than consumer of AI output. You make the methodological decisions. AI helps you implement those decisions efficiently. The resulting code reflects your understanding because it implements your logic.</p>
+</section>
+<section id="run-and-test-after-every-ai-assisted-change" class="level3" data-number="9.8.3">
+<h3 data-number="9.8.3" class="anchored" data-anchor-id="run-and-test-after-every-ai-assisted-change"><span class="header-section-number">9.8.3</span> Run and test after every AI-assisted change</h3>
+<p>Never accumulate multiple AI-generated changes before testing. After each change, run the code and verify it behaves correctly. Check edge cases. Compare results against manual calculations or known benchmarks. This immediate feedback catches errors early when they are easy to diagnose.</p>
+<p>If you accept several AI suggestions before testing, and something goes wrong, you do not know which change caused the problem. You may need to undo everything and start over. Testing incrementally avoids this.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>AI-generated tests require careful review
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>AI tools are good at writing tests, which can accelerate your workflow. However, when AI writes both the code and the tests, you lose an important check on correctness. Review AI-generated tests carefully to ensure they actually test the right behavior and cover edge cases. A test that passes is only meaningful if the test itself is correct.</p>
+<p>Be especially careful with coding agents. When tests fail, agents have a tendency to modify the tests to make them pass rather than fixing the underlying code. This defeats the purpose of testing entirely. Always review diffs carefully to ensure the agent fixed the function, not the test.</p>
+</div>
+</div>
+<div class="cell" data-format="pdf" data-fig-height="8" data-layout-align="default">
+<div class="cell-output-display">
+<div id="fig-ai-workflow" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ai-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div>
+<pre class="mermaid mermaid-js" data-label="fig-ai-workflow">flowchart TB
+    A[Write pseudocode] --&gt; B[Implement one step]
+    B --&gt; C{AI help&lt;br&gt;needed?}
+    C --&gt;|Yes| D[Prompt AI with&lt;br&gt;specific request]
+    D --&gt; E[Review output&lt;br&gt;line by line]
+    E --&gt; F[Modify if needed]
+    F --&gt; G[Test immediately]
+    C --&gt;|No| G
+    G --&gt; H{Works&lt;br&gt;correctly?}
+    H --&gt;|No| I[Debug with&lt;br&gt;understanding]
+    I --&gt; B
+    H --&gt;|Yes| J[Commit to&lt;br&gt;version control]
+    J --&gt; K{More steps&lt;br&gt;remaining?}
+    K --&gt;|Yes| B
+    K --&gt;|No| L[Done]
+</pre>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ai-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9.2: AI-assisted workflow for research coding
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="use-version-control-aggressively-between-iterations" class="level3" data-number="9.8.4">
+<h3 data-number="9.8.4" class="anchored" data-anchor-id="use-version-control-aggressively-between-iterations"><span class="header-section-number">9.8.4</span> Use version control aggressively between iterations</h3>
+<p>Commit working code to version control before making AI-assisted changes. If the changes break something, you can easily revert. This safety net encourages experimentation while protecting against mistakes.</p>
+<p>Good commit messages document what you changed and why. When you later review your project history, you can see the evolution of your analysis. This is valuable for debugging, for collaboration, and for your own understanding. AI coding assistants are good at writing detailed commit messages that summarize the changes made. Just make sure you review the message before submitting the commit to ensure it accurately describes the work.</p>
+</section>
+<section id="never-merge-ai-generated-code-you-cannot-explain-line-by-line" class="level3" data-number="9.8.5">
+<h3 data-number="9.8.5" class="anchored" data-anchor-id="never-merge-ai-generated-code-you-cannot-explain-line-by-line"><span class="header-section-number">9.8.5</span> Never merge AI-generated code you cannot explain line by line</h3>
+<p>The final check is simple: can you explain every line of the code? If someone asked why a particular line exists, could you answer? If the code stopped working, would you know where to look?</p>
+<p>If you cannot answer these questions, you should not use the code. Take time to understand it, or ask the AI to explain it, or write it yourself. The short-term cost of slower progress is worth the long-term benefit of genuine understanding.</p>
+</section>
+</section>
+<section id="local-and-open-models" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="local-and-open-models"><span class="header-section-number">9.9</span> Local and Open Models</h2>
+<p>Cloud-based AI tools are convenient but not always appropriate. This section covers alternatives that run on your own hardware, avoiding the need to send data to external servers.</p>
+<p>Local models address several concerns that matter for research. Your prompts and code never leave your machine, eliminating concerns about data retention, training on your inputs, or security breaches at the provider. Organizations that prohibit external AI tools may permit local ones since the code stays within your controlled environment. Local inference has no per-token charges, so after the initial setup, usage costs only electricity. And local models work without internet access, which matters for air-gapped systems or unreliable connections.</p>
+<p>Running AI models locally requires significant computing resources. Effective local models require Apple Silicon Macs or PCs with modern GPUs; older hardware often cannot run useful models at reasonable speed. Memory is usually the binding constraint, with larger models requiring more of it. On Apple computers, the system uses unified memory where RAM is shared between the CPU and GPU, so a machine with 32GB or more of RAM can run substantial models. On PCs, the relevant constraint is typically VRAM on the GPU rather than system RAM, since the model must fit in GPU memory to run efficiently. Model files themselves are large, often multiple gigabytes each, so keeping several models available requires substantial storage. Local AI also requires more technical setup than cloud services: you need to install software, download models, and configure integration with your editor.</p>
+<p>Two popular options for running AI models locally are <a href="https://ollama.com/">Ollama</a> and <a href="https://lmstudio.ai/">LM Studio</a>. Ollama is a command-line tool that makes running local models straightforward, handling model downloads, memory management, and inference. Many editor integrations support Ollama as a backend. LM Studio provides a graphical interface for downloading and running local models, making it more accessible for users uncomfortable with command-line tools, and includes a built-in chat interface.</p>
+<p>Several tools support local model backends for coding assistance. Some configurations of <a href="https://github.com/features/copilot">GitHub Copilot</a> allow using local models instead of cloud APIs, though capabilities may be reduced. Open-source alternatives like Continue provide Copilot-like functionality with local model support. Command-line agents like <a href="https://claude.com/product/claude-code">Claude Code</a> can also be configured with local model providers, though this requires additional setup.</p>
+<p>Local models currently trail cloud models in capability. The most capable models require hardware that exceeds what most individuals own, so local models are typically smaller and less capable. Cloud providers invest heavily in tooling that local solutions cannot match, and you are responsible for updates, troubleshooting, and configuration. These trade-offs may be acceptable when privacy or institutional requirements demand local operation, but for learning purposes, cloud tools are usually more practical.</p>
+</section>
+<section id="summary-rules-you-should-actually-follow" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="summary-rules-you-should-actually-follow"><span class="header-section-number">9.10</span> Summary: Rules You Should Actually Follow</h2>
+<p>This chapter has covered many considerations, but effective AI use comes down to a few key principles:</p>
+<p><strong>If you cannot read the code, you should not use the code.</strong> This is the fundamental rule. AI can help you write code faster, but you must understand what you are using. If you cannot explain it, you cannot debug it, maintain it, or defend it.</p>
+<p><strong>AI accelerates feedback, not understanding.</strong> The AI can produce code quickly and identify errors quickly. But understanding comes from your engagement with the code. Use AI to speed up the feedback loop, not to skip the learning.</p>
+<p><strong>In research and industry, credibility beats convenience.</strong> Your reputation depends on the quality and correctness of your work. AI-generated code that contains errors damages your credibility. Code you understand and can explain builds it.</p>
+<p><strong>Start with what you know.</strong> Write pseudocode before asking for help. Use AI to implement your ideas, not to have ideas for you. The research decisions are yours; AI helps with the implementation.</p>
+<p><strong>Test relentlessly.</strong> Every AI-generated change should be followed by testing. Catch errors early, when they are easy to diagnose. Never assume that code is correct because AI produced it.</p>
+<p><strong>Maintain version control.</strong> Commit working code before making changes. Create a safety net that lets you experiment confidently and recover from mistakes.</p>
+<p><strong>Treat AI responses as hypotheses.</strong> The AI is proposing solutions, not providing answers. Your job is to evaluate those proposals critically, accept what works, and reject what does not.</p>
+<p>These principles will serve you regardless of how AI tools evolve. The specific tools will change. The specific capabilities will improve. But the fundamental dynamic remains: AI is a tool that amplifies your capabilities, for better or worse. Used wisely, it makes you more effective. Used carelessly, it prevents you from becoming effective at all.</p>
+<p>The choice is yours.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../python/git/index.html" class="pagination-link" aria-label="Version Control using Git and GitHub">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../python/devcontainers/index.html" class="pagination-link" aria-label="Stay Safe with Devcontainers">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vincentgregoire.com">
+<p>© 2026 Vincent Grégoire</p>
+</a>
+  </li>  
+    <li class="nav-item">
+  - 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+<p>Licensed under CC BY-NC-ND 4.0</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
