@@ -1,0 +1,2618 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>11&nbsp; Introduction to DataFrames – Empirical Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../data-analysis/io/index.html" rel="next">
+<link href="../../data-analysis/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="5c0abb42-9e67-4889-8e30-295fe46e640b">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../data-analysis/index.html">Working with Data</a></li><li class="breadcrumb-item"><a href="../../data-analysis/dataframes/index.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Empirical Finance</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/install/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/oop/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/testing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/logging/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/tools/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/git/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../data-analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/dataframes/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/io/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Data Input and File Formats</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/cleaning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/structuring/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Structuring and Aggregation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/reshaping/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reshaping Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/joins/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Joins and Merges</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#overview" id="toc-overview" class="nav-link active" data-scroll-target="#overview"><span class="header-section-number">11.1</span> Overview</a></li>
+  <li><a href="#the-dataframe-abstraction" id="toc-the-dataframe-abstraction" class="nav-link" data-scroll-target="#the-dataframe-abstraction"><span class="header-section-number">11.2</span> The DataFrame Abstraction</a>
+  <ul class="collapse">
+  <li><a href="#what-is-a-dataframe" id="toc-what-is-a-dataframe" class="nav-link" data-scroll-target="#what-is-a-dataframe"><span class="header-section-number">11.2.1</span> What is a DataFrame?</a></li>
+  <li><a href="#why-dataframes-matter-in-finance" id="toc-why-dataframes-matter-in-finance" class="nav-link" data-scroll-target="#why-dataframes-matter-in-finance"><span class="header-section-number">11.2.2</span> Why DataFrames Matter in Finance</a></li>
+  <li><a href="#core-concepts" id="toc-core-concepts" class="nav-link" data-scroll-target="#core-concepts"><span class="header-section-number">11.2.3</span> Core Concepts</a></li>
+  </ul></li>
+  <li><a href="#pandas-overview" id="toc-pandas-overview" class="nav-link" data-scroll-target="#pandas-overview"><span class="header-section-number">11.3</span> pandas Overview</a>
+  <ul class="collapse">
+  <li><a href="#basic-operations" id="toc-basic-operations" class="nav-link" data-scroll-target="#basic-operations"><span class="header-section-number">11.3.1</span> Basic Operations</a></li>
+  <li><a href="#indexing-and-selection" id="toc-indexing-and-selection" class="nav-link" data-scroll-target="#indexing-and-selection"><span class="header-section-number">11.3.2</span> Indexing and Selection</a></li>
+  <li><a href="#creating-new-columns" id="toc-creating-new-columns" class="nav-link" data-scroll-target="#creating-new-columns"><span class="header-section-number">11.3.3</span> Creating New Columns</a></li>
+  <li><a href="#strengths-and-limitations" id="toc-strengths-and-limitations" class="nav-link" data-scroll-target="#strengths-and-limitations"><span class="header-section-number">11.3.4</span> Strengths and Limitations</a></li>
+  </ul></li>
+  <li><a href="#polars-overview" id="toc-polars-overview" class="nav-link" data-scroll-target="#polars-overview"><span class="header-section-number">11.4</span> Polars Overview</a>
+  <ul class="collapse">
+  <li><a href="#basic-operations-1" id="toc-basic-operations-1" class="nav-link" data-scroll-target="#basic-operations-1"><span class="header-section-number">11.4.1</span> Basic Operations</a></li>
+  <li><a href="#the-expression-api" id="toc-the-expression-api" class="nav-link" data-scroll-target="#the-expression-api"><span class="header-section-number">11.4.2</span> The Expression API</a></li>
+  <li><a href="#lazy-evaluation" id="toc-lazy-evaluation" class="nav-link" data-scroll-target="#lazy-evaluation"><span class="header-section-number">11.4.3</span> Lazy Evaluation</a></li>
+  <li><a href="#grouping-and-aggregation" id="toc-grouping-and-aggregation" class="nav-link" data-scroll-target="#grouping-and-aggregation"><span class="header-section-number">11.4.4</span> Grouping and Aggregation</a></li>
+  <li><a href="#strengths-and-limitations-1" id="toc-strengths-and-limitations-1" class="nav-link" data-scroll-target="#strengths-and-limitations-1"><span class="header-section-number">11.4.5</span> Strengths and Limitations</a></li>
+  </ul></li>
+  <li><a href="#duckdb-and-sql-for-dataframes" id="toc-duckdb-and-sql-for-dataframes" class="nav-link" data-scroll-target="#duckdb-and-sql-for-dataframes"><span class="header-section-number">11.5</span> DuckDB and SQL for DataFrames</a>
+  <ul class="collapse">
+  <li><a href="#why-sql-for-dataframes" id="toc-why-sql-for-dataframes" class="nav-link" data-scroll-target="#why-sql-for-dataframes"><span class="header-section-number">11.5.1</span> Why SQL for DataFrames?</a></li>
+  <li><a href="#basic-usage" id="toc-basic-usage" class="nav-link" data-scroll-target="#basic-usage"><span class="header-section-number">11.5.2</span> Basic Usage</a></li>
+  <li><a href="#advanced-sql-operations" id="toc-advanced-sql-operations" class="nav-link" data-scroll-target="#advanced-sql-operations"><span class="header-section-number">11.5.3</span> Advanced SQL Operations</a></li>
+  <li><a href="#integration-with-multiple-sources" id="toc-integration-with-multiple-sources" class="nav-link" data-scroll-target="#integration-with-multiple-sources"><span class="header-section-number">11.5.4</span> Integration with Multiple Sources</a></li>
+  <li><a href="#duckdb-relations-api" id="toc-duckdb-relations-api" class="nav-link" data-scroll-target="#duckdb-relations-api"><span class="header-section-number">11.5.5</span> DuckDB Relations API</a></li>
+  <li><a href="#strengths-and-limitations-2" id="toc-strengths-and-limitations-2" class="nav-link" data-scroll-target="#strengths-and-limitations-2"><span class="header-section-number">11.5.6</span> Strengths and Limitations</a></li>
+  </ul></li>
+  <li><a href="#choosing-between-pandas-polars-and-duckdb" id="toc-choosing-between-pandas-polars-and-duckdb" class="nav-link" data-scroll-target="#choosing-between-pandas-polars-and-duckdb"><span class="header-section-number">11.6</span> Choosing Between pandas, Polars, and DuckDB</a>
+  <ul class="collapse">
+  <li><a href="#when-to-use-pandas" id="toc-when-to-use-pandas" class="nav-link" data-scroll-target="#when-to-use-pandas"><span class="header-section-number">11.6.1</span> When to Use pandas</a></li>
+  <li><a href="#when-to-use-polars" id="toc-when-to-use-polars" class="nav-link" data-scroll-target="#when-to-use-polars"><span class="header-section-number">11.6.2</span> When to Use Polars</a></li>
+  <li><a href="#when-to-use-duckdb" id="toc-when-to-use-duckdb" class="nav-link" data-scroll-target="#when-to-use-duckdb"><span class="header-section-number">11.6.3</span> When to Use DuckDB</a></li>
+  <li><a href="#hybrid-approaches" id="toc-hybrid-approaches" class="nav-link" data-scroll-target="#hybrid-approaches"><span class="header-section-number">11.6.4</span> Hybrid Approaches</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">11.7</span> Summary</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">11.8</span> Further Reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../data-analysis/index.html">Working with Data</a></li><li class="breadcrumb-item"><a href="../../data-analysis/dataframes/index.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span id="sec-dataframes-intro" class="quarto-section-identifier"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overview" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="overview"><span class="header-section-number">11.1</span> Overview</h2>
+<p>In empirical finance, we work mostly with structured data: stock prices organized by date and ticker, financial statements arranged by company and quarter, portfolio returns indexed by time and strategy. The DataFrame abstraction is the fundamental tool for handling this kind of tabular data in Python.</p>
+<p>This chapter introduces three major DataFrame libraries in the Python ecosystem: pandas (the established standard), Polars (a modern, high-performance alternative), and DuckDB (which brings SQL to DataFrames). Understanding when and how to use each tool will significantly impact your productivity and the performance of your empirical work.</p>
+</section>
+<section id="the-dataframe-abstraction" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="the-dataframe-abstraction"><span class="header-section-number">11.2</span> The DataFrame Abstraction</h2>
+<section id="what-is-a-dataframe" class="level3" data-number="11.2.1">
+<h3 data-number="11.2.1" class="anchored" data-anchor-id="what-is-a-dataframe"><span class="header-section-number">11.2.1</span> What is a DataFrame?</h3>
+<p>A DataFrame is a two-dimensional labeled data structure with columns of potentially different types. Think of it as a spreadsheet in code, a database table with an API, or a generalization of a matrix that allows mixed types.</p>
+<p>But a DataFrame is more than just a container. It’s an abstraction that encapsulates:</p>
+<ol type="1">
+<li><strong>Data storage</strong>: Efficient memory layout for columnar data</li>
+<li><strong>Indexing</strong>: Labels for rows and columns enabling semantic access</li>
+<li><strong>Operations</strong>: A rich API for transformations, aggregations, and joins</li>
+<li><strong>Type system</strong>: Handling heterogeneous data types within a single structure</li>
+</ol>
+</section>
+<section id="why-dataframes-matter-in-finance" class="level3" data-number="11.2.2">
+<h3 data-number="11.2.2" class="anchored" data-anchor-id="why-dataframes-matter-in-finance"><span class="header-section-number">11.2.2</span> Why DataFrames Matter in Finance</h3>
+<p>In empirical finance research, DataFrames solve several critical problems:</p>
+<p><strong>Data Alignment</strong>: When you merge stock returns with company characteristics, the DataFrame automatically handles date and identifier alignment. No manual loops checking if dates match.</p>
+<p><strong>Missing Data</strong>: Financial datasets are riddled with missing values. DataFrames provide principled methods for handling missing values that respect the underlying data structure.</p>
+<p><strong>Performance</strong>: Modern DataFrame libraries use columnar storage and vectorized operations, making them orders of magnitude faster than row-by-row processing.</p>
+<p><strong>Expressiveness</strong>: Complex operations like “calculate rolling volatility by stock, then merge with quarterly earnings” can be expressed in a few lines of readable code.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>The Columnar Advantage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DataFrames store data column-by-column rather than row-by-row. This means:</p>
+<ul>
+<li>Operations on a single column (like calculating returns) are blazingly fast</li>
+<li>Memory access patterns are optimized for modern CPUs</li>
+<li>Compression works better when similar data is stored together</li>
+<li>Aggregations can skip irrelevant columns entirely</li>
+</ul>
+<p>This is why DataFrames can process millions of rows efficiently while naive Python loops struggle.</p>
+</div>
+</div>
+</section>
+<section id="core-concepts" class="level3" data-number="11.2.3">
+<h3 data-number="11.2.3" class="anchored" data-anchor-id="core-concepts"><span class="header-section-number">11.2.3</span> Core Concepts</h3>
+<p>All DataFrame libraries share several fundamental concepts:</p>
+<p><strong>Columns and Rows</strong>: The basic 2D structure. Columns typically represent variables (price, volume, return), while rows represent observations (a specific date, company, or transaction).</p>
+<p><strong>Index</strong>: A special column (or set of columns) that labels rows. In finance, this is often a date or a combination of date and identifier.</p>
+<p><strong>Schema</strong>: The data type of each column. Strongly-typed schemas enable optimization and catch errors early.</p>
+<p><strong>Operations</strong>: Transformations that produce new DataFrames. These include filtering, selecting, aggregating, and joining.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Beyond two dimensions
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you need more than two dimensions for your data, the <a href="https://xarray.dev/">xarray</a> library in Python can be helpful. It provides labeled, multi-dimensional arrays that extend the DataFrame concept to higher dimensions. While less widespread in finance than pandas or Polars, xarray is useful for working with panel data or other multi-dimensional structures.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="pandas-overview" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="pandas-overview"><span class="header-section-number">11.3</span> pandas Overview</h2>
+<p>pandas is the original DataFrame library for Python and remains the most widely used. Created by Wes McKinney in 2008 for financial data analysis, it has become the de facto standard for data manipulation in Python. While pandas is no longer my go-to library for data processing (I now mostly use Polars for that), pandas remains the standard and is unavoidable because many additional libraries for plotting and statistics rely on pandas DataFrames. If you only learn one DataFrame library, it should be this one.</p>
+<section id="basic-operations" class="level3" data-number="11.3.1">
+<h3 data-number="11.3.1" class="anchored" data-anchor-id="basic-operations"><span class="header-section-number">11.3.1</span> Basic Operations</h3>
+<p>Let’s start with creating and manipulating a simple DataFrame:</p>
+<div id="9978bcf6" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
+<span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'MSFT'</span>, <span class="st">'GOOG'</span>, <span class="st">'GOOG'</span>],</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">6</span>, freq<span class="op">=</span><span class="st">'D'</span>)[:<span class="dv">6</span>],</span>
+<span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price'</span>: [<span class="fl">150.5</span>, <span class="fl">152.3</span>, <span class="fl">380.2</span>, <span class="fl">378.9</span>, <span class="fl">140.1</span>, <span class="fl">142.5</span>],</span>
+<span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'volume'</span>: [<span class="dv">1000000</span>, <span class="dv">1050000</span>, <span class="dv">800000</span>, <span class="dv">820000</span>, <span class="dv">950000</span>, <span class="dv">980000</span>]</span>
+<span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-1-9"><a href="#annotated-cell-1-9" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="4">4</button><span id="annotated-cell-1-10" class="code-annotation-target"><a href="#annotated-cell-1-10" aria-hidden="true" tabindex="-1"></a>df</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-1" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="1" data-code-annotation="1">The standard convention is to import pandas as <code>pd</code>, allowing you to reference it with this short alias throughout your code.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="3" data-code-annotation="2">Create a DataFrame from a dictionary where keys become column names.</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="3">3</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="5" data-code-annotation="3"><code>pd.date_range()</code> generates a sequence of dates with the specified frequency (<code>'D'</code> for daily).</span>
+</dd>
+<dt data-target-cell="annotated-cell-1" data-target-annotation="4">4</dt>
+<dd>
+<span data-code-cell="annotated-cell-1" data-code-lines="10" data-code-annotation="4">In Jupyter notebooks and Quarto, simply placing a DataFrame at the end of a cell displays it with nice formatting.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>2024-01-04</td>
+<td>378.9</td>
+<td>820000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>GOOG</td>
+<td>2024-01-05</td>
+<td>140.1</td>
+<td>950000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>GOOG</td>
+<td>2024-01-06</td>
+<td>142.5</td>
+<td>980000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Key characteristics of this DataFrame:</p>
+<ul>
+<li><strong>Index</strong>: Automatically created as integers (0-5)</li>
+<li><strong>Columns</strong>: Four columns with mixed types (object, datetime64, float64, int64)</li>
+<li><strong>Shape</strong>: 6 rows × 4 columns</li>
+</ul>
+</section>
+<section id="indexing-and-selection" class="level3" data-number="11.3.2">
+<h3 data-number="11.3.2" class="anchored" data-anchor-id="indexing-and-selection"><span class="header-section-number">11.3.2</span> Indexing and Selection</h3>
+<p>pandas provides multiple ways to select data, which can be confusing at first but powerful once mastered. pandas is somewhat unique in this regard: Polars and DuckDB don’t rely on indexing the same way pandas does—they basically treat all columns the same. In pandas, the index column (or columns, if there’s a multi-index) has a special status that affects how the DataFrame behaves.</p>
+<section id="column-selection" class="level4" data-number="11.3.2.1">
+<h4 data-number="11.3.2.1" class="anchored" data-anchor-id="column-selection"><span class="header-section-number">11.3.2.1</span> Column Selection</h4>
+<div id="f7106091" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a single column (returns a Series)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> df[<span class="st">'price'</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>prices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="2">
+<pre><code>0    150.5
+1    152.3
+2    380.2
+3    378.9
+4    140.1
+5    142.5
+Name: price, dtype: float64</code></pre>
+</div>
+</div>
+<div id="452b8433" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select multiple columns (returns a DataFrame)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> df[[<span class="st">'ticker'</span>, <span class="st">'price'</span>]]</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>subset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>150.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>152.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>380.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>378.9</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>GOOG</td>
+<td>140.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>GOOG</td>
+<td>142.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Notice that the double brackets in the second example aren’t a different operator—we’re still using the same square bracket indexing, but instead of passing a single column name, we’re passing a list of column names. When you pass a list, pandas returns a DataFrame; when you pass a single column name, it returns a Series.</p>
+</section>
+<section id="row-selection-with-.loc-and-.iloc" class="level4" data-number="11.3.2.2">
+<h4 data-number="11.3.2.2" class="anchored" data-anchor-id="row-selection-with-.loc-and-.iloc"><span class="header-section-number">11.3.2.2</span> Row Selection with .loc and .iloc</h4>
+<p>pandas distinguishes between label-based indexing (<code>.loc</code>) and position-based indexing (<code>.iloc</code>):</p>
+<div id="c5ef8106" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows 0-2 by position</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>:<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="3acaa61f" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If we set an index, we can use .loc with labels</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_indexed <span class="op">=</span> df.set_index(<span class="st">'date'</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_indexed.loc[<span class="st">'2024-01-01'</span>:<span class="st">'2024-01-03'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024-01-01</th>
+<td>AAPL</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">2024-01-02</th>
+<td>AAPL</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2024-01-03</th>
+<td>MSFT</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>.loc vs .iloc vs []
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Use <code>.loc[row_labels, column_labels]</code> for label-based indexing</li>
+<li>Use <code>.iloc[row_positions, column_positions]</code> for integer position-based indexing</li>
+<li>Use <code>[]</code> for simple column selection or boolean masking</li>
+</ul>
+<p>The distinction prevents ambiguity: <code>df[0]</code> is an error (is it column 0 or row 0?), but <code>df.iloc[0]</code> and <code>df['column_0']</code> are clear.</p>
+</div>
+</div>
+</section>
+<section id="boolean-indexing" class="level4" data-number="11.3.2.3">
+<h4 data-number="11.3.2.3" class="anchored" data-anchor-id="boolean-indexing"><span class="header-section-number">11.3.2.3</span> Boolean Indexing</h4>
+<p>Filtering data is a core operation in empirical finance:</p>
+<div id="9dc11559" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows where price &gt; 150</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>high_price <span class="op">=</span> df[df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>high_price</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>2024-01-04</td>
+<td>378.9</td>
+<td>820000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>The expression inside the square brackets (<code>df['price'] &gt; 150</code>) is itself a Series of Boolean values. Let’s look at what it produces:</p>
+<div id="f8e6b2e1" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The condition produces a Boolean Series</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>0     True
+1     True
+2     True
+3     True
+4    False
+5    False
+Name: price, dtype: bool</code></pre>
+</div>
+</div>
+<p>The rows that get selected are those where the Boolean value is <code>True</code>.</p>
+<div id="519be440" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple conditions: AAPL stocks with price &gt; 150</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>aapl_high <span class="op">=</span> df[(df[<span class="st">'ticker'</span>] <span class="op">==</span> <span class="st">'AAPL'</span>) <span class="op">&amp;</span> (df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>)]</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>aapl_high</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="e8e4fa5d" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using query method for more readable syntax</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df.query(<span class="st">'ticker == "AAPL" and price &gt; 150'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-new-columns" class="level3" data-number="11.3.3">
+<h3 data-number="11.3.3" class="anchored" data-anchor-id="creating-new-columns"><span class="header-section-number">11.3.3</span> Creating New Columns</h3>
+<p>A common operation is creating new columns from existing ones. When you perform arithmetic operations between columns, pandas aligns them by index and applies the operation element by element:</p>
+<div id="0cecb916" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column by multiplying two existing columns</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'dollar_volume'</span>] <span class="op">=</span> df[<span class="st">'price'</span>] <span class="op">*</span> df[<span class="st">'volume'</span>]</span>
+<span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>df</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-10" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-10" data-code-lines="2" data-code-annotation="1">Element-wise multiplication: each row’s price is multiplied by that row’s volume.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="10">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+<th data-quarto-table-cell-role="th">dollar_volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+<td>150500000.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+<td>159915000.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>800000</td>
+<td>304160000.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>2024-01-04</td>
+<td>378.9</td>
+<td>820000</td>
+<td>310698000.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>GOOG</td>
+<td>2024-01-05</td>
+<td>140.1</td>
+<td>950000</td>
+<td>133095000.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>GOOG</td>
+<td>2024-01-06</td>
+<td>142.5</td>
+<td>980000</td>
+<td>139650000.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>When you multiply or add a scalar, it applies to all elements in the column:</p>
+<div id="88b4ae34" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply a column by a scalar</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'price_cents'</span>] <span class="op">=</span> df[<span class="st">'price'</span>] <span class="op">*</span> <span class="dv">100</span></span>
+<span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>df</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-11" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-11" data-code-lines="2" data-code-annotation="1">The scalar 100 is applied to every element in the <code>price</code> column.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="11">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+<th data-quarto-table-cell-role="th">dollar_volume</th>
+<th data-quarto-table-cell-role="th">price_cents</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>1000000</td>
+<td>150500000.0</td>
+<td>15050.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>1050000</td>
+<td>159915000.0</td>
+<td>15230.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>800000</td>
+<td>304160000.0</td>
+<td>38020.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>2024-01-04</td>
+<td>378.9</td>
+<td>820000</td>
+<td>310698000.0</td>
+<td>37890.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>GOOG</td>
+<td>2024-01-05</td>
+<td>140.1</td>
+<td>950000</td>
+<td>133095000.0</td>
+<td>14010.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>GOOG</td>
+<td>2024-01-06</td>
+<td>142.5</td>
+<td>980000</td>
+<td>139650000.0</td>
+<td>14250.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>You can also combine columns with different operations:</p>
+<div id="8f5cf1a2" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining columns with arithmetic</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'avg_price_per_share'</span>] <span class="op">=</span> df[<span class="st">'dollar_volume'</span>] <span class="op">/</span> df[<span class="st">'volume'</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'ticker'</span>, <span class="st">'price'</span>, <span class="st">'avg_price_per_share'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">avg_price_per_share</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>150.5</td>
+<td>150.5</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>152.3</td>
+<td>152.3</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>380.2</td>
+<td>380.2</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>MSFT</td>
+<td>378.9</td>
+<td>378.9</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>GOOG</td>
+<td>140.1</td>
+<td>140.1</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>GOOG</td>
+<td>142.5</td>
+<td>142.5</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Index alignment in operations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When you perform operations between two columns (or two DataFrames), pandas automatically aligns them by their index. This is powerful but can also be a source of subtle bugs if your indices don’t match as expected. We’ll cover sorting, grouping, and aggregation operations in a later chapter.</p>
+</div>
+</div>
+</section>
+<section id="strengths-and-limitations" class="level3" data-number="11.3.4">
+<h3 data-number="11.3.4" class="anchored" data-anchor-id="strengths-and-limitations"><span class="header-section-number">11.3.4</span> Strengths and Limitations</h3>
+<p><strong>Strengths</strong>:</p>
+<ul>
+<li>Mature ecosystem with extensive documentation</li>
+<li>Rich functionality covering nearly every data manipulation need</li>
+<li>Excellent integration with other libraries (scikit-learn, statsmodels, matplotlib)</li>
+<li>Flexible indexing system enabling time-series analysis</li>
+<li>Wide adoption means abundant examples, Stack Overflow answers, and AI coding assistance</li>
+</ul>
+<p><strong>Limitations</strong>:</p>
+<ul>
+<li>Performance can degrade with multi-gigabyte datasets, depending on available RAM</li>
+<li>Memory usage is higher than necessary due to row-based implementation details</li>
+<li>API inconsistencies accumulated over 15+ years of development</li>
+<li>Single-threaded execution for most operations</li>
+<li>String operations are particularly slow</li>
+</ul>
+</section>
+</section>
+<section id="polars-overview" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="polars-overview"><span class="header-section-number">11.4</span> Polars Overview</h2>
+<p>Polars is a modern DataFrame library written in Rust, designed from the ground up for performance. It addresses many of pandas’ limitations while maintaining a familiar API for common operations.</p>
+<p>Polars differs from pandas in several important ways:</p>
+<p><strong>Lazy evaluation</strong> allows you to write your data processing code without immediately executing it. Polars builds a query plan and defers execution until you explicitly collect the results. This enables the query optimizer to analyze the entire pipeline and find efficiencies—such as eliminating unnecessary computations, reordering operations, or pushing filters earlier in the pipeline.</p>
+<p><strong>Parallel execution</strong> means Polars can automatically use multiple CPU cores for operations that support it. Unlike pandas, which is largely single-threaded, Polars can process different parts of your data concurrently, leading to significant speedups on modern multi-core machines.</p>
+<p><strong>Apache Arrow memory representation</strong> is an efficient columnar format that Polars uses internally. Arrow improves interoperability with other libraries that support the format (pandas includes Arrow as an optional backend), and generally makes operations more efficient. Importantly, Arrow explicitly supports missing values as a distinct type rather than relying on NaN, which is important for accurate calculations and proper handling of missing data. Arrow also enables efficient reading and writing to the optimized Parquet file format.</p>
+<p><strong>The expression API</strong> provides a composable syntax for data transformations that is not identical to pandas. Users coming from the R tidyverse may find it feels more familiar than pandas’ approach. Expressions can be combined and optimized together, leading to more efficient execution.</p>
+<section id="basic-operations-1" class="level3" data-number="11.4.1">
+<h3 data-number="11.4.1" class="anchored" data-anchor-id="basic-operations-1"><span class="header-section-number">11.4.1</span> Basic Operations</h3>
+<div id="359894a5" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>df_pl <span class="op">=</span> pl.DataFrame({</span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'MSFT'</span>, <span class="st">'GOOG'</span>, <span class="st">'GOOG'</span>],</span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">6</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price'</span>: [<span class="fl">150.5</span>, <span class="fl">152.3</span>, <span class="fl">380.2</span>, <span class="fl">378.9</span>, <span class="fl">140.1</span>, <span class="fl">142.5</span>],</span>
+<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'volume'</span>: [<span class="dv">1000000</span>, <span class="dv">1050000</span>, <span class="dv">800000</span>, <span class="dv">820000</span>, <span class="dv">950000</span>, <span class="dv">980000</span>]</span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a>df_pl</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-13" data-code-lines="1" data-code-annotation="1">The standard convention is to import Polars as <code>pl</code>.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="13">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (6, 4)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>datetime[ns]</td>
+<td>f64</td>
+<td>i64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>2024-01-01 00:00:00</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<td>"AAPL"</td>
+<td>2024-01-02 00:00:00</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<td>"MSFT"</td>
+<td>2024-01-03 00:00:00</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+<tr class="even">
+<td>"MSFT"</td>
+<td>2024-01-04 00:00:00</td>
+<td>378.9</td>
+<td>820000</td>
+</tr>
+<tr class="odd">
+<td>"GOOG"</td>
+<td>2024-01-05 00:00:00</td>
+<td>140.1</td>
+<td>950000</td>
+</tr>
+<tr class="even">
+<td>"GOOG"</td>
+<td>2024-01-06 00:00:00</td>
+<td>142.5</td>
+<td>980000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="the-expression-api" class="level3" data-number="11.4.2">
+<h3 data-number="11.4.2" class="anchored" data-anchor-id="the-expression-api"><span class="header-section-number">11.4.2</span> The Expression API</h3>
+<p>Polars introduces an expression-based API that is more composable than pandas:</p>
+<div id="ea176f94" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and transform columns</span></span>
+<span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df_pl.select([</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'ticker'</span>),</span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>),</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="2">2</button><span id="annotated-cell-14-5" class="code-annotation-target"><a href="#annotated-cell-14-5" aria-hidden="true" tabindex="-1"></a>    (pl.col(<span class="st">'price'</span>) <span class="op">*</span> pl.col(<span class="st">'volume'</span>)).alias(<span class="st">'dollar_volume'</span>)</span>
+<span id="annotated-cell-14-6"><a href="#annotated-cell-14-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="annotated-cell-14-7"><a href="#annotated-cell-14-7" aria-hidden="true" tabindex="-1"></a>result</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="3" data-code-annotation="1"><code>pl.col()</code> references a column by name.</span>
+</dd>
+<dt data-target-cell="annotated-cell-14" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="5" data-code-annotation="2"><code>.alias()</code> names the resulting column.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="14">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (6, 3)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">dollar_volume</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>f64</td>
+<td>f64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>150.5</td>
+<td>1.505e8</td>
+</tr>
+<tr class="even">
+<td>"AAPL"</td>
+<td>152.3</td>
+<td>1.59915e8</td>
+</tr>
+<tr class="odd">
+<td>"MSFT"</td>
+<td>380.2</td>
+<td>3.0416e8</td>
+</tr>
+<tr class="even">
+<td>"MSFT"</td>
+<td>378.9</td>
+<td>3.10698e8</td>
+</tr>
+<tr class="odd">
+<td>"GOOG"</td>
+<td>140.1</td>
+<td>1.33095e8</td>
+</tr>
+<tr class="even">
+<td>"GOOG"</td>
+<td>142.5</td>
+<td>1.3965e8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="3c2ad913" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering with expressions</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>high_price_pl <span class="op">=</span> df_pl.<span class="bu">filter</span>(pl.col(<span class="st">'price'</span>) <span class="op">&gt;</span> <span class="dv">150</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>high_price_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (4, 4)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>datetime[ns]</td>
+<td>f64</td>
+<td>i64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>2024-01-01 00:00:00</td>
+<td>150.5</td>
+<td>1000000</td>
+</tr>
+<tr class="even">
+<td>"AAPL"</td>
+<td>2024-01-02 00:00:00</td>
+<td>152.3</td>
+<td>1050000</td>
+</tr>
+<tr class="odd">
+<td>"MSFT"</td>
+<td>2024-01-03 00:00:00</td>
+<td>380.2</td>
+<td>800000</td>
+</tr>
+<tr class="even">
+<td>"MSFT"</td>
+<td>2024-01-04 00:00:00</td>
+<td>378.9</td>
+<td>820000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="d3970885" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chaining operations</span></span>
+<span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (</span>
+<span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    df_pl</span>
+<span id="annotated-cell-16-4"><a href="#annotated-cell-16-4" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(pl.col(<span class="st">'ticker'</span>) <span class="op">==</span> <span class="st">'AAPL'</span>)</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-16" data-target-annotation="1">1</button><span id="annotated-cell-16-5" class="code-annotation-target"><a href="#annotated-cell-16-5" aria-hidden="true" tabindex="-1"></a>    .with_columns((pl.col(<span class="st">'price'</span>) <span class="op">*</span> <span class="fl">1.1</span>).alias(<span class="st">'price_plus_10pct'</span>))</span>
+<span id="annotated-cell-16-6"><a href="#annotated-cell-16-6" aria-hidden="true" tabindex="-1"></a>    .select([<span class="st">'ticker'</span>, <span class="st">'date'</span>, <span class="st">'price'</span>, <span class="st">'price_plus_10pct'</span>])</span>
+<span id="annotated-cell-16-7"><a href="#annotated-cell-16-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-16-8"><a href="#annotated-cell-16-8" aria-hidden="true" tabindex="-1"></a>result</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-16" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-16" data-code-lines="5" data-code-annotation="1"><code>.with_columns()</code> adds or replaces columns in the DataFrame.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="16">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 4)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">price_plus_10pct</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>datetime[ns]</td>
+<td>f64</td>
+<td>f64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>2024-01-01 00:00:00</td>
+<td>150.5</td>
+<td>165.55</td>
+</tr>
+<tr class="even">
+<td>"AAPL"</td>
+<td>2024-01-02 00:00:00</td>
+<td>152.3</td>
+<td>167.53</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="lazy-evaluation" class="level3" data-number="11.4.3">
+<h3 data-number="11.4.3" class="anchored" data-anchor-id="lazy-evaluation"><span class="header-section-number">11.4.3</span> Lazy Evaluation</h3>
+<p>Polars’ lazy API builds a query plan and optimizes it before execution:</p>
+<div id="0056fdb3" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>lazy_df <span class="op">=</span> df_pl.lazy()</span>
+<span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a query (nothing executes yet)</span></span>
+<span id="annotated-cell-17-4"><a href="#annotated-cell-17-4" aria-hidden="true" tabindex="-1"></a>lazy_query <span class="op">=</span> (</span>
+<span id="annotated-cell-17-5"><a href="#annotated-cell-17-5" aria-hidden="true" tabindex="-1"></a>    lazy_df</span>
+<span id="annotated-cell-17-6"><a href="#annotated-cell-17-6" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(pl.col(<span class="st">'volume'</span>) <span class="op">&gt;</span> <span class="dv">850000</span>)</span>
+<span id="annotated-cell-17-7"><a href="#annotated-cell-17-7" aria-hidden="true" tabindex="-1"></a>    .group_by(<span class="st">'ticker'</span>)</span>
+<span id="annotated-cell-17-8"><a href="#annotated-cell-17-8" aria-hidden="true" tabindex="-1"></a>    .agg([</span>
+<span id="annotated-cell-17-9"><a href="#annotated-cell-17-9" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'avg_price'</span>),</span>
+<span id="annotated-cell-17-10"><a href="#annotated-cell-17-10" aria-hidden="true" tabindex="-1"></a>        pl.col(<span class="st">'volume'</span>).<span class="bu">sum</span>().alias(<span class="st">'total_volume'</span>)</span>
+<span id="annotated-cell-17-11"><a href="#annotated-cell-17-11" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="annotated-cell-17-12"><a href="#annotated-cell-17-12" aria-hidden="true" tabindex="-1"></a>    .sort(<span class="st">'avg_price'</span>, descending<span class="op">=</span><span class="va">True</span>)</span>
+<span id="annotated-cell-17-13"><a href="#annotated-cell-17-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-17-14"><a href="#annotated-cell-17-14" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="2">2</button><span id="annotated-cell-17-15" class="code-annotation-target"><a href="#annotated-cell-17-15" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> lazy_query.collect()</span>
+<span id="annotated-cell-17-16"><a href="#annotated-cell-17-16" aria-hidden="true" tabindex="-1"></a>result</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-17" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="1" data-code-annotation="1"><code>.lazy()</code> converts an eager DataFrame to a lazy frame.</span>
+</dd>
+<dt data-target-cell="annotated-cell-17" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-17" data-code-lines="15" data-code-annotation="2"><code>.collect()</code> executes the optimized query plan and returns the result.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (2, 3)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">avg_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>f64</td>
+<td>i64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>151.4</td>
+<td>2050000</td>
+</tr>
+<tr class="even">
+<td>"GOOG"</td>
+<td>141.3</td>
+<td>1930000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>When to Use Lazy Evaluation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lazy evaluation shines when:</p>
+<ul>
+<li>You have a complex chain of operations</li>
+<li>Your data is large enough that optimization matters</li>
+<li>You’re reading from files (Polars can push down filters and projections)</li>
+</ul>
+<p>For small datasets and simple operations, the overhead of optimization may not be worth it. Use eager mode (regular DataFrames) for interactive exploration.</p>
+</div>
+</div>
+</section>
+<section id="grouping-and-aggregation" class="level3" data-number="11.4.4">
+<h3 data-number="11.4.4" class="anchored" data-anchor-id="grouping-and-aggregation"><span class="header-section-number">11.4.4</span> Grouping and Aggregation</h3>
+<div id="355da469" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by with multiple aggregations</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>summary_pl <span class="op">=</span> df_pl.group_by(<span class="st">'ticker'</span>).agg([</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'avg_price'</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).std().alias(<span class="st">'std_price'</span>),</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).<span class="bu">sum</span>().alias(<span class="st">'total_volume'</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>summary_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="18">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (3, 4)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">avg_price</th>
+<th data-quarto-table-cell-role="th">std_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>f64</td>
+<td>f64</td>
+<td>i64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"MSFT"</td>
+<td>379.55</td>
+<td>0.919239</td>
+<td>1620000</td>
+</tr>
+<tr class="even">
+<td>"GOOG"</td>
+<td>141.3</td>
+<td>1.697056</td>
+<td>1930000</td>
+</tr>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>151.4</td>
+<td>1.272792</td>
+<td>2050000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="02735759" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns calculation</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_pl_sorted <span class="op">=</span> df_pl.sort([<span class="st">'ticker'</span>, <span class="st">'date'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_with_returns <span class="op">=</span> df_pl_sorted.with_columns(</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_with_returns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<div><style>
+.dataframe > thead > tr,
+.dataframe > tbody > tr {
+  text-align: right;
+  white-space: pre-wrap;
+}
+</style>
+<small>shape: (6, 5)</small>
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">volume</th>
+<th data-quarto-table-cell-role="th">return</th>
+</tr>
+<tr class="even">
+<td>str</td>
+<td>datetime[ns]</td>
+<td>f64</td>
+<td>i64</td>
+<td>f64</td>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>"AAPL"</td>
+<td>2024-01-01 00:00:00</td>
+<td>150.5</td>
+<td>1000000</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>"AAPL"</td>
+<td>2024-01-02 00:00:00</td>
+<td>152.3</td>
+<td>1050000</td>
+<td>0.01196</td>
+</tr>
+<tr class="odd">
+<td>"GOOG"</td>
+<td>2024-01-05 00:00:00</td>
+<td>140.1</td>
+<td>950000</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>"GOOG"</td>
+<td>2024-01-06 00:00:00</td>
+<td>142.5</td>
+<td>980000</td>
+<td>0.017131</td>
+</tr>
+<tr class="odd">
+<td>"MSFT"</td>
+<td>2024-01-03 00:00:00</td>
+<td>380.2</td>
+<td>800000</td>
+<td>null</td>
+</tr>
+<tr class="even">
+<td>"MSFT"</td>
+<td>2024-01-04 00:00:00</td>
+<td>378.9</td>
+<td>820000</td>
+<td>-0.003419</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="strengths-and-limitations-1" class="level3" data-number="11.4.5">
+<h3 data-number="11.4.5" class="anchored" data-anchor-id="strengths-and-limitations-1"><span class="header-section-number">11.4.5</span> Strengths and Limitations</h3>
+<p><strong>Strengths</strong>:</p>
+<ul>
+<li>Significantly faster than pandas, especially for large datasets</li>
+<li>Lower memory usage thanks to Arrow format</li>
+<li>Automatic parallelization</li>
+<li>Lazy evaluation enables query optimization</li>
+<li>More consistent API design</li>
+<li>Excellent handling of string and categorical data</li>
+</ul>
+<p><strong>Limitations</strong>:</p>
+<ul>
+<li>Smaller ecosystem (fewer third-party integrations)</li>
+<li>Less mature documentation and community resources</li>
+<li>Some advanced pandas features not yet implemented</li>
+<li>Different mental model requires learning curve</li>
+<li>Index-less design may require adaptation for time-series workflows</li>
+</ul>
+</section>
+</section>
+<section id="duckdb-and-sql-for-dataframes" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="duckdb-and-sql-for-dataframes"><span class="header-section-number">11.5</span> DuckDB and SQL for DataFrames</h2>
+<p>DuckDB is an in-process SQL database optimized for analytical queries. While not strictly a DataFrame library, it provides a powerful alternative interface for DataFrame operations through SQL.</p>
+<p>While this book focuses mostly on Python, SQL is also a very important language for financial data analytics because it is the language most databases use. Many third-party databases can be accessed through SQL from Python and return DataFrames, but DuckDB presents a nice alternative that lets you write SQL directly within your Python environment. DuckDB doesn’t need to run inside Python—it can also operate as a standalone tool—but using it within Python makes it easy to take partial results and transfer them to pandas or Polars for further processing. Like Polars, DuckDB uses Arrow for its memory representation, enabling efficient data exchange between tools.</p>
+<section id="why-sql-for-dataframes" class="level3" data-number="11.5.1">
+<h3 data-number="11.5.1" class="anchored" data-anchor-id="why-sql-for-dataframes"><span class="header-section-number">11.5.1</span> Why SQL for DataFrames?</h3>
+<p>SQL has several advantages:</p>
+<ol type="1">
+<li><strong>Declarative</strong>: Describe what you want, not how to get it</li>
+<li><strong>Optimized</strong>: Query optimizers can find efficient execution plans</li>
+<li><strong>Familiar</strong>: Many finance professionals already know SQL</li>
+<li><strong>Standard</strong>: SQL skills transfer across tools and platforms</li>
+</ol>
+</section>
+<section id="basic-usage" class="level3" data-number="11.5.2">
+<h3 data-number="11.5.2" class="anchored" data-anchor-id="basic-usage"><span class="header-section-number">11.5.2</span> Basic Usage</h3>
+<div id="a3e8a90b" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
+<span id="annotated-cell-20-2"><a href="#annotated-cell-20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-20-3"><a href="#annotated-cell-20-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="annotated-cell-20-4"><a href="#annotated-cell-20-4" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker,</span></span>
+<span id="annotated-cell-20-5"><a href="#annotated-cell-20-5" aria-hidden="true" tabindex="-1"></a><span class="st">           AVG(price) as avg_price,</span></span>
+<span id="annotated-cell-20-6"><a href="#annotated-cell-20-6" aria-hidden="true" tabindex="-1"></a><span class="st">           SUM(volume) as total_volume</span></span>
+<span id="annotated-cell-20-7"><a href="#annotated-cell-20-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM df</span></span>
+<span id="annotated-cell-20-8"><a href="#annotated-cell-20-8" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY ticker</span></span>
+<span id="annotated-cell-20-9"><a href="#annotated-cell-20-9" aria-hidden="true" tabindex="-1"></a><span class="st">    ORDER BY avg_price DESC</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-20" data-target-annotation="1">1</button><span id="annotated-cell-20-10" class="code-annotation-target"><a href="#annotated-cell-20-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="annotated-cell-20-11"><a href="#annotated-cell-20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-20-12"><a href="#annotated-cell-20-12" aria-hidden="true" tabindex="-1"></a>result</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-20" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-20" data-code-lines="10" data-code-annotation="1"><code>.df()</code> converts the DuckDB result to a pandas DataFrame.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">avg_price</th>
+<th data-quarto-table-cell-role="th">total_volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>MSFT</td>
+<td>379.55</td>
+<td>1620000.0</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>151.40</td>
+<td>2050000.0</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>GOOG</td>
+<td>141.30</td>
+<td>1930000.0</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>Notice that we didn’t need to import the DataFrame into DuckDB explicitly. DuckDB automatically detects pandas DataFrames in the scope and makes them queryable.</p>
+</section>
+<section id="advanced-sql-operations" class="level3" data-number="11.5.3">
+<h3 data-number="11.5.3" class="anchored" data-anchor-id="advanced-sql-operations"><span class="header-section-number">11.5.3</span> Advanced SQL Operations</h3>
+<div id="4ac1388d" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>returns_sql <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker,</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">           date,</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">           price,</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">           price / LAG(price) OVER (PARTITION BY ticker ORDER BY date) - 1 as return</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM df</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ORDER BY ticker, date</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>returns_sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="21">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">date</th>
+<th data-quarto-table-cell-role="th">price</th>
+<th data-quarto-table-cell-role="th">return</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>2024-01-01</td>
+<td>150.5</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2024-01-02</td>
+<td>152.3</td>
+<td>0.011960</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>GOOG</td>
+<td>2024-01-05</td>
+<td>140.1</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>GOOG</td>
+<td>2024-01-06</td>
+<td>142.5</td>
+<td>0.017131</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">4</th>
+<td>MSFT</td>
+<td>2024-01-03</td>
+<td>380.2</td>
+<td>NaN</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">5</th>
+<td>MSFT</td>
+<td>2024-01-04</td>
+<td>378.9</td>
+<td>-0.003419</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="1256aece" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complex filtering and aggregation</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">    WITH high_volume AS (</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT *</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM df</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE volume &gt; 900000</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ticker,</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) as n_high_volume_days,</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">        AVG(price) as avg_price_on_high_volume</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM high_volume</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY ticker</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>analysis</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">n_high_volume_days</th>
+<th data-quarto-table-cell-role="th">avg_price_on_high_volume</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>GOOG</td>
+<td>2</td>
+<td>141.3</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>2</td>
+<td>151.4</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="integration-with-multiple-sources" class="level3" data-number="11.5.4">
+<h3 data-number="11.5.4" class="anchored" data-anchor-id="integration-with-multiple-sources"><span class="header-section-number">11.5.4</span> Integration with Multiple Sources</h3>
+<p>DuckDB can query multiple DataFrame types simultaneously:</p>
+<div id="1c622280" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Query both pandas and Polars DataFrames in one query</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">        p.ticker,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">        p.avg_price as pandas_avg,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">        pl.avg_price as polars_avg</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM (SELECT ticker, AVG(price) as avg_price FROM df GROUP BY ticker) p</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN (SELECT ticker, AVG(price) as avg_price FROM df_pl GROUP BY ticker) pl</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ON p.ticker = pl.ticker</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">pandas_avg</th>
+<th data-quarto-table-cell-role="th">polars_avg</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>GOOG</td>
+<td>141.30</td>
+<td>141.30</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>AAPL</td>
+<td>151.40</td>
+<td>151.40</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>MSFT</td>
+<td>379.55</td>
+<td>379.55</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="duckdb-relations-api" class="level3" data-number="11.5.5">
+<h3 data-number="11.5.5" class="anchored" data-anchor-id="duckdb-relations-api"><span class="header-section-number">11.5.5</span> DuckDB Relations API</h3>
+<p>For a more programmatic interface, DuckDB provides a relational API:</p>
+<div id="564fb3ce" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-1" class="code-annotation-target"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a>rel <span class="op">=</span> duckdb.sql(<span class="st">"SELECT * FROM df"</span>)</span>
+<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-3"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Chain operations</span></span>
+<span id="annotated-cell-24-4"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (</span>
+<span id="annotated-cell-24-5"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a>    rel</span>
+<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">filter</span>(<span class="st">"volume &gt; 900000"</span>)</span>
+<span id="annotated-cell-24-7"><a href="#annotated-cell-24-7" aria-hidden="true" tabindex="-1"></a>    .aggregate(<span class="st">"ticker, AVG(price) as avg_price"</span>)</span>
+<span id="annotated-cell-24-8"><a href="#annotated-cell-24-8" aria-hidden="true" tabindex="-1"></a>    .order(<span class="st">"avg_price DESC"</span>)</span>
+<span id="annotated-cell-24-9"><a href="#annotated-cell-24-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-24-10"><a href="#annotated-cell-24-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-24-11"><a href="#annotated-cell-24-11" aria-hidden="true" tabindex="-1"></a>result.df()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-24" data-code-lines="1" data-code-annotation="1">Create a relation from a DataFrame that can be queried programmatically.</span>
+</dd>
+</dl>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">ticker</th>
+<th data-quarto-table-cell-role="th">avg_price</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>AAPL</td>
+<td>151.4</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>GOOG</td>
+<td>141.3</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="strengths-and-limitations-2" class="level3" data-number="11.5.6">
+<h3 data-number="11.5.6" class="anchored" data-anchor-id="strengths-and-limitations-2"><span class="header-section-number">11.5.6</span> Strengths and Limitations</h3>
+<p><strong>Strengths</strong>:</p>
+<ul>
+<li>Extremely fast for analytical queries</li>
+<li>Optimized query plans can outperform hand-written DataFrame code</li>
+<li>SQL is a standard, transferable skill</li>
+<li>Seamless integration with pandas and Polars</li>
+<li>Can query files directly without loading into memory</li>
+<li>Excellent for joins and complex aggregations</li>
+</ul>
+<p><strong>Limitations</strong>:</p>
+<ul>
+<li>SQL syntax can be verbose for simple operations</li>
+<li>Less suitable for row-wise operations or complex custom logic</li>
+<li>Debugging SQL queries can be harder than Python code</li>
+<li>Some operations are more natural in a DataFrame API</li>
+<li>Embedded database means limited concurrency</li>
+</ul>
+</section>
+</section>
+<section id="choosing-between-pandas-polars-and-duckdb" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="choosing-between-pandas-polars-and-duckdb"><span class="header-section-number">11.6</span> Choosing Between pandas, Polars, and DuckDB</h2>
+<p>The right tool depends on your specific use case. Here’s a decision framework:</p>
+<section id="when-to-use-pandas" class="level3" data-number="11.6.1">
+<h3 data-number="11.6.1" class="anchored" data-anchor-id="when-to-use-pandas"><span class="header-section-number">11.6.1</span> When to Use pandas</h3>
+<p>Choose pandas when:</p>
+<ul>
+<li>You’re working with small to medium datasets (&lt;1GB in memory)</li>
+<li>You need integration with scikit-learn, statsmodels, or other pandas-centric libraries</li>
+<li>You’re learning and want maximum community support</li>
+<li>Your code needs to be maintained by others who know pandas</li>
+<li>You need pandas’ advanced time-series functionality (business day calendars, time zone handling)</li>
+</ul>
+<p><strong>Example use case</strong>: Exploratory analysis of a few thousand stocks with daily data for factor model estimation.</p>
+</section>
+<section id="when-to-use-polars" class="level3" data-number="11.6.2">
+<h3 data-number="11.6.2" class="anchored" data-anchor-id="when-to-use-polars"><span class="header-section-number">11.6.2</span> When to Use Polars</h3>
+<p>Choose Polars when:</p>
+<ul>
+<li>You’re working with large datasets (&gt;1GB)</li>
+<li>Performance is critical (e.g., production pipelines, real-time systems)</li>
+<li>You want cleaner, more maintainable code through the expression API</li>
+<li>You need parallel processing without explicit threading code</li>
+<li>String manipulation performance matters</li>
+</ul>
+<p><strong>Example use case</strong>: Processing tick-by-tick trade data for thousands of stocks to compute intraday liquidity measures.</p>
+</section>
+<section id="when-to-use-duckdb" class="level3" data-number="11.6.3">
+<h3 data-number="11.6.3" class="anchored" data-anchor-id="when-to-use-duckdb"><span class="header-section-number">11.6.3</span> When to Use DuckDB</h3>
+<p>Choose DuckDB when:</p>
+<ul>
+<li>You’re comfortable with SQL and prefer declarative queries</li>
+<li>You need to join multiple large datasets</li>
+<li>Your data lives in files (CSV, Parquet) and you want to query without loading</li>
+<li>You need maximum analytical query performance</li>
+<li>You’re aggregating or filtering large datasets</li>
+</ul>
+<p><strong>Example use case</strong>: Joining quarterly earnings data with daily stock returns across thousands of companies and years.</p>
+</section>
+<section id="hybrid-approaches" class="level3" data-number="11.6.4">
+<h3 data-number="11.6.4" class="anchored" data-anchor-id="hybrid-approaches"><span class="header-section-number">11.6.4</span> Hybrid Approaches</h3>
+<p>You don’t need to choose just one. Modern workflows often combine tools:</p>
+<div id="2a31a8ae" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read large file with DuckDB</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>duckdb_result <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker, date, price, volume</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM 'large_dataset.parquet'</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE date &gt;= '2020-01-01'</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">    AND ticker IN ('AAPL', 'MSFT', 'GOOG')</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to Polars for further processing</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df_polars <span class="op">=</span> pl.from_arrow(duckdb_result.arrow())</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Do complex feature engineering in Polars</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> df_polars.with_columns([</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>),</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).rolling_mean(<span class="dv">20</span>).over(<span class="st">'ticker'</span>).alias(<span class="st">'avg_volume_20d'</span>)</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to pandas for sklearn</span></span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>df_pandas <span class="op">=</span> features.to_pandas()</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Use in machine learning pipeline</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># from sklearn.ensemble import RandomForestRegressor</span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co"># model = RandomForestRegressor()</span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Practical Recommendation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For MSc-level empirical finance work, I recommend:</p>
+<ol type="1">
+<li><strong>Learn pandas first</strong>: It’s the standard, and you’ll encounter it everywhere</li>
+<li><strong>Add Polars for performance</strong>: When pandas becomes slow, rewrite critical sections in Polars</li>
+<li><strong>Use DuckDB for data wrangling</strong>: ETL pipelines and complex joins are often cleaner in SQL</li>
+<li><strong>Profile your code</strong>: Don’t optimize prematurely—measure where time is actually spent</li>
+</ol>
+<p>The best practitioners know all three and choose the right tool for each task.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="summary" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="summary"><span class="header-section-number">11.7</span> Summary</h2>
+<p>DataFrames are the fundamental abstraction for tabular data in empirical finance. This chapter introduced three powerful tools:</p>
+<p><strong>pandas</strong>: The established standard with broad ecosystem support. Best for general-purpose data analysis, learning, and integration with statistical libraries.</p>
+<p><strong>Polars</strong>: A modern, high-performance alternative with lazy evaluation and automatic parallelization. Best for large datasets and performance-critical applications.</p>
+<p><strong>DuckDB</strong>: SQL interface for analytical queries on DataFrames and files. Best for complex joins, aggregations, and data pipeline work.</p>
+<p>The key insight is that these tools are complementary. Understanding when to use each—and how to combine them—will make you significantly more productive in empirical finance research.</p>
+<p>In the next chapters, we’ll dive deeper into specific operations: data cleaning, merging and joining, time-series operations, and efficient computation with large datasets.</p>
+</section>
+<section id="further-reading" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">11.8</span> Further Reading</h2>
+<ul>
+<li><a href="https://pandas.pydata.org/docs/">pandas documentation</a>: Comprehensive guide to pandas</li>
+<li><a href="https://pola.rs/">Polars User Guide</a>: Official Polars documentation</li>
+<li><a href="https://duckdb.org/docs/">DuckDB documentation</a>: Complete DuckDB reference</li>
+<li>McKinney, W. (2022). <em>Python for Data Analysis, 3rd Edition</em>. O’Reilly. (by pandas creator)</li>
+<li>VanderPlas, J. (2016). <em>Python Data Science Handbook</em>. O’Reilly.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../data-analysis/index.html" class="pagination-link" aria-label="Working with Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Working with Data</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../data-analysis/io/index.html" class="pagination-link" aria-label="Data Input and File Formats">
+        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Data Input and File Formats</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vincentgregoire.com">
+<p>© 2026 Vincent Grégoire</p>
+</a>
+  </li>  
+    <li class="nav-item">
+  - 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+<p>Licensed under CC BY-NC-ND 4.0</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Vincent Grégoire, CFA, Ph.D.">
 
-<title>Empirical Finance</title>
+<title>Working with Data – Empirical Finance</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,25 +23,26 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./python/index.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../data-analysis/dataframes/index.html" rel="next">
+<link href="../python/devcontainers/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -79,13 +79,13 @@ ul.task-list li input[type="checkbox"] {
 <body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">About This Book</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../data-analysis/index.html">Working with Data</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -95,50 +95,14 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">Empirical Finance</h1>
-            <p class="subtitle lead">Modern Research with Python</p>
-                      </div>
-  </div>
-    
-  <div class="quarto-title-meta-author">
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-heading">Affiliation</div>
-    
-      <div class="quarto-title-meta-contents">
-      <p class="author"><a href="https://vincentgregoire.com">Vincent Grégoire, CFA, Ph.D.</a> <a href="mailto:vincent.gregoire@hec.ca" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
-    </div>
-    <div class="quarto-title-meta-contents">
-          <p class="affiliation">
-              HEC Montréal
-            </p>
-        </div>
-    </div>
-
-  <div class="quarto-title-meta">
-
-        
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">January 2026</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Empirical Finance</a> 
+      <a href="../">Empirical Finance</a> 
         <div class="sidebar-tools-main">
-    <a href="./Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+    <a href="../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
@@ -156,13 +120,13 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">About This Book</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./python/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../python/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Python</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -171,61 +135,61 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/install/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/install/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/oop/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/oop/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/testing/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/testing/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/logging/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/logging/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/tools/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/tools/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/git/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/git/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
   </div>
 </li>
@@ -233,7 +197,7 @@ ul.task-list li input[type="checkbox"] {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a href="./data-analysis/index.html" class="sidebar-item-text sidebar-link">
+            <a href="../data-analysis/index.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Working with Data</span></a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
@@ -242,37 +206,37 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/dataframes/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/dataframes/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/io/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/io/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Data Input and File Formats</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/cleaning/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/cleaning/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/structuring/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/structuring/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Structuring and Aggregation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/reshaping/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/reshaping/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reshaping Data</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./data-analysis/joins/index.html" class="sidebar-item-text sidebar-link">
+  <a href="../data-analysis/joins/index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Joins and Merges</span></span></a>
   </div>
 </li>
@@ -283,117 +247,44 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#about-this-book" id="toc-about-this-book" class="nav-link active" data-scroll-target="#about-this-book">About This Book</a></li>
-  <li><a href="#structure" id="toc-structure" class="nav-link" data-scroll-target="#structure">Structure</a></li>
-  <li><a href="#learning-approach" id="toc-learning-approach" class="nav-link" data-scroll-target="#learning-approach">Learning Approach</a></li>
-  <li><a href="#youtube-video-tutorials" id="toc-youtube-video-tutorials" class="nav-link" data-scroll-target="#youtube-video-tutorials">YouTube Video Tutorials</a></li>
-  <li><a href="#tech-stack" id="toc-tech-stack" class="nav-link" data-scroll-target="#tech-stack">Tech Stack</a></li>
-  <li><a href="#use-of-ai" id="toc-use-of-ai" class="nav-link" data-scroll-target="#use-of-ai">Use of AI</a></li>
-  <li><a href="#about-the-author" id="toc-about-the-author" class="nav-link" data-scroll-target="#about-the-author">About the Author</a></li>
-  <li><a href="#acknowledgments" id="toc-acknowledgments" class="nav-link" data-scroll-target="#acknowledgments">Acknowledgments</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Working with Data</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
-<p>This book is aimed at students in the MSc in Finance program at HEC Montréal taking the course <em>MATH 60230 Empirical Finance</em>. I make it publicly available for anyone interested in learning Python for finance, but some examples and explanations are tailored to the HEC Montréal context.</p>
-<section id="about-this-book" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="about-this-book">About This Book</h2>
-<p>The main objective of this book is to offer a thorough and accessible practical guide to empirical finance research using Python. To achieve this goal, I cover statistical and econometric techniques used in empirical finance, with a focus on practical applications using Python. I believe that learning by doing is the most effective way to master new skills. Thus, I present real-world scenarios and datasets, enabling you to see the power and efficacy of these techniques in action.</p>
-<p>No prior programming experience is required. If you are already familiar with Python, I still recommend you at least skim Part I because I propose not only an introduction to Python, but an introduction to a modern workflow for data analysis with Python.</p>
-<p>My goal is that by the end of this book, you will have an advanced understanding of the main econometric techniques used in empirical finance and a solid grounding in modern Python programming for data analysis. I look forward to guiding you through this exciting journey into the world of empirical finance, statistics, econometrics, and Python programming.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This book is also available as a <a href="Empirical-Finance-with-Python.pdf">PDF file</a>.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Work in Progress
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This book is a work in progress. I am constantly adding new content and refining existing content. If you have any suggestions or feedback, please reach out at <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>.</p>
-</div>
-</div>
-</section>
-<section id="structure" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="structure">Structure</h2>
-<p>This book is organized into seven parts plus appendices, each designed to build upon the knowledge from the previous section, ultimately guiding you to a robust understanding of empirical finance using Python.</p>
-<p><strong>Part I: Python Fundamentals, Environment, and Best Practices</strong></p>
-<p>The first part of the book is devoted to familiarizing you with Python and setting up the necessary coding environment. We begin with instructions on installing Python and understanding its basic syntax. We then introduce various tools that are part of the programmer’s toolbox, including the terminal, VS Code, Git, and GitHub. You will learn about managing Python environments with uv, writing clean and well-documented code, testing your code, and object-oriented programming concepts.</p>
-<p><strong>Part II: Working with Data</strong></p>
-<p>In the second part, we focus on data manipulation and analysis. You will learn how to load data from various sources and formats, work with DataFrames using pandas and Polars, clean and transform data, structure datasets for analysis, merge multiple data sources, and reshape data between wide and long formats.</p>
-<p><strong>Part III: Visualization and Research Output</strong></p>
-<p>The third part covers how to communicate your findings effectively. We explore data visualization with matplotlib and seaborn, creating publication-quality tables for regression results and summary statistics, and using Quarto to create reproducible research documents that combine code, text, and results.</p>
-<p><strong>Part IV: Statistical Foundations</strong></p>
-<p>In the fourth part, we dive into the statistical foundations needed for empirical finance. We cover numerical computing with NumPy, probability distributions and random number generation, and descriptive statistics for financial data.</p>
-<p><strong>Part V: Regression Methods</strong></p>
-<p>The fifth part focuses on econometric techniques central to empirical finance research. We cover linear regression with statsmodels, panel data methods for working with firm-time observations, and instrumental variables estimation for addressing endogeneity.</p>
-<p><strong>Part VI: Machine Learning and Artificial Intelligence in Research</strong></p>
-<p>The sixth part introduces modern AI and machine learning tools relevant to finance research. We discuss how to use AI assistants effectively for coding and research, machine learning techniques for prediction and classification, and natural language processing methods for analyzing textual data.</p>
-<p><strong>Part VII: Reproducibility and Replication</strong></p>
-<p>The final part addresses the critical importance of reproducibility in research. We cover best practices for organizing research projects, managing dependencies, and ensuring that your results can be replicated by others.</p>
-</section>
-<section id="learning-approach" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="learning-approach">Learning Approach</h2>
-<p>The learning approach adopted in this book is designed to be practical and closely linked with the real-world challenges encountered in empirical finance. My philosophy is grounded in the belief that the best way to learn is by doing, especially when it comes to mastering complex concepts like econometrics and programming.</p>
-</section>
-<section id="youtube-video-tutorials" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="youtube-video-tutorials">YouTube Video Tutorials</h2>
-<p>Throughout the book, I provide links to YouTube videos that offer alternative explanations of the concepts covered in the chapters. These videos are not meant to replace the book, but rather to provide additional perspectives and clarifications. Some of these videos are created by me and are available on my YouTube channel, <a href="https://www.youtube.com/@vincentcodesfinance">Vincent Codes Finance</a>.</p>
-</section>
-<section id="tech-stack" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="tech-stack">Tech Stack</h2>
-<p>This book is structured around a tech stack formed by a specific set of tools that has been carefully chosen based on their wide adoption, robustness, versatility, and compatibility with each other. While alternative tools exist and may be equally capable, the book takes an opinionated approach, focusing on this particular stack for clarity and consistency. It’s worth noting that the concepts and techniques covered in this book can be applied with other tools as well, but the specific examples and code use the following:</p>
+</header>
+
+
+<p>This part covers the essential tools and techniques for working with data in Python. We introduce three powerful libraries—pandas, Polars, and DuckDB—and demonstrate how to use them for common data manipulation tasks in empirical finance.</p>
+<p>The chapters in this part progressively build your data manipulation skills:</p>
 <ul>
-<li>Python 3.14 (released in October 2025)</li>
-<li>uv for managing Python versions and environments</li>
-<li>Visual Studio Code for writing code</li>
-<li>Git and GitHub for version control and collaboration</li>
-<li>Claude, ChatGPT, and Microsoft Copilot</li>
-<li>Claude Code, OpenAI Codex, and GitHub Copilot for coding assistance</li>
-<li>Quarto for writing technical content</li>
+<li><strong>Introduction to DataFrames</strong>: A high-level overview of pandas, Polars, and DuckDB</li>
+<li><strong>Data Input and File Formats</strong>: Loading data from CSV, Parquet, and Excel files</li>
+<li><strong>Data Cleaning</strong>: Handling duplicates, missing data, and validation</li>
+<li><strong>Data Structuring and Aggregation</strong>: Grouping, aggregation, and working with keys</li>
+<li><strong>Reshaping Data</strong>: Converting between long and wide formats</li>
+<li><strong>Joins and Merges</strong>: Combining datasets correctly</li>
 </ul>
-</section>
-<section id="use-of-ai" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="use-of-ai">Use of AI</h2>
-<p>This book was written with substantial assistance from AI tools, primarily ChatGPT and Claude Code. AI was used for all aspects of the book’s creation, including idea generation, creating outlines, drafting content, proofreading, and generating code examples. This reflects the modern reality of software development and technical writing, where AI assistants have become valuable collaborators.</p>
-<p>However, all content has been reviewed and edited by a human. I take full responsibility for the accuracy and quality of the material presented. Any errors or omissions remain my responsibility.</p>
-</section>
-<section id="about-the-author" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="about-the-author">About the Author</h2>
-<p>I’m Vincent Grégoire, CFA, a Professor of Finance at HEC Montréal and the Canada Research Chair in Finance and Technology. I teach empirical finance with a strong emphasis on Python-based data analysis. I earned a Ph.D.&nbsp;in Finance from the University of British Columbia, along with degrees in Computer Engineering and Financial Engineering from Université Laval, and previously served as Chief Data Scientist at Berkindale Analytics, a fintech startup.</p>
-<p>My work focuses on how information is produced, processed, and priced in financial markets. I study market structure through the lens of big data, machine learning, algorithmic trading, and cybersecurity, with an emphasis on methods that actually scale outside toy examples.</p>
-</section>
-<section id="acknowledgments" class="level2 unnumbered">
-<h2 class="unnumbered anchored" data-anchor-id="acknowledgments">Acknowledgments</h2>
-<p>I am grateful to <a href="https://www.charlesmartineau.com/">Charles Martineau</a> and <a href="http://www.saadalikhan.com/">Saad Ali Khan</a> for their feedback and suggestions on the book.</p>
+<p>Most concepts are demonstrated with examples in pandas, Polars, and DuckDB, allowing you to choose the right tool for your needs and understand how to translate between them.</p>
 
 
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -837,10 +728,13 @@ Tip
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../python/devcontainers/index.html" class="pagination-link" aria-label="Stay Safe with Devcontainers">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./python/index.html" class="pagination-link" aria-label="Python">
-        <span class="nav-page-text">Python</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../data-analysis/dataframes/index.html" class="pagination-link" aria-label="Introduction to DataFrames">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
