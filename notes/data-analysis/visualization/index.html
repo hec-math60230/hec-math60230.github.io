@@ -1,0 +1,1877 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>17&nbsp; Data Visualization – Empirical Finance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../data-analysis/tables/index.html" rel="next">
+<link href="../../data-analysis/joins/index.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="5c0abb42-9e67-4889-8e30-295fe46e640b">
+</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../data-analysis/visualization/index.html">Visualization and Research Output</a></li><li class="breadcrumb-item"><a href="../../data-analysis/visualization/index.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Visualization</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Empirical Finance</a> 
+        <div class="sidebar-tools-main">
+    <a href="../../Empirical-Finance.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">About This Book</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../python/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Python</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/install/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Installing Python</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/python-basics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Python Syntax</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/oop/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Object-Oriented Programming Basics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/code-quality/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Code Quality and Documentation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/testing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Error Handling and Testing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/logging/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Logging and Configuration</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/tools/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Development Environment and Tools</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/git/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Version Control using Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/ai-for-coding/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Using AI for Coding in Empirical Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../python/devcontainers/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Stay Safe with Devcontainers</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a href="../../data-analysis/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Working with Data</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/dataframes/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Introduction to DataFrames</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/io/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Data Input and File Formats</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/cleaning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/structuring/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Data Structuring and Aggregation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/reshaping/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Reshaping Data</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/joins/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Joins and Merges</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Visualization and Research Output</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/visualization/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Visualization</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/tables/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Tables for Research</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../data-analysis/quarto/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reproducible Documents with Quarto</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#principles-of-effective-data-visualization" id="toc-principles-of-effective-data-visualization" class="nav-link active" data-scroll-target="#principles-of-effective-data-visualization"><span class="header-section-number">17.1</span> Principles of Effective Data Visualization</a>
+  <ul class="collapse">
+  <li><a href="#recommended-additional-readings" id="toc-recommended-additional-readings" class="nav-link" data-scroll-target="#recommended-additional-readings"><span class="header-section-number">17.1.1</span> Recommended additional readings</a></li>
+  </ul></li>
+  <li><a href="#matplotlib-fundamentals" id="toc-matplotlib-fundamentals" class="nav-link" data-scroll-target="#matplotlib-fundamentals"><span class="header-section-number">17.2</span> Matplotlib Fundamentals</a>
+  <ul class="collapse">
+  <li><a href="#the-figure-and-axes-architecture" id="toc-the-figure-and-axes-architecture" class="nav-link" data-scroll-target="#the-figure-and-axes-architecture"><span class="header-section-number">17.2.1</span> The Figure and Axes Architecture</a></li>
+  <li><a href="#multiple-subplots" id="toc-multiple-subplots" class="nav-link" data-scroll-target="#multiple-subplots"><span class="header-section-number">17.2.2</span> Multiple Subplots</a></li>
+  <li><a href="#common-plot-types" id="toc-common-plot-types" class="nav-link" data-scroll-target="#common-plot-types"><span class="header-section-number">17.2.3</span> Common Plot Types</a></li>
+  <li><a href="#customizing-appearance" id="toc-customizing-appearance" class="nav-link" data-scroll-target="#customizing-appearance"><span class="header-section-number">17.2.4</span> Customizing Appearance</a></li>
+  </ul></li>
+  <li><a href="#plotting-with-pandas" id="toc-plotting-with-pandas" class="nav-link" data-scroll-target="#plotting-with-pandas"><span class="header-section-number">17.3</span> Plotting with Pandas</a>
+  <ul class="collapse">
+  <li><a href="#basic-plotting-with-series-and-dataframes" id="toc-basic-plotting-with-series-and-dataframes" class="nav-link" data-scroll-target="#basic-plotting-with-series-and-dataframes"><span class="header-section-number">17.3.1</span> Basic plotting with Series and DataFrames</a></li>
+  <li><a href="#integrating-with-matplotlib" id="toc-integrating-with-matplotlib" class="nav-link" data-scroll-target="#integrating-with-matplotlib"><span class="header-section-number">17.3.2</span> Integrating with matplotlib</a></li>
+  <li><a href="#plot-types" id="toc-plot-types" class="nav-link" data-scroll-target="#plot-types"><span class="header-section-number">17.3.3</span> Plot types</a></li>
+  <li><a href="#why-use-pandas-plotting" id="toc-why-use-pandas-plotting" class="nav-link" data-scroll-target="#why-use-pandas-plotting"><span class="header-section-number">17.3.4</span> Why use pandas plotting?</a></li>
+  </ul></li>
+  <li><a href="#seaborn-for-exploratory-analysis" id="toc-seaborn-for-exploratory-analysis" class="nav-link" data-scroll-target="#seaborn-for-exploratory-analysis"><span class="header-section-number">17.4</span> Seaborn for Exploratory Analysis</a>
+  <ul class="collapse">
+  <li><a href="#distribution-plots" id="toc-distribution-plots" class="nav-link" data-scroll-target="#distribution-plots"><span class="header-section-number">17.4.1</span> Distribution Plots</a></li>
+  <li><a href="#relationship-plots" id="toc-relationship-plots" class="nav-link" data-scroll-target="#relationship-plots"><span class="header-section-number">17.4.2</span> Relationship Plots</a></li>
+  <li><a href="#pair-plots-and-correlation" id="toc-pair-plots-and-correlation" class="nav-link" data-scroll-target="#pair-plots-and-correlation"><span class="header-section-number">17.4.3</span> Pair Plots and Correlation</a></li>
+  <li><a href="#heatmaps-for-correlation-matrices" id="toc-heatmaps-for-correlation-matrices" class="nav-link" data-scroll-target="#heatmaps-for-correlation-matrices"><span class="header-section-number">17.4.4</span> Heatmaps for Correlation Matrices</a></li>
+  </ul></li>
+  <li><a href="#figure-design-for-academic-papers" id="toc-figure-design-for-academic-papers" class="nav-link" data-scroll-target="#figure-design-for-academic-papers"><span class="header-section-number">17.5</span> Figure Design for Academic Papers</a>
+  <ul class="collapse">
+  <li><a href="#figure-sizing-and-resolution" id="toc-figure-sizing-and-resolution" class="nav-link" data-scroll-target="#figure-sizing-and-resolution"><span class="header-section-number">17.5.1</span> Figure sizing and resolution</a></li>
+  </ul></li>
+  <li><a href="#time-series-plots" id="toc-time-series-plots" class="nav-link" data-scroll-target="#time-series-plots"><span class="header-section-number">17.6</span> Time-Series Plots</a>
+  <ul class="collapse">
+  <li><a href="#plotting-stock-prices" id="toc-plotting-stock-prices" class="nav-link" data-scroll-target="#plotting-stock-prices"><span class="header-section-number">17.6.1</span> Plotting stock prices</a></li>
+  <li><a href="#returns-over-time" id="toc-returns-over-time" class="nav-link" data-scroll-target="#returns-over-time"><span class="header-section-number">17.6.2</span> Returns over time</a></li>
+  <li><a href="#rolling-statistics" id="toc-rolling-statistics" class="nav-link" data-scroll-target="#rolling-statistics"><span class="header-section-number">17.6.3</span> Rolling statistics</a></li>
+  <li><a href="#multiple-series-comparison" id="toc-multiple-series-comparison" class="nav-link" data-scroll-target="#multiple-series-comparison"><span class="header-section-number">17.6.4</span> Multiple series comparison</a></li>
+  </ul></li>
+  <li><a href="#styles-and-color-choices" id="toc-styles-and-color-choices" class="nav-link" data-scroll-target="#styles-and-color-choices"><span class="header-section-number">17.7</span> Styles and Color Choices</a>
+  <ul class="collapse">
+  <li><a href="#using-style-sheets" id="toc-using-style-sheets" class="nav-link" data-scroll-target="#using-style-sheets"><span class="header-section-number">17.7.1</span> Using style sheets</a></li>
+  <li><a href="#color-schemes-for-accessibility" id="toc-color-schemes-for-accessibility" class="nav-link" data-scroll-target="#color-schemes-for-accessibility"><span class="header-section-number">17.7.2</span> Color schemes for accessibility</a></li>
+  </ul></li>
+  <li><a href="#exporting-publication-quality-figures" id="toc-exporting-publication-quality-figures" class="nav-link" data-scroll-target="#exporting-publication-quality-figures"><span class="header-section-number">17.8</span> Exporting Publication-Quality Figures</a>
+  <ul class="collapse">
+  <li><a href="#save-formats-and-settings" id="toc-save-formats-and-settings" class="nav-link" data-scroll-target="#save-formats-and-settings"><span class="header-section-number">17.8.1</span> Save Formats and Settings</a></li>
+  <li><a href="#format-specific-considerations" id="toc-format-specific-considerations" class="nav-link" data-scroll-target="#format-specific-considerations"><span class="header-section-number">17.8.2</span> Format-specific considerations</a></li>
+  <li><a href="#batch-saving-multiple-figures" id="toc-batch-saving-multiple-figures" class="nav-link" data-scroll-target="#batch-saving-multiple-figures"><span class="header-section-number">17.8.3</span> Batch Saving Multiple Figures</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../data-analysis/visualization/index.html">Visualization and Research Output</a></li><li class="breadcrumb-item"><a href="../../data-analysis/visualization/index.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Visualization</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Data Visualization</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Effective visualization is essential in empirical finance. A well-crafted plot can reveal patterns in returns, expose outliers in trading data, or communicate regression results more clearly than pages of tables. This chapter introduces the core tools for creating publication-quality figures in Python: <a href="https://matplotlib.org/">matplotlib</a> for fine-grained control and <a href="https://seaborn.pydata.org/index.html">seaborn</a> for elegant statistical graphics.</p>
+<p>We’ll focus on practical skills: understanding matplotlib’s architecture, using seaborn for exploratory analysis, and creating the kinds of plots you’ll need for academic papers—time series of stock prices and returns, distribution plots, and regression diagnostics. We’ll also cover how to export figures that meet journal standards for resolution and formatting.</p>
+<section id="principles-of-effective-data-visualization" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="principles-of-effective-data-visualization"><span class="header-section-number">17.1</span> Principles of Effective Data Visualization</h2>
+<p>Before diving into the technical tools, it’s worth considering what makes a visualization effective. The purpose of data visualization is to communicate information clearly and honestly. A good figure should reveal patterns in your data, support the conclusions you draw, and help your audience understand complex relationships quickly.</p>
+<p>When creating visualizations for academic papers, keep these principles in mind:</p>
+<ul>
+<li><strong>Clarity over decoration</strong>: Resist the temptation to add visual flourishes that don’t convey information. Simple, clean figures are easier to interpret and reproduce.</li>
+<li><strong>Appropriate precision</strong>: Show uncertainty when it exists. Error bars, confidence intervals, and shaded regions can communicate the reliability of your estimates.</li>
+<li><strong>Honest scales</strong>: Start axes at zero when comparing magnitudes, use consistent scales across panels, and avoid truncating axes in ways that exaggerate differences.</li>
+<li><strong>Accessibility</strong>: Choose color palettes that remain distinguishable for colorblind readers, and ensure your figures are interpretable in grayscale for readers who print papers.</li>
+</ul>
+<p>The tools we’ll cover in this chapter—matplotlib, pandas, and seaborn—give you the technical ability to create any visualization you need. The principles above will help you decide what to create and how to make it effective.</p>
+<section id="recommended-additional-readings" class="level3" data-number="17.1.1">
+<h3 data-number="17.1.1" class="anchored" data-anchor-id="recommended-additional-readings"><span class="header-section-number">17.1.1</span> Recommended additional readings</h3>
+<p><span class="citation" data-cites="tufte2001visual">Tufte (<a href="../quarto/index.html#ref-tufte2001visual" role="doc-biblioref">2001</a>)</span> established foundational principles for statistical graphics that remain influential today. His concept of <em>data-ink ratio</em>—the proportion of a graphic’s ink devoted to non-redundant display of data—encourages removing unnecessary visual elements (what he calls “chartjunk”) that distract from the data itself. While modern digital displays have made some of these concerns less pressing, the underlying principle holds: every visual element should serve a purpose.</p>
+<p><span class="citation" data-cites="knaflic2015storytelling">Knaflic (<a href="../quarto/index.html#ref-knaflic2015storytelling" role="doc-biblioref">2015</a>)</span> offers a more practical, business-oriented perspective on data visualization. Her framework emphasizes understanding your audience, choosing the right visual for your message, and eliminating clutter. She advocates for thoughtful use of pre-attentive attributes—visual properties like color, size, and position that our brains process almost instantly—to guide attention to the most important parts of your figure. For instance, using a single accent color to highlight a key data series while keeping everything else in muted gray immediately draws the viewer’s eye to what matters most.</p>
+<p><span class="citation" data-cites="wilke2019fundamentals">Wilke (<a href="../quarto/index.html#ref-wilke2019fundamentals" role="doc-biblioref">2019</a>)</span> provides comprehensive coverage of visualization types and when to use them. His book is particularly useful for understanding which plot types work best for different kinds of data: histograms and density plots for distributions, scatter plots for relationships, line plots for trends over time, and so on. He also addresses practical concerns like choosing color palettes that work for colorblind readers and in grayscale printing.</p>
+<p><span class="citation" data-cites="rougier2021scientific">Rougier (<a href="../quarto/index.html#ref-rougier2021scientific" role="doc-biblioref">2021</a>)</span> is a comprehensive guide to scientific visualization with Python and matplotlib. The book covers everything from basic plotting to advanced techniques for creating publication-quality figures, with a focus on the needs of researchers and scientists. It is freely available online at <a href="https://github.com/rougier/scientific-visualization-book" class="uri">https://github.com/rougier/scientific-visualization-book</a>.</p>
+</section>
+</section>
+<section id="matplotlib-fundamentals" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="matplotlib-fundamentals"><span class="header-section-number">17.2</span> Matplotlib Fundamentals</h2>
+<p>Matplotlib is the foundation of Python’s visualization ecosystem. While higher-level libraries like seaborn provide convenient interfaces, understanding matplotlib’s core concepts gives you the flexibility to create any visualization you need. For more details, see the <a href="https://matplotlib.org/stable/users/index">Matplotlib User Guide</a>.</p>
+<section id="the-figure-and-axes-architecture" class="level3" data-number="17.2.1">
+<h3 data-number="17.2.1" class="anchored" data-anchor-id="the-figure-and-axes-architecture"><span class="header-section-number">17.2.1</span> The Figure and Axes Architecture</h3>
+<p>Matplotlib organizes plots into a hierarchy:</p>
+<ul>
+<li>The <strong>Figure</strong> is the top-level container—the entire window or page where your plot lives</li>
+<li>Each figure contains one or more <strong>Axes</strong> objects—these are the individual plots (despite the name, an Axes is a plot, not just the x and y axes)</li>
+<li>Each Axes has x and y axis objects, titles, labels, and the actual plotted data</li>
+</ul>
+<p>This separation gives you precise control over layout and appearance.</p>
+<div id="a9844821" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a figure and a single axes</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">5</span>))</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sin(x)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot on the axes</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y, linewidth<span class="op">=</span><span class="dv">2</span>, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Returns'</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Basic Time Series Plot'</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-2-output-1.png" width="683" height="449" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The pattern <code>fig, ax = plt.subplots()</code> is the standard way to start a plot. It creates both the figure and axes explicitly, giving you handles to customize each component.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Explicit vs.&nbsp;Implicit Interface
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matplotlib has two interfaces: the <strong>pyplot</strong> interface (e.g., <code>plt.plot()</code>) and the <strong>object-oriented</strong> interface (e.g., <code>ax.plot()</code>). The pyplot interface is convenient for quick plots but maintains hidden state. For publication-quality work, prefer the object-oriented interface—it’s more explicit and gives you finer control.</p>
+</div>
+</div>
+</section>
+<section id="multiple-subplots" class="level3" data-number="17.2.2">
+<h3 data-number="17.2.2" class="anchored" data-anchor-id="multiple-subplots"><span class="header-section-number">17.2.2</span> Multiple Subplots</h3>
+<p>Financial analysis often requires comparing multiple series. You can create multiple axes in a grid:</p>
+<div id="e57c025b" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a 2x2 grid of plots</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample financial data</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> np.random.normal(<span class="fl">0.001</span>, <span class="fl">0.02</span>, <span class="dv">252</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> np.exp(np.cumsum(returns))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>volume <span class="op">=</span> np.random.lognormal(<span class="dv">15</span>, <span class="fl">0.5</span>, <span class="dv">252</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot on each subplot</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].plot(prices)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">'Price'</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].set_ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].plot(returns)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_title(<span class="st">'Returns'</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>, <span class="dv">1</span>].set_ylabel(<span class="st">'Return'</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].hist(returns, bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">'Return Distribution'</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].set_xlabel(<span class="st">'Return'</span>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].bar(<span class="bu">range</span>(<span class="bu">len</span>(volume[:<span class="dv">20</span>])), volume[:<span class="dv">20</span>])</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_title(<span class="st">'Volume (First 20 Days)'</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">1</span>].set_xlabel(<span class="st">'Day'</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-3-output-1.png" width="955" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Always call <code>tight_layout()</code>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <code>tight_layout()</code> function automatically adjusts spacing to prevent labels from overlapping or being cut off. It’s good practice to call it before <code>plt.show()</code> or <code>plt.savefig()</code>.</p>
+</div>
+</div>
+</section>
+<section id="common-plot-types" class="level3" data-number="17.2.3">
+<h3 data-number="17.2.3" class="anchored" data-anchor-id="common-plot-types"><span class="header-section-number">17.2.3</span> Common Plot Types</h3>
+<p>Matplotlib provides methods for all standard plot types. Here we demonstrate the most common ones.</p>
+<p><strong>Line plots</strong> are the workhorse of time-series visualization:</p>
+<div id="b87dd544" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">4</span>, <span class="dv">50</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="op">=</span> np.exp(<span class="op">-</span>x) <span class="op">*</span> np.cos(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> x)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>y2 <span class="op">=</span> np.exp(<span class="op">-</span>x)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y1, <span class="st">'b-'</span>, label<span class="op">=</span><span class="st">'Oscillating'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y2, <span class="st">'r--'</span>, label<span class="op">=</span><span class="st">'Decay'</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Line Plot'</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-4-output-1.png" width="507" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Scatter plots</strong> show relationships between two variables:</p>
+<div id="1517b1bd" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y1 <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.1</span>, <span class="bu">len</span>(x)), alpha<span class="op">=</span><span class="fl">0.6</span>, s<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Scatter Plot'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-5-output-1.png" width="516" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Bar plots</strong> compare discrete categories:</p>
+<div id="59ad37eb" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>categories <span class="op">=</span> [<span class="st">'A'</span>, <span class="st">'B'</span>, <span class="st">'C'</span>, <span class="st">'D'</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>values <span class="op">=</span> [<span class="dv">23</span>, <span class="dv">45</span>, <span class="dv">56</span>, <span class="dv">78</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>ax.bar(categories, values, color<span class="op">=</span><span class="st">'steelblue'</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Bar Plot'</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-6-output-1.png" width="492" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Histograms</strong> display the distribution of a single variable:</p>
+<div id="cca69e3b" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1000</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ax.hist(data, bins<span class="op">=</span><span class="dv">30</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Histogram'</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-7-output-1.png" width="500" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Filled area plots</strong> emphasize magnitude under a curve:</p>
+<div id="8edae93e" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>ax.fill_between(x, <span class="dv">0</span>, y1, alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'green'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y1, <span class="st">'g-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Filled Area'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-8-output-1.png" width="507" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Box plots</strong> summarize distributions and highlight outliers:</p>
+<div id="b17675d7" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">4</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data_groups <span class="op">=</span> [np.random.normal(<span class="dv">0</span>, std, <span class="dv">100</span>) <span class="cf">for</span> std <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">5</span>)]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>ax.boxplot(data_groups)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Box Plot'</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>ax.set_xticklabels([<span class="st">'Low'</span>, <span class="st">'Med'</span>, <span class="st">'High'</span>, <span class="st">'V.High'</span>])</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-9-output-1.png" width="507" height="357" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="customizing-appearance" class="level3" data-number="17.2.4">
+<h3 data-number="17.2.4" class="anchored" data-anchor-id="customizing-appearance"><span class="header-section-number">17.2.4</span> Customizing Appearance</h3>
+<p>Professional figures require attention to fonts, colors, line styles, and legends:</p>
+<div id="764bee5c" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">9</span>, <span class="dv">5</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate multiple series</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>series <span class="op">=</span> {</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Asset A'</span>: np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> t) <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>),</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Asset B'</span>: np.cos(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> t) <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Asset C'</span>: <span class="fl">0.5</span> <span class="op">*</span> np.sin(<span class="dv">4</span> <span class="op">*</span> np.pi <span class="op">*</span> t) <span class="op">+</span> <span class="fl">0.1</span> <span class="op">*</span> np.random.randn(<span class="dv">100</span>),</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot with custom styles</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>colors <span class="op">=</span> [<span class="st">'#1f77b4'</span>, <span class="st">'#ff7f0e'</span>, <span class="st">'#2ca02c'</span>]</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>linestyles <span class="op">=</span> [<span class="st">'-'</span>, <span class="st">'--'</span>, <span class="st">'-.'</span>]</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (name, data), color, style <span class="kw">in</span> <span class="bu">zip</span>(series.items(), colors, linestyles):</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    ax.plot(t, data, label<span class="op">=</span>name, color<span class="op">=</span>color, linestyle<span class="op">=</span>style,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>            linewidth<span class="op">=</span><span class="dv">2</span>, alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Customize axes</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (years)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Cumulative Return'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Multi-Asset Performance'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Grid and legend</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">':'</span>, alpha<span class="op">=</span><span class="fl">0.6</span>)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper right'</span>, framealpha<span class="op">=</span><span class="fl">0.9</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Spine customization (remove top and right borders)</span></span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-10-output-1.png" width="750" height="452" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="plotting-with-pandas" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="plotting-with-pandas"><span class="header-section-number">17.3</span> Plotting with Pandas</h2>
+<p>For most data analysis work, the pandas <code>plot()</code> method is the most convenient way to create visualizations. It provides a simple interface that works directly on DataFrames and Series, automatically handling index values, column labels, and legends. Under the hood, pandas uses matplotlib, so everything you’ve learned about customizing figures still applies.</p>
+<section id="basic-plotting-with-series-and-dataframes" class="level3" data-number="17.3.1">
+<h3 data-number="17.3.1" class="anchored" data-anchor-id="basic-plotting-with-series-and-dataframes"><span class="header-section-number">17.3.1</span> Basic plotting with Series and DataFrames</h3>
+<p>When you call <code>plot()</code> on a pandas object, the index becomes the x-axis and the values become the y-axis:</p>
+<div id="cb8ff60f" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a simple time series</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">'2023-01-01'</span>, periods<span class="op">=</span><span class="dv">100</span>, freq<span class="op">=</span><span class="st">'D'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.Series(np.random.normal(<span class="fl">0.001</span>, <span class="fl">0.02</span>, <span class="dv">100</span>), index<span class="op">=</span>dates)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> (<span class="dv">1</span> <span class="op">+</span> returns).cumprod() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic plot - index is automatically used as x-axis</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>prices.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">'Stock Price'</span>)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-11-output-1.png" width="816" height="372" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With a DataFrame, each column becomes a separate line:</p>
+<div id="daca77f7" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create multi-asset DataFrame</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>returns_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Tech'</span>: np.random.normal(<span class="fl">0.0005</span>, <span class="fl">0.020</span>, <span class="dv">100</span>),</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Finance'</span>: np.random.normal(<span class="fl">0.0003</span>, <span class="fl">0.015</span>, <span class="dv">100</span>),</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Energy'</span>: np.random.normal(<span class="fl">0.0002</span>, <span class="fl">0.025</span>, <span class="dv">100</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>dates)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>prices_df <span class="op">=</span> (<span class="dv">1</span> <span class="op">+</span> returns_df).cumprod() <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co"># All columns plotted automatically with legend</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>prices_df.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">'Multi-Asset Prices'</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-12-output-1.png" width="816" height="372" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="integrating-with-matplotlib" class="level3" data-number="17.3.2">
+<h3 data-number="17.3.2" class="anchored" data-anchor-id="integrating-with-matplotlib"><span class="header-section-number">17.3.2</span> Integrating with matplotlib</h3>
+<p>The pandas <code>plot()</code> method returns a matplotlib Axes object, allowing you to combine the convenience of pandas with full matplotlib customization. You can also pass an existing Axes to plot on:</p>
+<div id="522c096d" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot on specific axes using the ax parameter</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>prices_df[<span class="st">'Tech'</span>].plot(ax<span class="op">=</span>axes[<span class="dv">0</span>], color<span class="op">=</span><span class="st">'steelblue'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Tech Sector'</span>)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Use the returned Axes for further customization</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> prices_df.plot(ax<span class="op">=</span>axes[<span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'All Sectors'</span>)</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">100</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-13-output-1.png" width="1142" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="plot-types" class="level3" data-number="17.3.3">
+<h3 data-number="17.3.3" class="anchored" data-anchor-id="plot-types"><span class="header-section-number">17.3.3</span> Plot types</h3>
+<p>The pandas <code>plot()</code> method supports many plot types via the <code>kind</code> parameter:</p>
+<div id="cb026c28" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Line plot (default)</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>prices_df.plot(ax<span class="op">=</span>axes[<span class="dv">0</span>, <span class="dv">0</span>], title<span class="op">=</span><span class="st">'Line Plot'</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Area plot</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>prices_df.plot(kind<span class="op">=</span><span class="st">'area'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>, <span class="dv">1</span>], alpha<span class="op">=</span><span class="fl">0.4</span>, title<span class="op">=</span><span class="st">'Area Plot'</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot - useful for comparing values at specific points</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>monthly_returns <span class="op">=</span> returns_df.resample(<span class="st">'ME'</span>).<span class="bu">sum</span>()</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>monthly_returns.iloc[<span class="op">-</span><span class="dv">6</span>:].plot(kind<span class="op">=</span><span class="st">'bar'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>, <span class="dv">0</span>], title<span class="op">=</span><span class="st">'Monthly Returns'</span>)</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].tick_params(axis<span class="op">=</span><span class="st">'x'</span>, rotation<span class="op">=</span><span class="dv">45</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram of returns</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>returns_df.plot(kind<span class="op">=</span><span class="st">'hist'</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>, <span class="dv">1</span>], bins<span class="op">=</span><span class="dv">30</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, title<span class="op">=</span><span class="st">'Return Distribution'</span>)</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-14-output-1.png" width="950" height="758" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="why-use-pandas-plotting" class="level3" data-number="17.3.4">
+<h3 data-number="17.3.4" class="anchored" data-anchor-id="why-use-pandas-plotting"><span class="header-section-number">17.3.4</span> Why use pandas plotting?</h3>
+<p>For working with financial data in DataFrames, pandas plotting offers several advantages:</p>
+<ul>
+<li><strong>DateTime index handling</strong>: When your index is a DatetimeIndex, pandas automatically formats dates on the x-axis and handles gaps appropriately.</li>
+<li><strong>Column awareness</strong>: Each column becomes a separate series with automatic legend entries based on column names.</li>
+<li><strong>Less boilerplate</strong>: Common operations like creating legends and setting labels require less code.</li>
+<li><strong>Direct integration</strong>: You can chain plotting with other pandas operations like <code>resample()</code>, <code>groupby()</code>, and <code>rolling()</code>.</li>
+</ul>
+<p>When you need more control than pandas provides, you can always drop down to the matplotlib API by getting the Axes object and modifying it directly.</p>
+</section>
+</section>
+<section id="seaborn-for-exploratory-analysis" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="seaborn-for-exploratory-analysis"><span class="header-section-number">17.4</span> Seaborn for Exploratory Analysis</h2>
+<p>Seaborn is a statistical visualization library built on top of matplotlib. It provides a higher-level interface for creating attractive and informative graphics, with particular strengths in visualizing distributions and relationships in data. Seaborn integrates closely with pandas DataFrames, making it natural to visualize data directly from your analysis workflow. For a comprehensive introduction to seaborn’s capabilities, see <a href="https://seaborn.pydata.org/tutorial/introduction.html">An introduction to seaborn</a>.</p>
+<section id="distribution-plots" class="level3" data-number="17.4.1">
+<h3 data-number="17.4.1" class="anchored" data-anchor-id="distribution-plots"><span class="header-section-number">17.4.1</span> Distribution Plots</h3>
+<p>Understanding the distribution of returns or other financial variables is fundamental:</p>
+<div id="8b2824e2" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seaborn style</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"whitegrid"</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate sample data</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">500</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'returns'</span>: np.concatenate([</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>        np.random.normal(<span class="fl">0.001</span>, <span class="fl">0.015</span>, n),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>        np.random.normal(<span class="fl">0.001</span>, <span class="fl">0.025</span>, n)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'market'</span>: np.concatenate([</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        [<span class="st">'Bull'</span>] <span class="op">*</span> n,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        [<span class="st">'Bear'</span>] <span class="op">*</span> n</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Create distribution plots</span></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">3</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">4</span>))</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Histogram with KDE</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'returns'</span>, kde<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>])</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Histogram with Kernel Density'</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Daily Returns'</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare distributions across groups</span></span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>sns.histplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'returns'</span>, hue<span class="op">=</span><span class="st">'market'</span>, kde<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>             alpha<span class="op">=</span><span class="fl">0.5</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Returns by Market Regime'</span>)</span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Daily Returns'</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Violin plot for detailed distribution comparison</span></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a>sns.violinplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'market'</span>, y<span class="op">=</span><span class="st">'returns'</span>, ax<span class="op">=</span>axes[<span class="dv">2</span>])</span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_title(<span class="st">'Distribution Comparison'</span>)</span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">2</span>].set_ylabel(<span class="st">'Daily Returns'</span>)</span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-15-output-1.png" width="1334" height="373" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Seaborn automatically handles many details: choosing appropriate bin sizes, computing kernel density estimates, and creating legends for grouped data.</p>
+</section>
+<section id="relationship-plots" class="level3" data-number="17.4.2">
+<h3 data-number="17.4.2" class="anchored" data-anchor-id="relationship-plots"><span class="header-section-number">17.4.2</span> Relationship Plots</h3>
+<p>Exploring relationships between variables is central to finance research:</p>
+<div id="e897fa00" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate correlated data</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">200</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>market_returns <span class="op">=</span> np.random.normal(<span class="fl">0.001</span>, <span class="fl">0.02</span>, n)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>stock_returns <span class="op">=</span> <span class="fl">0.7</span> <span class="op">*</span> market_returns <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.015</span>, n)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>size <span class="op">=</span> np.random.choice([<span class="st">'Small'</span>, <span class="st">'Large'</span>], n)</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Market'</span>: market_returns,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Stock'</span>: stock_returns,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Size'</span>: size</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot with regression line</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Basic regression plot</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'Market'</span>, y<span class="op">=</span><span class="st">'Stock'</span>, ax<span class="op">=</span>axes[<span class="dv">0</span>],</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>            scatter_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.5</span>}, line_kws<span class="op">=</span>{<span class="st">'color'</span>: <span class="st">'red'</span>})</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_title(<span class="st">'Stock vs. Market Returns'</span>)</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_xlabel(<span class="st">'Market Return'</span>)</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">0</span>].set_ylabel(<span class="st">'Stock Return'</span>)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Grouped by category</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'Market'</span>, y<span class="op">=</span><span class="st">'Stock'</span>, hue<span class="op">=</span><span class="st">'Size'</span>,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>                style<span class="op">=</span><span class="st">'Size'</span>, s<span class="op">=</span><span class="dv">80</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, ax<span class="op">=</span>axes[<span class="dv">1</span>])</span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_title(<span class="st">'Returns by Firm Size'</span>)</span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_xlabel(<span class="st">'Market Return'</span>)</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>axes[<span class="dv">1</span>].set_ylabel(<span class="st">'Stock Return'</span>)</span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-16-output-1.png" width="1142" height="470" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>regplot</code> function automatically fits and displays a regression line with confidence interval—perfect for visualizing CAPM-style relationships.</p>
+</section>
+<section id="pair-plots-and-correlation" class="level3" data-number="17.4.3">
+<h3 data-number="17.4.3" class="anchored" data-anchor-id="pair-plots-and-correlation"><span class="header-section-number">17.4.3</span> Pair Plots and Correlation</h3>
+<p>When exploring multiple variables simultaneously, pair plots provide a comprehensive overview:</p>
+<div id="faafe494" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate multi-asset data</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">300</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>cov <span class="op">=</span> [[<span class="fl">0.0004</span>, <span class="fl">0.0002</span>, <span class="fl">0.0001</span>],</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>       [<span class="fl">0.0002</span>, <span class="fl">0.0006</span>, <span class="fl">0.00015</span>],</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       [<span class="fl">0.0001</span>, <span class="fl">0.00015</span>, <span class="fl">0.0005</span>]]</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> np.random.multivariate_normal([<span class="fl">0.001</span>, <span class="fl">0.0008</span>, <span class="fl">0.0012</span>], cov, n)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.DataFrame(returns, columns<span class="op">=</span>[<span class="st">'Tech'</span>, <span class="st">'Finance'</span>, <span class="st">'Energy'</span>])</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>data[<span class="st">'Period'</span>] <span class="op">=</span> np.random.choice([<span class="st">'Q1'</span>, <span class="st">'Q2'</span>], n)</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Create pair plot</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>pairplot <span class="op">=</span> sns.pairplot(data, hue<span class="op">=</span><span class="st">'Period'</span>, diag_kind<span class="op">=</span><span class="st">'kde'</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>                         plot_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.6</span>, <span class="st">'s'</span>: <span class="dv">30</span>},</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>                         diag_kws<span class="op">=</span>{<span class="st">'alpha'</span>: <span class="fl">0.7</span>})</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>pairplot.fig.suptitle(<span class="st">'Multi-Asset Return Relationships'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-17-output-1.png" width="784" height="740" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Pair plots show all pairwise relationships in a single figure—the diagonal shows marginal distributions, while off-diagonal panels show scatter plots.</p>
+</section>
+<section id="heatmaps-for-correlation-matrices" class="level3" data-number="17.4.4">
+<h3 data-number="17.4.4" class="anchored" data-anchor-id="heatmaps-for-correlation-matrices"><span class="header-section-number">17.4.4</span> Heatmaps for Correlation Matrices</h3>
+<p>Correlation matrices are ubiquitous in portfolio analysis:</p>
+<div id="5cda238b" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate larger dataset</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="dv">250</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>assets <span class="op">=</span> [<span class="st">'Tech'</span>, <span class="st">'Finance'</span>, <span class="st">'Energy'</span>, <span class="st">'Healthcare'</span>, <span class="st">'Consumer'</span>]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>cov <span class="op">=</span> np.array([</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.0400</span>, <span class="fl">0.0120</span>, <span class="fl">0.0080</span>, <span class="fl">0.0100</span>, <span class="fl">0.0150</span>],</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.0120</span>, <span class="fl">0.0300</span>, <span class="fl">0.0100</span>, <span class="fl">0.0080</span>, <span class="fl">0.0090</span>],</span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.0080</span>, <span class="fl">0.0100</span>, <span class="fl">0.0350</span>, <span class="fl">0.0070</span>, <span class="fl">0.0060</span>],</span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.0100</span>, <span class="fl">0.0080</span>, <span class="fl">0.0070</span>, <span class="fl">0.0250</span>, <span class="fl">0.0110</span>],</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    [<span class="fl">0.0150</span>, <span class="fl">0.0090</span>, <span class="fl">0.0060</span>, <span class="fl">0.0110</span>, <span class="fl">0.0280</span>]</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> np.random.multivariate_normal(np.zeros(<span class="dv">5</span>), cov, n)</span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(returns, columns<span class="op">=</span>assets)</span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute correlation matrix</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>corr <span class="op">=</span> df.corr()</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Create heatmap</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">6</span>))</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">'.3f'</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>,</span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>            center<span class="op">=</span><span class="dv">0</span>, square<span class="op">=</span><span class="va">True</span>, linewidths<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>            cbar_kws<span class="op">=</span>{<span class="st">'label'</span>: <span class="st">'Correlation'</span>},</span>
+<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>            ax<span class="op">=</span>ax)</span>
+<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Asset Return Correlations'</span>, fontsize<span class="op">=</span><span class="dv">13</span>, pad<span class="op">=</span><span class="dv">15</span>)</span>
+<span id="cb17-26"><a href="#cb17-26" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb17-27"><a href="#cb17-27" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-18-output-1.png" width="641" height="567" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The <code>annot=True</code> parameter displays correlation coefficients directly on the heatmap—essential for publication-quality correlation tables.</p>
+</section>
+</section>
+<section id="figure-design-for-academic-papers" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="figure-design-for-academic-papers"><span class="header-section-number">17.5</span> Figure Design for Academic Papers</h2>
+<p>Academic journals have specific requirements for figures, and following these guidelines ensures your work meets professional standards and is accepted without revision requests for figure quality. Beyond technical requirements, well-designed figures communicate your results more effectively and make your paper more readable. Taking the time to polish your figures is one of the highest-return investments you can make when preparing a manuscript.</p>
+<section id="figure-sizing-and-resolution" class="level3" data-number="17.5.1">
+<h3 data-number="17.5.1" class="anchored" data-anchor-id="figure-sizing-and-resolution"><span class="header-section-number">17.5.1</span> Figure sizing and resolution</h3>
+<p>For professional-looking figures, use vector formats (PDF, SVG) whenever possible since they scale perfectly at any size. When vector formats aren’t suitable—for example, with complex scatter plots containing thousands of points—use raster formats (PNG) with a minimum resolution of 300 DPI. Most journals specify figure widths: typically 3.5 inches for single-column figures and 7 inches for figures spanning two columns. Set your figure size in inches when creating the plot, so fonts and line weights appear at their intended size in the final document.</p>
+<div id="5fb796b2" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set publication-ready figure size</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))  <span class="co"># 7 inches wide for double-column</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a clean, professional plot</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> np.sin(x) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">/</span><span class="dv">5</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y, <span class="st">'k-'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>ax.fill_between(x, <span class="dv">0</span>, y, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (years)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Cumulative Abnormal Return'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Event Study: Post-Announcement Performance'</span>,</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>             fontsize<span class="op">=</span><span class="dv">12</span>, fontweight<span class="op">=</span><span class="st">'normal'</span>)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean spines</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Subtle grid</span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">':'</span>, alpha<span class="op">=</span><span class="fl">0.4</span>, linewidth<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-19-output-1.png" width="662" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="time-series-plots" class="level2" data-number="17.6">
+<h2 data-number="17.6" class="anchored" data-anchor-id="time-series-plots"><span class="header-section-number">17.6</span> Time-Series Plots</h2>
+<p>Time series are fundamental to finance. When your data has a DatetimeIndex, pandas handles most of the date formatting automatically, making it the preferred approach for time-series visualization.</p>
+<section id="plotting-stock-prices" class="level3" data-number="17.6.1">
+<h3 data-number="17.6.1" class="anchored" data-anchor-id="plotting-stock-prices"><span class="header-section-number">17.6.1</span> Plotting stock prices</h3>
+<p>With a DatetimeIndex, plotting stock prices is straightforward using pandas’ <code>plot()</code> method:</p>
+<div id="5639f949" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate realistic stock price data</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start<span class="op">=</span><span class="st">'2020-01-01'</span>, end<span class="op">=</span><span class="st">'2023-12-31'</span>, freq<span class="op">=</span><span class="st">'B'</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(dates)</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>daily_returns <span class="op">=</span> np.random.normal(<span class="fl">0.0003</span>, <span class="fl">0.015</span>, n)</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> <span class="dv">100</span> <span class="op">*</span> np.exp(np.cumsum(daily_returns))</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create DataFrame with DatetimeIndex</span></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({<span class="st">'Price'</span>: prices}, index<span class="op">=</span>dates)</span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>df.index.name <span class="op">=</span> <span class="st">'Date'</span></span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Simple plot using pandas - dates are handled automatically</span></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Price'</span>].plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), title<span class="op">=</span><span class="st">'Stock Price: 2020-2023'</span>)</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Price ($)'</span>)</span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-20-output-1.png" width="813" height="461" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="returns-over-time" class="level3" data-number="17.6.2">
+<h3 data-number="17.6.2" class="anchored" data-anchor-id="returns-over-time"><span class="header-section-number">17.6.2</span> Returns over time</h3>
+<p>When visualizing financial performance over time, you can plot either prices or cumulative returns—both convey similar information, but cumulative returns are normalized to start at an arbitrary value (typically 0% or 1), making it easier to compare assets with different price levels.</p>
+<p><strong>Cumulative returns</strong> show the total growth of an investment over time:</p>
+<div id="30ecda46" class="cell" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate cumulative returns (starting from 0)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Return'</span>] <span class="op">=</span> df[<span class="st">'Price'</span>].pct_change()</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Cumulative_Return'</span>] <span class="op">=</span> (<span class="dv">1</span> <span class="op">+</span> df[<span class="st">'Return'</span>]).cumprod() <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot cumulative returns</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df[<span class="st">'Cumulative_Return'</span>].plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), title<span class="op">=</span><span class="st">'Cumulative Returns: 2020-2023'</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(plt.FuncFormatter(<span class="kw">lambda</span> y, _: <span class="ss">f'</span><span class="sc">{</span>y<span class="sc">:.0%}</span><span class="ss">'</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Cumulative Return'</span>)</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-21-output-1.png" width="824" height="461" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Daily returns</strong> show the day-to-day variation in returns. This type of plot is typically not very informative on its own—individual daily returns appear as noise—but it can be useful when you want to highlight the volatility of returns or identify periods of unusual activity:</p>
+<div id="ac5a7f6d" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot daily returns</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df[<span class="st">'Return'</span>].plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>), title<span class="op">=</span><span class="st">'Daily Returns'</span>, alpha<span class="op">=</span><span class="fl">0.7</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">0</span>, color<span class="op">=</span><span class="st">'black'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, linewidth<span class="op">=</span><span class="fl">0.8</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(plt.FuncFormatter(<span class="kw">lambda</span> y, _: <span class="ss">f'</span><span class="sc">{</span>y<span class="sc">:.1%}</span><span class="ss">'</span>))</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Daily Return'</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-22-output-1.png" width="825" height="387" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="rolling-statistics" class="level3" data-number="17.6.3">
+<h3 data-number="17.6.3" class="anchored" data-anchor-id="rolling-statistics"><span class="header-section-number">17.6.3</span> Rolling statistics</h3>
+<p>Visualizing rolling windows helps identify time-varying patterns like changes in volatility regimes:</p>
+<div id="960893d2" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate rolling statistics</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> <span class="dv">60</span>  <span class="co"># 60 trading days (approximately 3 months)</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Rolling_Std'</span>] <span class="op">=</span> df[<span class="st">'Return'</span>].rolling(window<span class="op">=</span>window).std()</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Annualize the rolling volatility</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Annualized_Vol'</span>] <span class="op">=</span> df[<span class="st">'Rolling_Std'</span>] <span class="op">*</span> np.sqrt(<span class="dv">252</span>)</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot rolling volatility</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> df[<span class="st">'Annualized_Vol'</span>].plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>), title<span class="op">=</span><span class="st">'Rolling Volatility (60-day window)'</span>,</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>                                color<span class="op">=</span><span class="st">'darkred'</span>, linewidth<span class="op">=</span><span class="fl">1.5</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>ax.fill_between(df.index, <span class="dv">0</span>, df[<span class="st">'Annualized_Vol'</span>], alpha<span class="op">=</span><span class="fl">0.3</span>, color<span class="op">=</span><span class="st">'darkred'</span>)</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>ax.yaxis.set_major_formatter(plt.FuncFormatter(<span class="kw">lambda</span> y, _: <span class="ss">f'</span><span class="sc">{</span>y<span class="sc">:.0%}</span><span class="ss">'</span>))</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Annualized Volatility'</span>)</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-23-output-1.png" width="817" height="461" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="multiple-series-comparison" class="level3" data-number="17.6.4">
+<h3 data-number="17.6.4" class="anchored" data-anchor-id="multiple-series-comparison"><span class="header-section-number">17.6.4</span> Multiple series comparison</h3>
+<p>Comparing multiple assets or portfolios is common in finance. With pandas, plotting multiple columns is automatic:</p>
+<div id="dca82b41" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate multiple asset returns</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">123</span>)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(start<span class="op">=</span><span class="st">'2020-01-01'</span>, end<span class="op">=</span><span class="st">'2023-12-31'</span>, freq<span class="op">=</span><span class="st">'B'</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>n <span class="op">=</span> <span class="bu">len</span>(dates)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>returns_df <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Tech'</span>: np.random.normal(<span class="fl">0.0005</span>, <span class="fl">0.020</span>, n),</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Finance'</span>: np.random.normal(<span class="fl">0.0003</span>, <span class="fl">0.015</span>, n),</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Energy'</span>: np.random.normal(<span class="fl">0.0002</span>, <span class="fl">0.025</span>, n)</span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>}, index<span class="op">=</span>dates)</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate cumulative returns (wealth indices starting at 1)</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>cumulative <span class="op">=</span> (<span class="dv">1</span> <span class="op">+</span> returns_df).cumprod()</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot all columns with automatic legend</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> cumulative.plot(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>), title<span class="op">=</span><span class="st">'Multi-Asset Performance Comparison'</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>ax.axhline(<span class="dv">1</span>, color<span class="op">=</span><span class="st">'gray'</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Cumulative Return (Index)'</span>)</span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-24-output-1.png" width="808" height="517" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="styles-and-color-choices" class="level2" data-number="17.7">
+<h2 data-number="17.7" class="anchored" data-anchor-id="styles-and-color-choices"><span class="header-section-number">17.7</span> Styles and Color Choices</h2>
+<p>Consistent styling across all figures in a paper creates a professional, polished appearance. Matplotlib provides several mechanisms for controlling the visual style of your plots, from built-in style sheets to fine-grained control over individual parameters. Equally important is choosing colors that work for all readers, including those with color vision deficiencies, and that reproduce well in both color and grayscale.</p>
+<section id="using-style-sheets" class="level3" data-number="17.7.1">
+<h3 data-number="17.7.1" class="anchored" data-anchor-id="using-style-sheets"><span class="header-section-number">17.7.1</span> Using style sheets</h3>
+<p>Matplotlib’s style system lets you apply consistent formatting across all figures with a single command. The library includes many built-in styles, and you can create custom style files to match specific journal requirements or personal preferences. Using style sheets ensures that fonts, line weights, grid styles, and other visual elements remain consistent without manually setting each parameter.</p>
+<div id="b65782ca" class="cell" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Available styles</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Available styles:"</span>, plt.style.available[:<span class="dv">10</span>])  <span class="co"># Show first 10</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Use a clean, publication-ready style</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'seaborn-v0_8-paper'</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter with regression line</span></span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">50</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> <span class="dv">2</span><span class="op">*</span>x <span class="op">+</span> np.random.normal(<span class="dv">0</span>, <span class="fl">0.5</span>, <span class="dv">50</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>ax.scatter(x, y, alpha<span class="op">=</span><span class="fl">0.6</span>, s<span class="op">=</span><span class="dv">50</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a>ax.plot(np.sort(x), <span class="dv">2</span><span class="op">*</span>np.sort(x), <span class="st">'r--'</span>, alpha<span class="op">=</span><span class="fl">0.8</span>, label<span class="op">=</span><span class="st">'Fitted line'</span>)</span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Factor'</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Return'</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Factor Exposure'</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-20"><a href="#cb24-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb24-21"><a href="#cb24-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb24-22"><a href="#cb24-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-23"><a href="#cb24-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset to default</span></span>
+<span id="cb24-24"><a href="#cb24-24" aria-hidden="true" tabindex="-1"></a>plt.style.use(<span class="st">'default'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Available styles: ['Solarize_Light2', '_classic_test_patch', '_mpl-gallery', '_mpl-gallery-nogrid', 'bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot']</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-25-output-2.png" width="661" height="374" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>For consistency across a paper, consider creating a custom style file or setting <code>rcParams</code> at the start of your analysis script. Seaborn also provides its own style settings through <code>sns.set_style()</code> and <code>sns.set_context()</code>, which can be useful when combining seaborn and matplotlib plots.</p>
+</section>
+<section id="color-schemes-for-accessibility" class="level3" data-number="17.7.2">
+<h3 data-number="17.7.2" class="anchored" data-anchor-id="color-schemes-for-accessibility"><span class="header-section-number">17.7.2</span> Color schemes for accessibility</h3>
+<p>Effective color choices enhance clarity and ensure your figures are accessible to all readers. About 8% of men and 0.5% of women have some form of color vision deficiency, most commonly affecting the ability to distinguish red from green. Choosing colorblind-friendly palettes from the start means you won’t need to redesign figures later. Both matplotlib and seaborn offer built-in color palettes designed with accessibility in mind.</p>
+<div id="ab90da37" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Colorblind-friendly palette</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>colors_cb <span class="op">=</span> [<span class="st">'#0173B2'</span>, <span class="st">'#DE8F05'</span>, <span class="st">'#029E73'</span>, <span class="st">'#CC78BC'</span>, <span class="st">'#CA9161'</span>]</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple lines with accessible colors</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">2</span>, <span class="dv">100</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i, color <span class="kw">in</span> <span class="bu">enumerate</span>(colors_cb[:<span class="dv">3</span>]):</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> (i<span class="op">+</span><span class="dv">1</span>) <span class="op">*</span> t) <span class="op">*</span> np.exp(<span class="op">-</span>t<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    ax.plot(t, y, color<span class="op">=</span>color, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="ss">f'Portfolio </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time'</span>)</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Cumulative Return'</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Colorblind-Friendly Palette'</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>ax.legend()</span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-26-output-1.png" width="790" height="388" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Seaborn provides several colorblind-friendly palettes through <code>sns.color_palette()</code>, including <code>"colorblind"</code>, <code>"deep"</code>, and <code>"muted"</code>. For continuous data, prefer perceptually uniform colormaps like <code>"viridis"</code>, <code>"plasma"</code>, or <code>"cividis"</code> over rainbow colormaps like <code>"jet"</code>, which can create misleading visual gradients and reproduce poorly in grayscale.</p>
+</section>
+</section>
+<section id="exporting-publication-quality-figures" class="level2" data-number="17.8">
+<h2 data-number="17.8" class="anchored" data-anchor-id="exporting-publication-quality-figures"><span class="header-section-number">17.8</span> Exporting Publication-Quality Figures</h2>
+<p>The final step is saving your figures in formats suitable for journals and presentations.</p>
+<section id="save-formats-and-settings" class="level3" data-number="17.8.1">
+<h3 data-number="17.8.1" class="anchored" data-anchor-id="save-formats-and-settings"><span class="header-section-number">17.8.1</span> Save Formats and Settings</h3>
+<p>Different output formats serve different purposes:</p>
+<div id="4efc5d69" class="cell" data-execution_count="26">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a publication-ready figure</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">7</span>, <span class="dv">4</span>))</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>x <span class="op">=</span> np.linspace(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">100</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>y1 <span class="op">=</span> np.sin(x) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">/</span><span class="dv">5</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>y2 <span class="op">=</span> np.cos(x) <span class="op">*</span> np.exp(<span class="op">-</span>x<span class="op">/</span><span class="dv">5</span>)</span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y1, <span class="st">'b-'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Strategy A'</span>)</span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>ax.plot(x, y2, <span class="st">'r--'</span>, linewidth<span class="op">=</span><span class="dv">2</span>, label<span class="op">=</span><span class="st">'Strategy B'</span>)</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>ax.fill_between(x, y1, y2, alpha<span class="op">=</span><span class="fl">0.2</span>, color<span class="op">=</span><span class="st">'gray'</span>)</span>
+<span id="cb27-11"><a href="#cb27-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-12"><a href="#cb27-12" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Time (years)'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb27-13"><a href="#cb27-13" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Return'</span>, fontsize<span class="op">=</span><span class="dv">11</span>)</span>
+<span id="cb27-14"><a href="#cb27-14" aria-hidden="true" tabindex="-1"></a>ax.set_title(<span class="st">'Strategy Performance Comparison'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb27-15"><a href="#cb27-15" aria-hidden="true" tabindex="-1"></a>ax.legend(loc<span class="op">=</span><span class="st">'upper right'</span>, framealpha<span class="op">=</span><span class="fl">0.9</span>)</span>
+<span id="cb27-16"><a href="#cb27-16" aria-hidden="true" tabindex="-1"></a>ax.grid(<span class="va">True</span>, alpha<span class="op">=</span><span class="fl">0.3</span>)</span>
+<span id="cb27-17"><a href="#cb27-17" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'top'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb27-18"><a href="#cb27-18" aria-hidden="true" tabindex="-1"></a>ax.spines[<span class="st">'right'</span>].set_visible(<span class="va">False</span>)</span>
+<span id="cb27-19"><a href="#cb27-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-20"><a href="#cb27-20" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb27-21"><a href="#cb27-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-22"><a href="#cb27-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Save in multiple formats (commented out to avoid file creation)</span></span>
+<span id="cb27-23"><a href="#cb27-23" aria-hidden="true" tabindex="-1"></a><span class="co"># High-resolution PNG for Word documents</span></span>
+<span id="cb27-24"><a href="#cb27-24" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('figure.png', dpi=300, bbox_inches='tight',</span></span>
+<span id="cb27-25"><a href="#cb27-25" aria-hidden="true" tabindex="-1"></a><span class="co">#             facecolor='white', edgecolor='none')</span></span>
+<span id="cb27-26"><a href="#cb27-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-27"><a href="#cb27-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Vector PDF for LaTeX documents (preferred for publications)</span></span>
+<span id="cb27-28"><a href="#cb27-28" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('figure.pdf', format='pdf', bbox_inches='tight')</span></span>
+<span id="cb27-29"><a href="#cb27-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-30"><a href="#cb27-30" aria-hidden="true" tabindex="-1"></a><span class="co"># SVG for web or further editing</span></span>
+<span id="cb27-31"><a href="#cb27-31" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('figure.svg', format='svg', bbox_inches='tight')</span></span>
+<span id="cb27-32"><a href="#cb27-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-33"><a href="#cb27-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Transparent background version</span></span>
+<span id="cb27-34"><a href="#cb27-34" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.savefig('figure_transparent.png', dpi=300, bbox_inches='tight',</span></span>
+<span id="cb27-35"><a href="#cb27-35" aria-hidden="true" tabindex="-1"></a><span class="co">#             transparent=True)</span></span>
+<span id="cb27-36"><a href="#cb27-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-37"><a href="#cb27-37" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-html/cell-27-output-1.png" width="689" height="388" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Best Practices for Saving Figures
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Use <code>bbox_inches='tight'</code></strong>: Automatically crops whitespace around the figure</li>
+<li><strong>Set <code>dpi=300</code></strong>: Ensures high quality for print (journals typically require 300-600 DPI)</li>
+<li><strong>Specify <code>facecolor='white'</code></strong>: Prevents transparent backgrounds in PNG files unless explicitly desired</li>
+<li><strong>Save as PDF for LaTeX</strong>: Vector formats scale perfectly and meet most journal requirements</li>
+<li><strong>Keep originals</strong>: Save a Python script or Jupyter notebook with the code to regenerate figures</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="format-specific-considerations" class="level3" data-number="17.8.2">
+<h3 data-number="17.8.2" class="anchored" data-anchor-id="format-specific-considerations"><span class="header-section-number">17.8.2</span> Format-specific considerations</h3>
+<p>Different output formats serve different purposes:</p>
+<ul>
+<li><strong>PDF (vector)</strong>: Best for publications. Vector formats scale infinitely without quality loss and produce small file sizes for simple plots. PDF is required or preferred by most journals.</li>
+<li><strong>PNG (raster)</strong>: Good for presentations and Word documents. PNG offers wide compatibility but has fixed resolution, so you should set <code>dpi=300</code> or higher for print quality. File sizes can be larger for complex plots.</li>
+<li><strong>SVG (vector)</strong>: Best for web and further editing. SVG files can be edited in vector graphics software like Inkscape or Adobe Illustrator, and they render well in modern browsers. However, SVG is not always accepted by journals.</li>
+</ul>
+</section>
+<section id="batch-saving-multiple-figures" class="level3" data-number="17.8.3">
+<h3 data-number="17.8.3" class="anchored" data-anchor-id="batch-saving-multiple-figures"><span class="header-section-number">17.8.3</span> Batch Saving Multiple Figures</h3>
+<p>When creating many figures for a paper, automate the export process:</p>
+<div id="2d0bcc27" class="cell" data-execution_count="27">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Create and save multiple figures programmatically</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_figure(fig, filename, formats<span class="op">=</span>[<span class="st">'pdf'</span>, <span class="st">'png'</span>]):</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Save figure in multiple formats with consistent settings.</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="co">    fig : matplotlib.figure.Figure</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a><span class="co">        The figure to save</span></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co">    filename : str</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a><span class="co">        Base filename (without extension)</span></span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a><span class="co">    formats : list of str</span></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co">        List of formats to save ('pdf', 'png', 'svg')</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> fmt <span class="kw">in</span> formats:</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> fmt <span class="op">==</span> <span class="st">'png'</span>:</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>            <span class="co"># High-resolution PNG</span></span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>            fig.savefig(<span class="ss">f'</span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>fmt<span class="sc">}</span><span class="ss">'</span>, dpi<span class="op">=</span><span class="dv">300</span>,</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>                       bbox_inches<span class="op">=</span><span class="st">'tight'</span>, facecolor<span class="op">=</span><span class="st">'white'</span>)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>            <span class="co"># Vector formats</span></span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>            fig.savefig(<span class="ss">f'</span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss">.</span><span class="sc">{</span>fmt<span class="sc">}</span><span class="ss">'</span>, <span class="bu">format</span><span class="op">=</span>fmt,</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>                       bbox_inches<span class="op">=</span><span class="st">'tight'</span>)</span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Saved </span><span class="sc">{</span>filename<span class="sc">}</span><span class="ss"> in formats: </span><span class="sc">{</span><span class="st">', '</span><span class="sc">.</span>join(formats)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage (commented to avoid file creation)</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a><span class="co"># fig1, ax1 = plt.subplots(figsize=(7, 4))</span></span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ax1.plot([1, 2, 3], [1, 4, 9])</span></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="co"># ax1.set_title('Figure 1: Results')</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="co"># save_figure(fig1, 'paper_figure_1', formats=['pdf', 'png'])</span></span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a><span class="co"># plt.close(fig1)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Figure Numbering and Organization
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For paper submissions:</p>
+<ol type="1">
+<li><strong>Name figures descriptively</strong>: Use names like <code>returns_distribution.pdf</code> rather than <code>fig1.pdf</code>. Avoid putting figure numbers in filenames—they cause friction when you reorder content.</li>
+<li><strong>Keep separate directories</strong>: Store figures in a <code>figures/</code> or <code>output/</code> directory</li>
+<li><strong>Version control</strong>: Commit your figure generation code, not the generated figures themselves. Output files can always be regenerated and clutter your repository.</li>
+<li><strong>Document parameters</strong>: Note DPI, dimensions, and any special requirements in your code</li>
+</ol>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-knaflic2015storytelling" class="csl-entry" role="listitem">
+Knaflic, Cole Nussbaumer. 2015. <em>Storytelling with Data: A Data Visualization Guide for Business Professionals</em>. Wiley.
+</div>
+<div id="ref-rougier2021scientific" class="csl-entry" role="listitem">
+Rougier, Nicolas P. 2021. <em>Scientific Visualization: Python + Matplotlib</em>.
+</div>
+<div id="ref-tufte2001visual" class="csl-entry" role="listitem">
+Tufte, Edward R. 2001. <em>The Visual Display of Quantitative Information</em>. 2nd ed. Graphics Press.
+</div>
+<div id="ref-wilke2019fundamentals" class="csl-entry" role="listitem">
+Wilke, Claus O. 2019. <em>Fundamentals of Data Visualization: A Primer on Making Informative and Compelling Figures</em>. 1st ed. Sebastopol, CA: O’Reilly Media.
+</div>
+</div>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        const annoteTargets = window.document.querySelectorAll('.code-annotation-anchor');
+        for (let i=0; i<annoteTargets.length; i++) {
+          const annoteTarget = annoteTargets[i];
+          const targetCell = annoteTarget.getAttribute("data-target-cell");
+          const targetAnnotation = annoteTarget.getAttribute("data-target-annotation");
+          const contentFn = () => {
+            const content = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+            if (content) {
+              const tipContent = content.cloneNode(true);
+              tipContent.classList.add("code-annotation-tip-content");
+              return tipContent.outerHTML;
+            }
+          }
+          const config = {
+            allowHTML: true,
+            content: contentFn,
+            onShow: (instance) => {
+              selectCodeLines(instance.reference);
+              instance.reference.classList.add('code-annotation-active');
+              window.tippy.hideAll();
+            },
+            onHide: (instance) => {
+              unselectCodeLines();
+              instance.reference.classList.remove('code-annotation-active');
+            },
+            maxWidth: 300,
+            delay: [50, 0],
+            duration: [200, 0],
+            offset: [5, 10],
+            arrow: true,
+            appendTo: function(el) {
+              return el.parentElement.parentElement.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'quarto',
+            placement: 'right',
+            popperOptions: {
+              modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  flipVariations: false, // true by default
+                  allowedAutoPlacements: ['right'],
+                  fallbackPlacements: ['right', 'top', 'top-start', 'top-end', 'bottom', 'bottom-start', 'bottom-end', 'left'],
+                },
+              },
+              {
+                name: 'preventOverflow',
+                options: {
+                  mainAxis: false,
+                  altAxis: false
+                }
+              }
+              ]        
+            }      
+          };
+          window.tippy(annoteTarget, config); 
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../data-analysis/joins/index.html" class="pagination-link" aria-label="Joins and Merges">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Joins and Merges</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../data-analysis/tables/index.html" class="pagination-link" aria-label="Tables for Research">
+        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Tables for Research</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://vincentgregoire.com">
+<p>© 2026 Vincent Grégoire</p>
+</a>
+  </li>  
+    <li class="nav-item">
+  - 
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+<p>Licensed under CC BY-NC-ND 4.0</p>
+</a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right">
+      &nbsp;
+    </div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
