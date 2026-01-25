@@ -11,7 +11,7 @@
 
   <meta name="author" content="Vincent Grégoire">
   <meta name="author" content="Saad Ali Khan">
-  <title>MATH60207 - Séance 2</title>
+  <title>MATH60230 - Séance 2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -201,7 +201,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH60207 - Séance 2</h1>
+  <h1 class="title">MATH60230 - Séance 2</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -358,13 +358,13 @@ Saad Ali Khan
 <section id="exceptions" class="slide level2">
 <h2>Exceptions</h2>
 <p>Les exceptions en Python se produisent lorsqu’il y a une erreur lors de l’exécution du code :</p>
-<div id="51972879" class="cell" data-execution_count="1">
+<div id="ccc79d55" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="bu">print</span>(<span class="dv">5</span> <span class="op">/</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">ZeroDivisionError</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[5], line 1</span>
+Cell <span class="ansi-green-fg">In[1], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(98,98,98)" class="ansi-yellow-bg">5</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">/</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">0</span>)
 
 <span class="ansi-red-fg">ZeroDivisionError</span>: division by zero</pre>
@@ -375,7 +375,7 @@ Cell <span class="ansi-green-fg">In[5], line 1</span>
 <section id="exceptions-2" class="slide level2">
 <h2>Exceptions (2)</h2>
 <p>Vous pouvez lever (<code>raise</code>) vos propres exceptions pour signaler les erreurs que vous détectez dans votre code :</p>
-<div id="b903812d" class="cell" data-execution_count="2">
+<div id="045c18b3" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>error <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb4-2"><a href=""></a><span class="cf">if</span> error:</span>
 <span id="cb4-3"><a href=""></a>    <span class="cf">raise</span> <span class="pp">Exception</span>(<span class="st">"Il y avait une erreur"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -383,7 +383,7 @@ Cell <span class="ansi-green-fg">In[5], line 1</span>
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">Exception</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[6], line 3</span>
+Cell <span class="ansi-green-fg">In[2], line 3</span>
 <span class="ansi-green-fg ansi-bold">      1</span> error <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">True</span>
 <span class="ansi-green-fg ansi-bold">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> error:
 <span class="ansi-green-fg">----&gt; 3</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">Exception</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Il y avait une erreur</span><span style="color:rgb(175,0,0)">"</span>)
@@ -396,7 +396,7 @@ Cell <span class="ansi-green-fg">In[6], line 3</span>
 <section id="exceptions-3" class="slide level2">
 <h2>Exceptions (3)</h2>
 <p>Parfois, il est utile d’attraper et de gérer les exceptions :</p>
-<div id="e0c70d73" class="cell" data-execution_count="3">
+<div id="2abbe8e5" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>x <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb5-2"><a href=""></a><span class="cf">try</span>:</span>
 <span id="cb5-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>
@@ -423,7 +423,7 @@ Tout va bien !</code></pre>
 <section id="exceptions-5" class="slide level2">
 <h2>Exceptions (5)</h2>
 <p>Il est préférable d’être aussi spécifique que possible lors de la capture des exceptions :</p>
-<div id="c4c0918a" class="cell" data-execution_count="4">
+<div id="1ac3ff40" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>x <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb7-2"><a href=""></a><span class="cf">try</span>:</span>
 <span id="cb7-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>

@@ -13,7 +13,7 @@
 
   <meta name="author" content="Vincent Grégoire">
   <meta name="author" content="Saad Ali Khan">
-  <title>MATH60207 - Lecture 3</title>
+  <title>MATH60230 - Lecture 3</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -219,7 +219,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH60207 - Lecture 3</h1>
+  <h1 class="title">MATH60230 - Lecture 3</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -465,7 +465,7 @@ Saad Ali Khan
 </section>
 <section id="detour-estimating-derivatives" class="slide level2">
 <h2>Detour: Estimating derivatives</h2>
-<div id="48b67409" class="cell" data-execution_count="1">
+<div id="edc52883" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -477,7 +477,7 @@ Saad Ali Khan
 </section>
 <section id="estimating-derivatives" class="slide level2">
 <h2>Estimating derivatives</h2>
-<div id="d49b542f" class="cell" data-execution_count="2">
+<div id="7a2c95de" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -490,14 +490,14 @@ Saad Ali Khan
 <section id="estimating-derivatives-numerically" class="slide level2">
 <h2>Estimating derivatives numerically</h2>
 <p>Consider a function to estimate the derivative of another function:</p>
-<div id="ceb5d18c" class="cell" data-execution_count="3">
+<div id="2b4de617" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> deriv(func, x, delta<span class="op">=</span><span class="fl">0.1</span>):</span>
 <span id="cb3-2"><a href=""></a>    y1 <span class="op">=</span> func(x <span class="op">+</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
 <span id="cb3-3"><a href=""></a>    y2 <span class="op">=</span> func(x <span class="op">-</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
 <span id="cb3-4"><a href=""></a>    <span class="cf">return</span> (y1 <span class="op">-</span> y2) <span class="op">/</span> delta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Suppose we have a function that computes the square of a number:</p>
-<div id="9c504fe5" class="cell" data-execution_count="4">
+<div id="edd07be7" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> square(x):</span>
 <span id="cb4-2"><a href=""></a>    <span class="cf">return</span> x <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -505,13 +505,13 @@ Saad Ali Khan
 <section id="example-2" class="slide level2">
 <h2>Example (2)</h2>
 <p>You can now pass <code>square</code> as an argument to <code>deriv</code>:</p>
-<div id="f1860190" class="cell" data-execution_count="5">
+<div id="51349705" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>deriv(square, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>7.999999999999119</code></pre>
 </div>
 </div>
-<div id="878ef046" class="cell" data-execution_count="6">
+<div id="829157e6" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>deriv(square, <span class="dv">10</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>20.000000000024443</code></pre>
@@ -525,13 +525,13 @@ Saad Ali Khan
 <li>For simple functions, properly defining them with <code>def</code> can be overkill.</li>
 <li>Instead, we use <em>lambda</em> functions (anonymous functions):</li>
 </ul>
-<div id="23363e9c" class="cell" data-execution_count="7">
+<div id="a7802fea" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>7.999999999999119</code></pre>
 </div>
 </div>
-<div id="701a2d53" class="cell" data-execution_count="8">
+<div id="24c81859" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>75.00000024995757</code></pre>

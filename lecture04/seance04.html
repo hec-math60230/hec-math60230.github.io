@@ -11,7 +11,7 @@
 
   <meta name="author" content="Vincent Grégoire">
   <meta name="author" content="Saad Ali Khan">
-  <title>MATH60207 - Séance 4</title>
+  <title>MATH60230 - Séance 4</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -204,7 +204,7 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">MATH60207 - Séance 4</h1>
+  <h1 class="title">MATH60230 - Séance 4</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -247,7 +247,7 @@ Saad Ali Khan
 <ul>
 <li>Nous pouvons considérer un vecteur comme une colonne unique d’un Dataframe pandas</li>
 </ul>
-<div id="b3d4495e" class="cell" data-execution_count="1">
+<div id="4cd236c2" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> pandas <span class="im">import</span> DataFrame</span>
 <span id="cb1-2"><a href=""></a>df <span class="op">=</span> DataFrame({</span>
 <span id="cb1-3"><a href=""></a>    <span class="st">'vecA'</span>:[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>], </span>
@@ -269,7 +269,7 @@ Saad Ali Khan
 </section>
 <section id="exemple-vecteurs" class="slide level2">
 <h2>Exemple (vecteurs)</h2>
-<div id="ea06cafe" class="cell" data-execution_count="2">
+<div id="079daaf7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>df[<span class="st">'vecA'</span>] <span class="op">+</span> df[<span class="st">'vecB'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>row1    5
@@ -278,7 +278,7 @@ row3    9
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="b23ffe52" class="cell" data-execution_count="3">
+<div id="06984fe8" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="dv">2</span><span class="op">*</span>df[<span class="st">'vecA'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>row1    2
@@ -287,7 +287,7 @@ row3    6
 Name: vecA, dtype: int64</code></pre>
 </div>
 </div>
-<div id="7886e82d" class="cell" data-execution_count="4">
+<div id="e34a279e" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>df[<span class="st">'vecA'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>np.float64(2.0)</code></pre>
@@ -299,7 +299,7 @@ Name: vecA, dtype: int64</code></pre>
 <ul>
 <li>Nous pouvons considérer une matrice comme deux colonnes d’un Dataframe pandas.</li>
 </ul>
-<div id="e870e606" class="cell" data-execution_count="5">
+<div id="7632f15a" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="bu">print</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      vecA  vecB
@@ -311,7 +311,7 @@ row3     3     6</code></pre>
 <ul>
 <li>Calcul des moyennes par colonnes:</li>
 </ul>
-<div id="720fdd6f" class="cell" data-execution_count="6">
+<div id="e8cd4cb0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>df.mean(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>vecA    2.0
@@ -325,7 +325,7 @@ dtype: float64</code></pre>
 <ul>
 <li>Calcul des moyennes par rangées:</li>
 </ul>
-<div id="1d261d42" class="cell" data-execution_count="7">
+<div id="a25f92de" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>df.mean(axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>row1    2.5
@@ -337,7 +337,7 @@ dtype: float64</code></pre>
 <ul>
 <li>En considérant le vecteur A et le vecteur B empilés comme une matrice, nous pouvons également transposer la matrice:</li>
 </ul>
-<div id="e7587fe1" class="cell" data-execution_count="8">
+<div id="8cf5ec35" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>df.T</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
