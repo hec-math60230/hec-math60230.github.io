@@ -1,0 +1,2030 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="lecture10_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture10_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture10_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture10_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture10_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture10_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture10_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.27">
+
+  <meta name="author" content="Vincent Grégoire">
+  <meta name="author" content="Saad Ali Khan">
+  <title>MATH60230: Lecture 10</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
+  <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
+  <script>document.addEventListener("DOMContentLoaded", function () {
+ var mathElements = document.getElementsByClassName("math");
+ var macros = [];
+ for (var i = 0; i < mathElements.length; i++) {
+  var texText = mathElements[i].firstChild;
+  if (mathElements[i].tagName == "SPAN") {
+   katex.render(texText.data, mathElements[i], {
+    displayMode: mathElements[i].classList.contains('display'),
+    throwOnError: false,
+    macros: macros,
+    fleqn: false
+   });
+}}});
+  </script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css">
+  <link href="lecture10_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture10_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture10_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture10_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lecture10_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lecture10_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script defer="" src="https://umami.vincentgregoire.com/script.js" data-website-id="5c0abb42-9e67-4889-8e30-295fe46e640b">
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&amp;family=Noto+Sans:ital,wght@0,100..900;1,100..900&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+  <script src="lecture10_files/libs/quarto-diagram/mermaid.min.js"></script>
+  <script src="lecture10_files/libs/quarto-diagram/mermaid-init.js"></script>
+  <link href="lecture10_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">MATH60230: Lecture 10</h1>
+  <p class="subtitle">Text Analysis and Natural Language Processing</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Vincent Grégoire 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
+</div>
+        <p class="quarto-title-affiliation">
+            HEC Montréal
+          </p>
+    </div>
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Saad Ali Khan 
+</div>
+<div class="quarto-title-author-email">
+<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
+</div>
+        <p class="quarto-title-affiliation">
+            HEC Montréal
+          </p>
+    </div>
+</div>
+
+</section>
+<section id="plan-for-today" class="slide level2">
+<h2>Plan for Today</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Introduction to text analysis in finance</li>
+<li>Text preprocessing fundamentals</li>
+<li>Text representation: BoW, TF-IDF, dictionaries</li>
+<li>Word and document embeddings</li>
+<li>Transformers and LLMs</li>
+<li>Practical considerations for research</li>
+</ul>
+</section>
+<section id="what-is-text-analysis" class="slide level2">
+<h2>What is Text Analysis?</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><strong>Text analysis</strong> (text mining, NLP) is the process of extracting structured information from unstructured text</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Turning <strong>words into numbers</strong> that can be used for:
+<ul>
+<li>Statistical analysis</li>
+<li>Machine learning</li>
+<li>Information retrieval</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Natural Language Processing (NLP) provides the tools and techniques</li>
+</ul>
+</section>
+<section id="why-text-analysis-in-finance" class="slide level2">
+<h2>Why Text Analysis in Finance?</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Vast amounts of valuable information exist in text form:
+<ul>
+<li>SEC filings (10-K, 10-Q, 8-K)</li>
+<li>Earnings call transcripts</li>
+<li>News articles and press releases</li>
+<li>Analyst reports</li>
+<li>Social media (Twitter/X, Reddit, StockTwits)</li>
+<li>Central bank communications</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Traditional structured datasets (CRSP, Compustat) are well-studied</li>
+<li>Text data offers <strong>new sources of data</strong> to answer new research questions</li>
+</ul>
+</section>
+<section id="nlp-applications-in-finance" class="slide level2">
+<h2>NLP Applications in Finance</h2>
+<div style="height: 1em;">
+
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 37%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Application</th>
+<th>Description</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Sentiment Analysis</strong></td>
+<td>Measure tone/mood of text</td>
+<td>Is this earnings call positive or negative?</td>
+</tr>
+<tr class="even">
+<td><strong>Information Extraction</strong></td>
+<td>Extract specific facts</td>
+<td>What is the reported revenue?</td>
+</tr>
+<tr class="odd">
+<td><strong>Named Entity Recognition</strong></td>
+<td>Identify entities</td>
+<td>Which companies are mentioned?</td>
+</tr>
+<tr class="even">
+<td><strong>Document Classification</strong></td>
+<td>Categorize documents</td>
+<td>What topics does this 10-K discuss?</td>
+</tr>
+<tr class="odd">
+<td><strong>Event Detection</strong></td>
+<td>Identify events</td>
+<td>Is this news about an M&amp;A?</td>
+</tr>
+<tr class="even">
+<td><strong>Summarization</strong></td>
+<td>Condense text</td>
+<td>Summarize this 100-page filing</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sentiment-analysis-in-finance" class="slide level2">
+<h2>Sentiment Analysis in Finance</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Quantify the <strong>tone</strong> of financial communications</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Applications:
+<ul>
+<li>Predicting stock returns from news sentiment</li>
+<li>Measuring management confidence in earnings calls</li>
+<li>Detecting changes in Fed communication tone</li>
+<li>Aggregating social media sentiment</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Key insight: sentiment in financial text differs from general sentiment
+<ul>
+<li>“Liability” is negative in general English, neutral in finance</li>
+</ul></li>
+</ul>
+</section>
+<section id="named-entity-recognition-ner" class="slide level2">
+<h2>Named Entity Recognition (NER)</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Identify and classify <strong>named entities</strong> in text:
+<ul>
+<li><strong>Organizations</strong>: Apple Inc., Federal Reserve</li>
+<li><strong>People</strong>: Warren Buffett, Jerome Powell</li>
+<li><strong>Locations</strong>: New York, Silicon Valley</li>
+<li><strong>Financial terms</strong>: revenue, EBITDA, market cap</li>
+<li><strong>Dates and amounts</strong>: Q3 2024, $5.2 billion</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Finance-specific NER models exist (e.g., FinBERT-NER)</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Use case: building knowledge graphs of company relationships</li>
+</ul>
+</section>
+<section id="the-text-analysis-pipeline" class="slide level2">
+<h2>The Text Analysis Pipeline</h2>
+<div style="height: 1em;">
+
+</div>
+<div class="cell" data-reveal="true" data-fig-width="10" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Raw Text] --&gt; B[Preprocessing]
+    B --&gt; C[Tokenization]
+    C --&gt; D[Normalization]
+    D --&gt; E[Representation]
+    E --&gt; F[Analysis/ML]
+
+    style A fill:#e1f5fe
+    style F fill:#c8e6c9
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div style="height: 1em;">
+
+</div>
+<ol type="1">
+<li><strong>Preprocessing</strong>: Clean the raw text</li>
+<li><strong>Tokenization</strong>: Split into words/subwords</li>
+<li><strong>Normalization</strong>: Standardize tokens</li>
+<li><strong>Representation</strong>: Convert to numerical features</li>
+<li><strong>Analysis</strong>: Apply statistical/ML methods</li>
+</ol>
+</section>
+<section id="tokenization" class="slide level2">
+<h2>Tokenization</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Tokenization</strong> = splitting text into individual units (tokens)</p>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>text <span class="op">=</span> <span class="st">"Apple's Q3 revenue was $81.8 billion."</span></span>
+<span id="cb1-2"><a href=""></a></span>
+<span id="cb1-3"><a href=""></a><span class="co"># Simple whitespace tokenization</span></span>
+<span id="cb1-4"><a href=""></a>tokens <span class="op">=</span> text.split()</span>
+<span id="cb1-5"><a href=""></a><span class="co"># ['Apple's', 'Q3', 'revenue', 'was', '$81.8', 'billion.']</span></span>
+<span id="cb1-6"><a href=""></a></span>
+<span id="cb1-7"><a href=""></a><span class="co"># Better: use a tokenizer</span></span>
+<span id="cb1-8"><a href=""></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb1-9"><a href=""></a>tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb1-10"><a href=""></a><span class="co"># ['Apple', "'s", 'Q3', 'revenue', 'was', '$', '81.8', 'billion', '.']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Challenges: contractions, hyphenated words, numbers, punctuation</li>
+</ul>
+</section>
+<section id="stop-words" class="slide level2">
+<h2>Stop Words</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Stop words</strong> = common words that carry little meaning</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Examples: “the”, “is”, “at”, “which”, “on”, “a”, “an”</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb2-2"><a href=""></a></span>
+<span id="cb2-3"><a href=""></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
+<span id="cb2-4"><a href=""></a>tokens <span class="op">=</span> [<span class="st">'the'</span>, <span class="st">'company'</span>, <span class="st">'reported'</span>, <span class="st">'strong'</span>, <span class="st">'revenue'</span>, <span class="st">'growth'</span>]</span>
+<span id="cb2-5"><a href=""></a>filtered <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> tokens <span class="cf">if</span> w.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
+<span id="cb2-6"><a href=""></a><span class="co"># ['company', 'reported', 'strong', 'revenue', 'growth']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Removing stop words reduces noise and dimensionality</li>
+<li>But: sometimes context words matter (e.g., “not profitable”)</li>
+</ul>
+</section>
+<section id="stemming-and-lemmatization" class="slide level2">
+<h2>Stemming and Lemmatization</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Reduce words to their <strong>root form</strong> to group related words:</p>
+<div style="height: 1em;">
+
+</div>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="stemming">Stemming</h3>
+<ul>
+<li>Crude rules-based truncation</li>
+<li>Fast but imprecise</li>
+<li>“running” → “run”</li>
+<li>“studies” → “studi”</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> nltk.stem <span class="im">import</span> PorterStemmer</span>
+<span id="cb3-2"><a href=""></a>stemmer <span class="op">=</span> PorterStemmer()</span>
+<span id="cb3-3"><a href=""></a>stemmer.stem(<span class="st">"profitable"</span>)</span>
+<span id="cb3-4"><a href=""></a><span class="co"># 'profit'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div><div class="column" style="width:50%;">
+<h3 id="lemmatization">Lemmatization</h3>
+<ul>
+<li>Uses vocabulary and morphology</li>
+<li>Slower but accurate</li>
+<li>“running” → “run”</li>
+<li>“studies” → “study”</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> nltk.stem <span class="im">import</span> WordNetLemmatizer</span>
+<span id="cb4-2"><a href=""></a>lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb4-3"><a href=""></a>lemmatizer.lemmatize(<span class="st">"profitable"</span>, pos<span class="op">=</span><span class="st">'a'</span>)</span>
+<span id="cb4-4"><a href=""></a><span class="co"># 'profitable'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+</section>
+<section id="n-grams" class="slide level2">
+<h2>N-grams</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>N-grams</strong> = contiguous sequences of n tokens</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Unigrams</strong> (n=1): individual words</li>
+<li><strong>Bigrams</strong> (n=2): pairs of consecutive words</li>
+<li><strong>Trigrams</strong> (n=3): triplets of consecutive words</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> nltk <span class="im">import</span> ngrams</span>
+<span id="cb5-2"><a href=""></a></span>
+<span id="cb5-3"><a href=""></a>text <span class="op">=</span> [<span class="st">"interest"</span>, <span class="st">"rate"</span>, <span class="st">"hike"</span>, <span class="st">"expected"</span>]</span>
+<span id="cb5-4"><a href=""></a><span class="bu">list</span>(ngrams(text, <span class="dv">2</span>))</span>
+<span id="cb5-5"><a href=""></a><span class="co"># [('interest', 'rate'), ('rate', 'hike'), ('hike', 'expected')]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Captures phrases: “interest rate” vs.&nbsp;“interest” + “rate”</li>
+<li>Trade-off: more context vs.&nbsp;data sparsity</li>
+</ul>
+</section>
+<section id="bag-of-words-bow" class="slide level2">
+<h2>Bag of Words (BoW)</h2>
+<div style="height: 2em;">
+
+</div>
+<p>The simplest text representation: count word occurrences</p>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb6-2"><a href=""></a></span>
+<span id="cb6-3"><a href=""></a>docs <span class="op">=</span> [</span>
+<span id="cb6-4"><a href=""></a>    <span class="st">"revenue increased significantly"</span>,</span>
+<span id="cb6-5"><a href=""></a>    <span class="st">"profit margins decreased"</span>,</span>
+<span id="cb6-6"><a href=""></a>    <span class="st">"revenue and profit both increased"</span></span>
+<span id="cb6-7"><a href=""></a>]</span>
+<span id="cb6-8"><a href=""></a></span>
+<span id="cb6-9"><a href=""></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
+<span id="cb6-10"><a href=""></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
+<span id="cb6-11"><a href=""></a><span class="bu">print</span>(vectorizer.get_feature_names_out())</span>
+<span id="cb6-12"><a href=""></a><span class="co"># ['and', 'both', 'decreased', 'increased', 'margins',</span></span>
+<span id="cb6-13"><a href=""></a><span class="co">#  'profit', 'revenue', 'significantly']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Result: document-term matrix (documents × words)</li>
+<li>Ignores word order (“bag” of words)</li>
+</ul>
+</section>
+<section id="tf-idf" class="slide level2">
+<h2>TF-IDF</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Term Frequency-Inverse Document Frequency</strong></p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>TF</strong> (Term Frequency): how often a word appears in a document</li>
+<li><strong>IDF</strong> (Inverse Document Frequency): how rare a word is across all documents</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p><span class="math display">\text{TF-IDF}(t, d) = \text{TF}(t, d) \times \log\left(\frac{N}{\text{DF}(t)}\right)</span></p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Words that appear frequently in one document but rarely overall get <strong>high</strong> scores</li>
+<li>Common words across all documents get <strong>low</strong> scores</li>
+<li>Better than raw counts for identifying distinctive terms</li>
+</ul>
+</section>
+<section id="tf-idf-in-python" class="slide level2">
+<h2>TF-IDF in Python</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb7-2"><a href=""></a></span>
+<span id="cb7-3"><a href=""></a>docs <span class="op">=</span> [</span>
+<span id="cb7-4"><a href=""></a>    <span class="st">"The company reported strong revenue growth in Q3"</span>,</span>
+<span id="cb7-5"><a href=""></a>    <span class="st">"Revenue declined due to market conditions"</span>,</span>
+<span id="cb7-6"><a href=""></a>    <span class="st">"Strong earnings beat analyst expectations"</span></span>
+<span id="cb7-7"><a href=""></a>]</span>
+<span id="cb7-8"><a href=""></a></span>
+<span id="cb7-9"><a href=""></a>vectorizer <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb7-10"><a href=""></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
+<span id="cb7-11"><a href=""></a></span>
+<span id="cb7-12"><a href=""></a><span class="co"># X is now a sparse matrix of TF-IDF features</span></span>
+<span id="cb7-13"><a href=""></a><span class="bu">print</span>(X.shape)  <span class="co"># (3 documents, n features)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><code>TfidfVectorizer</code> combines tokenization, stop word removal, and TF-IDF</li>
+<li>Can specify <code>ngram_range=(1, 2)</code> to include bigrams</li>
+</ul>
+</section>
+<section id="dictionary-based-methods" class="slide level2">
+<h2>Dictionary-Based Methods</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Use predefined word lists to measure specific concepts:</p>
+<div style="height: 1em;">
+
+</div>
+<ol type="1">
+<li>Create/obtain a dictionary of words for each category</li>
+<li>Count occurrences of dictionary words in text</li>
+<li>Compute scores (e.g., % positive words, net sentiment)</li>
+</ol>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Simple, interpretable, and transparent</li>
+<li>No training required</li>
+<li>But: context-independent (same word = same meaning)</li>
+</ul>
+</section>
+<section id="loughran-mcdonald-dictionary" class="slide level2">
+<h2>Loughran-McDonald Dictionary</h2>
+<div style="height: 2em;">
+
+</div>
+<p>The standard sentiment dictionary for financial text <span class="citation" data-cites="loughran2011liability">(<a href="#/references-1" role="doc-biblioref" onclick="">Loughran and McDonald 2011</a>)</span></p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Developed specifically for 10-K filings</li>
+<li>Categories: Negative, Positive, Uncertainty, Litigious, Constraining, Strong Modal, Weak Modal</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Category</th>
+<th>Example Words</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Negative</td>
+<td>loss, decline, adverse, deficit, litigation</td>
+</tr>
+<tr class="even">
+<td>Positive</td>
+<td>achieve, benefit, gain, improve, profitable</td>
+</tr>
+<tr class="odd">
+<td>Uncertainty</td>
+<td>approximate, contingent, possible, risk</td>
+</tr>
+<tr class="even">
+<td>Litigious</td>
+<td>attorney, court, lawsuit, legal, tribunal</td>
+</tr>
+</tbody>
+</table>
+<div style="height: 1em;">
+
+</div>
+<p>Available at: <a href="https://sraf.nd.edu/loughranmcdonald-master-dictionary/">sraf.nd.edu/loughranmcdonald-master-dictionary</a></p>
+</section>
+<section id="using-loughran-mcdonald" class="slide level2">
+<h2>Using Loughran-McDonald</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href=""></a></span>
+<span id="cb8-3"><a href=""></a><span class="co"># Load the dictionary</span></span>
+<span id="cb8-4"><a href=""></a>lm_dict <span class="op">=</span> pd.read_csv(<span class="st">'LoughranMcDonald_MasterDictionary.csv'</span>)</span>
+<span id="cb8-5"><a href=""></a></span>
+<span id="cb8-6"><a href=""></a><span class="co"># Get negative words</span></span>
+<span id="cb8-7"><a href=""></a>negative_words <span class="op">=</span> <span class="bu">set</span>(</span>
+<span id="cb8-8"><a href=""></a>    lm_dict[lm_dict[<span class="st">'Negative'</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">'Word'</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb8-9"><a href=""></a>)</span>
+<span id="cb8-10"><a href=""></a></span>
+<span id="cb8-11"><a href=""></a><span class="co"># Count negative words in text</span></span>
+<span id="cb8-12"><a href=""></a><span class="kw">def</span> count_negative(text):</span>
+<span id="cb8-13"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb8-14"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
+<span id="cb8-15"><a href=""></a></span>
+<span id="cb8-16"><a href=""></a><span class="co"># Compute sentiment score</span></span>
+<span id="cb8-17"><a href=""></a><span class="kw">def</span> sentiment_score(text):</span>
+<span id="cb8-18"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb8-19"><a href=""></a>    n_neg <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
+<span id="cb8-20"><a href=""></a>    n_pos <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> positive_words)</span>
+<span id="cb8-21"><a href=""></a>    <span class="cf">return</span> (n_pos <span class="op">-</span> n_neg) <span class="op">/</span> <span class="bu">len</span>(words)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="limitations-of-bowtf-idf" class="slide level2">
+<h2>Limitations of BoW/TF-IDF</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><strong>No semantic meaning</strong>: “good” and “excellent” are unrelated vectors</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>High dimensionality</strong>: vocabulary can be 10,000+ words</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Sparse representations</strong>: most entries are zero</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>No context</strong>: “bank” (financial) vs.&nbsp;“bank” (river) are the same</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Word order lost</strong>: “dog bites man” = “man bites dog”</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>Solution: <strong>word embeddings</strong> — dense, semantic representations</p>
+</section>
+<section id="word-embeddings" class="slide level2">
+<h2>Word Embeddings</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Map words to <strong>dense vectors</strong> where similar words are close together</p>
+<div style="height: 1em;">
+
+</div>
+<div class="cell" data-reveal="true" data-fig-width="10" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">%%{init: {'theme': 'base', 'themeVariables': {'clusterBkg': '#f5f5f5', 'clusterBorder': '#cccccc'}}}%%
+flowchart LR
+    subgraph "Sparse (BoW)"
+        A["king: [0,0,1,0,0,...]&lt;br/&gt;queen: [0,1,0,0,0,...]&lt;br/&gt;man: [1,0,0,0,0,...]"]
+    end
+    subgraph "Dense (Embedding)"
+        B["king: [0.2, 0.8, -0.1, ...]&lt;br/&gt;queen: [0.3, 0.7, -0.2, ...]&lt;br/&gt;man: [0.1, 0.6, 0.4, ...]"]
+    end
+    A --&gt; B
+
+    style A fill:#ffcdd2
+    style B fill:#c8e6c9
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Typically 100-300 dimensions (vs.&nbsp;10,000+ for BoW)</li>
+<li>Learned from large text corpora</li>
+<li>Capture semantic relationships</li>
+</ul>
+</section>
+<section id="word2vec" class="slide level2">
+<h2>Word2Vec</h2>
+<div style="height: 2em;">
+
+</div>
+<p>The foundational word embedding method <span class="citation" data-cites="mikolov2013word2vec">(<a href="#/references-1" role="doc-biblioref" onclick="">Mikolov et al. 2013</a>)</span></p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Key idea</strong>: “You shall know a word by the company it keeps”</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Train a neural network to predict:
+<ul>
+<li><strong>CBOW</strong>: predict word from context</li>
+<li><strong>Skip-gram</strong>: predict context from word</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Famous example: <span class="math display">\text{king} - \text{man} + \text{woman} \approx \text{queen}</span></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Pre-trained models available (Google News, GloVe, FastText)</li>
+</ul>
+</section>
+<section id="using-pre-trained-embeddings" class="slide level2">
+<h2>Using Pre-trained Embeddings</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> gensim.downloader <span class="im">as</span> api</span>
+<span id="cb9-2"><a href=""></a></span>
+<span id="cb9-3"><a href=""></a><span class="co"># Load pre-trained Word2Vec embeddings</span></span>
+<span id="cb9-4"><a href=""></a>model <span class="op">=</span> api.load(<span class="st">'word2vec-google-news-300'</span>)</span>
+<span id="cb9-5"><a href=""></a></span>
+<span id="cb9-6"><a href=""></a><span class="co"># Find similar words</span></span>
+<span id="cb9-7"><a href=""></a>model.most_similar(<span class="st">'profit'</span>)</span>
+<span id="cb9-8"><a href=""></a><span class="co"># [('profits', 0.82), ('earnings', 0.71), ('revenue', 0.65), ...]</span></span>
+<span id="cb9-9"><a href=""></a></span>
+<span id="cb9-10"><a href=""></a><span class="co"># Word arithmetic</span></span>
+<span id="cb9-11"><a href=""></a>model.most_similar(positive<span class="op">=</span>[<span class="st">'ceo'</span>, <span class="st">'woman'</span>], negative<span class="op">=</span>[<span class="st">'man'</span>])</span>
+<span id="cb9-12"><a href=""></a><span class="co"># [('chairwoman', 0.71), ('executive', 0.69), ...]</span></span>
+<span id="cb9-13"><a href=""></a></span>
+<span id="cb9-14"><a href=""></a><span class="co"># Get embedding vector</span></span>
+<span id="cb9-15"><a href=""></a>vector <span class="op">=</span> model[<span class="st">'stock'</span>]  <span class="co"># 300-dimensional vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>GloVe, FastText are alternatives with similar usage</li>
+</ul>
+</section>
+<section id="document-embeddings" class="slide level2">
+<h2>Document Embeddings</h2>
+<div style="height: 2em;">
+
+</div>
+<p>How to represent an entire document as a vector?</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Simple approach</strong>: average word embeddings</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href=""></a></span>
+<span id="cb10-3"><a href=""></a><span class="kw">def</span> document_embedding(text, model):</span>
+<span id="cb10-4"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb10-5"><a href=""></a>    vectors <span class="op">=</span> [model[w] <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> model]</span>
+<span id="cb10-6"><a href=""></a>    <span class="cf">if</span> vectors:</span>
+<span id="cb10-7"><a href=""></a>        <span class="cf">return</span> np.mean(vectors, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-8"><a href=""></a>    <span class="cf">return</span> np.zeros(model.vector_size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Works reasonably well for short texts</li>
+<li>Loses word order and importance weighting</li>
+<li>Better methods: Doc2Vec, Sentence-BERT, LLM embeddings</li>
+</ul>
+</section>
+<section id="the-context-problem" class="slide level2">
+<h2>The Context Problem</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Traditional embeddings give <strong>one vector per word</strong>:</p>
+<div style="height: 1em;">
+
+</div>
+<blockquote>
+<p>“The bank raised interest rates” “I sat by the river bank”</p>
+</blockquote>
+<div style="height: 1em;">
+
+</div>
+<p>Same vector for “bank” in both sentences!</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Solution</strong>: contextual embeddings from Transformers</p>
+<ul>
+<li>Different vector for the same word depending on context</li>
+<li>Revolutionized NLP starting with BERT (2018)</li>
+</ul>
+</section>
+<section id="the-transformer-architecture" class="slide level2">
+<h2>The Transformer Architecture</h2>
+<p>The foundational architecture for modern NLP <span class="citation" data-cites="vaswani2017attention">(<a href="#/references-1" role="doc-biblioref" onclick="">Vaswani et al. 2017</a>)</span></p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Self-attention</strong>: each word attends to all other words</li>
+<li>Captures long-range dependencies</li>
+<li>Parallelizable (unlike RNNs)</li>
+</ul>
+</section>
+<section id="attention-mechanism-intuition" class="slide level2">
+<h2>Attention Mechanism (Intuition)</h2>
+<div style="height: 2em;">
+
+</div>
+<p>For each word, compute <strong>attention weights</strong> to all other words:</p>
+<div style="height: 1em;">
+
+</div>
+<blockquote>
+<p>“The <strong>company</strong> reported that <strong>its</strong> revenue increased”</p>
+</blockquote>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>“its” attends strongly to “company” (learns the reference)</li>
+<li>Each word’s representation is a weighted sum of all words</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Allows model to understand:
+<ul>
+<li>Coreference (“its” refers to “company”)</li>
+<li>Long-distance dependencies</li>
+<li>Word sense disambiguation</li>
+</ul></li>
+</ul>
+</section>
+<section id="bert-bidirectional-encoder" class="slide level2">
+<h2>BERT: Bidirectional Encoder</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Bidirectional Encoder Representations from Transformers</strong> <span class="citation" data-cites="devlin2019bert">(<a href="#/references-1" role="doc-biblioref" onclick="">Devlin et al. 2019</a>)</span></p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Pre-trained on massive text corpus (Wikipedia + Books)</li>
+<li>Two pre-training objectives:
+<ul>
+<li><strong>Masked Language Model</strong>: predict masked words</li>
+<li><strong>Next Sentence Prediction</strong>: are two sentences consecutive?</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Fine-tune on downstream tasks:
+<ul>
+<li>Sentiment classification</li>
+<li>Named entity recognition</li>
+<li>Question answering</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>See <a href="https://huggingface.co/docs/transformers/index">Hugging Face Transformers</a></li>
+</ul>
+</section>
+<section id="finance-specific-transformers" class="slide level2">
+<h2>Finance-Specific Transformers</h2>
+<div style="height: 2em;">
+
+</div>
+<p>General BERT may not understand financial language well</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>FinBERT</strong> variants <span class="citation" data-cites="araci2019finbert">(<a href="#/references-1" role="doc-biblioref" onclick="">Araci 2019</a>)</span>:</p>
+<ul>
+<li><a href="https://huggingface.co/ProsusAI/finbert">ProsusAI/finbert</a>: fine-tuned for financial sentiment</li>
+<li><a href="https://huggingface.co/yiyanghkust/finbert-tone">yiyanghkust/finbert-tone</a>: trained on analyst reports</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a>classifier <span class="op">=</span> pipeline(<span class="st">"sentiment-analysis"</span>,</span>
+<span id="cb11-4"><a href=""></a>                      model<span class="op">=</span><span class="st">"ProsusAI/finbert"</span>)</span>
+<span id="cb11-5"><a href=""></a></span>
+<span id="cb11-6"><a href=""></a>classifier(<span class="st">"Revenue growth exceeded expectations"</span>)</span>
+<span id="cb11-7"><a href=""></a><span class="co"># [{'label': 'positive', 'score': 0.94}]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="using-transformers-for-embeddings" class="slide level2">
+<h2>Using Transformers for Embeddings</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
+<span id="cb12-2"><a href=""></a></span>
+<span id="cb12-3"><a href=""></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'all-MiniLM-L6-v2'</span>)</span>
+<span id="cb12-4"><a href=""></a></span>
+<span id="cb12-5"><a href=""></a>sentences <span class="op">=</span> [</span>
+<span id="cb12-6"><a href=""></a>    <span class="st">"The company reported strong earnings"</span>,</span>
+<span id="cb12-7"><a href=""></a>    <span class="st">"Profits exceeded analyst expectations"</span>,</span>
+<span id="cb12-8"><a href=""></a>    <span class="st">"The weather was sunny today"</span></span>
+<span id="cb12-9"><a href=""></a>]</span>
+<span id="cb12-10"><a href=""></a></span>
+<span id="cb12-11"><a href=""></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
+<span id="cb12-12"><a href=""></a><span class="co"># embeddings.shape: (3, 384)</span></span>
+<span id="cb12-13"><a href=""></a></span>
+<span id="cb12-14"><a href=""></a><span class="co"># Compute similarity</span></span>
+<span id="cb12-15"><a href=""></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb12-16"><a href=""></a>similarity <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb12-17"><a href=""></a><span class="co"># sentences 0 and 1 will have high similarity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Use for semantic search, clustering, classification</li>
+</ul>
+</section>
+<section id="large-language-models-llms" class="slide level2">
+<h2>Large Language Models (LLMs)</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>LLMs</strong> = very large Transformer models trained on vast text corpora</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>GPT-4, Claude, Llama, Gemini, Mistral…</li>
+<li>Billions of parameters</li>
+<li>Trained on internet-scale data</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Key capability</strong>: can perform tasks from <strong>instructions</strong> (prompts)</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>No task-specific training needed</li>
+<li>“Zero-shot” and “few-shot” learning</li>
+<li>Can follow complex instructions</li>
+</ul>
+</section>
+<section id="llm-capabilities-for-finance" class="slide level2">
+<h2>LLM Capabilities for Finance</h2>
+<div style="height: 1em;">
+
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Task</th>
+<th>Example Prompt</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Sentiment</strong></td>
+<td>“Is this earnings call positive, negative, or neutral?”</td>
+</tr>
+<tr class="even">
+<td><strong>Classification</strong></td>
+<td>“What risk factors are discussed in this 10-K section?”</td>
+</tr>
+<tr class="odd">
+<td><strong>Extraction</strong></td>
+<td>“Extract the reported revenue and net income from this text”</td>
+</tr>
+<tr class="even">
+<td><strong>Summarization</strong></td>
+<td>“Summarize this 10-K in 3 bullet points”</td>
+</tr>
+<tr class="odd">
+<td><strong>Q&amp;A</strong></td>
+<td>“Based on this filing, what are the main business risks?”</td>
+</tr>
+<tr class="even">
+<td><strong>NER</strong></td>
+<td>“List all company names mentioned in this article”</td>
+</tr>
+</tbody>
+</table>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>No training required — just write good prompts</li>
+<li>Can handle nuance and context better than rule-based methods</li>
+</ul>
+</section>
+<section id="using-the-openai-api" class="slide level2">
+<h2>Using the OpenAI API</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb13-2"><a href=""></a></span>
+<span id="cb13-3"><a href=""></a>client <span class="op">=</span> OpenAI()  <span class="co"># Uses OPENAI_API_KEY env variable</span></span>
+<span id="cb13-4"><a href=""></a></span>
+<span id="cb13-5"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb13-6"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb13-7"><a href=""></a>    messages<span class="op">=</span>[</span>
+<span id="cb13-8"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a financial analyst."</span>},</span>
+<span id="cb13-9"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"""</span></span>
+<span id="cb13-10"><a href=""></a><span class="st">            Classify the sentiment of this text as</span></span>
+<span id="cb13-11"><a href=""></a><span class="st">            positive, negative, or neutral:</span></span>
+<span id="cb13-12"><a href=""></a></span>
+<span id="cb13-13"><a href=""></a><span class="st">            "Despite challenging market conditions,</span></span>
+<span id="cb13-14"><a href=""></a><span class="st">            the company achieved record revenue growth."</span></span>
+<span id="cb13-15"><a href=""></a><span class="st">        """</span>}</span>
+<span id="cb13-16"><a href=""></a>    ]</span>
+<span id="cb13-17"><a href=""></a>)</span>
+<span id="cb13-18"><a href=""></a></span>
+<span id="cb13-19"><a href=""></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb13-20"><a href=""></a><span class="co"># "positive"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="prompt-engineering" class="slide level2">
+<h2>Prompt Engineering</h2>
+<div style="height: 2em;">
+
+</div>
+<p>The art of writing effective prompts:</p>
+<div style="height: 1em;">
+
+</div>
+<ol type="1">
+<li><strong>Be specific</strong>: clearly define the task and expected output format</li>
+<li><strong>Provide context</strong>: explain the domain (finance, accounting, etc.)</li>
+<li><strong>Give examples</strong>: few-shot learning improves accuracy</li>
+<li><strong>Define constraints</strong>: “respond only with: positive, negative, neutral”</li>
+</ol>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb14-2"><a href=""></a><span class="st">You are a financial sentiment analyst. Classify the following</span></span>
+<span id="cb14-3"><a href=""></a><span class="st">text as exactly one of: POSITIVE, NEGATIVE, NEUTRAL.</span></span>
+<span id="cb14-4"><a href=""></a></span>
+<span id="cb14-5"><a href=""></a><span class="st">Example: "Revenue increased 15%" -&gt; POSITIVE</span></span>
+<span id="cb14-6"><a href=""></a><span class="st">Example: "We face significant headwinds" -&gt; NEGATIVE</span></span>
+<span id="cb14-7"><a href=""></a></span>
+<span id="cb14-8"><a href=""></a><span class="st">Text: "</span><span class="sc">{text}</span><span class="st">"</span></span>
+<span id="cb14-9"><a href=""></a><span class="st">Classification:</span></span>
+<span id="cb14-10"><a href=""></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="local-llms" class="slide level2">
+<h2>Local LLMs</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Run LLMs locally for privacy and cost control:</p>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">import</span> ollama</span>
+<span id="cb15-2"><a href=""></a></span>
+<span id="cb15-3"><a href=""></a>response <span class="op">=</span> ollama.chat(</span>
+<span id="cb15-4"><a href=""></a>    model<span class="op">=</span><span class="st">'llama3.2'</span>,</span>
+<span id="cb15-5"><a href=""></a>    messages<span class="op">=</span>[{</span>
+<span id="cb15-6"><a href=""></a>        <span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb15-7"><a href=""></a>        <span class="st">'content'</span>: <span class="st">'Summarize this earnings report in one sentence: ...'</span></span>
+<span id="cb15-8"><a href=""></a>    }]</span>
+<span id="cb15-9"><a href=""></a>)</span>
+<span id="cb15-10"><a href=""></a></span>
+<span id="cb15-11"><a href=""></a><span class="bu">print</span>(response[<span class="st">'message'</span>][<span class="st">'content'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><a href="https://ollama.com/">Ollama</a>: command-line tool for local LLM deployment</li>
+<li><a href="https://lmstudio.ai/">LM Studio</a>: GUI application for running local LLMs</li>
+<li>Models: Llama 3, Mistral, Phi, Gemma, Qwen, etc.</li>
+<li>Trade-off: smaller models = less capable but free and private</li>
+</ul>
+</section>
+<section id="research-challenge-look-ahead-bias" class="slide level2">
+<h2>Research Challenge: Look-Ahead Bias</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Look-ahead bias</strong> = using information not available at the time</p>
+<div style="height: 1em;">
+
+</div>
+<p>In NLP research, this can occur through:</p>
+<div style="height: 1em;">
+
+</div>
+<ol type="1">
+<li><strong>Model training data</strong>: GPT-4 was trained on data up to a cutoff date
+<ul>
+<li>Using it to “predict” events before that date is cheating</li>
+</ul></li>
+</ol>
+<div style="height: 1em;">
+
+</div>
+<ol start="2" type="1">
+<li><strong>Model release dates</strong>: Can’t use GPT-4 for 2020 predictions
+<ul>
+<li>Document which model version you used</li>
+</ul></li>
+</ol>
+<div style="height: 1em;">
+
+</div>
+<ol start="3" type="1">
+<li><strong>Text availability</strong>: When was the document actually public?
+<ul>
+<li>10-K filing date vs.&nbsp;fiscal year end</li>
+</ul></li>
+</ol>
+</section>
+<section id="research-challenge-replicability" class="slide level2">
+<h2>Research Challenge: Replicability</h2>
+<div style="height: 2em;">
+
+</div>
+<p>LLM-based research faces unique replicability challenges:</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Model versioning</strong>: APIs update silently
+<ul>
+<li>Document exact model name: <code>gpt-4-0613</code> not just <code>gpt-4</code></li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>API deprecation</strong>: models get retired
+<ul>
+<li>Consider local models for long-term reproducibility</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Stochastic outputs</strong>: same prompt → different answers
+<ul>
+<li>Set <code>temperature=0</code> for deterministic outputs</li>
+<li>Save all raw outputs</li>
+</ul></li>
+</ul>
+</section>
+<section id="temperature-and-sampling" class="slide level2">
+<h2>Temperature and Sampling</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Temperature</strong> controls randomness in LLM outputs:</p>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><code>temperature=0</code>: deterministic, always pick most likely token</li>
+<li><code>temperature=1</code>: sample according to model probabilities</li>
+<li><code>temperature&gt;1</code>: more random/creative</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb16-2"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb16-3"><a href=""></a>    temperature<span class="op">=</span><span class="dv">0</span>,  <span class="co"># Reproducible outputs</span></span>
+<span id="cb16-4"><a href=""></a>    messages<span class="op">=</span>[...]</span>
+<span id="cb16-5"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<p><strong>For research</strong>: use <code>temperature=0</code> for reproducibility, but note that most models perform best at higher temperatures (typically 0.7-1.0)</p>
+</section>
+<section id="structured-output" class="slide level2">
+<h2>Structured Output</h2>
+<div style="height: 2em;">
+
+</div>
+<p>LLMs output text, but we often need <strong>structured data</strong>:</p>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb17-2"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb17-3"><a href=""></a>    response_format<span class="op">=</span>{<span class="st">"type"</span>: <span class="st">"json_object"</span>},</span>
+<span id="cb17-4"><a href=""></a>    messages<span class="op">=</span>[{</span>
+<span id="cb17-5"><a href=""></a>        <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb17-6"><a href=""></a>        <span class="st">"content"</span>: <span class="st">"""Extract financial data as JSON:</span></span>
+<span id="cb17-7"><a href=""></a><span class="st">        {"revenue": number, "net_income": number, "sentiment": string}</span></span>
+<span id="cb17-8"><a href=""></a></span>
+<span id="cb17-9"><a href=""></a><span class="st">        Text: Revenue was $5.2B, net income $800M.</span></span>
+<span id="cb17-10"><a href=""></a><span class="st">        Management expressed cautious optimism."""</span></span>
+<span id="cb17-11"><a href=""></a>    }]</span>
+<span id="cb17-12"><a href=""></a>)</span>
+<span id="cb17-13"><a href=""></a><span class="co"># {"revenue": 5200000000, "net_income": 800000000,</span></span>
+<span id="cb17-14"><a href=""></a><span class="co">#  "sentiment": "cautiously positive"}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Use JSON mode for reliable parsing</li>
+<li>Define clear schemas in prompts</li>
+</ul>
+</section>
+<section id="structured-output-with-pydantic" class="slide level2">
+<h2>Structured Output with Pydantic</h2>
+<div style="height: 1em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb18-2"><a href=""></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb18-3"><a href=""></a></span>
+<span id="cb18-4"><a href=""></a><span class="kw">class</span> FinancialExtraction(BaseModel):</span>
+<span id="cb18-5"><a href=""></a>    revenue: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
+<span id="cb18-6"><a href=""></a>    net_income: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
+<span id="cb18-7"><a href=""></a>    sentiment: <span class="bu">str</span></span>
+<span id="cb18-8"><a href=""></a>    confidence: <span class="bu">float</span></span>
+<span id="cb18-9"><a href=""></a></span>
+<span id="cb18-10"><a href=""></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb18-11"><a href=""></a>completion <span class="op">=</span> client.beta.chat.completions.parse(</span>
+<span id="cb18-12"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb18-13"><a href=""></a>    messages<span class="op">=</span>[</span>
+<span id="cb18-14"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Extract financial information."</span>},</span>
+<span id="cb18-15"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Revenue grew 15% to $5.2B..."</span>}</span>
+<span id="cb18-16"><a href=""></a>    ],</span>
+<span id="cb18-17"><a href=""></a>    response_format<span class="op">=</span>FinancialExtraction,</span>
+<span id="cb18-18"><a href=""></a>)</span>
+<span id="cb18-19"><a href=""></a></span>
+<span id="cb18-20"><a href=""></a>result <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.parsed</span>
+<span id="cb18-21"><a href=""></a><span class="bu">print</span>(result.revenue)  <span class="co"># 5200000000.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="llm-workflow-for-research" class="slide level2">
+<h2>LLM Workflow for Research</h2>
+<div style="height: 1em;">
+
+</div>
+<div class="cell" data-reveal="true" data-fig-width="10" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class=""><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Documents] --&gt; B[Prompt Template]
+    B --&gt; C[LLM API]
+    C --&gt; D[Parse Response]
+    D --&gt; E[Validate]
+    E --&gt; F[Store Results]
+    F --&gt; G[Analysis]
+
+    E --&gt;|Invalid| B
+
+    style A fill:#e1f5fe
+    style G fill:#c8e6c9
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div style="height: 0.5em;">
+
+</div>
+<ul>
+<li><strong>Batch processing</strong>: process documents in parallel</li>
+<li><strong>Error handling</strong>: API failures, rate limits, invalid responses</li>
+<li><strong>Validation</strong>: check outputs match expected format</li>
+<li><strong>Logging</strong>: save prompts, responses, and metadata</li>
+</ul>
+</section>
+<section id="cost-considerations" class="slide level2">
+<h2>Cost Considerations</h2>
+<div style="height: 2em;">
+
+</div>
+<p>LLM APIs charge per token (≈ 0.75 words):</p>
+<div style="height: 1em;">
+
+</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Model</th>
+<th>Input</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>GPT-5.2 (OpenAI)</td>
+<td>$1.75/1M tokens</td>
+<td>$14/1M tokens</td>
+</tr>
+<tr class="even">
+<td>GPT-5 mini (OpenAI)</td>
+<td>$0.25/1M tokens</td>
+<td>$2/1M tokens</td>
+</tr>
+<tr class="odd">
+<td>Claude Sonnet 4.5 (Anthropic)</td>
+<td>$3/1M tokens</td>
+<td>$15/1M tokens</td>
+</tr>
+<tr class="even">
+<td>Claude Haiku 4.5 (Anthropic)</td>
+<td>$1/1M tokens</td>
+<td>$5/1M tokens</td>
+</tr>
+</tbody>
+</table>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>10,000 documents × 1,000 tokens each = 10M tokens</li>
+<li>With GPT-5 mini: ~$22.50 for processing</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Start with smaller/cheaper models for development</li>
+<li>Consider local models for large-scale processing</li>
+</ul>
+</section>
+<section id="python-libraries-summary" class="slide level2">
+<h2>Python Libraries Summary</h2>
+<div style="height: 1em;">
+
+</div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Library</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a href="https://www.nltk.org/">NLTK</a></td>
+<td>Classic NLP: tokenization, stemming, corpora</td>
+</tr>
+<tr class="even">
+<td><a href="https://spacy.io/">spaCy</a></td>
+<td>Industrial NLP: fast, production-ready pipelines</td>
+</tr>
+<tr class="odd">
+<td><a href="https://scikit-learn.org/">scikit-learn</a></td>
+<td>BoW, TF-IDF, text classification</td>
+</tr>
+<tr class="even">
+<td><a href="https://radimrehurek.com/gensim/">Gensim</a></td>
+<td>Word2Vec, Doc2Vec, topic modeling</td>
+</tr>
+<tr class="odd">
+<td><a href="https://huggingface.co/docs/transformers/">Transformers</a></td>
+<td>BERT, FinBERT, state-of-the-art models</td>
+</tr>
+<tr class="even">
+<td><a href="https://www.sbert.net/">Sentence-Transformers</a></td>
+<td>Document embeddings, semantic search</td>
+</tr>
+<tr class="odd">
+<td><a href="https://platform.openai.com/docs/">OpenAI</a></td>
+<td>GPT models via API</td>
+</tr>
+<tr class="even">
+<td><a href="https://ollama.com/">Ollama</a></td>
+<td>Local LLM deployment</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="best-practices-summary" class="slide level2">
+<h2>Best Practices Summary</h2>
+<div style="height: 2em;">
+
+</div>
+<ol type="1">
+<li><strong>Start simple</strong>: dictionaries and TF-IDF are interpretable baselines</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="2" type="1">
+<li><strong>Use domain-specific resources</strong>: Loughran-McDonald, FinBERT</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="3" type="1">
+<li><strong>Document everything</strong>: model versions, prompts, parameters</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="4" type="1">
+<li><strong>Set temperature=0</strong>: for reproducible research</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="5" type="1">
+<li><strong>Validate outputs</strong>: LLMs can hallucinate or misformat</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="6" type="1">
+<li><strong>Consider costs</strong>: batch processing, model selection</li>
+</ol>
+<div style="height: 0.5em;">
+
+</div>
+<ol start="7" type="1">
+<li><strong>Avoid look-ahead bias</strong>: respect model training cutoffs</li>
+</ol>
+</section>
+<section id="references" class="slide level2">
+<h2>References</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Essential reading</strong>:</p>
+<ul>
+<li><span class="citation" data-cites="gentzkow2019text">Gentzkow, Kelly, and Taddy (<a href="#/references-1" role="doc-biblioref" onclick="">2019</a>)</span> - comprehensive survey of text analysis in economics</li>
+<li><span class="citation" data-cites="jurafsky2025speech">Jurafsky and Martin (<a href="#/references-1" role="doc-biblioref" onclick="">2025</a>)</span> - free online textbook: <a href="https://web.stanford.edu/~jurafsky/slp3/">web.stanford.edu/~jurafsky/slp3</a></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Books</strong> (available via HEC library):</p>
+<ul>
+<li><a href="https://learning.oreilly.com/library/view/applied-text-analysis/9781491963036/">Applied Text Analysis with Python</a> - O’Reilly</li>
+<li><a href="https://learning.oreilly.com/library/view/natural-language-processing/9781098136789/">Natural Language Processing with Transformers</a> - O’Reilly</li>
+</ul>
+<p><strong>Videos</strong>:</p>
+<ul>
+<li><a href="https://youtu.be/aircAruvnKk">Neural Networks</a> - 3Blue1Brown series on neural networks</li>
+</ul>
+</section>
+<section id="references-1" class="slide level2 smaller scrollable">
+<h2>References</h2>
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-araci2019finbert" class="csl-entry" role="listitem">
+Araci, Dogu. 2019. <span>“FinBERT: Financial Sentiment Analysis with Pre-Trained Language Models.”</span> <em>arXiv Preprint arXiv:1908.10063</em>.
+</div>
+<div id="ref-devlin2019bert" class="csl-entry" role="listitem">
+Devlin, Jacob, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova. 2019. <span>“BERT: Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies</em>, 4171–86.
+</div>
+<div id="ref-gentzkow2019text" class="csl-entry" role="listitem">
+Gentzkow, Matthew, Bryan Kelly, and Matt Taddy. 2019. <span>“Text as Data.”</span> <em>Journal of Economic Literature</em> 57 (3): 535–74.
+</div>
+<div id="ref-jurafsky2025speech" class="csl-entry" role="listitem">
+Jurafsky, Dan, and James H. Martin. 2025. <em>Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition with Language Models</em>. 3rd ed. <a href="https://web.stanford.edu/~jurafsky/slp3/">https://web.stanford.edu/~jurafsky/slp3/</a>.
+</div>
+<div id="ref-loughran2011liability" class="csl-entry" role="listitem">
+Loughran, Tim, and Bill McDonald. 2011. <span>“When Is a Liability Not a Liability? Textual Analysis, Dictionaries, and 10-Ks.”</span> <em>The Journal of Finance</em> 66 (1): 35–65.
+</div>
+<div id="ref-mikolov2013word2vec" class="csl-entry" role="listitem">
+Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space.”</span> <em>arXiv Preprint arXiv:1301.3781</em>.
+</div>
+<div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
+</div>
+</div>
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="logos/logo_hec_montreal_bleu_web.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>MATH60230</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lecture10_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lecture10_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lecture10_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture10_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":false,"theme":"whiteboard"},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>
