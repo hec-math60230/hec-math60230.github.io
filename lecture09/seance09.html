@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="fr"><head>
 <script src="seance09_files/libs/clipboard/clipboard.min.js"></script>
 <script src="seance09_files/libs/quarto-html/tabby.min.js"></script>
 <script src="seance09_files/libs/quarto-html/popper.min.js"></script>
 <script src="seance09_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="seance09_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="seance09_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="seance09_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="seance09_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Séance 9</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="seance09_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="seance09_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +104,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -116,7 +120,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="seance09_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="seance09_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -243,21 +247,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -527,12 +520,12 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a>model <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)       <span class="co"># 1. Créer le modèle avec les hyperparamètres</span></span>
-<span id="cb1-4"><a href=""></a>model.fit(X_train, y_train)    <span class="co"># 2. Entraîner le modèle</span></span>
-<span id="cb1-5"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test) <span class="co"># 3. Faire des prédictions</span></span>
-<span id="cb1-6"><a href=""></a>score <span class="op">=</span> model.score(X_test, y_test) <span class="co"># 4. Évaluer la performance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a>model <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)       <span class="co"># 1. Créer le modèle avec les hyperparamètres</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>model.fit(X_train, y_train)    <span class="co"># 2. Entraîner le modèle</span></span>
+<span id="cb1-5"><a href="" aria-label="5"></a>y_pred <span class="op">=</span> model.predict(X_test) <span class="co"># 3. Faire des prédictions</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>score <span class="op">=</span> model.score(X_test, y_test) <span class="co"># 4. Évaluer la performance</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -551,8 +544,8 @@ Saad Ali Khan
 
 </div>
 <ul>
-<li><a href="https://pytorch.org/">PyTorch</a> (Facebook)</li>
-<li><a href="https://keras.io/">Keras</a> (basé sur <a href="https://www.tensorflow.org/">TensorFlow</a>, Google)</li>
+<li><a href="https://pytorch.org/">PyTorch</a> (né chez Facebook/Meta, géré par la PyTorch Foundation sous l’égide de la Linux Foundation depuis 2022)</li>
+<li><a href="https://keras.io/">Keras</a> (multi-backend depuis Keras 3 : fonctionne sur <a href="https://www.tensorflow.org/">TensorFlow</a>, JAX ou PyTorch)</li>
 </ul>
 </section>
 <section id="quest-ce-que-le-surapprentissage" class="slide level2">
@@ -650,7 +643,7 @@ Saad Ali Khan
 
 </div>
 <ul>
-<li><strong>Problème</strong> : avec beaucoup de variables, les MCO surapprentissent — ils ajustent le bruit dans les données d’entraînement</li>
+<li><strong>Problème</strong> : avec beaucoup de variables, les MCO surajustent — ils ajustent le bruit dans les données d’entraînement</li>
 </ul>
 <div style="height: 1em;">
 
@@ -737,11 +730,11 @@ Saad Ali Khan
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge, Lasso, ElasticNet</span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb2-4"><a href=""></a>lasso <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
-<span id="cb2-5"><a href=""></a>enet  <span class="op">=</span> ElasticNet(alpha<span class="op">=</span><span class="fl">1.0</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge, Lasso, ElasticNet</span>
+<span id="cb2-2"><a href="" aria-label="2"></a></span>
+<span id="cb2-3"><a href="" aria-label="3"></a>ridge <span class="op">=</span> Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>lasso <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">1.0</span>)</span>
+<span id="cb2-5"><a href="" aria-label="5"></a>enet  <span class="op">=</span> ElasticNet(alpha<span class="op">=</span><span class="fl">1.0</span>, l1_ratio<span class="op">=</span><span class="fl">0.5</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -752,9 +745,9 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>model <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
-<span id="cb3-2"><a href=""></a>model.fit(X_train, y_train)</span>
-<span id="cb3-3"><a href=""></a>y_pred <span class="op">=</span> model.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>model <span class="op">=</span> Lasso(alpha<span class="op">=</span><span class="fl">0.1</span>)</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>model.fit(X_train, y_train)</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>y_pred <span class="op">=</span> model.predict(X_test)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -1012,14 +1005,14 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
-<span id="cb4-2"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
-<span id="cb4-3"><a href=""></a></span>
-<span id="cb4-4"><a href=""></a>param_grid <span class="op">=</span> {<span class="st">"alpha"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]}</span>
-<span id="cb4-5"><a href=""></a>search <span class="op">=</span> GridSearchCV(Ridge(), param_grid, cv<span class="op">=</span><span class="dv">5</span>)</span>
-<span id="cb4-6"><a href=""></a>search.fit(X_train, y_train)</span>
-<span id="cb4-7"><a href=""></a></span>
-<span id="cb4-8"><a href=""></a>best_alpha <span class="op">=</span> search.best_params_[<span class="st">"alpha"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> GridSearchCV</span>
+<span id="cb4-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb4-3"><a href="" aria-label="3"></a></span>
+<span id="cb4-4"><a href="" aria-label="4"></a>param_grid <span class="op">=</span> {<span class="st">"alpha"</span>: [<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="fl">1.0</span>, <span class="fl">10.0</span>, <span class="fl">100.0</span>]}</span>
+<span id="cb4-5"><a href="" aria-label="5"></a>search <span class="op">=</span> GridSearchCV(Ridge(), param_grid, cv<span class="op">=</span><span class="dv">5</span>)</span>
+<span id="cb4-6"><a href="" aria-label="6"></a>search.fit(X_train, y_train)</span>
+<span id="cb4-7"><a href="" aria-label="7"></a></span>
+<span id="cb4-8"><a href="" aria-label="8"></a>best_alpha <span class="op">=</span> search.best_params_[<span class="st">"alpha"</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="métriques-de-régression" class="slide level2">
 <h2>Métriques de régression</h2>
@@ -1063,7 +1056,7 @@ Saad Ali Khan
 <ul>
 <li><strong>Exactitude</strong> (<em>accuracy</em>) : fraction de prédictions correctes</li>
 <li><strong>Précision</strong> : parmi toutes les prédictions positives, combien sont vraiment positives ?</li>
-<li><strong>Rappel</strong> (<em>recall</em>) : parmi tous les vrais positifs, combien avons-nous trouvés ?</li>
+<li><strong>Rappel</strong> (<em>recall</em>) : parmi tous les cas réellement positifs, combien avons-nous trouvés ?</li>
 <li><strong>Score F1</strong> : moyenne harmonique de la précision et du rappel : <span class="math inline">F_1 = \frac{2 \cdot \text{Précision} \cdot \text{Rappel}}{\text{Précision} + \text{Rappel}}</span></li>
 </ul>
 <div style="height: 1em;">
@@ -1088,20 +1081,20 @@ Saad Ali Khan
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
-<span id="cb5-2"><a href=""></a>    mean_squared_error,</span>
-<span id="cb5-3"><a href=""></a>    r2_score,</span>
-<span id="cb5-4"><a href=""></a>    accuracy_score,</span>
-<span id="cb5-5"><a href=""></a>    classification_report,</span>
-<span id="cb5-6"><a href=""></a>)</span>
-<span id="cb5-7"><a href=""></a></span>
-<span id="cb5-8"><a href=""></a><span class="co"># Régression</span></span>
-<span id="cb5-9"><a href=""></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
-<span id="cb5-10"><a href=""></a>r2  <span class="op">=</span> r2_score(y_test, y_pred)</span>
-<span id="cb5-11"><a href=""></a></span>
-<span id="cb5-12"><a href=""></a><span class="co"># Classification</span></span>
-<span id="cb5-13"><a href=""></a>acc <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
-<span id="cb5-14"><a href=""></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
+<span id="cb5-2"><a href="" aria-label="2"></a>    mean_squared_error,</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    r2_score,</span>
+<span id="cb5-4"><a href="" aria-label="4"></a>    accuracy_score,</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>    classification_report,</span>
+<span id="cb5-6"><a href="" aria-label="6"></a>)</span>
+<span id="cb5-7"><a href="" aria-label="7"></a></span>
+<span id="cb5-8"><a href="" aria-label="8"></a><span class="co"># Régression</span></span>
+<span id="cb5-9"><a href="" aria-label="9"></a>mse <span class="op">=</span> mean_squared_error(y_test, y_pred)</span>
+<span id="cb5-10"><a href="" aria-label="10"></a>r2  <span class="op">=</span> r2_score(y_test, y_pred)</span>
+<span id="cb5-11"><a href="" aria-label="11"></a></span>
+<span id="cb5-12"><a href="" aria-label="12"></a><span class="co"># Classification</span></span>
+<span id="cb5-13"><a href="" aria-label="13"></a>acc <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
+<span id="cb5-14"><a href="" aria-label="14"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="arbres-de-décision" class="slide level2">
 <h2>Arbres de décision</h2>
@@ -1310,11 +1303,11 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a>scaler <span class="op">=</span> StandardScaler()</span>
-<span id="cb6-4"><a href=""></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)  <span class="co"># ajuster + transformer</span></span>
-<span id="cb6-5"><a href=""></a>X_test_scaled  <span class="op">=</span> scaler.transform(X_test)        <span class="co"># transformer seulement !</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb6-2"><a href="" aria-label="2"></a></span>
+<span id="cb6-3"><a href="" aria-label="3"></a>scaler <span class="op">=</span> StandardScaler()</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>X_train_scaled <span class="op">=</span> scaler.fit_transform(X_train)  <span class="co"># ajuster + transformer</span></span>
+<span id="cb6-5"><a href="" aria-label="5"></a>X_test_scaled  <span class="op">=</span> scaler.transform(X_test)        <span class="co"># transformer seulement !</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section class="slide level2">
 
@@ -1326,17 +1319,17 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
-<span id="cb7-2"><a href=""></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
-<span id="cb7-3"><a href=""></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
-<span id="cb7-4"><a href=""></a></span>
-<span id="cb7-5"><a href=""></a>pipe <span class="op">=</span> Pipeline([</span>
-<span id="cb7-6"><a href=""></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
-<span id="cb7-7"><a href=""></a>    (<span class="st">"model"</span>, Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)),</span>
-<span id="cb7-8"><a href=""></a>])</span>
-<span id="cb7-9"><a href=""></a></span>
-<span id="cb7-10"><a href=""></a>pipe.fit(X_train, y_train)</span>
-<span id="cb7-11"><a href=""></a>y_pred <span class="op">=</span> pipe.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.pipeline <span class="im">import</span> Pipeline</span>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="im">from</span> sklearn.preprocessing <span class="im">import</span> StandardScaler</span>
+<span id="cb7-3"><a href="" aria-label="3"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> Ridge</span>
+<span id="cb7-4"><a href="" aria-label="4"></a></span>
+<span id="cb7-5"><a href="" aria-label="5"></a>pipe <span class="op">=</span> Pipeline([</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>    (<span class="st">"scaler"</span>, StandardScaler()),</span>
+<span id="cb7-7"><a href="" aria-label="7"></a>    (<span class="st">"model"</span>, Ridge(alpha<span class="op">=</span><span class="fl">1.0</span>)),</span>
+<span id="cb7-8"><a href="" aria-label="8"></a>])</span>
+<span id="cb7-9"><a href="" aria-label="9"></a></span>
+<span id="cb7-10"><a href="" aria-label="10"></a>pipe.fit(X_train, y_train)</span>
+<span id="cb7-11"><a href="" aria-label="11"></a>y_pred <span class="op">=</span> pipe.predict(X_test)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -1396,10 +1389,10 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
-<span id="cb8-2"><a href=""></a></span>
-<span id="cb8-3"><a href=""></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb8-4"><a href=""></a>X_reduced <span class="op">=</span> pca.fit_transform(X)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.decomposition <span class="im">import</span> PCA</span>
+<span id="cb8-2"><a href="" aria-label="2"></a></span>
+<span id="cb8-3"><a href="" aria-label="3"></a>pca <span class="op">=</span> PCA(n_components<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb8-4"><a href="" aria-label="4"></a>X_reduced <span class="op">=</span> pca.fit_transform(X)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <p>L’ACP sera couverte plus en détail dans le cours suivant.</p>
 </section>
 <section id="apprentissage-non-supervisé-clustering-k-means" class="slide level2">
@@ -1435,11 +1428,11 @@ Saad Ali Khan
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
-<span id="cb9-2"><a href=""></a></span>
-<span id="cb9-3"><a href=""></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
-<span id="cb9-4"><a href=""></a>kmeans.fit(X)</span>
-<span id="cb9-5"><a href=""></a>labels <span class="op">=</span> kmeans.labels_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans</span>
+<span id="cb9-2"><a href="" aria-label="2"></a></span>
+<span id="cb9-3"><a href="" aria-label="3"></a>kmeans <span class="op">=</span> KMeans(n_clusters<span class="op">=</span><span class="dv">3</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span>
+<span id="cb9-4"><a href="" aria-label="4"></a>kmeans.fit(X)</span>
+<span id="cb9-5"><a href="" aria-label="5"></a>labels <span class="op">=</span> kmeans.labels_</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -1504,7 +1497,7 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<p>Pour l’AA en finance, voir <span class="citation" data-cites="gu2020empirical">Gu, Kelly, and Xiu (<a href="#/références" role="doc-biblioref" onclick="">2020</a>)</span>.</p>
+<p>Pour l’AA en finance, voir <span class="citation" data-cites="gu2020empirical">Gu et al. (<a href="#/références" role="doc-biblioref" onclick="">2020</a>)</span>.</p>
 </section>
 <section class="slide level2">
 
@@ -1535,9 +1528,9 @@ Saad Ali Khan
 <section id="références" class="slide level2 smaller scrollable">
 <h2>Références</h2>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-gu2020empirical" class="csl-entry" role="listitem">
-Gu, Shihao, Bryan Kelly, and Dacheng Xiu. 2020. <span>“Empirical Asset Pricing via Machine Learning.”</span> <em>The Review of Financial Studies</em> 33 (5): 2223–73.
+Gu, Shihao, Bryan Kelly, et Dacheng Xiu. 2020. <span>«&nbsp;Empirical asset pricing via machine learning&nbsp;»</span>. <em>The Review of Financial Studies</em> 33 (5): 2223‑73.
 </div>
 </div>
 </section>
@@ -1762,12 +1755,12 @@ Gu, Shihao, Bryan Kelly, and Dacheng Xiu. 2020. <span>“Empirical Asset Pricing
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
+          button.setAttribute("title", "Copié");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
+            button.setAttribute("data-bs-title", "Copié");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>15&nbsp; Reshaping Data – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../data-analysis/structuring/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -365,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The distinction between long and wide formats is fundamental to data analysis. Understanding when to use each format, and how to convert between them, will save you countless hours of frustration.</p>
 <section id="what-are-long-and-wide-formats" class="level3" data-number="15.1.1">
 <h3 data-number="15.1.1" class="anchored" data-anchor-id="what-are-long-and-wide-formats"><span class="header-section-number">15.1.1</span> What Are Long and Wide Formats?</h3>
-<p><strong>Wide format</strong> stores each entity as a row and each time period (or category) as a separate column. This is how many people naturally think about panel data—it looks like a spreadsheet:</p>
+<p><strong>Wide format</strong> stores each time period as a row and each entity (or category) as a separate column. This is how many people naturally think about panel data—it looks like a spreadsheet:</p>
 <pre><code>date        AAPL    MSFT    GOOGL
 2024-01-01  0.012   0.008   0.015
 2024-01-02  -0.005  0.003   0.002
@@ -401,23 +406,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="a-simple-example" class="level3" data-number="15.1.3">
 <h3 data-number="15.1.3" class="anchored" data-anchor-id="a-simple-example"><span class="header-section-number">15.1.3</span> A Simple Example</h3>
 <p>Let’s create a small dataset of daily stock returns in long format:</p>
-<div id="730f0b3b" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample return data in long format</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">5</span>, freq<span class="op">=</span><span class="st">'D'</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'GOOGL'</span>]</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas version</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>data_long_pd <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: date, <span class="st">'ticker'</span>: ticker, <span class="st">'return'</span>: <span class="bu">round</span>(<span class="fl">0.01</span> <span class="op">*</span> (<span class="bu">hash</span>(<span class="bu">str</span>(date) <span class="op">+</span> ticker) <span class="op">%</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">50</span>) <span class="op">/</span> <span class="dv">100</span>, <span class="dv">4</span>)}</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> date <span class="kw">in</span> dates</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ticker <span class="kw">in</span> tickers</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>data_long_pd.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6e2099a4" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-3"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-3-1"><a href="#annotated-cell-3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="annotated-cell-3-2"><a href="#annotated-cell-3-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="annotated-cell-3-3"><a href="#annotated-cell-3-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="annotated-cell-3-4"><a href="#annotated-cell-3-4" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="1">1</button><span id="annotated-cell-3-5" class="code-annotation-target"><a href="#annotated-cell-3-5" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="annotated-cell-3-6"><a href="#annotated-cell-3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-7"><a href="#annotated-cell-3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample return data in long format</span></span>
+<span id="annotated-cell-3-8"><a href="#annotated-cell-3-8" aria-hidden="true" tabindex="-1"></a>dates <span class="op">=</span> pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">5</span>, freq<span class="op">=</span><span class="st">'D'</span>)</span>
+<span id="annotated-cell-3-9"><a href="#annotated-cell-3-9" aria-hidden="true" tabindex="-1"></a>tickers <span class="op">=</span> [<span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'GOOGL'</span>]</span>
+<span id="annotated-cell-3-10"><a href="#annotated-cell-3-10" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-3" data-target-annotation="2">2</button><span id="annotated-cell-3-11" class="code-annotation-target"><a href="#annotated-cell-3-11" aria-hidden="true" tabindex="-1"></a>records <span class="op">=</span> [</span>
+<span id="annotated-cell-3-12"><a href="#annotated-cell-3-12" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: date, <span class="st">'ticker'</span>: ticker, <span class="st">'return'</span>: <span class="bu">round</span>(rng.normal(<span class="dv">0</span>, <span class="fl">0.01</span>), <span class="dv">4</span>)}</span>
+<span id="annotated-cell-3-13"><a href="#annotated-cell-3-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> date <span class="kw">in</span> dates</span>
+<span id="annotated-cell-3-14"><a href="#annotated-cell-3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ticker <span class="kw">in</span> tickers</span>
+<span id="annotated-cell-3-15"><a href="#annotated-cell-3-15" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="annotated-cell-3-16"><a href="#annotated-cell-3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-17"><a href="#annotated-cell-3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas version</span></span>
+<span id="annotated-cell-3-18"><a href="#annotated-cell-3-18" aria-hidden="true" tabindex="-1"></a>data_long_pd <span class="op">=</span> pd.DataFrame(records)</span>
+<span id="annotated-cell-3-19"><a href="#annotated-cell-3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-3-20"><a href="#annotated-cell-3-20" aria-hidden="true" tabindex="-1"></a>data_long_pd.head(<span class="dv">10</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-3" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="5" data-code-annotation="1">Seeding the generator makes every table in this chapter reproducible: re-running the code gives the same returns, so the numbers you see here are the numbers you will get.</span>
+</dd>
+<dt data-target-cell="annotated-cell-3" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-3" data-code-lines="11" data-code-annotation="2">Building the records once and reusing them means the pandas and Polars versions hold identical data.</span>
+</dd>
+</dl>
+</div>
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 
@@ -436,61 +457,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">0</th>
 <td>2024-01-01</td>
 <td>AAPL</td>
-<td>0.0047</td>
+<td>0.0030</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>2024-01-01</td>
 <td>MSFT</td>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>2024-01-01</td>
 <td>GOOGL</td>
-<td>-0.0038</td>
+<td>0.0075</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>2024-01-02</td>
 <td>AAPL</td>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>2024-01-02</td>
 <td>MSFT</td>
-<td>0.0035</td>
+<td>-0.0195</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
 <td>2024-01-02</td>
 <td>GOOGL</td>
-<td>-0.0009</td>
+<td>-0.0130</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
 <td>2024-01-03</td>
 <td>AAPL</td>
-<td>-0.0027</td>
+<td>0.0013</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
 <td>2024-01-03</td>
 <td>MSFT</td>
-<td>-0.0035</td>
+<td>-0.0032</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
 <td>2024-01-03</td>
 <td>GOOGL</td>
-<td>-0.0026</td>
+<td>-0.0002</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
 <td>2024-01-04</td>
 <td>AAPL</td>
-<td>-0.0017</td>
+<td>-0.0085</td>
 </tr>
 </tbody>
 </table>
@@ -498,15 +519,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="4c7b7fdb" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars version</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_long_pl <span class="op">=</span> pl.DataFrame([</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: date, <span class="st">'ticker'</span>: ticker, <span class="st">'return'</span>: <span class="bu">round</span>(<span class="fl">0.01</span> <span class="op">*</span> (<span class="bu">hash</span>(<span class="bu">str</span>(date) <span class="op">+</span> ticker) <span class="op">%</span> <span class="dv">100</span> <span class="op">-</span> <span class="dv">50</span>) <span class="op">/</span> <span class="dv">100</span>, <span class="dv">4</span>)}</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> date <span class="kw">in</span> dates</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ticker <span class="kw">in</span> tickers</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>data_long_pl.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="471861e3" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars version, built from the same records</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_long_pl <span class="op">=</span> pl.DataFrame(records)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>data_long_pl.head(<span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div><style>
 .dataframe > thead > tr,
@@ -533,52 +550,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>2024-01-01 00:00:00</td>
 <td>"AAPL"</td>
-<td>0.0047</td>
+<td>0.003</td>
 </tr>
 <tr class="even">
 <td>2024-01-01 00:00:00</td>
 <td>"MSFT"</td>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="odd">
 <td>2024-01-01 00:00:00</td>
 <td>"GOOGL"</td>
-<td>-0.0038</td>
+<td>0.0075</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
 <td>"AAPL"</td>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <td>2024-01-02 00:00:00</td>
 <td>"MSFT"</td>
-<td>0.0035</td>
+<td>-0.0195</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
 <td>"GOOGL"</td>
-<td>-0.0009</td>
+<td>-0.013</td>
 </tr>
 <tr class="odd">
 <td>2024-01-03 00:00:00</td>
 <td>"AAPL"</td>
-<td>-0.0027</td>
+<td>0.0013</td>
 </tr>
 <tr class="even">
 <td>2024-01-03 00:00:00</td>
 <td>"MSFT"</td>
-<td>-0.0035</td>
+<td>-0.0032</td>
 </tr>
 <tr class="odd">
 <td>2024-01-03 00:00:00</td>
 <td>"GOOGL"</td>
-<td>-0.0026</td>
+<td>-0.0002</td>
 </tr>
 <tr class="even">
 <td>2024-01-04 00:00:00</td>
 <td>"AAPL"</td>
-<td>-0.0017</td>
+<td>-0.0085</td>
 </tr>
 </tbody>
 </table>
@@ -595,7 +612,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="15.2.1" class="anchored" data-anchor-id="pivot-long-to-wide"><span class="header-section-number">15.2.1</span> Pivot: Long to Wide</h3>
 <p>The <code>pivot</code> operation transforms long format data into wide format. You specify which column becomes the index (rows), which becomes the columns, and which contains the values to fill the resulting matrix.</p>
 <p><strong>pandas syntax:</strong></p>
-<div id="1d798132" class="cell" data-execution_count="3">
+<div id="dcefce2d" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-5"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-5-1"><a href="#annotated-cell-5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert long to wide: dates as rows, tickers as columns</span></span>
 <span id="annotated-cell-5-2"><a href="#annotated-cell-5-2" aria-hidden="true" tabindex="-1"></a>data_wide_pd <span class="op">=</span> data_long_pd.pivot(</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-5" data-target-annotation="1">1</button><span id="annotated-cell-5-3" class="code-annotation-target"><a href="#annotated-cell-5-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
@@ -642,33 +659,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-01</th>
-<td>0.0047</td>
-<td>-0.0038</td>
-<td>0.0023</td>
+<td>0.0030</td>
+<td>0.0075</td>
+<td>-0.0104</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2024-01-02</th>
-<td>0.0047</td>
-<td>-0.0009</td>
-<td>0.0035</td>
+<td>0.0094</td>
+<td>-0.0130</td>
+<td>-0.0195</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-03</th>
-<td>-0.0027</td>
-<td>-0.0026</td>
-<td>-0.0035</td>
+<td>0.0013</td>
+<td>-0.0002</td>
+<td>-0.0032</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2024-01-04</th>
-<td>-0.0017</td>
-<td>0.0007</td>
-<td>-0.0033</td>
+<td>-0.0085</td>
+<td>0.0078</td>
+<td>0.0088</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-05</th>
-<td>-0.0013</td>
-<td>0.0006</td>
-<td>-0.0012</td>
+<td>0.0007</td>
+<td>0.0047</td>
+<td>0.0113</td>
 </tr>
 </tbody>
 </table>
@@ -683,18 +700,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Return values fill the cells</li>
 </ul>
 <p><strong>Polars syntax:</strong></p>
-<div id="2c2d24ad" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars uses pivot differently - need to specify aggregation</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data_wide_pl <span class="op">=</span> data_long_pl.pivot(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>data_wide_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/jr/cn9h86ld68qb5rtvs9gsb1vr0000gn/T/ipykernel_60679/105412148.py:2: DeprecationWarning: the argument `columns` for `DataFrame.pivot` is deprecated. It was renamed to `on` in version 1.0.0.
-  data_wide_pl = data_long_pl.pivot(</code></pre>
+<div id="d554c89d" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-6"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-6-1"><a href="#annotated-cell-6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars names the pivoted column `on` rather than `columns`</span></span>
+<span id="annotated-cell-6-2"><a href="#annotated-cell-6-2" aria-hidden="true" tabindex="-1"></a>data_wide_pl <span class="op">=</span> data_long_pl.pivot(</span>
+<span id="annotated-cell-6-3"><a href="#annotated-cell-6-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-6" data-target-annotation="1">1</button><span id="annotated-cell-6-4" class="code-annotation-target"><a href="#annotated-cell-6-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="annotated-cell-6-5"><a href="#annotated-cell-6-5" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span></span>
+<span id="annotated-cell-6-6"><a href="#annotated-cell-6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-6-7"><a href="#annotated-cell-6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-6-8"><a href="#annotated-cell-6-8" aria-hidden="true" tabindex="-1"></a>data_wide_pl</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-6" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-6" data-code-lines="4" data-code-annotation="1">Polars renamed this argument from <code>columns</code> to <code>on</code> in version 1.0.0. pandas still calls it <code>columns</code>, so this is one keyword you have to translate when moving code between the two libraries; <code>index</code> and <code>values</code> mean the same thing in both.</span>
+</dd>
+</dl>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <div><style>
@@ -723,57 +744,57 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>2024-01-01 00:00:00</td>
-<td>0.0047</td>
-<td>0.0023</td>
-<td>-0.0038</td>
+<td>0.003</td>
+<td>-0.0104</td>
+<td>0.0075</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
-<td>0.0047</td>
-<td>0.0035</td>
-<td>-0.0009</td>
+<td>0.0094</td>
+<td>-0.0195</td>
+<td>-0.013</td>
 </tr>
 <tr class="odd">
 <td>2024-01-03 00:00:00</td>
-<td>-0.0027</td>
-<td>-0.0035</td>
-<td>-0.0026</td>
+<td>0.0013</td>
+<td>-0.0032</td>
+<td>-0.0002</td>
 </tr>
 <tr class="even">
 <td>2024-01-04 00:00:00</td>
-<td>-0.0017</td>
-<td>-0.0033</td>
-<td>0.0007</td>
+<td>-0.0085</td>
+<td>0.0088</td>
+<td>0.0078</td>
 </tr>
 <tr class="odd">
 <td>2024-01-05 00:00:00</td>
-<td>-0.0013</td>
-<td>-0.0012</td>
-<td>0.0006</td>
+<td>0.0007</td>
+<td>0.0113</td>
+<td>0.0047</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<p>Polars’ <code>pivot</code> is similar but requires you to think about aggregation from the start. If multiple rows could map to the same cell (same date and ticker), you must specify how to combine them (sum, mean, first, etc.).</p>
+<p>Polars’ <code>pivot</code> behaves like the pandas version here: each date-ticker pair appears exactly once, so no aggregation is needed and none is given. The difference between the two libraries is <em>where</em> the aggregation lives. Polars takes an optional <code>aggregate_function</code> argument on <code>pivot</code> itself, while pandas splits the job across two methods: <code>pivot</code> never aggregates, and <code>pivot_table</code> always can.</p>
 </section>
 <section id="handling-duplicate-entries" class="level3" data-number="15.2.2">
 <h3 data-number="15.2.2" class="anchored" data-anchor-id="handling-duplicate-entries"><span class="header-section-number">15.2.2</span> Handling Duplicate Entries</h3>
 <p>One common issue with pivoting is duplicate entries. What happens if your data has multiple return observations for the same stock on the same date?</p>
-<div id="c2c6a55a" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data with duplicates</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data_with_dups_pd <span class="op">=</span> pd.DataFrame([</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.01</span>},</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.02</span>},  <span class="co"># duplicate!</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'MSFT'</span>, <span class="st">'return'</span>: <span class="fl">0.03</span>},</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas pivot will fail with duplicates</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    data_with_dups_pd.pivot(index<span class="op">=</span><span class="st">'date'</span>, columns<span class="op">=</span><span class="st">'ticker'</span>, values<span class="op">=</span><span class="st">'return'</span>)</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span> <span class="im">as</span> e:</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="12f52dd4" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data with duplicates</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data_with_dups_pd <span class="op">=</span> pd.DataFrame([</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.01</span>},</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.02</span>},  <span class="co"># duplicate!</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'MSFT'</span>, <span class="st">'return'</span>: <span class="fl">0.03</span>},</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas pivot will fail with duplicates</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    data_with_dups_pd.pivot(index<span class="op">=</span><span class="st">'date'</span>, columns<span class="op">=</span><span class="st">'ticker'</span>, values<span class="op">=</span><span class="st">'return'</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">ValueError</span> <span class="im">as</span> e:</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Error: </span><span class="sc">{</span>e<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Error: Index contains duplicate entries, cannot reshape</code></pre>
 </div>
@@ -783,16 +804,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Use <code>pivot_table</code> with an aggregation function</li>
 <li>Clean your data first to remove duplicates</li>
 </ol>
-<div id="61ec1e1d" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 1: Use pivot_table with aggregation</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pd <span class="op">=</span> data_with_dups_pd.pivot_table(</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">'mean'</span>  <span class="co"># or 'sum', 'first', 'last', etc.</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="9f18b32c" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Option 1: Use pivot_table with aggregation</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pd <span class="op">=</span> data_with_dups_pd.pivot_table(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    aggfunc<span class="op">=</span><span class="st">'mean'</span>  <span class="co"># or 'sum', 'first', 'last', etc.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
@@ -822,27 +843,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Polars requires you to specify aggregation from the start, so duplicates are handled automatically:</p>
-<div id="6db1433d" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data_with_dups_pl <span class="op">=</span> pl.DataFrame([</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.01</span>},</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.02</span>},</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'MSFT'</span>, <span class="st">'return'</span>: <span class="fl">0.03</span>},</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars pivot with aggregation</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pl <span class="op">=</span> data_with_dups_pl.pivot(</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span>,</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>    aggregate_function<span class="op">=</span><span class="st">'mean'</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/jr/cn9h86ld68qb5rtvs9gsb1vr0000gn/T/ipykernel_60679/556176386.py:8: DeprecationWarning: the argument `columns` for `DataFrame.pivot` is deprecated. It was renamed to `on` in version 1.0.0.
-  wide_with_agg_pl = data_with_dups_pl.pivot(</code></pre>
-</div>
+<p>Polars refuses to guess as well. Pivoting the same duplicated data without an aggregation raises <code>ComputeError: aggregation 'item' expected no or a single value, got 2 values</code>. Neither library will silently pick a value for you. The difference is only in the fix: in Polars you stay with <code>pivot</code> and add <code>aggregate_function</code>, rather than switching to a separate method.</p>
+<div id="b023ef52" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>data_with_dups_pl <span class="op">=</span> pl.DataFrame([</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.01</span>},</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'AAPL'</span>, <span class="st">'return'</span>: <span class="fl">0.02</span>},</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'date'</span>: <span class="st">'2024-01-01'</span>, <span class="st">'ticker'</span>: <span class="st">'MSFT'</span>, <span class="st">'return'</span>: <span class="fl">0.03</span>},</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars pivot with aggregation</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pl <span class="op">=</span> data_with_dups_pl.pivot(</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    values<span class="op">=</span><span class="st">'return'</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    aggregate_function<span class="op">=</span><span class="st">'mean'</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>wide_with_agg_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <div><style>
 .dataframe > thead > tr,
@@ -881,7 +898,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="15.2.3" class="anchored" data-anchor-id="meltunpivot-wide-to-long"><span class="header-section-number">15.2.3</span> Melt/Unpivot: Wide to Long</h3>
 <p>The melt operation (called <code>unpivot</code> in Polars) is the inverse of pivot—it transforms wide format data back into long format. You specify which columns to keep as identifiers and which to “melt” into a single column.</p>
 <p><strong>pandas syntax:</strong></p>
-<div id="534fe042" class="cell" data-execution_count="8">
+<div id="1e18b8db" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset index to make date a regular column</span></span>
 <span id="annotated-cell-10-2"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>data_wide_pd_reset <span class="op">=</span> data_wide_pd.reset_index()</span>
 <span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -932,61 +949,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <th data-quarto-table-cell-role="th">0</th>
 <td>2024-01-01</td>
 <td>AAPL</td>
-<td>0.0047</td>
+<td>0.0030</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>2024-01-02</td>
 <td>AAPL</td>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>2024-01-03</td>
 <td>AAPL</td>
-<td>-0.0027</td>
+<td>0.0013</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>2024-01-04</td>
 <td>AAPL</td>
-<td>-0.0017</td>
+<td>-0.0085</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>2024-01-05</td>
 <td>AAPL</td>
-<td>-0.0013</td>
+<td>0.0007</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
 <td>2024-01-01</td>
 <td>MSFT</td>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
 <td>2024-01-02</td>
 <td>MSFT</td>
-<td>0.0035</td>
+<td>-0.0195</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
 <td>2024-01-03</td>
 <td>MSFT</td>
-<td>-0.0035</td>
+<td>-0.0032</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
 <td>2024-01-04</td>
 <td>MSFT</td>
-<td>-0.0033</td>
+<td>0.0088</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
 <td>2024-01-05</td>
 <td>MSFT</td>
-<td>-0.0012</td>
+<td>0.0113</td>
 </tr>
 </tbody>
 </table>
@@ -995,7 +1012,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p><strong>Polars syntax:</strong></p>
-<div id="a261feab" class="cell" data-execution_count="9">
+<div id="1ecd8a1e" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars uses unpivot (melt is deprecated)</span></span>
 <span id="annotated-cell-11-2"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>data_melted_pl <span class="op">=</span> data_wide_pl.unpivot(</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-3" class="code-annotation-target"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">'date'</span>],</span>
@@ -1043,52 +1060,52 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td>2024-01-01 00:00:00</td>
 <td>"AAPL"</td>
-<td>0.0047</td>
+<td>0.003</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
 <td>"AAPL"</td>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <td>2024-01-03 00:00:00</td>
 <td>"AAPL"</td>
-<td>-0.0027</td>
+<td>0.0013</td>
 </tr>
 <tr class="even">
 <td>2024-01-04 00:00:00</td>
 <td>"AAPL"</td>
-<td>-0.0017</td>
+<td>-0.0085</td>
 </tr>
 <tr class="odd">
 <td>2024-01-05 00:00:00</td>
 <td>"AAPL"</td>
-<td>-0.0013</td>
+<td>0.0007</td>
 </tr>
 <tr class="even">
 <td>2024-01-01 00:00:00</td>
 <td>"MSFT"</td>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="odd">
 <td>2024-01-02 00:00:00</td>
 <td>"MSFT"</td>
-<td>0.0035</td>
+<td>-0.0195</td>
 </tr>
 <tr class="even">
 <td>2024-01-03 00:00:00</td>
 <td>"MSFT"</td>
-<td>-0.0035</td>
+<td>-0.0032</td>
 </tr>
 <tr class="odd">
 <td>2024-01-04 00:00:00</td>
 <td>"MSFT"</td>
-<td>-0.0033</td>
+<td>0.0088</td>
 </tr>
 <tr class="even">
 <td>2024-01-05 00:00:00</td>
 <td>"MSFT"</td>
-<td>-0.0012</td>
+<td>0.0113</td>
 </tr>
 </tbody>
 </table>
@@ -1101,12 +1118,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>While <code>pivot</code> and <code>melt</code> work with columns, <code>stack</code> and <code>unstack</code> work with index levels. They’re particularly useful when you have MultiIndex DataFrames (hierarchical indices with multiple levels).</p>
 <p><strong>Stack:</strong> Moves a column level into the row index (wide to long)</p>
 <p><strong>Unstack:</strong> Moves a row index level into the columns (long to wide)</p>
-<div id="f78acba2" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a MultiIndex DataFrame</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Set both date and ticker as index</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>data_multi_pd <span class="op">=</span> data_long_pd.set_index([<span class="st">'date'</span>, <span class="st">'ticker'</span>])</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>data_multi_pd.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="12c7998b" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a MultiIndex DataFrame</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Set both date and ticker as index</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>data_multi_pd <span class="op">=</span> data_long_pd.set_index([<span class="st">'date'</span>, <span class="st">'ticker'</span>])</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>data_multi_pd.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <div>
 
@@ -1128,24 +1145,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th rowspan="3" data-quarto-table-cell-role="th" data-valign="top">2024-01-01</th>
 <th data-quarto-table-cell-role="th">AAPL</th>
-<td>0.0047</td>
+<td>0.0030</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">MSFT</th>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">GOOGL</th>
-<td>-0.0038</td>
+<td>0.0075</td>
 </tr>
 <tr class="even">
 <th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">2024-01-02</th>
 <th data-quarto-table-cell-role="th">AAPL</th>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">MSFT</th>
-<td>0.0035</td>
+<td>-0.0195</td>
 </tr>
 </tbody>
 </table>
@@ -1153,11 +1170,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="f2fa0e89" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstack: move ticker from index to columns (long to wide)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>data_unstacked_pd <span class="op">=</span> data_multi_pd.unstack(level<span class="op">=</span><span class="st">'ticker'</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>data_unstacked_pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c1650253" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unstack: move ticker from index to columns (long to wide)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>data_unstacked_pd <span class="op">=</span> data_multi_pd.unstack(level<span class="op">=</span><span class="st">'ticker'</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>data_unstacked_pd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <div>
 
@@ -1184,33 +1201,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-01</th>
-<td>0.0047</td>
-<td>-0.0038</td>
-<td>0.0023</td>
+<td>0.0030</td>
+<td>0.0075</td>
+<td>-0.0104</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2024-01-02</th>
-<td>0.0047</td>
-<td>-0.0009</td>
-<td>0.0035</td>
+<td>0.0094</td>
+<td>-0.0130</td>
+<td>-0.0195</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-03</th>
-<td>-0.0027</td>
-<td>-0.0026</td>
-<td>-0.0035</td>
+<td>0.0013</td>
+<td>-0.0002</td>
+<td>-0.0032</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">2024-01-04</th>
-<td>-0.0017</td>
-<td>0.0007</td>
-<td>-0.0033</td>
+<td>-0.0085</td>
+<td>0.0078</td>
+<td>0.0088</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2024-01-05</th>
-<td>-0.0013</td>
-<td>0.0006</td>
-<td>-0.0012</td>
+<td>0.0007</td>
+<td>0.0047</td>
+<td>0.0113</td>
 </tr>
 </tbody>
 </table>
@@ -1218,14 +1235,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="e896cc3e" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack: move ticker from columns back to index (wide to long)</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data_stacked_pd <span class="op">=</span> data_unstacked_pd.stack(level<span class="op">=</span><span class="st">'ticker'</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>data_stacked_pd.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/jr/cn9h86ld68qb5rtvs9gsb1vr0000gn/T/ipykernel_60679/4172318071.py:2: FutureWarning: The previous implementation of stack is deprecated and will be removed in a future version of pandas. See the What's New notes for pandas 2.1.0 for details. Specify future_stack=True to adopt the new implementation and silence this warning.
-  data_stacked_pd = data_unstacked_pd.stack(level='ticker')</code></pre>
+<div id="4394e5e4" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stack: move ticker from columns back to index (wide to long)</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-2" class="code-annotation-target"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>data_stacked_pd <span class="op">=</span> data_unstacked_pd.stack(level<span class="op">=</span><span class="st">'ticker'</span>, future_stack<span class="op">=</span><span class="va">True</span>)</span>
+<span id="annotated-cell-14-3"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-14-4"><a href="#annotated-cell-14-4" aria-hidden="true" tabindex="-1"></a>data_stacked_pd.head()</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-14" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-14" data-code-lines="2" data-code-annotation="1"><code>future_stack=True</code> opts into the rewritten implementation of <code>stack</code>. On pandas 2 the old implementation is still the default and emits a <code>FutureWarning</code>; from pandas 3 the new behavior is the default and the argument becomes unnecessary.</span>
+</dd>
+</dl>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
@@ -1248,24 +1269,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th rowspan="3" data-quarto-table-cell-role="th" data-valign="top">2024-01-01</th>
 <th data-quarto-table-cell-role="th">AAPL</th>
-<td>0.0047</td>
+<td>0.0030</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">GOOGL</th>
-<td>-0.0038</td>
+<td>0.0075</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">MSFT</th>
-<td>0.0023</td>
+<td>-0.0104</td>
 </tr>
 <tr class="even">
 <th rowspan="2" data-quarto-table-cell-role="th" data-valign="top">2024-01-02</th>
 <th data-quarto-table-cell-role="th">AAPL</th>
-<td>0.0047</td>
+<td>0.0094</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">GOOGL</th>
-<td>-0.0009</td>
+<td>-0.0130</td>
 </tr>
 </tbody>
 </table>
@@ -1278,7 +1299,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><strong>pivot/melt</strong>: Work with regular columns, create new structure from scratch</li>
 <li><strong>stack/unstack</strong>: Work with existing MultiIndex structure, move levels between index and columns</li>
 </ul>
-<p>Polars doesn’t have direct equivalents to stack/unstack because it doesn’t use MultiIndex. Instead, you would use combinations of <code>pivot</code>, <code>melt</code>, <code>group_by</code>, and <code>join</code> to achieve the same results.</p>
+<p>Polars doesn’t have direct equivalents to stack/unstack because it doesn’t use MultiIndex. Instead, you would use combinations of <code>pivot</code>, <code>unpivot</code>, <code>group_by</code>, and <code>join</code> to achieve the same results.</p>
 </section>
 </section>
 <section id="summary" class="level2" data-number="15.3">

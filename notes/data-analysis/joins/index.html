@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>16&nbsp; Joins and Merges – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../data-analysis/reshaping/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -414,7 +419,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: merging monthly portfolio returns with portfolio characteristics. Each portfolio-month appears once in each dataset.</p>
-<div id="7df1ee40" class="cell" data-execution_count="1">
+<div id="6767b606" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> date</span>
@@ -547,7 +552,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: merging firm characteristics (one row per firm) with daily returns (many rows per firm).</p>
-<div id="54dafe6c" class="cell" data-execution_count="2">
+<div id="61e96e06" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firm characteristics (one row per firm)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>firms <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'permno'</span>: [<span class="dv">10107</span>, <span class="dv">10107</span>, <span class="dv">14593</span>],</span>
@@ -690,7 +695,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: joining firm-level data to analyst coverage by sector-year creates all combinations.</p>
-<div id="70de1f00" class="cell" data-execution_count="3">
+<div id="e48458ef" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Firms in each sector-year</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>firms <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sector'</span>: [<span class="st">'Tech'</span>, <span class="st">'Tech'</span>, <span class="st">'Finance'</span>],</span>
@@ -779,7 +784,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Notice how the row count exploded:</p>
-<div id="b5413427" class="cell" data-execution_count="4">
+<div id="1a136395" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Original firms: </span><span class="sc">{</span><span class="bu">len</span>(firms)<span class="sc">}</span><span class="ss">, analysts: </span><span class="sc">{</span><span class="bu">len</span>(analysts)<span class="sc">}</span><span class="ss">, merged: </span><span class="sc">{</span><span class="bu">len</span>(merged)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original firms: 3, analysts: 3, merged: 5</code></pre>
@@ -795,7 +800,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In finance, many-to-many joins typically indicate a modeling error. You probably need to aggregate one dataset first (e.g., average analyst recommendations by sector-year) or use a more specific join key. Pandas allows many-to-many by default; consider this a bug, not a feature.</p>
+<p>In finance, many-to-many joins typically indicate a modeling error. You probably need to aggregate one dataset first (e.g., average analyst recommendations by sector-year) or use a more specific join key. Pandas and Polars both allow many-to-many silently by default; consider this a bug, not a feature, and pass <code>validate</code> to make your expectation explicit.</p>
 </div>
 </div>
 </section>
@@ -845,7 +850,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: merging returns with accounting data. Only firm-years with both survive.</p>
-<div id="78f2134b" class="cell" data-execution_count="5">
+<div id="31f1ce4c" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Stock returns</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'TSLA'</span>],</span>
@@ -960,7 +965,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: keeping all returns, adding accounting data where available.</p>
-<div id="155783f5" class="cell" data-execution_count="6">
+<div id="5f42ffae" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join: keep all returns</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>left <span class="op">=</span> returns.merge(accounting, on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'left'</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>left</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1027,7 +1032,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="right-join-keep-all-from-right-dataset" class="level3" data-number="16.2.3">
 <h3 data-number="16.2.3" class="anchored" data-anchor-id="right-join-keep-all-from-right-dataset"><span class="header-section-number">16.2.3</span> Right Join: Keep All from Right Dataset</h3>
 <p>The mirror of left join. Keep every row from the right dataset, add data from left where available. In practice, just swap your datasets and use a left join—right joins exist for symmetry but rarely clarify code.</p>
-<div id="bdf07eec" class="cell" data-execution_count="7">
+<div id="f199e99b" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Right join: keep all accounting observations</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>right <span class="op">=</span> returns.merge(accounting, on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'right'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>right</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1137,7 +1142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Example: keeping all tickers from either dataset.</p>
-<div id="fa762a2e" class="cell" data-execution_count="8">
+<div id="8e7ee32f" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outer join: keep everything</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>outer <span class="op">=</span> returns.merge(accounting, on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>], how<span class="op">=</span><span class="st">'outer'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>outer</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1211,8 +1216,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="polars-merge-syntax" class="level3" data-number="16.2.5">
 <h3 data-number="16.2.5" class="anchored" data-anchor-id="polars-merge-syntax"><span class="header-section-number">16.2.5</span> Polars Merge Syntax</h3>
-<p>Polars uses similar concepts but different method names. The key difference: Polars is more explicit about join types and discourages many-to-many joins by default.</p>
-<div id="0753292a" class="cell" data-execution_count="9">
+<p>Polars uses similar concepts but different method names, and is more explicit about join types (<code>how='full'</code> rather than <code>'outer'</code>, for example). It is <em>not</em> stricter about cardinality: a join on a key that repeats on both sides returns the full cartesian product with no warning, exactly like pandas. The same discipline applies on both sides.</p>
+<div id="c4fc0db0" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same data in Polars</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>returns_pl <span class="op">=</span> pl.DataFrame({</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'TSLA'</span>],</span>
@@ -1280,7 +1285,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="051d5507" class="cell" data-execution_count="10">
+<div id="1e471ca2" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Left join</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>left_pl <span class="op">=</span> returns_pl.join(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    accounting_pl,</span>
@@ -1341,7 +1346,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="ec7e00fe" class="cell" data-execution_count="11">
+<div id="5270a967" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Outer join (called 'full' in Polars)</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>outer_pl <span class="op">=</span> returns_pl.join(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    accounting_pl,</span>
@@ -1421,15 +1426,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Polars also provides a <code>validate</code> parameter similar to pandas:</p>
-<div id="706d2024" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate one-to-one</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>inner_pl <span class="op">=</span> returns_pl.join(</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    accounting_pl,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>],</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'inner'</span>,</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">'1:1'</span>  <span class="co"># Raises error if violated</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Because nothing is enforced by default, use the <code>validate</code> parameter, the Polars equivalent of the pandas one. It accepts <code>'1:1'</code>, <code>'1:m'</code>, <code>'m:1'</code>, and <code>'m:m'</code>—the same shorthand pandas accepts alongside its longer <code>'one_to_one'</code> spellings:</p>
+<div id="09142b81" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-12"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-12-1"><a href="#annotated-cell-12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate one-to-one</span></span>
+<span id="annotated-cell-12-2"><a href="#annotated-cell-12-2" aria-hidden="true" tabindex="-1"></a>inner_pl <span class="op">=</span> returns_pl.join(</span>
+<span id="annotated-cell-12-3"><a href="#annotated-cell-12-3" aria-hidden="true" tabindex="-1"></a>    accounting_pl,</span>
+<span id="annotated-cell-12-4"><a href="#annotated-cell-12-4" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>],</span>
+<span id="annotated-cell-12-5"><a href="#annotated-cell-12-5" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'inner'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="1">1</button><span id="annotated-cell-12-6" class="code-annotation-target"><a href="#annotated-cell-12-6" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">'1:1'</span></span>
+<span id="annotated-cell-12-7"><a href="#annotated-cell-12-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-12-8"><a href="#annotated-cell-12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-12-9"><a href="#annotated-cell-12-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Validate many-to-one: repeated keys on the left, unique on the right</span></span>
+<span id="annotated-cell-12-10"><a href="#annotated-cell-12-10" aria-hidden="true" tabindex="-1"></a>broadcast_pl <span class="op">=</span> returns_pl.join(</span>
+<span id="annotated-cell-12-11"><a href="#annotated-cell-12-11" aria-hidden="true" tabindex="-1"></a>    accounting_pl,</span>
+<span id="annotated-cell-12-12"><a href="#annotated-cell-12-12" aria-hidden="true" tabindex="-1"></a>    on<span class="op">=</span>[<span class="st">'ticker'</span>, <span class="st">'year'</span>],</span>
+<span id="annotated-cell-12-13"><a href="#annotated-cell-12-13" aria-hidden="true" tabindex="-1"></a>    how<span class="op">=</span><span class="st">'left'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-12" data-target-annotation="2">2</button><span id="annotated-cell-12-14" class="code-annotation-target"><a href="#annotated-cell-12-14" aria-hidden="true" tabindex="-1"></a>    validate<span class="op">=</span><span class="st">'m:1'</span></span>
+<span id="annotated-cell-12-15"><a href="#annotated-cell-12-15" aria-hidden="true" tabindex="-1"></a>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-12" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="6" data-code-annotation="1">Raises <code>ComputeError: join keys did not fulfill 1:1 validation</code> if either side has duplicate keys.</span>
+</dd>
+<dt data-target-cell="annotated-cell-12" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-12" data-code-lines="14" data-code-annotation="2">The usual case when broadcasting firm-level data onto a panel: only the right side is checked for uniqueness.</span>
+</dd>
+</dl>
+</div>
 </div>
 </section>
 </section>
@@ -1449,56 +1474,59 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Optionally match exactly on other columns (e.g., ticker)</li>
 </ol>
 <p>Example: merging daily returns with quarterly earnings.</p>
-<div id="a92e3e98" class="cell" data-execution_count="13">
+<div id="9f042d73" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-13-1"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns (many observations)</span></span>
-<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
-<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">10</span>,</span>
-<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">10</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
-<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'return'</span>: np.random.randn(<span class="dv">10</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
-<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Earnings announcements (sparse, irregular)</span></span>
-<span id="annotated-cell-13-11"><a href="#annotated-cell-13-11" aria-hidden="true" tabindex="-1"></a>earnings <span class="op">=</span> pd.DataFrame({</span>
-<span id="annotated-cell-13-12"><a href="#annotated-cell-13-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>],</span>
-<span id="annotated-cell-13-13"><a href="#annotated-cell-13-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'announce_date'</span>: pd.to_datetime([<span class="st">'2023-12-28'</span>, <span class="st">'2024-01-03'</span>, <span class="st">'2024-01-08'</span>]),</span>
-<span id="annotated-cell-13-14"><a href="#annotated-cell-13-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eps'</span>: [<span class="fl">1.25</span>, <span class="fl">1.30</span>, <span class="fl">1.35</span>],</span>
-<span id="annotated-cell-13-15"><a href="#annotated-cell-13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'surprise'</span>: [<span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
-<span id="annotated-cell-13-16"><a href="#annotated-cell-13-16" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="annotated-cell-13-17"><a href="#annotated-cell-13-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-13-18"><a href="#annotated-cell-13-18" aria-hidden="true" tabindex="-1"></a><span class="co"># CRITICAL: Sort by time</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-19" class="code-annotation-target"><a href="#annotated-cell-13-19" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> returns.sort_values(<span class="st">'date'</span>)</span>
-<span id="annotated-cell-13-20"><a href="#annotated-cell-13-20" aria-hidden="true" tabindex="-1"></a>earnings <span class="op">=</span> earnings.sort_values(<span class="st">'announce_date'</span>)</span>
-<span id="annotated-cell-13-21"><a href="#annotated-cell-13-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-13-22"><a href="#annotated-cell-13-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: match each return to most recent earnings</span></span>
-<span id="annotated-cell-13-23"><a href="#annotated-cell-13-23" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
-<span id="annotated-cell-13-24"><a href="#annotated-cell-13-24" aria-hidden="true" tabindex="-1"></a>    returns,</span>
-<span id="annotated-cell-13-25"><a href="#annotated-cell-13-25" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-26" class="code-annotation-target"><a href="#annotated-cell-13-26" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="annotated-cell-13-27"><a href="#annotated-cell-13-27" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3">3</button><span id="annotated-cell-13-28" class="code-annotation-target"><a href="#annotated-cell-13-28" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4">4</button><span id="annotated-cell-13-29" class="code-annotation-target"><a href="#annotated-cell-13-29" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
-<span id="annotated-cell-13-30"><a href="#annotated-cell-13-30" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="annotated-cell-13-31"><a href="#annotated-cell-13-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-13-32"><a href="#annotated-cell-13-32" aria-hidden="true" tabindex="-1"></a>merged[[<span class="st">'date'</span>, <span class="st">'return'</span>, <span class="st">'announce_date'</span>, <span class="st">'eps'</span>, <span class="st">'surprise'</span>]]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Seeded generator so the numbers below are reproducible</span></span>
+<span id="annotated-cell-13-4"><a href="#annotated-cell-13-4" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="annotated-cell-13-5"><a href="#annotated-cell-13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-6"><a href="#annotated-cell-13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns (many observations)</span></span>
+<span id="annotated-cell-13-7"><a href="#annotated-cell-13-7" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
+<span id="annotated-cell-13-8"><a href="#annotated-cell-13-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">10</span>,</span>
+<span id="annotated-cell-13-9"><a href="#annotated-cell-13-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">10</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
+<span id="annotated-cell-13-10"><a href="#annotated-cell-13-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'return'</span>: rng.standard_normal(<span class="dv">10</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
+<span id="annotated-cell-13-11"><a href="#annotated-cell-13-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-13-12"><a href="#annotated-cell-13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-13"><a href="#annotated-cell-13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Earnings announcements (sparse, irregular)</span></span>
+<span id="annotated-cell-13-14"><a href="#annotated-cell-13-14" aria-hidden="true" tabindex="-1"></a>earnings <span class="op">=</span> pd.DataFrame({</span>
+<span id="annotated-cell-13-15"><a href="#annotated-cell-13-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>],</span>
+<span id="annotated-cell-13-16"><a href="#annotated-cell-13-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'announce_date'</span>: pd.to_datetime([<span class="st">'2023-12-28'</span>, <span class="st">'2024-01-03'</span>, <span class="st">'2024-01-08'</span>]),</span>
+<span id="annotated-cell-13-17"><a href="#annotated-cell-13-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eps'</span>: [<span class="fl">1.25</span>, <span class="fl">1.30</span>, <span class="fl">1.35</span>],</span>
+<span id="annotated-cell-13-18"><a href="#annotated-cell-13-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'surprise'</span>: [<span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
+<span id="annotated-cell-13-19"><a href="#annotated-cell-13-19" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-13-20"><a href="#annotated-cell-13-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-21"><a href="#annotated-cell-13-21" aria-hidden="true" tabindex="-1"></a><span class="co"># CRITICAL: Sort by time</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-22" class="code-annotation-target"><a href="#annotated-cell-13-22" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> returns.sort_values(<span class="st">'date'</span>)</span>
+<span id="annotated-cell-13-23"><a href="#annotated-cell-13-23" aria-hidden="true" tabindex="-1"></a>earnings <span class="op">=</span> earnings.sort_values(<span class="st">'announce_date'</span>)</span>
+<span id="annotated-cell-13-24"><a href="#annotated-cell-13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-25"><a href="#annotated-cell-13-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: match each return to most recent earnings</span></span>
+<span id="annotated-cell-13-26"><a href="#annotated-cell-13-26" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
+<span id="annotated-cell-13-27"><a href="#annotated-cell-13-27" aria-hidden="true" tabindex="-1"></a>    returns,</span>
+<span id="annotated-cell-13-28"><a href="#annotated-cell-13-28" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="2">2</button><span id="annotated-cell-13-29" class="code-annotation-target"><a href="#annotated-cell-13-29" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="annotated-cell-13-30"><a href="#annotated-cell-13-30" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="3">3</button><span id="annotated-cell-13-31" class="code-annotation-target"><a href="#annotated-cell-13-31" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="4">4</button><span id="annotated-cell-13-32" class="code-annotation-target"><a href="#annotated-cell-13-32" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
+<span id="annotated-cell-13-33"><a href="#annotated-cell-13-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-13-34"><a href="#annotated-cell-13-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-13-35"><a href="#annotated-cell-13-35" aria-hidden="true" tabindex="-1"></a>merged[[<span class="st">'date'</span>, <span class="st">'return'</span>, <span class="st">'announce_date'</span>, <span class="st">'eps'</span>, <span class="st">'surprise'</span>]]</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-annotation">
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
 <dt data-target-cell="annotated-cell-13" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="19,20" data-code-annotation="1">Both DataFrames must be sorted by their time columns before asof join.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="22,23" data-code-annotation="1">Both DataFrames must be sorted by their time columns before asof join.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="26,27" data-code-annotation="2">Time columns to match on (can have different names).</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="29,30" data-code-annotation="2">Time columns to match on (can have different names).</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="28" data-code-annotation="3">Additional columns that must match exactly.</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="31" data-code-annotation="3">Additional columns that must match exactly.</span>
 </dd>
 <dt data-target-cell="annotated-cell-13" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-13" data-code-lines="29" data-code-annotation="4">Use most recent prior value (avoids look-ahead bias).</span>
+<span data-code-cell="annotated-cell-13" data-code-lines="32" data-code-annotation="4">Use most recent prior value (avoids look-ahead bias).</span>
 </dd>
 </dl>
 </div>
@@ -1521,7 +1549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
 <td>2024-01-01</td>
-<td>-0.032470</td>
+<td>0.006094</td>
 <td>2023-12-28</td>
 <td>1.25</td>
 <td>0.02</td>
@@ -1529,7 +1557,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
 <td>2024-01-02</td>
-<td>0.023386</td>
+<td>-0.020800</td>
 <td>2023-12-28</td>
 <td>1.25</td>
 <td>0.02</td>
@@ -1537,7 +1565,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
 <td>2024-01-03</td>
-<td>-0.040501</td>
+<td>0.015009</td>
 <td>2024-01-03</td>
 <td>1.30</td>
 <td>-0.01</td>
@@ -1545,7 +1573,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
 <td>2024-01-04</td>
-<td>-0.017916</td>
+<td>0.018811</td>
 <td>2024-01-03</td>
 <td>1.30</td>
 <td>-0.01</td>
@@ -1553,7 +1581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
 <td>2024-01-05</td>
-<td>-0.004434</td>
+<td>-0.039021</td>
 <td>2024-01-03</td>
 <td>1.30</td>
 <td>-0.01</td>
@@ -1561,7 +1589,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <th data-quarto-table-cell-role="th">5</th>
 <td>2024-01-06</td>
-<td>-0.020436</td>
+<td>-0.026044</td>
 <td>2024-01-03</td>
 <td>1.30</td>
 <td>-0.01</td>
@@ -1569,7 +1597,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th data-quarto-table-cell-role="th">6</th>
 <td>2024-01-07</td>
-<td>-0.024500</td>
+<td>0.002557</td>
 <td>2024-01-03</td>
 <td>1.30</td>
 <td>-0.01</td>
@@ -1577,7 +1605,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <th data-quarto-table-cell-role="th">7</th>
 <td>2024-01-08</td>
-<td>0.046251</td>
+<td>-0.006325</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
@@ -1585,7 +1613,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <th data-quarto-table-cell-role="th">8</th>
 <td>2024-01-09</td>
-<td>-0.013361</td>
+<td>-0.000336</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
@@ -1593,7 +1621,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <th data-quarto-table-cell-role="th">9</th>
 <td>2024-01-10</td>
-<td>0.024632</td>
+<td>-0.017061</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
@@ -1621,7 +1649,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Both datasets must be sorted by the time column. Pandas doesn’t always check this, and unsorted data produces wrong results silently. Always sort explicitly before asof joins.</p>
+<p>Both datasets must be sorted by the time column. Pandas checks this and refuses to run: an unsorted left frame raises <code>ValueError: left keys must be sorted</code>, an unsorted right frame raises <code>ValueError: right keys must be sorted</code>. This is a loud failure, not silent corruption, so when you see it, fix the sort order rather than hunting for bad matches in the output.</p>
+<p>The check tells you <em>that</em> something is unsorted, not which upstream step reordered your data. Sort explicitly right before the join rather than assuming an earlier <code>sort_values()</code> survived intervening operations.</p>
 </div>
 </div>
 </section>
@@ -1633,26 +1662,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><code>direction='forward'</code>: Use next future value (rare in finance)</li>
 <li><code>direction='nearest'</code>: Use closest value in either direction (dangerous for event studies—can introduce look-ahead bias)</li>
 </ul>
-<div id="38751cc3" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward-looking (CAREFUL: creates look-ahead bias)</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>forward <span class="op">=</span> pd.merge_asof(</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    returns,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'forward'</span>  <span class="co"># Use next announcement</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nearest (AVOID for event studies)</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>nearest <span class="op">=</span> pd.merge_asof(</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    returns,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'nearest'</span>  <span class="co"># Use closest announcement</span></span>
-<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="8212ea35" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward-looking (CAREFUL: creates look-ahead bias)</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>forward <span class="op">=</span> pd.merge_asof(</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    returns,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'forward'</span>  <span class="co"># Use next announcement</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Nearest (AVOID for event studies)</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>nearest <span class="op">=</span> pd.merge_asof(</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    returns,</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    earnings,</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'nearest'</span>  <span class="co"># Use closest announcement</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1671,43 +1700,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="asof-joins-in-polars" class="level3" data-number="16.3.4">
 <h3 data-number="16.3.4" class="anchored" data-anchor-id="asof-joins-in-polars"><span class="header-section-number">16.3.4</span> Asof Joins in Polars</h3>
 <p>Polars provides asof joins through the <code>join_asof</code> method. The syntax is cleaner and performance is often better for large datasets.</p>
-<div id="35f41673" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same data in Polars</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>returns_pl <span class="op">=</span> pl.DataFrame({</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">10</span>,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pl.date_range(</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">10</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>        interval<span class="op">=</span><span class="st">'1d'</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>        eager<span class="op">=</span><span class="va">True</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'return'</span>: np.random.randn(<span class="dv">10</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>earnings_pl <span class="op">=</span> pl.DataFrame({</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>],</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'announce_date'</span>: [</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2023</span>, <span class="dv">12</span>, <span class="dv">28</span>),</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">3</span>),</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">8</span>)</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eps'</span>: [<span class="fl">1.25</span>, <span class="fl">1.30</span>, <span class="fl">1.35</span>],</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    <span class="st">'surprise'</span>: [<span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join in Polars</span></span>
-<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>merged_pl <span class="op">=</span> returns_pl.sort(<span class="st">'date'</span>).join_asof(</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a>    earnings_pl.sort(<span class="st">'announce_date'</span>),</span>
-<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
-<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a>    strategy<span class="op">=</span><span class="st">'backward'</span>  <span class="co"># Equivalent to pandas direction='backward'</span></span>
-<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>merged_pl.select([<span class="st">'date'</span>, <span class="st">'return'</span>, <span class="st">'announce_date'</span>, <span class="st">'eps'</span>, <span class="st">'surprise'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/var/folders/jr/cn9h86ld68qb5rtvs9gsb1vr0000gn/T/ipykernel_65713/4247637574.py:25: UserWarning: Sortedness of columns cannot be checked when 'by' groups provided
-  merged_pl = returns_pl.sort('date').join_asof(</code></pre>
+<div id="2d256751" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-15"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-15-1"><a href="#annotated-cell-15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same data in Polars: re-seed so the returns match the pandas example above</span></span>
+<span id="annotated-cell-15-2"><a href="#annotated-cell-15-2" aria-hidden="true" tabindex="-1"></a>rng <span class="op">=</span> np.random.default_rng(<span class="dv">42</span>)</span>
+<span id="annotated-cell-15-3"><a href="#annotated-cell-15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-4"><a href="#annotated-cell-15-4" aria-hidden="true" tabindex="-1"></a>returns_pl <span class="op">=</span> pl.DataFrame({</span>
+<span id="annotated-cell-15-5"><a href="#annotated-cell-15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">10</span>,</span>
+<span id="annotated-cell-15-6"><a href="#annotated-cell-15-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pl.date_range(</span>
+<span id="annotated-cell-15-7"><a href="#annotated-cell-15-7" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">1</span>),</span>
+<span id="annotated-cell-15-8"><a href="#annotated-cell-15-8" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">10</span>),</span>
+<span id="annotated-cell-15-9"><a href="#annotated-cell-15-9" aria-hidden="true" tabindex="-1"></a>        interval<span class="op">=</span><span class="st">'1d'</span>,</span>
+<span id="annotated-cell-15-10"><a href="#annotated-cell-15-10" aria-hidden="true" tabindex="-1"></a>        eager<span class="op">=</span><span class="va">True</span></span>
+<span id="annotated-cell-15-11"><a href="#annotated-cell-15-11" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="annotated-cell-15-12"><a href="#annotated-cell-15-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'return'</span>: rng.standard_normal(<span class="dv">10</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
+<span id="annotated-cell-15-13"><a href="#annotated-cell-15-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-15-14"><a href="#annotated-cell-15-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-15"><a href="#annotated-cell-15-15" aria-hidden="true" tabindex="-1"></a>earnings_pl <span class="op">=</span> pl.DataFrame({</span>
+<span id="annotated-cell-15-16"><a href="#annotated-cell-15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>],</span>
+<span id="annotated-cell-15-17"><a href="#annotated-cell-15-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'announce_date'</span>: [</span>
+<span id="annotated-cell-15-18"><a href="#annotated-cell-15-18" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2023</span>, <span class="dv">12</span>, <span class="dv">28</span>),</span>
+<span id="annotated-cell-15-19"><a href="#annotated-cell-15-19" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">3</span>),</span>
+<span id="annotated-cell-15-20"><a href="#annotated-cell-15-20" aria-hidden="true" tabindex="-1"></a>        date(<span class="dv">2024</span>, <span class="dv">1</span>, <span class="dv">8</span>)</span>
+<span id="annotated-cell-15-21"><a href="#annotated-cell-15-21" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="annotated-cell-15-22"><a href="#annotated-cell-15-22" aria-hidden="true" tabindex="-1"></a>    <span class="st">'eps'</span>: [<span class="fl">1.25</span>, <span class="fl">1.30</span>, <span class="fl">1.35</span>],</span>
+<span id="annotated-cell-15-23"><a href="#annotated-cell-15-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">'surprise'</span>: [<span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
+<span id="annotated-cell-15-24"><a href="#annotated-cell-15-24" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="annotated-cell-15-25"><a href="#annotated-cell-15-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-26"><a href="#annotated-cell-15-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join in Polars</span></span>
+<span id="annotated-cell-15-27"><a href="#annotated-cell-15-27" aria-hidden="true" tabindex="-1"></a>merged_pl <span class="op">=</span> returns_pl.sort(<span class="st">'date'</span>).join_asof(</span>
+<span id="annotated-cell-15-28"><a href="#annotated-cell-15-28" aria-hidden="true" tabindex="-1"></a>    earnings_pl.sort(<span class="st">'announce_date'</span>),</span>
+<span id="annotated-cell-15-29"><a href="#annotated-cell-15-29" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="annotated-cell-15-30"><a href="#annotated-cell-15-30" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
+<span id="annotated-cell-15-31"><a href="#annotated-cell-15-31" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="1">1</button><span id="annotated-cell-15-32" class="code-annotation-target"><a href="#annotated-cell-15-32" aria-hidden="true" tabindex="-1"></a>    strategy<span class="op">=</span><span class="st">'backward'</span>,</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-15" data-target-annotation="2">2</button><span id="annotated-cell-15-33" class="code-annotation-target"><a href="#annotated-cell-15-33" aria-hidden="true" tabindex="-1"></a>    check_sortedness<span class="op">=</span><span class="va">False</span></span>
+<span id="annotated-cell-15-34"><a href="#annotated-cell-15-34" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="annotated-cell-15-35"><a href="#annotated-cell-15-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-15-36"><a href="#annotated-cell-15-36" aria-hidden="true" tabindex="-1"></a>merged_pl.select([<span class="st">'date'</span>, <span class="st">'return'</span>, <span class="st">'announce_date'</span>, <span class="st">'eps'</span>, <span class="st">'surprise'</span>])</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-annotation">
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-15" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="32" data-code-annotation="1">Equivalent to pandas <code>direction='backward'</code>.</span>
+</dd>
+<dt data-target-cell="annotated-cell-15" data-target-annotation="2">2</dt>
+<dd>
+<span data-code-cell="annotated-cell-15" data-code-lines="33" data-code-annotation="2">Polars cannot verify sortedness once <code>by</code> groups are involved, and warns <code>UserWarning: Sortedness of columns cannot be checked when 'by' groups provided</code> if you leave the check on. We just sorted both frames, so we turn the check off to silence a warning that carries no information here. Without a <code>by</code> argument, leave it on—Polars will then raise <code>InvalidOperationError</code> on unsorted input, the same protection pandas gives you.</span>
+</dd>
+</dl>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div><style>
@@ -1738,70 +1778,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td>2024-01-01</td>
-<td>0.01453</td>
+<td>0.006094</td>
 <td>2023-12-28</td>
 <td>1.25</td>
 <td>0.02</td>
 </tr>
 <tr class="even">
 <td>2024-01-02</td>
-<td>0.001239</td>
+<td>-0.0208</td>
 <td>2023-12-28</td>
 <td>1.25</td>
 <td>0.02</td>
 </tr>
 <tr class="odd">
 <td>2024-01-03</td>
-<td>0.016048</td>
+<td>0.015009</td>
 <td>2024-01-03</td>
 <td>1.3</td>
 <td>-0.01</td>
 </tr>
 <tr class="even">
 <td>2024-01-04</td>
-<td>-0.02854</td>
+<td>0.018811</td>
 <td>2024-01-03</td>
 <td>1.3</td>
 <td>-0.01</td>
 </tr>
 <tr class="odd">
 <td>2024-01-05</td>
-<td>0.01889</td>
+<td>-0.039021</td>
 <td>2024-01-03</td>
 <td>1.3</td>
 <td>-0.01</td>
 </tr>
 <tr class="even">
 <td>2024-01-06</td>
-<td>-0.005555</td>
+<td>-0.026044</td>
 <td>2024-01-03</td>
 <td>1.3</td>
 <td>-0.01</td>
 </tr>
 <tr class="odd">
 <td>2024-01-07</td>
-<td>0.045201</td>
+<td>0.002557</td>
 <td>2024-01-03</td>
 <td>1.3</td>
 <td>-0.01</td>
 </tr>
 <tr class="even">
 <td>2024-01-08</td>
-<td>-0.029402</td>
+<td>-0.006325</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
 </tr>
 <tr class="odd">
 <td>2024-01-09</td>
-<td>-0.021957</td>
+<td>-0.000336</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
 </tr>
 <tr class="even">
 <td>2024-01-10</td>
-<td>0.026204</td>
+<td>-0.017061</td>
 <td>2024-01-08</td>
 <td>1.35</td>
 <td>0.03</td>
@@ -1812,126 +1852,126 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Polars also supports tolerance (maximum time difference) and handles missing values more explicitly:</p>
-<div id="d1db49c0" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only match if announcement is within 90 days</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>merged_pl <span class="op">=</span> returns_pl.sort(<span class="st">'date'</span>).join_asof(</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    earnings_pl.sort(<span class="st">'announce_date'</span>),</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    strategy<span class="op">=</span><span class="st">'backward'</span>,</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    tolerance<span class="op">=</span><span class="st">'90d'</span>  <span class="co"># NaN if no announcement within 90 days</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6bd4cb3f" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only match if announcement is within 90 days</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>merged_pl <span class="op">=</span> returns_pl.sort(<span class="st">'date'</span>).join_asof(</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    earnings_pl.sort(<span class="st">'announce_date'</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'announce_date'</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    strategy<span class="op">=</span><span class="st">'backward'</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    tolerance<span class="op">=</span><span class="st">'90d'</span>  <span class="co"># NaN if no announcement within 90 days</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="common-asof-join-patterns-in-finance" class="level3" data-number="16.3.5">
 <h3 data-number="16.3.5" class="anchored" data-anchor-id="common-asof-join-patterns-in-finance"><span class="header-section-number">16.3.5</span> Common Asof Join Patterns in Finance</h3>
 <p><strong>Pattern 1: Point-in-time accounting data</strong></p>
 <p>Merge daily returns with quarterly accounting variables. Each return should use the most recent financial statement available at that date.</p>
-<div id="e2f8d3dd" class="cell" data-execution_count="17">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'permno'</span>: [<span class="dv">10107</span>] <span class="op">*</span> <span class="dv">100</span>,</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">100</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ret'</span>: np.random.randn(<span class="dv">100</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarterly accounting (fiscal quarter end dates)</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>accounting <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'permno'</span>: [<span class="dv">10107</span>, <span class="dv">10107</span>, <span class="dv">10107</span>, <span class="dv">10107</span>],</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'datadate'</span>: pd.to_datetime([<span class="st">'2023-09-30'</span>, <span class="st">'2023-12-31'</span>,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">'2024-03-31'</span>, <span class="st">'2024-06-30'</span>]),</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'book_equity'</span>: [<span class="dv">1000</span>, <span class="dv">1100</span>, <span class="dv">1150</span>, <span class="dv">1200</span>],</span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'total_assets'</span>: [<span class="dv">5000</span>, <span class="dv">5200</span>, <span class="dv">5300</span>, <span class="dv">5400</span>]</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: each return uses most recent accounting data</span></span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>    returns.sort_values(<span class="st">'date'</span>),</span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>    accounting.sort_values(<span class="st">'datadate'</span>),</span>
-<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'datadate'</span>,</span>
-<span id="cb17-23"><a href="#cb17-23" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'permno'</span>,</span>
-<span id="cb17-24"><a href="#cb17-24" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
-<span id="cb17-25"><a href="#cb17-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0a50766c" class="cell" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'permno'</span>: [<span class="dv">10107</span>] <span class="op">*</span> <span class="dv">100</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">100</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ret'</span>: rng.standard_normal(<span class="dv">100</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Quarterly accounting (fiscal quarter end dates)</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>accounting <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'permno'</span>: [<span class="dv">10107</span>, <span class="dv">10107</span>, <span class="dv">10107</span>, <span class="dv">10107</span>],</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'datadate'</span>: pd.to_datetime([<span class="st">'2023-09-30'</span>, <span class="st">'2023-12-31'</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">'2024-03-31'</span>, <span class="st">'2024-06-30'</span>]),</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'book_equity'</span>: [<span class="dv">1000</span>, <span class="dv">1100</span>, <span class="dv">1150</span>, <span class="dv">1200</span>],</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">'total_assets'</span>: [<span class="dv">5000</span>, <span class="dv">5200</span>, <span class="dv">5300</span>, <span class="dv">5400</span>]</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: each return uses most recent accounting data</span></span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    returns.sort_values(<span class="st">'date'</span>),</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    accounting.sort_values(<span class="st">'datadate'</span>),</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'datadate'</span>,</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'permno'</span>,</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Pattern 2: Analyst forecast updates</strong></p>
 <p>Analyst forecasts arrive irregularly. Tag each return with the current consensus forecast.</p>
-<div id="ebea7878" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">30</span>,</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">30</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ret'</span>: np.random.randn(<span class="dv">30</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyst forecast updates (irregular)</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>forecasts <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'forecast_date'</span>: pd.to_datetime([</span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2023-12-15'</span>, <span class="st">'2024-01-05'</span>, <span class="st">'2024-01-12'</span>,</span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-20'</span>, <span class="st">'2024-01-28'</span></span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    ]),</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'consensus_eps'</span>: [<span class="fl">5.25</span>, <span class="fl">5.30</span>, <span class="fl">5.28</span>, <span class="fl">5.35</span>, <span class="fl">5.40</span>],</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_analysts'</span>: [<span class="dv">25</span>, <span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>, <span class="dv">29</span>]</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: current forecast as of each date</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>    returns.sort_values(<span class="st">'date'</span>),</span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    forecasts.sort_values(<span class="st">'forecast_date'</span>),</span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'forecast_date'</span>,</span>
-<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="aa52d585" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Daily returns</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">30</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">30</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ret'</span>: rng.standard_normal(<span class="dv">30</span>) <span class="op">*</span> <span class="fl">0.02</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Analyst forecast updates (irregular)</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>forecasts <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'forecast_date'</span>: pd.to_datetime([</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2023-12-15'</span>, <span class="st">'2024-01-05'</span>, <span class="st">'2024-01-12'</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-20'</span>, <span class="st">'2024-01-28'</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">'consensus_eps'</span>: [<span class="fl">5.25</span>, <span class="fl">5.30</span>, <span class="fl">5.28</span>, <span class="fl">5.35</span>, <span class="fl">5.40</span>],</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">'num_analysts'</span>: [<span class="dv">25</span>, <span class="dv">26</span>, <span class="dv">27</span>, <span class="dv">28</span>, <span class="dv">29</span>]</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: current forecast as of each date</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    returns.sort_values(<span class="st">'date'</span>),</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    forecasts.sort_values(<span class="st">'forecast_date'</span>),</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'date'</span>,</span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'forecast_date'</span>,</span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'ticker'</span>,</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Pattern 3: Bid-ask spreads and trades</strong></p>
 <p>Match each trade to the prevailing bid-ask spread (within milliseconds).</p>
-<div id="7b34d75d" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trades (exact timestamps)</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>trades <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'symbol'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_time'</span>: pd.to_datetime([</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.123'</span>,</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.456'</span>,</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:01.789'</span>,</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:02.012'</span>,</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:03.345'</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    ]),</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_price'</span>: [<span class="fl">150.25</span>, <span class="fl">150.26</span>, <span class="fl">150.24</span>, <span class="fl">150.25</span>, <span class="fl">150.27</span>],</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_size'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">150</span>, <span class="dv">300</span>, <span class="dv">250</span>]</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Quote updates (irregular, microsecond timestamps)</span></span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>quotes <span class="op">=</span> pd.DataFrame({</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'symbol'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">4</span>,</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'quote_time'</span>: pd.to_datetime([</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.100'</span>,</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.500'</span>,</span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:02.000'</span>,</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:03.000'</span></span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    ]),</span>
-<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bid'</span>: [<span class="fl">150.24</span>, <span class="fl">150.25</span>, <span class="fl">150.23</span>, <span class="fl">150.26</span>],</span>
-<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ask'</span>: [<span class="fl">150.26</span>, <span class="fl">150.27</span>, <span class="fl">150.25</span>, <span class="fl">150.28</span>]</span>
-<span id="cb19-26"><a href="#cb19-26" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb19-27"><a href="#cb19-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-28"><a href="#cb19-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: prevailing quote at each trade</span></span>
-<span id="cb19-29"><a href="#cb19-29" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
-<span id="cb19-30"><a href="#cb19-30" aria-hidden="true" tabindex="-1"></a>    trades.sort_values(<span class="st">'trade_time'</span>),</span>
-<span id="cb19-31"><a href="#cb19-31" aria-hidden="true" tabindex="-1"></a>    quotes.sort_values(<span class="st">'quote_time'</span>),</span>
-<span id="cb19-32"><a href="#cb19-32" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'trade_time'</span>,</span>
-<span id="cb19-33"><a href="#cb19-33" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'quote_time'</span>,</span>
-<span id="cb19-34"><a href="#cb19-34" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'symbol'</span>,</span>
-<span id="cb19-35"><a href="#cb19-35" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span>,</span>
-<span id="cb19-36"><a href="#cb19-36" aria-hidden="true" tabindex="-1"></a>    tolerance<span class="op">=</span>pd.Timedelta(<span class="st">'1s'</span>),  <span class="co"># Only match within 1 second</span></span>
-<span id="cb19-37"><a href="#cb19-37" aria-hidden="true" tabindex="-1"></a>    allow_exact_matches<span class="op">=</span><span class="va">False</span>  <span class="co"># Use quote *before* the trade, not at same instant</span></span>
-<span id="cb19-38"><a href="#cb19-38" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-39"><a href="#cb19-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-40"><a href="#cb19-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effective spread</span></span>
-<span id="cb19-41"><a href="#cb19-41" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">'spread'</span>] <span class="op">=</span> merged[<span class="st">'ask'</span>] <span class="op">-</span> merged[<span class="st">'bid'</span>]</span>
-<span id="cb19-42"><a href="#cb19-42" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">'effective_spread'</span>] <span class="op">=</span> <span class="bu">abs</span>(merged[<span class="st">'trade_price'</span>] <span class="op">-</span></span>
-<span id="cb19-43"><a href="#cb19-43" aria-hidden="true" tabindex="-1"></a>                                  (merged[<span class="st">'bid'</span>] <span class="op">+</span> merged[<span class="st">'ask'</span>]) <span class="op">/</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1daec101" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trades (exact timestamps)</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>trades <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'symbol'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">5</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_time'</span>: pd.to_datetime([</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.123'</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.456'</span>,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:01.789'</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:02.012'</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:03.345'</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_price'</span>: [<span class="fl">150.25</span>, <span class="fl">150.26</span>, <span class="fl">150.24</span>, <span class="fl">150.25</span>, <span class="fl">150.27</span>],</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'trade_size'</span>: [<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">150</span>, <span class="dv">300</span>, <span class="dv">250</span>]</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Quote updates (irregular, microsecond timestamps)</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>quotes <span class="op">=</span> pd.DataFrame({</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">'symbol'</span>: [<span class="st">'AAPL'</span>] <span class="op">*</span> <span class="dv">4</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">'quote_time'</span>: pd.to_datetime([</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.100'</span>,</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:00.500'</span>,</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:02.000'</span>,</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>        <span class="st">'2024-01-02 09:30:03.000'</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>    ]),</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">'bid'</span>: [<span class="fl">150.24</span>, <span class="fl">150.25</span>, <span class="fl">150.23</span>, <span class="fl">150.26</span>],</span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ask'</span>: [<span class="fl">150.26</span>, <span class="fl">150.27</span>, <span class="fl">150.25</span>, <span class="fl">150.28</span>]</span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Asof join: prevailing quote at each trade</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a>merged <span class="op">=</span> pd.merge_asof(</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>    trades.sort_values(<span class="st">'trade_time'</span>),</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>    quotes.sort_values(<span class="st">'quote_time'</span>),</span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a>    left_on<span class="op">=</span><span class="st">'trade_time'</span>,</span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>    right_on<span class="op">=</span><span class="st">'quote_time'</span>,</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a>    by<span class="op">=</span><span class="st">'symbol'</span>,</span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>    direction<span class="op">=</span><span class="st">'backward'</span>,</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>    tolerance<span class="op">=</span>pd.Timedelta(<span class="st">'1s'</span>),  <span class="co"># Only match within 1 second</span></span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>    allow_exact_matches<span class="op">=</span><span class="va">False</span>  <span class="co"># Use quote *before* the trade, not at same instant</span></span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate effective spread</span></span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">'spread'</span>] <span class="op">=</span> merged[<span class="st">'ask'</span>] <span class="op">-</span> merged[<span class="st">'bid'</span>]</span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a>merged[<span class="st">'effective_spread'</span>] <span class="op">=</span> <span class="bu">abs</span>(merged[<span class="st">'trade_price'</span>] <span class="op">-</span></span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a>                                  (merged[<span class="st">'bid'</span>] <span class="op">+</span> merged[<span class="st">'ask'</span>]) <span class="op">/</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -1943,7 +1983,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 data-number="16.4.1" class="anchored" data-anchor-id="essential-checks-before-and-after-merging"><span class="header-section-number">16.4.1</span> Essential checks before and after merging</h3>
 <p><strong>Before merging:</strong></p>
 <ul>
-<li><strong>Predict row counts</strong>: Inner join should give ≤ min(left, right) rows; left join should preserve left row count for one-to-one or one-to-many; outer join gives ≥ max(left, right) rows</li>
+<li><strong>Predict row counts</strong>: Inner join should give ≤ min(left, right) rows; a left join preserves the left row count only when keys are unique in the <em>right</em> dataset (one-to-one or many-to-one)—if the right side has repeated keys, the result expands; outer join gives ≥ max(left, right) rows</li>
 <li><strong>Check for duplicate keys</strong>: Use <code>df.duplicated(key_cols).sum()</code> or <code>validate</code> parameter to enforce cardinality</li>
 <li><strong>Verify data types match</strong>: Use <code>df[key_cols].dtypes</code> to ensure join keys have compatible types</li>
 <li><strong>For string keys</strong>: Normalize with <code>.str.strip().str.upper()</code> to handle whitespace and case differences</li>
@@ -1959,7 +1999,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="using-the-indicator-parameter" class="level3" data-number="16.4.2">
 <h3 data-number="16.4.2" class="anchored" data-anchor-id="using-the-indicator-parameter"><span class="header-section-number">16.4.2</span> Using the indicator parameter</h3>
 <p>The <code>indicator=True</code> parameter adds a <code>_merge</code> column showing match status:</p>
-<div id="a21da2ef" class="cell" data-execution_count="20">
+<div id="777c78fc" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Re-create sample data for merge diagnostics</span></span>
 <span id="annotated-cell-20-2"><a href="#annotated-cell-20-2" aria-hidden="true" tabindex="-1"></a>returns <span class="op">=</span> pd.DataFrame({</span>
 <span id="annotated-cell-20-3"><a href="#annotated-cell-20-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'TSLA'</span>],</span>
@@ -2000,8 +2040,8 @@ right_only    0
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="1745434d" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Match rate: </span><span class="sc">{</span>(merged[<span class="st">'_merge'</span>] <span class="op">==</span> <span class="st">'both'</span>)<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="863d7ea9" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Match rate: </span><span class="sc">{</span>(merged[<span class="st">'_merge'</span>] <span class="op">==</span> <span class="st">'both'</span>)<span class="sc">.</span>mean()<span class="sc">:.1%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Match rate: 66.7%</code></pre>
 </div>
@@ -2052,9 +2092,9 @@ Name: count, dtype: int64</code></pre>
 </tr>
 <tr class="odd">
 <td>Type mismatch</td>
-<td>Low or zero matches despite overlapping keys</td>
-<td>Different data types (int vs float, str vs object)</td>
-<td>Convert both to same type before merge</td>
+<td><code>ValueError: You are trying to merge on int64 and object columns</code></td>
+<td>Key is numeric in one dataset and text in the other (<code>10107</code> vs <code>'10107'</code>, or <code>datetime64</code> dates vs <code>'2024-01-02'</code> strings)</td>
+<td>Cast both sides first: <code>.astype('int64')</code>, <code>.astype(str)</code>, or <code>pd.to_datetime()</code></td>
 </tr>
 <tr class="even">
 <td>Float precision</td>
@@ -2076,7 +2116,7 @@ Name: count, dtype: int64</code></pre>
 </tr>
 <tr class="odd">
 <td>Unsorted asof join</td>
-<td>Wrong matches or NaN</td>
+<td><code>ValueError: left keys must be sorted</code> (or <code>right keys must be sorted</code>)</td>
 <td>Data not sorted by time column</td>
 <td>Always <code>sort_values()</code> before asof joins</td>
 </tr>
@@ -2092,7 +2132,7 @@ Name: count, dtype: int64</code></pre>
 <li><p><strong>Choose the right merge type.</strong> Inner for complete cases only, left to preserve your sample, outer rarely (and carefully).</p></li>
 <li><p><strong>Use asof joins for time-series data.</strong> Don’t try to match timestamps exactly—use asof joins with <code>direction='backward'</code> to avoid look-ahead bias.</p></li>
 <li><p><strong>Validate every merge.</strong> Check row counts, match rates, duplicates, and data types until these checks become automatic.</p></li>
-<li><p><strong>Sort before asof joins.</strong> Unsorted data produces silent errors.</p></li>
+<li><p><strong>Sort before asof joins.</strong> Unsorted data raises <code>ValueError: left keys must be sorted</code>, so sort right before the join instead of debugging the traceback later.</p></li>
 <li><p><strong>Document match rates.</strong> Report how many observations matched in your analysis. Low match rates indicate problems.</p></li>
 <li><p><strong>Normalize strings.</strong> Strip whitespace, standardize case, remove special characters before merging on text.</p></li>
 <li><p><strong>Use indicator columns.</strong> Add <code>indicator=True</code> to understand what matched and what didn’t.</p></li>

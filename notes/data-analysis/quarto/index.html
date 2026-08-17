@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>19&nbsp; Reproducible Documents with Quarto – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -68,15 +74,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../data-analysis/tables/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -329,60 +334,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#quarto-project-structure" id="toc-quarto-project-structure" class="nav-link" data-scroll-target="#quarto-project-structure"><span class="header-section-number">19.5</span> Quarto Project Structure</a>
   <ul class="collapse">
   <li><a href="#your-first-quarto-document" id="toc-your-first-quarto-document" class="nav-link" data-scroll-target="#your-first-quarto-document"><span class="header-section-number">19.5.1</span> Your first Quarto document</a></li>
+  <li><a href="#rendering-your-document" id="toc-rendering-your-document" class="nav-link" data-scroll-target="#rendering-your-document"><span class="header-section-number">19.5.2</span> Rendering your document</a></li>
+  <li><a href="#running-quarto-with-uv" id="toc-running-quarto-with-uv" class="nav-link" data-scroll-target="#running-quarto-with-uv"><span class="header-section-number">19.5.3</span> Running Quarto with uv</a></li>
+  <li><a href="#document-structure-and-organization" id="toc-document-structure-and-organization" class="nav-link" data-scroll-target="#document-structure-and-organization"><span class="header-section-number">19.5.4</span> Document structure and organization</a></li>
+  <li><a href="#multi-file-projects" id="toc-multi-file-projects" class="nav-link" data-scroll-target="#multi-file-projects"><span class="header-section-number">19.5.5</span> Multi-file projects</a></li>
   </ul></li>
-  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">19.6</span> Summary Statistics</a>
+  <li><a href="#code-execution-and-output" id="toc-code-execution-and-output" class="nav-link" data-scroll-target="#code-execution-and-output"><span class="header-section-number">19.6</span> Code Execution and Output</a>
   <ul class="collapse">
-  <li><a href="#running-quarto-with-uv" id="toc-running-quarto-with-uv" class="nav-link" data-scroll-target="#running-quarto-with-uv"><span class="header-section-number">19.6.1</span> Running Quarto with uv</a></li>
-  <li><a href="#document-structure-and-organization" id="toc-document-structure-and-organization" class="nav-link" data-scroll-target="#document-structure-and-organization"><span class="header-section-number">19.6.2</span> Document structure and organization</a></li>
-  <li><a href="#multi-file-projects" id="toc-multi-file-projects" class="nav-link" data-scroll-target="#multi-file-projects"><span class="header-section-number">19.6.3</span> Multi-file projects</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">19.6.1</span> Code chunks</a></li>
+  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="header-section-number">19.6.2</span> Chunk options</a></li>
+  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code"><span class="header-section-number">19.6.3</span> Inline code</a></li>
+  <li><a href="#output-formats-and-display" id="toc-output-formats-and-display" class="nav-link" data-scroll-target="#output-formats-and-display"><span class="header-section-number">19.6.4</span> Output formats and display</a></li>
+  <li><a href="#working-with-jupyter-notebooks" id="toc-working-with-jupyter-notebooks" class="nav-link" data-scroll-target="#working-with-jupyter-notebooks"><span class="header-section-number">19.6.5</span> Working with Jupyter notebooks</a></li>
+  <li><a href="#caching-and-freeze" id="toc-caching-and-freeze" class="nav-link" data-scroll-target="#caching-and-freeze"><span class="header-section-number">19.6.6</span> Caching and freeze</a></li>
   </ul></li>
-  <li><a href="#code-execution-and-output" id="toc-code-execution-and-output" class="nav-link" data-scroll-target="#code-execution-and-output"><span class="header-section-number">19.7</span> Code Execution and Output</a>
+  <li><a href="#integrating-figures-and-tables" id="toc-integrating-figures-and-tables" class="nav-link" data-scroll-target="#integrating-figures-and-tables"><span class="header-section-number">19.7</span> Integrating Figures and Tables</a>
   <ul class="collapse">
-  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">19.7.1</span> Code chunks</a></li>
-  <li><a href="#chunk-options" id="toc-chunk-options" class="nav-link" data-scroll-target="#chunk-options"><span class="header-section-number">19.7.2</span> Chunk options</a></li>
-  <li><a href="#inline-code" id="toc-inline-code" class="nav-link" data-scroll-target="#inline-code"><span class="header-section-number">19.7.3</span> Inline code</a></li>
-  <li><a href="#working-with-jupyter-notebooks" id="toc-working-with-jupyter-notebooks" class="nav-link" data-scroll-target="#working-with-jupyter-notebooks"><span class="header-section-number">19.7.4</span> Working with Jupyter notebooks</a></li>
-  <li><a href="#caching-and-freeze" id="toc-caching-and-freeze" class="nav-link" data-scroll-target="#caching-and-freeze"><span class="header-section-number">19.7.5</span> Caching and freeze</a></li>
+  <li><a href="#creating-figures" id="toc-creating-figures" class="nav-link" data-scroll-target="#creating-figures"><span class="header-section-number">19.7.1</span> Creating figures</a></li>
+  <li><a href="#creating-tables" id="toc-creating-tables" class="nav-link" data-scroll-target="#creating-tables"><span class="header-section-number">19.7.2</span> Creating tables</a></li>
+  <li><a href="#cross-referencing" id="toc-cross-referencing" class="nav-link" data-scroll-target="#cross-referencing"><span class="header-section-number">19.7.3</span> Cross-referencing</a></li>
+  <li><a href="#figure-and-table-layout" id="toc-figure-and-table-layout" class="nav-link" data-scroll-target="#figure-and-table-layout"><span class="header-section-number">19.7.4</span> Figure and table layout</a></li>
   </ul></li>
-  <li><a href="#integrating-figures-and-tables" id="toc-integrating-figures-and-tables" class="nav-link" data-scroll-target="#integrating-figures-and-tables"><span class="header-section-number">19.8</span> Integrating Figures and Tables</a>
+  <li><a href="#latex-configuration" id="toc-latex-configuration" class="nav-link" data-scroll-target="#latex-configuration"><span class="header-section-number">19.8</span> LaTeX Configuration</a>
   <ul class="collapse">
-  <li><a href="#creating-figures" id="toc-creating-figures" class="nav-link" data-scroll-target="#creating-figures"><span class="header-section-number">19.8.1</span> Creating figures</a></li>
-  <li><a href="#creating-tables" id="toc-creating-tables" class="nav-link" data-scroll-target="#creating-tables"><span class="header-section-number">19.8.2</span> Creating tables</a></li>
-  <li><a href="#cross-referencing" id="toc-cross-referencing" class="nav-link" data-scroll-target="#cross-referencing"><span class="header-section-number">19.8.3</span> Cross-referencing</a></li>
-  <li><a href="#figure-and-table-layout" id="toc-figure-and-table-layout" class="nav-link" data-scroll-target="#figure-and-table-layout"><span class="header-section-number">19.8.4</span> Figure and table layout</a></li>
+  <li><a href="#pdf-engine-selection" id="toc-pdf-engine-selection" class="nav-link" data-scroll-target="#pdf-engine-selection"><span class="header-section-number">19.8.1</span> PDF engine selection</a></li>
+  <li><a href="#document-classes" id="toc-document-classes" class="nav-link" data-scroll-target="#document-classes"><span class="header-section-number">19.8.2</span> Document classes</a></li>
+  <li><a href="#custom-styling-with-external-files" id="toc-custom-styling-with-external-files" class="nav-link" data-scroll-target="#custom-styling-with-external-files"><span class="header-section-number">19.8.3</span> Custom styling with external files</a></li>
+  <li><a href="#raw-latex-in-documents" id="toc-raw-latex-in-documents" class="nav-link" data-scroll-target="#raw-latex-in-documents"><span class="header-section-number">19.8.4</span> Raw LaTeX in documents</a></li>
+  <li><a href="#conditional-content-for-different-formats" id="toc-conditional-content-for-different-formats" class="nav-link" data-scroll-target="#conditional-content-for-different-formats"><span class="header-section-number">19.8.5</span> Conditional content for different formats</a></li>
   </ul></li>
-  <li><a href="#latex-configuration" id="toc-latex-configuration" class="nav-link" data-scroll-target="#latex-configuration"><span class="header-section-number">19.9</span> LaTeX Configuration</a>
+  <li><a href="#pdf-and-html-output" id="toc-pdf-and-html-output" class="nav-link" data-scroll-target="#pdf-and-html-output"><span class="header-section-number">19.9</span> PDF and HTML Output</a>
   <ul class="collapse">
-  <li><a href="#pdf-engine-selection" id="toc-pdf-engine-selection" class="nav-link" data-scroll-target="#pdf-engine-selection"><span class="header-section-number">19.9.1</span> PDF engine selection</a></li>
-  <li><a href="#document-classes" id="toc-document-classes" class="nav-link" data-scroll-target="#document-classes"><span class="header-section-number">19.9.2</span> Document classes</a></li>
-  <li><a href="#custom-styling-with-external-files" id="toc-custom-styling-with-external-files" class="nav-link" data-scroll-target="#custom-styling-with-external-files"><span class="header-section-number">19.9.3</span> Custom styling with external files</a></li>
-  <li><a href="#raw-latex-in-documents" id="toc-raw-latex-in-documents" class="nav-link" data-scroll-target="#raw-latex-in-documents"><span class="header-section-number">19.9.4</span> Raw LaTeX in documents</a></li>
+  <li><a href="#pdf-output-basics" id="toc-pdf-output-basics" class="nav-link" data-scroll-target="#pdf-output-basics"><span class="header-section-number">19.9.1</span> PDF output basics</a></li>
+  <li><a href="#pdf-formatting-options" id="toc-pdf-formatting-options" class="nav-link" data-scroll-target="#pdf-formatting-options"><span class="header-section-number">19.9.2</span> PDF formatting options</a></li>
+  <li><a href="#html-output-basics" id="toc-html-output-basics" class="nav-link" data-scroll-target="#html-output-basics"><span class="header-section-number">19.9.3</span> HTML output basics</a></li>
+  <li><a href="#html-themes-and-styling" id="toc-html-themes-and-styling" class="nav-link" data-scroll-target="#html-themes-and-styling"><span class="header-section-number">19.9.4</span> HTML themes and styling</a></li>
+  <li><a href="#multiple-output-formats" id="toc-multiple-output-formats" class="nav-link" data-scroll-target="#multiple-output-formats"><span class="header-section-number">19.9.5</span> Multiple output formats</a></li>
+  <li><a href="#citations-and-references" id="toc-citations-and-references" class="nav-link" data-scroll-target="#citations-and-references"><span class="header-section-number">19.9.6</span> Citations and references</a></li>
+  <li><a href="#mathematics-and-equations" id="toc-mathematics-and-equations" class="nav-link" data-scroll-target="#mathematics-and-equations"><span class="header-section-number">19.9.7</span> Mathematics and equations</a></li>
   </ul></li>
-  <li><a href="#pdf-and-html-output" id="toc-pdf-and-html-output" class="nav-link" data-scroll-target="#pdf-and-html-output"><span class="header-section-number">19.10</span> PDF and HTML Output</a>
+  <li><a href="#collaborative-commenting-with-quarto-comments" id="toc-collaborative-commenting-with-quarto-comments" class="nav-link" data-scroll-target="#collaborative-commenting-with-quarto-comments"><span class="header-section-number">19.10</span> Collaborative Commenting with quarto-comments</a>
   <ul class="collapse">
-  <li><a href="#pdf-output-basics" id="toc-pdf-output-basics" class="nav-link" data-scroll-target="#pdf-output-basics"><span class="header-section-number">19.10.1</span> PDF output basics</a></li>
-  <li><a href="#pdf-formatting-options" id="toc-pdf-formatting-options" class="nav-link" data-scroll-target="#pdf-formatting-options"><span class="header-section-number">19.10.2</span> PDF formatting options</a></li>
-  <li><a href="#html-output-basics" id="toc-html-output-basics" class="nav-link" data-scroll-target="#html-output-basics"><span class="header-section-number">19.10.3</span> HTML output basics</a></li>
-  <li><a href="#html-themes-and-styling" id="toc-html-themes-and-styling" class="nav-link" data-scroll-target="#html-themes-and-styling"><span class="header-section-number">19.10.4</span> HTML themes and styling</a></li>
-  <li><a href="#multiple-output-formats" id="toc-multiple-output-formats" class="nav-link" data-scroll-target="#multiple-output-formats"><span class="header-section-number">19.10.5</span> Multiple output formats</a></li>
-  <li><a href="#citations-and-references" id="toc-citations-and-references" class="nav-link" data-scroll-target="#citations-and-references"><span class="header-section-number">19.10.6</span> Citations and references</a></li>
-  <li><a href="#mathematics-and-equations" id="toc-mathematics-and-equations" class="nav-link" data-scroll-target="#mathematics-and-equations"><span class="header-section-number">19.10.7</span> Mathematics and equations</a></li>
+  <li><a href="#installing-the-extension" id="toc-installing-the-extension" class="nav-link" data-scroll-target="#installing-the-extension"><span class="header-section-number">19.10.1</span> Installing the extension</a></li>
+  <li><a href="#using-comment-shortcodes" id="toc-using-comment-shortcodes" class="nav-link" data-scroll-target="#using-comment-shortcodes"><span class="header-section-number">19.10.2</span> Using comment shortcodes</a></li>
+  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration"><span class="header-section-number">19.10.3</span> Configuration</a></li>
   </ul></li>
-  <li><a href="#collaborative-commenting-with-quarto-comments" id="toc-collaborative-commenting-with-quarto-comments" class="nav-link" data-scroll-target="#collaborative-commenting-with-quarto-comments"><span class="header-section-number">19.11</span> Collaborative Commenting with quarto-comments</a>
+  <li><a href="#best-practices-for-research-documents" id="toc-best-practices-for-research-documents" class="nav-link" data-scroll-target="#best-practices-for-research-documents"><span class="header-section-number">19.11</span> Best Practices for Research Documents</a>
   <ul class="collapse">
-  <li><a href="#installing-the-extension" id="toc-installing-the-extension" class="nav-link" data-scroll-target="#installing-the-extension"><span class="header-section-number">19.11.1</span> Installing the extension</a></li>
-  <li><a href="#using-comment-shortcodes" id="toc-using-comment-shortcodes" class="nav-link" data-scroll-target="#using-comment-shortcodes"><span class="header-section-number">19.11.2</span> Using comment shortcodes</a></li>
-  <li><a href="#configuration" id="toc-configuration" class="nav-link" data-scroll-target="#configuration"><span class="header-section-number">19.11.3</span> Configuration</a></li>
+  <li><a href="#separate-data-processing-from-presentation" id="toc-separate-data-processing-from-presentation" class="nav-link" data-scroll-target="#separate-data-processing-from-presentation"><span class="header-section-number">19.11.1</span> 1. Separate data processing from presentation</a></li>
+  <li><a href="#use-meaningful-chunk-labels" id="toc-use-meaningful-chunk-labels" class="nav-link" data-scroll-target="#use-meaningful-chunk-labels"><span class="header-section-number">19.11.2</span> 2. Use meaningful chunk labels</a></li>
+  <li><a href="#document-your-data-and-code" id="toc-document-your-data-and-code" class="nav-link" data-scroll-target="#document-your-data-and-code"><span class="header-section-number">19.11.3</span> 3. Document your data and code</a></li>
+  <li><a href="#use-freeze-for-long-running-documents" id="toc-use-freeze-for-long-running-documents" class="nav-link" data-scroll-target="#use-freeze-for-long-running-documents"><span class="header-section-number">19.11.4</span> 4. Use freeze for long-running documents</a></li>
+  <li><a href="#version-control-with-git" id="toc-version-control-with-git" class="nav-link" data-scroll-target="#version-control-with-git"><span class="header-section-number">19.11.5</span> 5. Version control with Git</a></li>
+  <li><a href="#create-reusable-templates" id="toc-create-reusable-templates" class="nav-link" data-scroll-target="#create-reusable-templates"><span class="header-section-number">19.11.6</span> 6. Create reusable templates</a></li>
   </ul></li>
-  <li><a href="#best-practices-for-research-documents" id="toc-best-practices-for-research-documents" class="nav-link" data-scroll-target="#best-practices-for-research-documents"><span class="header-section-number">19.12</span> Best Practices for Research Documents</a>
-  <ul class="collapse">
-  <li><a href="#separate-data-processing-from-presentation" id="toc-separate-data-processing-from-presentation" class="nav-link" data-scroll-target="#separate-data-processing-from-presentation"><span class="header-section-number">19.12.1</span> 1. Separate data processing from presentation</a></li>
-  <li><a href="#document-your-data-and-code" id="toc-document-your-data-and-code" class="nav-link" data-scroll-target="#document-your-data-and-code"><span class="header-section-number">19.12.2</span> 3. Document your data and code</a></li>
-  <li><a href="#version-control-with-git" id="toc-version-control-with-git" class="nav-link" data-scroll-target="#version-control-with-git"><span class="header-section-number">19.12.3</span> 5. Version control with Git</a></li>
-  <li><a href="#create-reusable-templates" id="toc-create-reusable-templates" class="nav-link" data-scroll-target="#create-reusable-templates"><span class="header-section-number">19.12.4</span> 6. Create reusable templates</a></li>
-  </ul></li>
-  <li><a href="#comparison-with-jupyter-notebooks" id="toc-comparison-with-jupyter-notebooks" class="nav-link" data-scroll-target="#comparison-with-jupyter-notebooks"><span class="header-section-number">19.13</span> Comparison with Jupyter Notebooks</a></li>
-  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">19.14</span> Additional Resources</a></li>
+  <li><a href="#comparison-with-jupyter-notebooks" id="toc-comparison-with-jupyter-notebooks" class="nav-link" data-scroll-target="#comparison-with-jupyter-notebooks"><span class="header-section-number">19.12</span> Comparison with Jupyter Notebooks</a></li>
+  <li><a href="#additional-resources" id="toc-additional-resources" class="nav-link" data-scroll-target="#additional-resources"><span class="header-section-number">19.13</span> Additional Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -542,45 +549,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">'MSFT'</span>: np.random.normal(<span class="fl">0.0012</span>, <span class="fl">0.018</span>, <span class="bu">len</span>(dates))</span>
 <span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>})</span>
 <span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(returns)<span class="sc">}</span><span class="ss"> observations"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded </span><span class="sc">{</span><span class="bu">len</span>(returns)<span class="sc">}</span><span class="ss"> observations"</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Summary Statistics</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>The average daily return for AAPL was <span class="in">`{python} f"{returns['AAPL'].mean():.4f}"`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This simple document has three key components:</p>
+<ol type="1">
+<li><strong>YAML header</strong> (between <code>---</code> markers): Metadata about the document</li>
+<li><strong>Markdown sections</strong>: Your narrative text with headings, paragraphs, lists, etc.</li>
+<li><strong>Code chunks</strong>: Python code that executes when you render the document</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>YAML header
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The YAML (Yet Another Markup Language) header at the top of your document controls how Quarto processes and formats your output. Common options include:</p>
+<ul>
+<li><code>title</code>, <code>author</code>, <code>date</code>: Document metadata</li>
+<li><code>format</code>: Output format (html, pdf, docx, etc.)</li>
+<li><code>execute</code>: Control code execution behavior</li>
+<li><code>bibliography</code>: Citation file location</li>
+<li><code>number-sections</code>: Automatically number sections</li>
+</ul>
+<p>We’ll explore these options in detail throughout this chapter.</p>
+</div>
+</div>
 </section>
-</section>
-<section id="summary-statistics" class="level2" data-number="19.6">
-<h2 data-number="19.6" class="anchored" data-anchor-id="summary-statistics"><span class="header-section-number">19.6</span> Summary Statistics</h2>
-<p>The average daily return for AAPL was {{{python}} f”{returns[‘AAPL’].mean():.4f}“}.</p>
-<pre><code>
-This simple document has three key components:
-
-1. **YAML header** (between `---` markers): Metadata about the document
-2. **Markdown sections**: Your narrative text with headings, paragraphs, lists, etc.
-3. **Code chunks**: Python code that executes when you render the document
-
-::: {.callout-tip}
-## YAML header
-
-The YAML (Yet Another Markup Language) header at the top of your document controls how Quarto processes and formats your output. Common options include:
-
-- `title`, `author`, `date`: Document metadata
-- `format`: Output format (html, pdf, docx, etc.)
-- `execute`: Control code execution behavior
-- `bibliography`: Citation file location
-- `number-sections`: Automatically number sections
-
-We'll explore these options in detail throughout this chapter.
-:::
-
-### Rendering your document
-
-To generate output from your Quarto document, use the `quarto render` command:
-
-```bash
-quarto render analysis.qmd</code></pre>
+<section id="rendering-your-document" class="level3" data-number="19.5.2">
+<h3 data-number="19.5.2" class="anchored" data-anchor-id="rendering-your-document"><span class="header-section-number">19.5.2</span> Rendering your document</h3>
+<p>To generate output from your Quarto document, use the <code>quarto render</code> command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render analysis.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This creates an HTML file (by default) in the same directory. Open <code>analysis.html</code> in your browser to see the result.</p>
 <p>For a live preview that updates as you edit:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> preview analysis.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This opens your browser and automatically refreshes whenever you save changes to the <code>.qmd</code> file.</p>
-<section id="running-quarto-with-uv" class="level3" data-number="19.6.1">
-<h3 data-number="19.6.1" class="anchored" data-anchor-id="running-quarto-with-uv"><span class="header-section-number">19.6.1</span> Running Quarto with uv</h3>
+</section>
+<section id="running-quarto-with-uv" class="level3" data-number="19.5.3">
+<h3 data-number="19.5.3" class="anchored" data-anchor-id="running-quarto-with-uv"><span class="header-section-number">19.5.3</span> Running Quarto with uv</h3>
 <p>If you use <code>uv</code> to manage your Python environment, you’ll want to ensure Quarto runs within that environment. This guarantees that Quarto uses the same packages and versions as your project:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run quarto render manuscript.qmd <span class="at">--to</span> pdf</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run quarto preview manuscript.qmd</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -605,8 +618,8 @@ quarto render analysis.qmd</code></pre>
 </div>
 </div>
 </section>
-<section id="document-structure-and-organization" class="level3" data-number="19.6.2">
-<h3 data-number="19.6.2" class="anchored" data-anchor-id="document-structure-and-organization"><span class="header-section-number">19.6.2</span> Document structure and organization</h3>
+<section id="document-structure-and-organization" class="level3" data-number="19.5.4">
+<h3 data-number="19.5.4" class="anchored" data-anchor-id="document-structure-and-organization"><span class="header-section-number">19.5.4</span> Document structure and organization</h3>
 <p>As your analysis grows, you’ll want to organize it into sections and subsections. Quarto uses standard markdown heading syntax:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Main Section (Level 1)</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">## Subsection (Level 2)</span></span>
@@ -684,8 +697,8 @@ quarto render analysis.qmd</code></pre>
 </div>
 </div>
 </section>
-<section id="multi-file-projects" class="level3" data-number="19.6.3">
-<h3 data-number="19.6.3" class="anchored" data-anchor-id="multi-file-projects"><span class="header-section-number">19.6.3</span> Multi-file projects</h3>
+<section id="multi-file-projects" class="level3" data-number="19.5.5">
+<h3 data-number="19.5.5" class="anchored" data-anchor-id="multi-file-projects"><span class="header-section-number">19.5.5</span> Multi-file projects</h3>
 <p>For larger projects like a thesis or a working paper with multiple analyses, you can organize content across multiple files:</p>
 <pre><code>my-project/
   _quarto.yml          # Project configuration
@@ -723,11 +736,11 @@ quarto render analysis.qmd</code></pre>
 <p>This approach keeps individual files manageable while maintaining a cohesive document. You can render the entire project with <code>quarto render</code> or individual chapters with <code>quarto render 02-data.qmd</code>.</p>
 </section>
 </section>
-<section id="code-execution-and-output" class="level2" data-number="19.7">
-<h2 data-number="19.7" class="anchored" data-anchor-id="code-execution-and-output"><span class="header-section-number">19.7</span> Code Execution and Output</h2>
+<section id="code-execution-and-output" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="code-execution-and-output"><span class="header-section-number">19.6</span> Code Execution and Output</h2>
 <p>The real power of Quarto lies in how it integrates code execution into your document. Let’s explore how to control what code runs, what gets displayed, and how results appear in your output.</p>
-<section id="code-chunks" class="level3" data-number="19.7.1">
-<h3 data-number="19.7.1" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">19.7.1</span> Code chunks</h3>
+<section id="code-chunks" class="level3" data-number="19.6.1">
+<h3 data-number="19.6.1" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">19.6.1</span> Code chunks</h3>
 <p>Code chunks are fenced blocks of Python code that Quarto executes when rendering your document. The basic syntax is:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Your Python code here</span></span>
@@ -736,7 +749,7 @@ quarto render analysis.qmd</code></pre>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>When rendered, this shows both your code and its output. Here’s a complete example:</p>
-<div id="1d08950a" class="cell" data-execution_count="1">
+<div id="d16d6525" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -760,8 +773,8 @@ quarto render analysis.qmd</code></pre>
 </div>
 </div>
 </section>
-<section id="chunk-options" class="level3" data-number="19.7.2">
-<h3 data-number="19.7.2" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">19.7.2</span> Chunk options</h3>
+<section id="chunk-options" class="level3" data-number="19.6.2">
+<h3 data-number="19.6.2" class="anchored" data-anchor-id="chunk-options"><span class="header-section-number">19.6.2</span> Chunk options</h3>
 <p>You can control code chunk behavior using special comments or chunk options. The most common options are:</p>
 <ul>
 <li><code>echo</code>: Show the code in output (default: <code>true</code>)</li>
@@ -822,18 +835,18 @@ quarto render analysis.qmd</code></pre>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">echo</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="co">      # Hide all code by default</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">warning</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="co">   # Suppress all warnings</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">message</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span><span class="co">   # Suppress messages</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Individual chunks can override these defaults by specifying their own options.</p>
+<p>You will also see <code>message: false</code> in Quarto examples written for R. That option belongs to the knitr engine and does nothing under the Jupyter engine we use here; with Python, <code>warning: false</code> already covers the noisy output you would want to suppress.</p>
 </div>
 </div>
 </section>
-<section id="inline-code" class="level3" data-number="19.7.3">
-<h3 data-number="19.7.3" class="anchored" data-anchor-id="inline-code"><span class="header-section-number">19.7.3</span> Inline code</h3>
-<p>For incorporating single values or calculations directly into your prose, use inline code expressions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>The sample includes {{{python}} len(data)} observations spanning</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>{{{python}} data<span class="co">[</span><span class="ot">'Date'</span><span class="co">]</span>.min().strftime('%B %Y')} to</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>{{{python}} data<span class="co">[</span><span class="ot">'Date'</span><span class="co">]</span>.max().strftime('%B %Y')}.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="inline-code" class="level3" data-number="19.6.3">
+<h3 data-number="19.6.3" class="anchored" data-anchor-id="inline-code"><span class="header-section-number">19.6.3</span> Inline code</h3>
+<p>For incorporating single values or calculations directly into your prose, use inline code expressions. These are ordinary backtick code spans of the form <code>{python} expression</code>, and Quarto replaces the whole span with the value the expression evaluates to:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>The sample includes <span class="in">`{python} len(data)`</span> observations spanning</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="in">`{{python}} data['Date'].min().strftime('%B %Y')`</span> to</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="in">`{{python}} data['Date'].max().strftime('%B %Y')`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This renders as: “The sample includes 1,234 observations spanning January 2020 to December 2023.”</p>
 <p>Inline code is perfect for:</p>
 <ul>
@@ -855,28 +868,27 @@ quarto render analysis.qmd</code></pre>
 <p>Inline code expressions can only reference variables already defined in previous code chunks. They’re evaluated in the same Python session, but you can’t define complex logic inline. For anything beyond simple variable references or method calls, use a regular code chunk first:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>average_return <span class="op">=</span> returns[<span class="st">'AAPL'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The average return was {{{python}} f”{average_return:.2%}“}.</p>
-<pre><code>:::
-
-### Output formats and display
-
-Different types of output appear differently in your rendered document:
-
-**Print statements** appear as console output:
-
-::: {#b06673cf .cell execution_count=2}
-``` {.python .cell-code}
-print("The analysis is complete.")
-print(f"Average return: {0.0123:.2%}")</code></pre>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>average_return <span class="op">=</span> returns[<span class="st">'AAPL'</span>].mean()</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>The average return was <span class="in">`{python} f"{average_return:.2%}"`</span>.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</section>
+<section id="output-formats-and-display" class="level3" data-number="19.6.4">
+<h3 data-number="19.6.4" class="anchored" data-anchor-id="output-formats-and-display"><span class="header-section-number">19.6.4</span> Output formats and display</h3>
+<p>Different types of output appear differently in your rendered document:</p>
+<p><strong>Print statements</strong> appear as console output:</p>
+<div id="76c59442" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"The analysis is complete."</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average return: </span><span class="sc">{</span><span class="fl">0.0123</span><span class="sc">:.2%}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>The analysis is complete.
 Average return: 1.23%</code></pre>
 </div>
 </div>
-</div>
 <p><strong>DataFrames</strong> display as formatted tables:</p>
-<div id="aa2bf54a" class="cell" data-execution_count="3">
+<div id="d3151751" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>summary <span class="op">=</span> pd.DataFrame({</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Mean'</span>: [<span class="fl">0.0012</span>, <span class="fl">0.0008</span>, <span class="fl">0.0015</span>],</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'Std Dev'</span>: [<span class="fl">0.018</span>, <span class="fl">0.022</span>, <span class="fl">0.020</span>],</span>
@@ -980,8 +992,8 @@ Figure&nbsp;19.1: Distribution of daily returns
 </div>
 </div>
 </section>
-<section id="working-with-jupyter-notebooks" class="level3" data-number="19.7.4">
-<h3 data-number="19.7.4" class="anchored" data-anchor-id="working-with-jupyter-notebooks"><span class="header-section-number">19.7.4</span> Working with Jupyter notebooks</h3>
+<section id="working-with-jupyter-notebooks" class="level3" data-number="19.6.5">
+<h3 data-number="19.6.5" class="anchored" data-anchor-id="working-with-jupyter-notebooks"><span class="header-section-number">19.6.5</span> Working with Jupyter notebooks</h3>
 <p>If you have existing analysis in Jupyter notebooks, Quarto can work with them directly. You can render a <code>.ipynb</code> file to PDF, HTML, or any other format without converting it first:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render analysis.ipynb <span class="at">--to</span> pdf</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render analysis.ipynb <span class="at">--to</span> html</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -990,31 +1002,47 @@ Figure&nbsp;19.1: Distribution of daily returns
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> convert notebook.ipynb</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This creates a <code>.qmd</code> file that you can edit with full access to Quarto’s features.</p>
 </section>
-<section id="caching-and-freeze" class="level3" data-number="19.7.5">
-<h3 data-number="19.7.5" class="anchored" data-anchor-id="caching-and-freeze"><span class="header-section-number">19.7.5</span> Caching and freeze</h3>
-<p>Research computations can be time-consuming. If your analysis takes 30 minutes to run, you don’t want to wait that long every time you fix a typo. Quarto offers two solutions: caching and freezing.</p>
-<p><strong>Freeze</strong> stores the results of code execution and reuses them unless the code changes:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Analysis"</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">freeze</span><span class="kw">:</span><span class="at"> auto</span><span class="co">  # Only re-run if code changes</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="caching-and-freeze" class="level3" data-number="19.6.6">
+<h3 data-number="19.6.6" class="anchored" data-anchor-id="caching-and-freeze"><span class="header-section-number">19.6.6</span> Caching and freeze</h3>
+<p>Research computations can be time-consuming. If your analysis takes 30 minutes to run, you don’t want to wait that long every time you fix a typo. Quarto offers two solutions: freezing and caching.</p>
+<p><strong>Freeze</strong> stores the results of code execution and reuses them unless the code changes. It is a <em>project</em> feature: it only takes effect when you render a Quarto project (a book, a website, or any directory containing a <code>_quarto.yml</code>), so the setting belongs in <code>_quarto.yml</code> rather than in an individual document’s header:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># _quarto.yml</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> book</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">freeze</span><span class="kw">:</span><span class="at"> auto</span><span class="co">  # Only re-run a document if its code changes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>With <code>freeze: auto</code>, Quarto:</p>
 <ol type="1">
-<li>Runs all code chunks the first time you render</li>
-<li>Stores results in a <code>_freeze</code> directory</li>
-<li>On subsequent renders, reuses stored results unless code changed</li>
-<li>Detects code changes and re-runs only affected chunks</li>
+<li>Runs the code in every document the first time you render the project</li>
+<li>Stores the results in a <code>_freeze</code> directory alongside <code>_quarto.yml</code></li>
+<li>On subsequent project renders, reuses the stored results for any document whose code is unchanged</li>
+<li>Re-executes a document from scratch as soon as any of its code changes</li>
 </ol>
-<p>To force a complete re-execution:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render <span class="at">--execute-all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Cache</strong> provides finer control at the chunk level:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| cache: true</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This expensive computation is cached</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>results <span class="op">=</span> run_monte_carlo_simulation(n_simulations<span class="op">=</span><span class="dv">100000</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two details matter here. Freeze operates on whole documents, not on individual chunks, so changing one line in one chunk re-runs that entire document. And it only applies to project renders: rendering a single file with <code>quarto render analysis.qmd</code> always executes the code, which is a handy way to confirm that a chapter still runs end to end.</p>
+<p>To throw away frozen results and force everything to execute again, delete the <code>_freeze</code> directory:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> <span class="at">-rf</span> _freeze</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span><code>--cache-refresh</code> does not clear the freeze
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>quarto render --cache-refresh</code> forces the <em>cache</em> to be rebuilt; it leaves <code>_freeze</code> alone. The two mechanisms are separate, and deleting <code>_freeze</code> is the way to invalidate frozen output.</p>
+</div>
+</div>
+<p><strong>Cache</strong> stores the output of executed code so that unchanged code is not re-run. With the Jupyter engine it is a document-level (or project-level) setting backed by <a href="https://jupyter-cache.readthedocs.io/">jupyter-cache</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Monte Carlo Analysis"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">cache</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Add the dependency with <code>uv add jupyter-cache</code> before enabling it. You will also see per-chunk <code>#| cache: true</code> in Quarto examples: that is a knitr (R) option and has no effect on Python chunks.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1026,20 +1054,20 @@ Figure&nbsp;19.1: Distribution of daily returns
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>Freeze</strong> (<code>freeze: auto</code>): Best for most research documents. Simple, automatic, and works at the document level.</li>
-<li><strong>Cache</strong> (<code>cache: true</code>): Use for specific expensive chunks within a document that otherwise runs quickly.</li>
-<li><strong>Neither</strong> (<code>freeze: false</code>): Only for documents with fast computations or when you need to ensure results are always fresh.</li>
+<li><strong>Freeze</strong> (<code>freeze: auto</code> in <code>_quarto.yml</code>): Best for most research projects. Simple, automatic, and keeps rendering fast while you edit prose.</li>
+<li><strong>Cache</strong> (<code>execute: cache: true</code>): Use when a single document is expensive to run and you want unchanged code skipped even on a single-file render.</li>
+<li><strong>Neither</strong>: Only for documents with fast computations or when you need to be sure results are always fresh.</li>
 </ul>
 <p>For empirical research papers, <code>freeze: auto</code> is typically the best choice. It ensures reproducibility while keeping rendering fast during the writing process.</p>
 </div>
 </div>
 </section>
 </section>
-<section id="integrating-figures-and-tables" class="level2" data-number="19.8">
-<h2 data-number="19.8" class="anchored" data-anchor-id="integrating-figures-and-tables"><span class="header-section-number">19.8</span> Integrating Figures and Tables</h2>
+<section id="integrating-figures-and-tables" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="integrating-figures-and-tables"><span class="header-section-number">19.7</span> Integrating Figures and Tables</h2>
 <p>Research documents live and die by their figures and tables. Quarto makes it easy to create, format, and reference high-quality visual content.</p>
-<section id="creating-figures" class="level3" data-number="19.8.1">
-<h3 data-number="19.8.1" class="anchored" data-anchor-id="creating-figures"><span class="header-section-number">19.8.1</span> Creating figures</h3>
+<section id="creating-figures" class="level3" data-number="19.7.1">
+<h3 data-number="19.7.1" class="anchored" data-anchor-id="creating-figures"><span class="header-section-number">19.7.1</span> Creating figures</h3>
 <p>Figures in Quarto typically come from matplotlib, seaborn, or other plotting libraries. Here’s a complete example showing best practices:</p>
 <div id="cell-fig-volatility" class="cell" data-fig-height="5" data-fig-width="8" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -1126,8 +1154,8 @@ Figure&nbsp;19.2: 30-Day Rolling Volatility for Tech Stocks
 </div>
 </div>
 </section>
-<section id="creating-tables" class="level3" data-number="19.8.2">
-<h3 data-number="19.8.2" class="anchored" data-anchor-id="creating-tables"><span class="header-section-number">19.8.2</span> Creating tables</h3>
+<section id="creating-tables" class="level3" data-number="19.7.2">
+<h3 data-number="19.7.2" class="anchored" data-anchor-id="creating-tables"><span class="header-section-number">19.7.2</span> Creating tables</h3>
 <p>Tables in empirical finance typically show summary statistics, regression results, or data samples. Quarto handles several approaches:</p>
 <p><strong>1. Simple DataFrame display</strong></p>
 <p>The simplest approach is to just display a pandas DataFrame:</p>
@@ -1151,7 +1179,7 @@ Table&nbsp;19.1: Summary statistics for daily returns
 <div>
 
 
-<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1202,11 +1230,10 @@ Table&nbsp;19.1: Summary statistics for daily returns
 <div class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>summary_stats.style <span class="op">\</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    .<span class="bu">format</span>(<span class="st">'</span><span class="sc">{:.4f}</span><span class="st">'</span>) <span class="op">\</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    .set_caption(<span class="st">"Daily Return Statistics"</span>) <span class="op">\</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    .set_table_styles([</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'selector'</span>: <span class="st">'th'</span>, <span class="st">'props'</span>: [(<span class="st">'font-weight'</span>, <span class="st">'bold'</span>)]},</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'selector'</span>: <span class="st">'td'</span>, <span class="st">'props'</span>: [(<span class="st">'text-align'</span>, <span class="st">'right'</span>)]}</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    .set_table_styles([</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'selector'</span>: <span class="st">'th'</span>, <span class="st">'props'</span>: [(<span class="st">'font-weight'</span>, <span class="st">'bold'</span>)]},</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">'selector'</span>: <span class="st">'td'</span>, <span class="st">'props'</span>: [(<span class="st">'text-align'</span>, <span class="st">'right'</span>)]}</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    ])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="tbl-styled" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-execution_count="7">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-styled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1215,66 +1242,58 @@ Table&nbsp;19.2: Formatted summary statistics
 <div aria-describedby="tbl-styled-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output cell-output-display" data-execution_count="7">
 <style type="text/css">
-#T_b27e7 th {
+#T_34ad9 th {
   font-weight: bold;
 }
-#T_b27e7 td {
+#T_34ad9 td {
   text-align: right;
 }
 </style>
 
-<div id="T_b27e7" class="do-not-create-environment quarto-float quarto-figure quarto-figure-center anchored" data-quarto-postprocess="true">
-<figure class="quarto-float quarto-subfloat-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-tbl" id="T_b27e7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Daily Return Statistics
-</figcaption>
-<div aria-describedby="T_b27e7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table id="T_b27e7" class="do-not-create-environment caption-top table table-sm table-striped small">
+<table id="T_34ad9" class="cell caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th class="blank level0" data-quarto-table-cell-role="th">&nbsp;</th>
-<th id="T_b27e7_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Mean</th>
-<th id="T_b27e7_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Std Dev</th>
-<th id="T_b27e7_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Sharpe</th>
-<th id="T_b27e7_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Min</th>
-<th id="T_b27e7_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">Max</th>
+<th id="T_34ad9_level0_col0" class="col_heading level0 col0" data-quarto-table-cell-role="th">Mean</th>
+<th id="T_34ad9_level0_col1" class="col_heading level0 col1" data-quarto-table-cell-role="th">Std Dev</th>
+<th id="T_34ad9_level0_col2" class="col_heading level0 col2" data-quarto-table-cell-role="th">Sharpe</th>
+<th id="T_34ad9_level0_col3" class="col_heading level0 col3" data-quarto-table-cell-role="th">Min</th>
+<th id="T_34ad9_level0_col4" class="col_heading level0 col4" data-quarto-table-cell-role="th">Max</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th id="T_b27e7_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">AAPL</th>
-<td id="T_b27e7_row0_col0" class="data row0 col0">0.0012</td>
-<td id="T_b27e7_row0_col1" class="data row0 col1">0.0180</td>
-<td id="T_b27e7_row0_col2" class="data row0 col2">0.0670</td>
-<td id="T_b27e7_row0_col3" class="data row0 col3">-0.0523</td>
-<td id="T_b27e7_row0_col4" class="data row0 col4">0.0612</td>
+<th id="T_34ad9_level0_row0" class="row_heading level0 row0" data-quarto-table-cell-role="th">AAPL</th>
+<td id="T_34ad9_row0_col0" class="data row0 col0">0.0012</td>
+<td id="T_34ad9_row0_col1" class="data row0 col1">0.0180</td>
+<td id="T_34ad9_row0_col2" class="data row0 col2">0.0670</td>
+<td id="T_34ad9_row0_col3" class="data row0 col3">-0.0523</td>
+<td id="T_34ad9_row0_col4" class="data row0 col4">0.0612</td>
 </tr>
 <tr class="even">
-<th id="T_b27e7_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">GOOGL</th>
-<td id="T_b27e7_row1_col0" class="data row1 col0">0.0008</td>
-<td id="T_b27e7_row1_col1" class="data row1 col1">0.0220</td>
-<td id="T_b27e7_row1_col2" class="data row1 col2">0.0360</td>
-<td id="T_b27e7_row1_col3" class="data row1 col3">-0.0601</td>
-<td id="T_b27e7_row1_col4" class="data row1 col4">0.0701</td>
+<th id="T_34ad9_level0_row1" class="row_heading level0 row1" data-quarto-table-cell-role="th">GOOGL</th>
+<td id="T_34ad9_row1_col0" class="data row1 col0">0.0008</td>
+<td id="T_34ad9_row1_col1" class="data row1 col1">0.0220</td>
+<td id="T_34ad9_row1_col2" class="data row1 col2">0.0360</td>
+<td id="T_34ad9_row1_col3" class="data row1 col3">-0.0601</td>
+<td id="T_34ad9_row1_col4" class="data row1 col4">0.0701</td>
 </tr>
 <tr class="odd">
-<th id="T_b27e7_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">MSFT</th>
-<td id="T_b27e7_row2_col0" class="data row2 col0">0.0015</td>
-<td id="T_b27e7_row2_col1" class="data row2 col1">0.0200</td>
-<td id="T_b27e7_row2_col2" class="data row2 col2">0.0750</td>
-<td id="T_b27e7_row2_col3" class="data row2 col3">-0.0489</td>
-<td id="T_b27e7_row2_col4" class="data row2 col4">0.0623</td>
+<th id="T_34ad9_level0_row2" class="row_heading level0 row2" data-quarto-table-cell-role="th">MSFT</th>
+<td id="T_34ad9_row2_col0" class="data row2 col0">0.0015</td>
+<td id="T_34ad9_row2_col1" class="data row2 col1">0.0200</td>
+<td id="T_34ad9_row2_col2" class="data row2 col2">0.0750</td>
+<td id="T_34ad9_row2_col3" class="data row2 col3">-0.0489</td>
+<td id="T_34ad9_row2_col4" class="data row2 col4">0.0623</td>
 </tr>
 </tbody>
 </table>
 </div>
-</figure>
-</div>
-</div>
 </div>
 </figure>
 </div>
 </div>
+<p>Let <code>#| tbl-cap</code> supply the caption and leave the Styler’s own <code>set_caption()</code> alone. Using both gives you two captions in the output: Quarto’s numbered one and a second, unnumbered one emitted by pandas. Keep in mind, too, that a Styler always renders as HTML — <code>pd.options.styler.render.repr</code> defaults to <code>"html"</code> — so a styled table that looks polished on the web will fall back to a plain table in PDF.</p>
 <p><strong>3. Regression tables</strong></p>
 <p>For regression output, specialized packages like <code>stargazer</code> (Python port) or creating custom tables work well:</p>
 <div class="cell" data-execution_count="8">
@@ -1288,7 +1307,7 @@ Table&nbsp;19.3: OLS regression results
 <div>
 
 
-<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1361,7 +1380,7 @@ Table&nbsp;19.4: Returns by year and quarter
 <div>
 
 
-<table class="dataframe do-not-create-environment cell caption-top table table-sm table-striped small" data-border="1">
+<table class="dataframe cell caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -1420,12 +1439,12 @@ Table&nbsp;19.4: Returns by year and quarter
 </div>
 <div class="callout-body-container callout-body">
 <p>Like figures, tables with <code>label: tbl-name</code> and <code>tbl-cap</code> can be cross-referenced in text using <code>@tbl-name</code>. Quarto automatically numbers tables and creates hyperlinks in HTML and PDF output.</p>
-<p>For example, you might write: “Table <a href="#tbl-summary" class="quarto-xref">Table&nbsp;<span>19.1</span></a> shows that MSFT has the highest Sharpe ratio among the three stocks.”</p>
+<p>For example, you might write: “<a href="#tbl-summary" class="quarto-xref">Table&nbsp;<span>19.1</span></a> shows that MSFT has the highest Sharpe ratio among the three stocks.” Don’t add a prefix of your own: <code>@tbl-summary</code> already expands to “Table 1”, so writing <code>Table @tbl-summary</code> would come out as “Table Table 1”.</p>
 </div>
 </div>
 </section>
-<section id="cross-referencing" class="level3" data-number="19.8.3">
-<h3 data-number="19.8.3" class="anchored" data-anchor-id="cross-referencing"><span class="header-section-number">19.8.3</span> Cross-referencing</h3>
+<section id="cross-referencing" class="level3" data-number="19.7.3">
+<h3 data-number="19.7.3" class="anchored" data-anchor-id="cross-referencing"><span class="header-section-number">19.7.3</span> Cross-referencing</h3>
 <p>Professional documents need consistent numbering and easy cross-references. Quarto handles this automatically:</p>
 <p><strong>Figures:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>See @fig-volatility for the time series of rolling volatility.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1473,8 +1492,8 @@ Table&nbsp;19.4: Returns by year and quarter
 </div>
 </div>
 </section>
-<section id="figure-and-table-layout" class="level3" data-number="19.8.4">
-<h3 data-number="19.8.4" class="anchored" data-anchor-id="figure-and-table-layout"><span class="header-section-number">19.8.4</span> Figure and table layout</h3>
+<section id="figure-and-table-layout" class="level3" data-number="19.7.4">
+<h3 data-number="19.7.4" class="anchored" data-anchor-id="figure-and-table-layout"><span class="header-section-number">19.7.4</span> Figure and table layout</h3>
 <p>For professional documents, you often need precise control over layout:</p>
 <p><strong>Side-by-side figures:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>::: {#fig-comparison layout-ncol=2}</span>
@@ -1531,19 +1550,19 @@ Table&nbsp;19.4: Returns by year and quarter
 <span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
-<section id="latex-configuration" class="level2" data-number="19.9">
-<h2 data-number="19.9" class="anchored" data-anchor-id="latex-configuration"><span class="header-section-number">19.9</span> LaTeX Configuration</h2>
+<section id="latex-configuration" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="latex-configuration"><span class="header-section-number">19.8</span> LaTeX Configuration</h2>
 <p>When you need fine-grained control over PDF output, Quarto exposes many LaTeX options through the YAML header. This section covers the most useful configurations for academic writing.</p>
-<section id="pdf-engine-selection" class="level3" data-number="19.9.1">
-<h3 data-number="19.9.1" class="anchored" data-anchor-id="pdf-engine-selection"><span class="header-section-number">19.9.1</span> PDF engine selection</h3>
+<section id="pdf-engine-selection" class="level3" data-number="19.8.1">
+<h3 data-number="19.8.1" class="anchored" data-anchor-id="pdf-engine-selection"><span class="header-section-number">19.8.1</span> PDF engine selection</h3>
 <p>By default, Quarto uses LuaLaTeX to compile PDFs. You can specify an alternative:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb42"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">pdf-engine</span><span class="kw">:</span><span class="at"> xelatex</span><span class="co">  # or pdflatex, lualatex</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>LuaLaTeX (the default) handles Unicode well and supports modern font features. XeLaTeX is another good choice for Unicode and custom fonts. The older pdflatex is faster but has limited Unicode support.</p>
 </section>
-<section id="document-classes" class="level3" data-number="19.9.2">
-<h3 data-number="19.9.2" class="anchored" data-anchor-id="document-classes"><span class="header-section-number">19.9.2</span> Document classes</h3>
+<section id="document-classes" class="level3" data-number="19.8.2">
+<h3 data-number="19.8.2" class="anchored" data-anchor-id="document-classes"><span class="header-section-number">19.8.2</span> Document classes</h3>
 <p>The <code>documentclass</code> option controls the overall document structure:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb43"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
@@ -1554,8 +1573,8 @@ Table&nbsp;19.4: Returns by year and quarter
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">documentclass</span><span class="kw">:</span><span class="at"> scrartcl</span><span class="co">  # KOMA-Script article</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The KOMA-Script classes (<code>scrartcl</code>, <code>scrreprt</code>, <code>scrbook</code>) offer improved typography and more customization options compared to standard LaTeX classes.</p>
 </section>
-<section id="custom-styling-with-external-files" class="level3" data-number="19.9.3">
-<h3 data-number="19.9.3" class="anchored" data-anchor-id="custom-styling-with-external-files"><span class="header-section-number">19.9.3</span> Custom styling with external files</h3>
+<section id="custom-styling-with-external-files" class="level3" data-number="19.8.3">
+<h3 data-number="19.8.3" class="anchored" data-anchor-id="custom-styling-with-external-files"><span class="header-section-number">19.8.3</span> Custom styling with external files</h3>
 <p>For extensive customization, you can include external LaTeX files:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb45"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
@@ -1572,8 +1591,8 @@ Table&nbsp;19.4: Returns by year and quarter
 <span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="fu">\fancyhead</span>[R]{<span class="fu">\thepage</span>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This approach lets you apply consistent styling across multiple documents by sharing a common preamble.</p>
 </section>
-<section id="raw-latex-in-documents" class="level3" data-number="19.9.4">
-<h3 data-number="19.9.4" class="anchored" data-anchor-id="raw-latex-in-documents"><span class="header-section-number">19.9.4</span> Raw LaTeX in documents</h3>
+<section id="raw-latex-in-documents" class="level3" data-number="19.8.4">
+<h3 data-number="19.8.4" class="anchored" data-anchor-id="raw-latex-in-documents"><span class="header-section-number">19.8.4</span> Raw LaTeX in documents</h3>
 <p>You can include LaTeX commands directly in your Quarto document when needed:</p>
 <p><strong>Inline LaTeX:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb47"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>The result is significant at the <span class="sc">\(</span> p &lt; 0.01 <span class="sc">\)</span> level.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1585,22 +1604,20 @@ Table&nbsp;19.4: Returns by year and quarter
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb49"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{=latex}</span></span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="in">\begin{theorem}</span></span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="in">Under standard assumptions, $\hat{\beta}$ is consistent.</span></span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="in">\end{theorem}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>
-Use raw LaTeX sparingly—it only appears in PDF output and breaks the multi-format capability.
-
-### Conditional content for different formats
-
-Sometimes you need different content for PDF versus HTML. Use conditional blocks:
-
-```markdown
-::: {.content-visible when-format="html"}
-Click the button below to download the data.
-:::
-
-::: {.content-visible when-format="pdf"}
-Data available at: https://example.com/data
-:::</code></pre>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="in">\end{theorem}</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Use raw LaTeX sparingly—it only appears in PDF output and breaks the multi-format capability.</p>
+</section>
+<section id="conditional-content-for-different-formats" class="level3" data-number="19.8.5">
+<h3 data-number="19.8.5" class="anchored" data-anchor-id="conditional-content-for-different-formats"><span class="header-section-number">19.8.5</span> Conditional content for different formats</h3>
+<p>Sometimes you need different content for PDF versus HTML. Use conditional blocks:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb50"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="html"}</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>Click the button below to download the data.</span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>::: {.content-visible when-format="pdf"}</span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>Data available at: https://example.com/data</span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>:::</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This is useful for:</p>
 <ul>
 <li>Interactive elements that only work in HTML</li>
@@ -1609,11 +1626,11 @@ Data available at: https://example.com/data
 </ul>
 </section>
 </section>
-<section id="pdf-and-html-output" class="level2" data-number="19.10">
-<h2 data-number="19.10" class="anchored" data-anchor-id="pdf-and-html-output"><span class="header-section-number">19.10</span> PDF and HTML Output</h2>
+<section id="pdf-and-html-output" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="pdf-and-html-output"><span class="header-section-number">19.9</span> PDF and HTML Output</h2>
 <p>One of Quarto’s greatest strengths is generating multiple output formats from a single source. Let’s explore how to create polished PDF and HTML documents suitable for academic publication.</p>
-<section id="pdf-output-basics" class="level3" data-number="19.10.1">
-<h3 data-number="19.10.1" class="anchored" data-anchor-id="pdf-output-basics"><span class="header-section-number">19.10.1</span> PDF output basics</h3>
+<section id="pdf-output-basics" class="level3" data-number="19.9.1">
+<h3 data-number="19.9.1" class="anchored" data-anchor-id="pdf-output-basics"><span class="header-section-number">19.9.1</span> PDF output basics</h3>
 <p>To generate PDF output, specify it in the YAML header:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb51"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Earnings Announcements and Volatility"</span></span>
@@ -1624,8 +1641,8 @@ Data available at: https://example.com/data
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb52"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render document.qmd <span class="at">--to</span> pdf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Quarto uses LaTeX behind the scenes, but you don’t need to know LaTeX to create beautiful PDFs. Quarto handles the conversion automatically.</p>
 </section>
-<section id="pdf-formatting-options" class="level3" data-number="19.10.2">
-<h3 data-number="19.10.2" class="anchored" data-anchor-id="pdf-formatting-options"><span class="header-section-number">19.10.2</span> PDF formatting options</h3>
+<section id="pdf-formatting-options" class="level3" data-number="19.9.2">
+<h3 data-number="19.9.2" class="anchored" data-anchor-id="pdf-formatting-options"><span class="header-section-number">19.9.2</span> PDF formatting options</h3>
 <p>Customize PDF appearance with format options:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb53"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Research Paper"</span></span>
@@ -1641,8 +1658,8 @@ Data available at: https://example.com/data
 <span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">             # Table of contents</span></span>
 <span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">2</span><span class="co">          # How many levels to include</span></span>
 <span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">colorlinks</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">      # Colored hyperlinks</span></span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">biblio-style</span><span class="kw">:</span><span class="at"> apalike</span><span class="co"> # Citation style</span></span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Citation style is deliberately not set here. Quarto formats citations with citeproc by default, and citeproc reads the top-level <code>csl:</code> option; the LaTeX-oriented <code>biblio-style</code> only has an effect if you explicitly switch to natbib or biblatex. We come back to <code>csl:</code> in the section on citations and references.</p>
 <p><strong>Common document classes:</strong></p>
 <ul>
 <li><code>article</code>: Standard papers (default)</li>
@@ -1687,8 +1704,8 @@ Data available at: https://example.com/data
 </div>
 </div>
 </section>
-<section id="html-output-basics" class="level3" data-number="19.10.3">
-<h3 data-number="19.10.3" class="anchored" data-anchor-id="html-output-basics"><span class="header-section-number">19.10.3</span> HTML output basics</h3>
+<section id="html-output-basics" class="level3" data-number="19.9.3">
+<h3 data-number="19.9.3" class="anchored" data-anchor-id="html-output-basics"><span class="header-section-number">19.9.3</span> HTML output basics</h3>
 <p>HTML output is ideal for online sharing, course materials, and interactive documents:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb56"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Analysis"</span></span>
@@ -1702,8 +1719,8 @@ Data available at: https://example.com/data
 <li>Fast navigation and search</li>
 </ul>
 </section>
-<section id="html-themes-and-styling" class="level3" data-number="19.10.4">
-<h3 data-number="19.10.4" class="anchored" data-anchor-id="html-themes-and-styling"><span class="header-section-number">19.10.4</span> HTML themes and styling</h3>
+<section id="html-themes-and-styling" class="level3" data-number="19.9.4">
+<h3 data-number="19.9.4" class="anchored" data-anchor-id="html-themes-and-styling"><span class="header-section-number">19.9.4</span> HTML themes and styling</h3>
 <p>Quarto includes several built-in themes:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb57"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html</span><span class="kw">:</span></span>
@@ -1726,9 +1743,8 @@ Data available at: https://example.com/data
 <span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
 <span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-depth</span><span class="kw">:</span><span class="at"> </span><span class="dv">3</span></span>
 <span id="cb58-9"><a href="#cb58-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-fold</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">          # Collapsible code blocks</span></span>
-<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-tools</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">         # Show/hide all code button</span></span>
-<span id="cb58-11"><a href="#cb58-11" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-link</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">          # Hyperlink function names</span></span>
-<span id="cb58-12"><a href="#cb58-12" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">df-print</span><span class="kw">:</span><span class="at"> paged</span><span class="co">          # Paginate large DataFrames</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb58-10"><a href="#cb58-10" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code-tools</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">         # Show/hide all code button</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Two HTML options you will meet in Quarto examples are deliberately absent from this list: <code>code-link: true</code>, which hyperlinks function names, and <code>df-print: paged</code>, which paginates data frames. Both are knitr-engine options that rely on R tooling, and neither does anything to Python code or pandas output.</p>
 <p><strong>Custom CSS:</strong></p>
 <p>For fine-grained control, add custom CSS:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb59"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
@@ -1750,8 +1766,8 @@ Data available at: https://example.com/data
 <span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>    <span class="kw">font-size</span><span class="ch">:</span> <span class="dv">0.9</span><span class="dt">em</span><span class="op">;</span></span>
 <span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="multiple-output-formats" class="level3" data-number="19.10.5">
-<h3 data-number="19.10.5" class="anchored" data-anchor-id="multiple-output-formats"><span class="header-section-number">19.10.5</span> Multiple output formats</h3>
+<section id="multiple-output-formats" class="level3" data-number="19.9.5">
+<h3 data-number="19.9.5" class="anchored" data-anchor-id="multiple-output-formats"><span class="header-section-number">19.9.5</span> Multiple output formats</h3>
 <p>You can configure multiple outputs simultaneously:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb61"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"My Research"</span></span>
@@ -1803,8 +1819,8 @@ Data available at: https://example.com/data
 </div>
 </div>
 </section>
-<section id="citations-and-references" class="level3" data-number="19.10.6">
-<h3 data-number="19.10.6" class="anchored" data-anchor-id="citations-and-references"><span class="header-section-number">19.10.6</span> Citations and references</h3>
+<section id="citations-and-references" class="level3" data-number="19.9.6">
+<h3 data-number="19.9.6" class="anchored" data-anchor-id="citations-and-references"><span class="header-section-number">19.9.6</span> Citations and references</h3>
 <p>Academic writing requires proper citations. Quarto integrates with BibTeX and other reference managers:</p>
 <p><strong>1. Create a bibliography file</strong> (<code>references.bib</code>):</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb65"><pre class="sourceCode bibtex code-with-copy"><code class="sourceCode bibtex"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a><span class="va">@article</span>{<span class="ot">fama1993</span>,</span>
@@ -1876,8 +1892,8 @@ Data available at: https://example.com/data
 </div>
 </div>
 </section>
-<section id="mathematics-and-equations" class="level3" data-number="19.10.7">
-<h3 data-number="19.10.7" class="anchored" data-anchor-id="mathematics-and-equations"><span class="header-section-number">19.10.7</span> Mathematics and equations</h3>
+<section id="mathematics-and-equations" class="level3" data-number="19.9.7">
+<h3 data-number="19.9.7" class="anchored" data-anchor-id="mathematics-and-equations"><span class="header-section-number">19.9.7</span> Mathematics and equations</h3>
 <p>Quarto supports LaTeX-style mathematical notation using MathJax (HTML) or native LaTeX (PDF):</p>
 <p><strong>Inline math:</strong></p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb70"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>The expected return is $E<span class="co">[</span><span class="ot">R_i</span><span class="co">]</span> = \mu_i$ with variance $\sigma_i^2$.</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1910,17 +1926,17 @@ Data available at: https://example.com/data
 </ul>
 </section>
 </section>
-<section id="collaborative-commenting-with-quarto-comments" class="level2" data-number="19.11">
-<h2 data-number="19.11" class="anchored" data-anchor-id="collaborative-commenting-with-quarto-comments"><span class="header-section-number">19.11</span> Collaborative Commenting with quarto-comments</h2>
+<section id="collaborative-commenting-with-quarto-comments" class="level2" data-number="19.10">
+<h2 data-number="19.10" class="anchored" data-anchor-id="collaborative-commenting-with-quarto-comments"><span class="header-section-number">19.10</span> Collaborative Commenting with quarto-comments</h2>
 <p>When writing research documents collaboratively, you often need to leave notes, questions, or todos for yourself or co-authors. The <a href="https://github.com/vgreg/quarto-comments"><code>quarto-comments</code></a> extension provides shortcodes for inline comments that appear in your output (useful during drafting) but can be hidden for final submission.</p>
-<section id="installing-the-extension" class="level3" data-number="19.11.1">
-<h3 data-number="19.11.1" class="anchored" data-anchor-id="installing-the-extension"><span class="header-section-number">19.11.1</span> Installing the extension</h3>
+<section id="installing-the-extension" class="level3" data-number="19.10.1">
+<h3 data-number="19.10.1" class="anchored" data-anchor-id="installing-the-extension"><span class="header-section-number">19.10.1</span> Installing the extension</h3>
 <p>Install the extension in your Quarto project:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb74"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb74-1"><a href="#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> add vgreg/quarto-comments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This adds the extension to your project’s <code>_extensions</code> directory.</p>
 </section>
-<section id="using-comment-shortcodes" class="level3" data-number="19.11.2">
-<h3 data-number="19.11.2" class="anchored" data-anchor-id="using-comment-shortcodes"><span class="header-section-number">19.11.2</span> Using comment shortcodes</h3>
+<section id="using-comment-shortcodes" class="level3" data-number="19.10.2">
+<h3 data-number="19.10.2" class="anchored" data-anchor-id="using-comment-shortcodes"><span class="header-section-number">19.10.2</span> Using comment shortcodes</h3>
 <p>The extension provides three shortcode types:</p>
 <p><strong>Todos</strong> for tasks that need attention:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb75"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a>We need to add robustness checks here. {{&lt; todo &gt;}}</span>
@@ -1935,8 +1951,8 @@ Data available at: https://example.com/data
 <span id="cb77-2"><a href="#cb77-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb77-3"><a href="#cb77-3" aria-hidden="true" tabindex="-1"></a>Is this the right sample period? {{&lt; question author="EF" &gt;}}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="configuration" class="level3" data-number="19.11.3">
-<h3 data-number="19.11.3" class="anchored" data-anchor-id="configuration"><span class="header-section-number">19.11.3</span> Configuration</h3>
+<section id="configuration" class="level3" data-number="19.10.3">
+<h3 data-number="19.10.3" class="anchored" data-anchor-id="configuration"><span class="header-section-number">19.10.3</span> Configuration</h3>
 <p>Configure the extension in your <code>_quarto.yml</code> or document YAML:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb78"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="fu">comments</span><span class="kw">:</span></span>
 <span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">show</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span><span class="co">  # Set to false for final submission</span></span>
@@ -1963,11 +1979,11 @@ Data available at: https://example.com/data
 </div>
 </section>
 </section>
-<section id="best-practices-for-research-documents" class="level2" data-number="19.12">
-<h2 data-number="19.12" class="anchored" data-anchor-id="best-practices-for-research-documents"><span class="header-section-number">19.12</span> Best Practices for Research Documents</h2>
+<section id="best-practices-for-research-documents" class="level2" data-number="19.11">
+<h2 data-number="19.11" class="anchored" data-anchor-id="best-practices-for-research-documents"><span class="header-section-number">19.11</span> Best Practices for Research Documents</h2>
 <p>As you create research documents with Quarto, keep these practices in mind:</p>
-<section id="separate-data-processing-from-presentation" class="level3" data-number="19.12.1">
-<h3 data-number="19.12.1" class="anchored" data-anchor-id="separate-data-processing-from-presentation"><span class="header-section-number">19.12.1</span> 1. Separate data processing from presentation</h3>
+<section id="separate-data-processing-from-presentation" class="level3" data-number="19.11.1">
+<h3 data-number="19.11.1" class="anchored" data-anchor-id="separate-data-processing-from-presentation"><span class="header-section-number">19.11.1</span> 1. Separate data processing from presentation</h3>
 <p>Structure your workflow with distinct stages:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb79"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
@@ -1977,66 +1993,65 @@ Data available at: https://example.com/data
 <span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'raw_data.csv'</span>)</span>
 <span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data.dropna()</span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data[data[<span class="st">'date'</span>] <span class="op">&gt;=</span> <span class="st">'2020-01-01'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb80-4"><a href="#cb80-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis and results (show output)</span></span>
-<span id="cb80-5"><a href="#cb80-5" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="op">=</span> data.describe()</span>
-<span id="cb80-6"><a href="#cb80-6" aria-hidden="true" tabindex="-1"></a>summary_stats</span>
-<span id="cb80-7"><a href="#cb80-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>
-This keeps your document clean and focused on results rather than data munging details.
-
-### 2. Use meaningful chunk labels
-
-Good labels make documents maintainable:
-
-```markdown
-#| label: fig-event-study
-#| label: tbl-regression-main
-#| label: sec-robustness-checks</code></pre>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> data[data[<span class="st">'date'</span>] <span class="op">&gt;=</span> <span class="st">'2020-01-01'</span>]</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Analysis and results (show output)</span></span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="op">=</span> data.describe()</span>
+<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a>summary_stats</span>
+<span id="cb79-18"><a href="#cb79-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This keeps your document clean and focused on results rather than data munging details.</p>
+</section>
+<section id="use-meaningful-chunk-labels" class="level3" data-number="19.11.2">
+<h3 data-number="19.11.2" class="anchored" data-anchor-id="use-meaningful-chunk-labels"><span class="header-section-number">19.11.2</span> 2. Use meaningful chunk labels</h3>
+<p>Good labels make documents maintainable:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb80"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb80-1"><a href="#cb80-1" aria-hidden="true" tabindex="-1"></a>#| label: fig-event-study</span>
+<span id="cb80-2"><a href="#cb80-2" aria-hidden="true" tabindex="-1"></a>#| label: tbl-regression-main</span>
+<span id="cb80-3"><a href="#cb80-3" aria-hidden="true" tabindex="-1"></a>#| label: sec-robustness-checks</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Not:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a>#| label: fig-1</span>
-<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a>#| label: tbl-stuff</span>
-<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>#| label: sec-section3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb81"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a>#| label: fig-1</span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>#| label: tbl-stuff</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>#| label: sec-section3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="document-your-data-and-code" class="level3" data-number="19.12.2">
-<h3 data-number="19.12.2" class="anchored" data-anchor-id="document-your-data-and-code"><span class="header-section-number">19.12.2</span> 3. Document your data and code</h3>
+<section id="document-your-data-and-code" class="level3" data-number="19.11.3">
+<h3 data-number="19.11.3" class="anchored" data-anchor-id="document-your-data-and-code"><span class="header-section-number">19.11.3</span> 3. Document your data and code</h3>
 <p>Include a setup section explaining data sources and key assumptions:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>We obtain daily stock returns from CRSP for all NYSE, AMEX, and NASDAQ stocks</span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>from January 1990 to December 2023. We require firms to have at least 12 months</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>of return data and exclude financial firms (SIC codes 6000-6999).</span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Data filters</span></span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>min_months <span class="op">=</span> <span class="dv">12</span></span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> <span class="st">'1990-01-01'</span></span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>end_date <span class="op">=</span> <span class="st">'2023-12-31'</span></span>
-<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>exclude_sic <span class="op">=</span> <span class="bu">range</span>(<span class="dv">6000</span>, <span class="dv">7000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<pre><code>
-### 4. Use freeze for long-running documents
-
-For computationally intensive research:
-
-```yaml
----
-title: "Monte Carlo Analysis"
-execute:
-  freeze: auto
----</code></pre>
-<p>This lets you edit text freely without re-running expensive simulations.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb82"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb82-1"><a href="#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">## Data</span></span>
+<span id="cb82-2"><a href="#cb82-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-3"><a href="#cb82-3" aria-hidden="true" tabindex="-1"></a>We obtain daily stock returns from CRSP for all NYSE, AMEX, and NASDAQ stocks</span>
+<span id="cb82-4"><a href="#cb82-4" aria-hidden="true" tabindex="-1"></a>from January 1990 to December 2023. We require firms to have at least 12 months</span>
+<span id="cb82-5"><a href="#cb82-5" aria-hidden="true" tabindex="-1"></a>of return data and exclude financial firms (SIC codes 6000-6999).</span>
+<span id="cb82-6"><a href="#cb82-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-7"><a href="#cb82-7" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
+<span id="cb82-8"><a href="#cb82-8" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb82-9"><a href="#cb82-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb82-10"><a href="#cb82-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Data filters</span></span>
+<span id="cb82-11"><a href="#cb82-11" aria-hidden="true" tabindex="-1"></a>min_months <span class="op">=</span> <span class="dv">12</span></span>
+<span id="cb82-12"><a href="#cb82-12" aria-hidden="true" tabindex="-1"></a>start_date <span class="op">=</span> <span class="st">'1990-01-01'</span></span>
+<span id="cb82-13"><a href="#cb82-13" aria-hidden="true" tabindex="-1"></a>end_date <span class="op">=</span> <span class="st">'2023-12-31'</span></span>
+<span id="cb82-14"><a href="#cb82-14" aria-hidden="true" tabindex="-1"></a>exclude_sic <span class="op">=</span> <span class="bu">range</span>(<span class="dv">6000</span>, <span class="dv">7000</span>)</span>
+<span id="cb82-15"><a href="#cb82-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="version-control-with-git" class="level3" data-number="19.12.3">
-<h3 data-number="19.12.3" class="anchored" data-anchor-id="version-control-with-git"><span class="header-section-number">19.12.3</span> 5. Version control with Git</h3>
+<section id="use-freeze-for-long-running-documents" class="level3" data-number="19.11.4">
+<h3 data-number="19.11.4" class="anchored" data-anchor-id="use-freeze-for-long-running-documents"><span class="header-section-number">19.11.4</span> 4. Use freeze for long-running documents</h3>
+<p>For computationally intensive research, organize the paper as a Quarto project and set <code>freeze</code> in <code>_quarto.yml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb83"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># _quarto.yml</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a><span class="fu">project</span><span class="kw">:</span></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">type</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a><span class="fu">execute</span><span class="kw">:</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">freeze</span><span class="kw">:</span><span class="at"> auto</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This lets you edit text freely without re-running expensive simulations. Remember that <code>freeze</code> only applies when you render the project; rendering a single document on its own always executes its code.</p>
+</section>
+<section id="version-control-with-git" class="level3" data-number="19.11.5">
+<h3 data-number="19.11.5" class="anchored" data-anchor-id="version-control-with-git"><span class="header-section-number">19.11.5</span> 5. Version control with Git</h3>
 <p>Quarto documents are plain text, making them perfect for Git:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb85"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add analysis.qmd references.bib</span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add robustness checks section"</span></span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb84"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> add analysis.qmd references.bib</span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> commit <span class="at">-m</span> <span class="st">"Add robustness checks section"</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> push</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Benefits:</p>
 <ul>
 <li>Track changes over time</li>
@@ -2064,26 +2079,26 @@ _book/
 </div>
 </div>
 </section>
-<section id="create-reusable-templates" class="level3" data-number="19.12.4">
-<h3 data-number="19.12.4" class="anchored" data-anchor-id="create-reusable-templates"><span class="header-section-number">19.12.4</span> 6. Create reusable templates</h3>
+<section id="create-reusable-templates" class="level3" data-number="19.11.6">
+<h3 data-number="19.11.6" class="anchored" data-anchor-id="create-reusable-templates"><span class="header-section-number">19.11.6</span> 6. Create reusable templates</h3>
 <p>For papers following a standard structure:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
-<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"19&nbsp; Reproducible Documents with Quarto"</span></span>
-<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
-<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
-<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
-<span id="cb87-6"><a href="#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
-<span id="cb87-7"><a href="#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">template</span><span class="kw">:</span><span class="at"> research-paper.tex</span></span>
-<span id="cb87-8"><a href="#cb87-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb87-9"><a href="#cb87-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">colorlinks</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb87-10"><a href="#cb87-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> ~/Documents/references.bib</span></span>
-<span id="cb87-11"><a href="#cb87-11" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> journal-of-finance.csl</span></span>
-<span id="cb87-12"><a href="#cb87-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb86"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb86-1"><a href="#cb86-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
+<span id="cb86-2"><a href="#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"19&nbsp; Reproducible Documents with Quarto"</span></span>
+<span id="cb86-3"><a href="#cb86-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author</span><span class="kw">:</span><span class="at"> </span><span class="st">"Your Name"</span></span>
+<span id="cb86-4"><a href="#cb86-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> today</span></span>
+<span id="cb86-5"><a href="#cb86-5" aria-hidden="true" tabindex="-1"></a><span class="fu">format</span><span class="kw">:</span></span>
+<span id="cb86-6"><a href="#cb86-6" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf</span><span class="kw">:</span></span>
+<span id="cb86-7"><a href="#cb86-7" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">template</span><span class="kw">:</span><span class="at"> research-paper.tex</span></span>
+<span id="cb86-8"><a href="#cb86-8" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">number-sections</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb86-9"><a href="#cb86-9" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">colorlinks</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb86-10"><a href="#cb86-10" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> ~/Documents/references.bib</span></span>
+<span id="cb86-11"><a href="#cb86-11" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> journal-of-finance.csl</span></span>
+<span id="cb86-12"><a href="#cb86-12" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save this as a template and reuse it for each new project.</p>
 </section>
 </section>
-<section id="comparison-with-jupyter-notebooks" class="level2" data-number="19.13">
-<h2 data-number="19.13" class="anchored" data-anchor-id="comparison-with-jupyter-notebooks"><span class="header-section-number">19.13</span> Comparison with Jupyter Notebooks</h2>
+<section id="comparison-with-jupyter-notebooks" class="level2" data-number="19.12">
+<h2 data-number="19.12" class="anchored" data-anchor-id="comparison-with-jupyter-notebooks"><span class="header-section-number">19.12</span> Comparison with Jupyter Notebooks</h2>
 <p>You may be wondering how Quarto documents differ from Jupyter notebooks, which you might already use. Here’s a detailed comparison:</p>
 <p><strong>Jupyter Notebooks:</strong></p>
 <ul>
@@ -2118,14 +2133,14 @@ _book/
 <li><strong>Publish</strong> final document in multiple formats</li>
 </ol>
 <p>You can even convert between formats:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb88"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb88-1"><a href="#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert notebook to Quarto</span></span>
-<span id="cb88-2"><a href="#cb88-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> convert notebook.ipynb</span>
-<span id="cb88-3"><a href="#cb88-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb88-4"><a href="#cb88-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Render notebook as PDF</span></span>
-<span id="cb88-5"><a href="#cb88-5" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render notebook.ipynb <span class="at">--to</span> pdf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb87"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb87-1"><a href="#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert notebook to Quarto</span></span>
+<span id="cb87-2"><a href="#cb87-2" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> convert notebook.ipynb</span>
+<span id="cb87-3"><a href="#cb87-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb87-4"><a href="#cb87-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Render notebook as PDF</span></span>
+<span id="cb87-5"><a href="#cb87-5" aria-hidden="true" tabindex="-1"></a><span class="ex">quarto</span> render notebook.ipynb <span class="at">--to</span> pdf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
-<section id="additional-resources" class="level2" data-number="19.14">
-<h2 data-number="19.14" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">19.14</span> Additional Resources</h2>
+<section id="additional-resources" class="level2" data-number="19.13">
+<h2 data-number="19.13" class="anchored" data-anchor-id="additional-resources"><span class="header-section-number">19.13</span> Additional Resources</h2>
 <p>To deepen your knowledge of Quarto:</p>
 <p><strong>Official Documentation:</strong></p>
 <ul>
@@ -2153,7 +2168,10 @@ _book/
 
 </section>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cochrane2005writing" class="csl-entry" role="listitem">
+Cochrane, John H. 2005. <em>Writing Tips for Ph.d. Students</em>.
+</div>
 <div id="ref-knaflic2015storytelling" class="csl-entry" role="listitem">
 Knaflic, Cole Nussbaumer. 2015. <em>Storytelling with Data: A Data
 Visualization Guide for Business Professionals</em>. Wiley.
@@ -2168,12 +2186,12 @@ Information</em>. 2nd ed. Graphics Press.
 </div>
 <div id="ref-wilke2019fundamentals" class="csl-entry" role="listitem">
 Wilke, Claus O. 2019. <em>Fundamentals of Data Visualization: A Primer
-on Making Informative and Compelling Figures</em>. 1st ed. Sebastopol,
-CA: O’Reilly Media.
+on Making Informative and Compelling Figures</em>. 1st ed. O’Reilly
+Media.
 </div>
 <div id="ref-Yadan2019Hydra" class="csl-entry" role="listitem">
-Yadan, Omry. 2019. <span>“Hydra - a Framework for Elegantly Configuring
-Complex Applications.”</span> Github. <a href="https://github.com/facebookresearch/hydra">https://github.com/facebookresearch/hydra</a>.
+Yadan, Omry. 2019. <em>Hydra - a Framework for Elegantly Configuring
+Complex Applications</em>. Github. <a href="https://github.com/facebookresearch/hydra">https://github.com/facebookresearch/hydra</a>.
 </div>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -6,11 +6,10 @@
 <script src="lecture07_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture07_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture07_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture07_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="lecture07_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Lecture 7</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="lecture07_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture07_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -33,7 +38,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -50,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="lecture07_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture07_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -179,21 +183,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -212,8 +205,6 @@ Saad Ali Khan
 <ul>
 <li>Review of Linear Regression</li>
 <li>Robust Standard Errors</li>
-<li>Measurement Errors</li>
-<li>Dummy Variables</li>
 </ul></li>
 </ul>
 <div style="height: 2em;">
@@ -224,7 +215,7 @@ Saad Ali Khan
 </ul>
 
 <aside><div>
-<p>Readings: Ch. 4 of <span class="citation" data-cites="mckinney2022python">McKinney (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>, Ch. 4, 5.3, and 5.4 of <span class="citation" data-cites="baltagi_econometrics_2022">Baltagi (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span></p>
+<p>Readings: Ch. 4 of <span class="citation" data-cites="mckinney2022python">McKinney (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>, Sections 4.1–4.6, 5.5, and 5.6 of <span class="citation" data-cites="baltagi_econometrics_2022">Baltagi (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span></p>
 </div></aside></section>
 <section id="linear-regression" class="slide level2">
 <h2>Linear Regression</h2>
@@ -296,9 +287,9 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
-<p>Regressing NVDA on <span class="citation" data-cites="fama1995size">Fama and French (<a href="#/references" role="doc-biblioref" onclick="">1995</a>)</span> 3 factors</p>
-<p><span class="math display">r_{\text{NVDA},t}-r_{f,t} = \alpha + \beta_1(r_{\text{M},t}-r_{f,t}) + \beta_2SMB_t + \beta_3HML_t + \beta_4MOM_t + \varepsilon_t</span></p>
-<div id="ec57daeb" class="cell" data-execution_count="1">
+<p>Regressing NVDA on the 3 factors of <span class="citation" data-cites="fama1993common">Fama and French (<a href="#/references" role="doc-biblioref" onclick="">1993</a>)</span></p>
+<p><span class="math display">r_{\text{NVDA},t}-r_{f,t} = \alpha + \beta_1(r_{\text{M},t}-r_{f,t}) + \beta_2SMB_t + \beta_3HML_t + \varepsilon_t</span></p>
+<div id="b170e791" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <style scoped="">
@@ -413,7 +404,7 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 <section id="univariate-regression" class="slide level2">
 <h2>Univariate Regression</h2>
 <div style="font-size: 75%;">
-<div id="dae61be6" class="cell" data-fontoptions="Scale=0.55" data-execution_count="2">
+<div id="c5119284" class="cell" data-fontoptions="Scale=0.55" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <table class="simpletable caption-top">
 <caption>OLS Regression Results</caption>
@@ -438,13 +429,13 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Sun, 25 Jan 2026</td>
+<td>Thu, 13 Aug 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>3.65e-20</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>15:31:34</td>
+<td>17:25:11</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>560.91</td>
 </tr>
@@ -544,11 +535,11 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="univariate-regression-1" class="slide level2" data-transition="fade-out slide-in">
 <h2>Univariate Regression</h2>
-<div id="2decf594" class="cell" data-execution_count="3">
+<div id="97feb85b" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-4-output-1.png" width="1129" height="596"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-4-output-1.png" width="1131" height="599"></p>
 </figure>
 </div>
 </div>
@@ -556,11 +547,11 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="univariate-regression-2" class="slide level2" data-transition="fade-in slide-out">
 <h2>Univariate Regression</h2>
-<div id="195650a7" class="cell" data-execution_count="4">
+<div id="a4c1d914" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-5-output-1.png" width="1129" height="596"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-5-output-1.png" width="1131" height="599"></p>
 </figure>
 </div>
 </div>
@@ -568,11 +559,11 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="residuals" class="slide level2">
 <h2>Residuals</h2>
-<div id="ef089f04" class="cell" data-execution_count="5">
+<div id="c8ad7a1c" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-6-output-1.png" width="1129" height="596"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-6-output-1.png" width="1131" height="599"></p>
 </figure>
 </div>
 </div>
@@ -580,11 +571,11 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="impact-of-outliers" class="slide level2" data-transition="fade-out slide-in">
 <h2>Impact of Outliers</h2>
-<div id="6a0f5c71" class="cell" data-execution_count="6">
+<div id="b31e902e" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-7-output-1.png" width="1129" height="597"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-7-output-1.png" width="1131" height="599"></p>
 </figure>
 </div>
 </div>
@@ -592,11 +583,11 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </section>
 <section id="impact-of-outliers-1" class="slide level2" data-transition="fade-in slide-out">
 <h2>Impact of Outliers</h2>
-<div id="3facf4e7" class="cell" data-execution_count="7">
+<div id="e520e0b0" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-8-output-1.png" width="1129" height="597"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-8-output-1.png" width="1131" height="599"></p>
 </figure>
 </div>
 </div>
@@ -606,7 +597,7 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 
 <h3 id="multivariate-regression">Multivariate Regression</h3>
 <div style="font-size: 67%;">
-<div id="cafc9f58" class="cell" data-execution_count="8">
+<div id="e06d2a1c" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display" data-execution_count="8">
 <table class="simpletable caption-top">
 <caption>OLS Regression Results</caption>
@@ -631,13 +622,13 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">Date:</th>
-<td>Sun, 25 Jan 2026</td>
+<td>Thu, 13 Aug 2026</td>
 <th data-quarto-table-cell-role="th">Prob (F-statistic):</th>
 <td>1.63e-25</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">Time:</th>
-<td>15:31:36</td>
+<td>17:25:12</td>
 <th data-quarto-table-cell-role="th">Log-Likelihood:</th>
 <td>578.28</td>
 </tr>
@@ -807,14 +798,22 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 <li>otherwise <em>individual elements of</em> <span class="math inline">\beta</span> may not be identified</li>
 </ul></li>
 </ol>
-<div style="height: 0.3em;">
-
-</div>
-<ol start="4" type="1">
-<li>Errors <span class="math inline">\varepsilon</span> are homoskedastic: <span class="math inline">\forall t, s\quad E[\varepsilon^2_t] = E[\varepsilon^2_s]</span></li>
-</ol>
 </section>
 <section id="the-gauss-markov-theorem-1" class="slide level2">
+<h2>The Gauss-Markov Theorem</h2>
+<ol start="4" type="1">
+<li><p>Errors <span class="math inline">\varepsilon</span> are <strong>spherical</strong>: <span class="math inline">E\left[\varepsilon\varepsilon^{\prime}\right] =\sigma_{\varepsilon}^{2}I</span></p>
+<ul>
+<li><em>Homoskedastic</em>: <span class="math inline">\forall t, s\quad E[\varepsilon^2_t] = E[\varepsilon^2_s]</span></li>
+<li><em>No autocorrelation</em>: <span class="math inline">E[\varepsilon_t\varepsilon_s] = 0</span> for <span class="math inline">t\neq s</span></li>
+</ul></li>
+</ol>
+<div style="height: 1em;">
+
+</div>
+<p><span class="math inline">\Rightarrow</span> Together these give <span class="math inline">Var\left(\widehat{\beta}\right) =\sigma_{\varepsilon}^{2}\left(X^{\prime}X\right)^{-1}</span>; we will relax them later with robust standard errors</p>
+</section>
+<section id="the-gauss-markov-theorem-2" class="slide level2">
 <h2>The Gauss-Markov Theorem</h2>
 <div style="height: 1em;">
 
@@ -827,14 +826,14 @@ y = \left[\begin{array}{c}y_1\\ y_2\\ \vdots\\ y_{T-1}\\ y_T \end{array} \right]
 &amp;=\beta+\left(  X^{\prime}X\right)  ^{-1}X^{\prime}\varepsilon
 \end{aligned}
 </span></p>
-<p>If <span class="math inline">\varepsilon</span> is <strong>not</strong> homoskedastic, <span class="math inline">\widehat{\beta}</span> is still unbiased, but has higher variance.</p>
 <ul>
 <li>This means that <span class="math inline">\widehat{\beta}</span> has the lowest variance of all unbiased estimators of the form</li>
 </ul>
 <p><span class="math display">
 \widehat{\beta}=\beta+w^{\prime}\varepsilon
 </span></p>
-<p>This also implies that <span class="math inline">\omega^{\prime}\widehat{\beta}</span> is the BLUE of <span class="math inline">\omega^{\prime}\beta</span></p>
+<p>This also implies that <span class="math inline">c^{\prime}\widehat{\beta}</span> is the BLUE of <span class="math inline">c^{\prime}\beta</span>, for any constant vector <span class="math inline">c</span></p>
+<p>If <span class="math inline">\varepsilon</span> is <strong>not</strong> spherical, <span class="math inline">\widehat{\beta}</span> is still unbiased, but no longer BLUE (GLS is more efficient), and <span class="math inline">\sigma_{\varepsilon}^{2}\left(X^{\prime}X\right)^{-1}</span> is no longer its variance.</p>
 </section>
 <section id="understanding-multiple-regression" class="slide level2">
 <h2>Understanding Multiple Regression</h2>
@@ -915,7 +914,7 @@ Var\left(  \widehat{\beta}\right) &amp;=Var\left(  \left(  X^{\prime}X\right)  ^
 </ul>
 <p>If <span class="math inline">\widehat{\beta}\sim N\left(\beta,\Sigma\right)</span> where <span class="math inline">\Sigma \equiv\sigma_{\varepsilon}^{2}\left(  X^{\prime}X\right)^{-1}</span></p>
 <ul>
-<li><p><span class="math inline">\Rightarrow\left(R\cdot\widehat{\beta}-b\right) \sim N\left(0, R^{\prime}\cdot\Sigma\cdot R\right)</span> under <span class="math inline">H_{0}</span></p></li>
+<li><p><span class="math inline">\Rightarrow\left(R\cdot\widehat{\beta}-b\right) \sim N\left(0, R\cdot\Sigma\cdot R^{\prime}\right)</span> under <span class="math inline">H_{0}</span></p></li>
 <li><p><span class="math inline">\Rightarrow \mathcal{F} \equiv\left(  R\cdot\widehat{\beta}-b\right) ^{\prime}\cdot\left[  R\cdot\Sigma\cdot R^{\prime}\right]^{-1}\cdot\left(  R\cdot\widehat{\beta}-b\right) \cdot q^{-1}</span> <span class="math inline">\sim F\left(q, T-K\right)</span> under <span class="math inline">H_{0}</span> where <span class="math inline">q</span> is the number of restrictions (rank of <span class="math inline">R</span>) and <span class="math inline">K</span> is the number of estimated parameters (# elements of <span class="math inline">\beta</span>)</p></li>
 </ul>
 <div class="fragment custom blur">
@@ -1035,7 +1034,7 @@ E\left(  e_{t}|X_{t}\right) =0
 <ul>
 <li><span class="math inline">X</span> is <span class="math inline">T\times K</span></li>
 <li><span class="math inline">\operatorname*{diag}\left(  \widehat{e}_{t}^{2}\right)</span> is a <span class="math inline">T\times T</span> matrix with zeros everywhere except the main diagonal, which has a typical element <span class="math inline">\widehat{e}_{j}^{2}</span> in row <span class="math inline">j</span>, column <span class="math inline">j</span></li>
-<li>Equation (2.49) in Tsay adjusts this by <span class="math inline">\frac{T}{T-K}</span> for better finite-sample performance. (<em>Warning: Tsay’s <span class="math inline">X_{t}^{\prime}=</span> my <span class="math inline">X_{t}</span></em>)</li>
+<li>A common finite-sample correction multiplies this by <span class="math inline">\frac{T}{T-K}</span> (this is the <code>HC1</code> option in <code>statsmodels</code>; the formula above is <code>HC0</code>)</li>
 <li><em>White</em> refers to Prof.&nbsp;Hal White of UCSD, who first proposed it <span class="citation" data-cites="white1980heteroskedasticity">(see <a href="#/references" role="doc-biblioref" onclick="">White 1980</a>)</span></li>
 </ul>
 </section>
@@ -1080,189 +1079,25 @@ E\left(  e_{t}|X_{t}\right) =0
 <li><p><strong>Flat</strong> <span class="math inline">\omega\left(  j\right) =1\left(  j\leq l\right)</span>: Due to <span class="citation" data-cites="hansen1980forward">Hansen and Hodrick (<a href="#/references" role="doc-biblioref" onclick="">1980</a>)</span>. Popular correction for overlapping forecast errors. Choose <span class="math inline">l=h-1</span>; <span class="math inline">\operatorname{Cov} (  \widehat{\beta})_{HAC}</span> might not be PSD</p></li>
 <li><p><strong>Bartlett</strong> <span class="math inline">\omega\left(  j\right) =1-\frac{j}{l+1}</span>: Due to <span class="citation" data-cites="newey1987simple">Newey and West (<a href="#/references" role="doc-biblioref" onclick="">1987</a>)</span>. The most popular general-purpose choice <span class="math inline">\Longrightarrow \operatorname{Cov}(  \widehat{\beta})_{HAC}</span> always PSD</p></li>
 </ul>
-<div id="9e6eae89" class="cell" data-execution_count="9">
+<div id="7f142229" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
-<p><img data-src="lecture07_files/figure-revealjs/cell-10-output-1.png" width="1110" height="302"></p>
+<p><img data-src="lecture07_files/figure-revealjs/cell-10-output-1.png" width="1111" height="302"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="measurement-errors" class="slide level2">
-<h2>Measurement Errors</h2>
-<div style="height: 1em;">
-
-</div>
-<p>Suppose that the “true” model is <span class="math display">
-y_{t}=X_{t}\cdot\beta+\varepsilon_{t} \qquad\text{where}\qquad E\left( X_{t}\cdot\varepsilon_{t}\right) =0
-</span></p>
-<p>We observe <span class="math inline">y_{t}</span>, but <span class="math inline">X_{t}</span> we only observe with error</p>
-<ul>
-<li>Instead of the true <span class="math inline">X_{t}</span>, we have <span class="math inline">\widetilde{X}_{t}=X_{t}+u_{t}</span></li>
-</ul>
-<p>If the measurement errors are “noise” in the sense that</p>
-<p><span class="math display">
-E\left[  X_{t}\cdot u_{t}\right] =E\left[  \varepsilon_{t}\cdot u_{t}\right] =0
-</span></p>
-<ul>
-<li><p><span class="math inline">\widetilde{X}_{t}=X_{t}+u_{t} \Rightarrow E\left[  \widetilde{X}_{t}\cdot u_{t}\right] \neq 0</span></p></li>
-<li><p>This is typically called a <strong><span class="primary-color">Measurement Error</span></strong> problem.</p></li>
-</ul>
-</section>
-<section id="measurement-errors-1" class="slide level2">
-<h2>Measurement Errors</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>What if we now regress <span class="math inline">y_{t}</span> on <span class="math inline">\widetilde{X}_{t}</span>?</li>
-</ul>
-<p><span class="math display">
-\begin{aligned}
-y_{t}  &amp;=\widetilde{X}_{t}\cdot\beta+e_{t}\\
-&amp;= X_{t}\cdot\beta+u_{t}\cdot\beta+e_{t}\\
-&amp;= X_{t}\cdot\beta+\varepsilon_{t}
-\end{aligned}
-</span></p>
-<div style="height: 0.5em;">
-
-</div>
-<p>So obviously, <span class="math inline">e_{t}=\varepsilon_{t}-\beta\cdot u_{t}</span></p>
-<ul>
-<li>So <span class="math inline">E\left[\widetilde{X}_{t}\cdot e_{t}\right] =E\left[\widetilde{X}_{t}\cdot\left(\varepsilon_{t}-\beta\cdot u_{t}\right)\right] = -\beta\cdot E\left[\widetilde{X}_{t}\cdot u_{t}\right] \neq 0</span></li>
-</ul>
-<p><span class="math inline">\Rightarrow e_{t}</span> violates one of the Gauss-Markov Theorem’s conditions for the regression <span class="math inline">y_{t}=\widetilde{X}_{t}\beta+e_{t}</span></p>
-</section>
-<section id="measurement-errors-2" class="slide level2">
-<h2>Measurement Errors</h2>
-<div style="height: 2em;">
-
-</div>
-<ul>
-<li><span class="math inline">\Rightarrow \widehat{\beta}=\left(  \widetilde{X}^{\prime}\widetilde{X}\right)^{-1}\widetilde{X}\cdot y</span> will be biased</li>
-</ul>
-<p><span class="math display">
-E\left(  \widehat{\beta}\right) =\beta\frac{\sigma_{X}^{2}}{\sigma_{X}^{2}+\sigma_{u}^{2}}
-</span></p>
-<div style="height: 2em;">
-
-</div>
-<p><span class="math inline">\Rightarrow \widehat{\beta}</span> typically <em>underestimates</em> <span class="math inline">\beta</span></p>
-</section>
-<section id="measurement-errors-3" class="slide level2">
-<h2>Measurement Errors</h2>
-<p>Suppose we regress stock returns on estimated stock betas <span class="math inline">\widehat{\beta}_{i}^{\prime}s</span></p>
-<ul>
-<li>The <span class="math inline">\widehat{\beta}_{i}^{\prime}s</span> contain some estimation error</li>
-<li>We should therefore expect that the OLS coefficients from the regression will tend to be smaller than what the “true” <span class="math inline">\beta</span>’s would give.</li>
-<li>The less precise our estimator, the bigger the downward bias.</li>
-</ul>
-<p>What to do?</p>
-<ul>
-<li>Get more accurate estimates of <span class="math inline">\beta</span> to reduce the bias.</li>
-<li>Find “valid instruments”; <span class="math inline">Z_{t}</span> such that</li>
-</ul>
-<p><span class="math display">
-E\left(  Z^{\prime}\widetilde{X}\right) \neq 0\text{ and }E\left(  Z^{\prime}e_{t}\right) =0
-</span></p>
-<p>and estimate using IV Two-Stage Least Squares</p>
-<ul>
-<li>Use Generalized Method of Moments (GMM)</li>
-</ul>
-</section>
-<section id="dummy-variables" class="slide level2">
-<h2>Dummy Variables</h2>
-<div style="height: 1em;">
-
-</div>
-<p><strong>Definition:</strong> A dummy variable is a binary variable that we include as an independent (RHS) variable in a regression.</p>
-<p>i.e.&nbsp;<span class="math inline">D_{t}\equiv1\left(  Z_{t}\right)</span> and we model <span class="math inline">y_{t}=\begin{bmatrix} X_{t} &amp; D_{t} \end{bmatrix} \cdot\overrightarrow{\beta}+\varepsilon_{t}</span></p>
-<p>Many common uses:</p>
-<ul>
-<li><strong>Temporal Effects:</strong> <span class="math inline">D_{t}=1\left(  t&lt;t^{\ast}\right)</span> or <span class="math inline">D_{t}=1\left(  t\in\left\{  \text{January}\right\}\right)</span></li>
-<li><strong>Events:</strong> <span class="math inline">D_{t}=1\left(  t\in\left\{  \text{Dividends cut}\right\}\right)</span> or <span class="math inline">D_{t}=1\left(  t\in\left\{  r_{t}&lt;\text{VaR}_{5\%}\right\}\right)</span></li>
-<li><strong>Characteristics:</strong> <span class="math inline">D_{i}=1\left(  i\in\left\{  \text{Male}\right\}\right)</span> or <span class="math inline">D_{i}=1\left(  i\in\left\{  \text{cross-listed}\right\}\right)</span></li>
-</ul>
-<p>Testing <span class="math inline">H_{0}:\beta_{D}=0</span> tests for change in the <em>conditional</em> mean of <span class="math inline">y.</span> However, frequently we want to test for changes in <span class="math inline">\beta</span>.</p>
-<ul>
-<li>Test <span class="math inline">\beta_{D}=0</span> in</li>
-</ul>
-<p><span class="math display">y_{t}=X_{t}\cdot\beta_X+ D_{t}\cdot\beta_D+ \left(  X_{t}\cdot D_{t}\right)  \cdot\beta_{XD}+\varepsilon_{t}</span></p>
-</section>
-<section id="understanding-dummy-variables" class="slide level2">
-<h2>Understanding Dummy Variables</h2>
-<div style="height: 1em;">
-
-</div>
-<p>Let</p>
-<ul>
-<li><span class="math inline">r_{TSX,t}</span> be the return on the Toronto Stock Exchange</li>
-<li><span class="math inline">\mathcal{1}_{FOMC,t}</span> be a dummy variable that is 1 on days with Federal Open Market Committee announcements and 0 on other days.</li>
-</ul>
-<p>If we estimate</p>
-<p><span class="math display"> r_{TSX,t} = \alpha + \gamma \mathcal{1}_{FOMC,t} + \varepsilon_t, </span></p>
-<p>we are jointly estimating</p>
-<p><span class="math display">\begin{array}{rlll}
-r_{TSX,t} &amp;= \alpha &amp;+ \varepsilon_t &amp;\text{ on non-FOMC days}, \\
-r_{TSX,t} &amp;= (\alpha + \gamma) &amp;+ \varepsilon_t &amp; \text{ on FOMC days}.
-\end{array}
-</span></p>
-<div style="height: 1em;">
-
-</div>
-<p>Thus, <span class="math inline">\gamma</span> is the change in the average return on FOMC days compared to non-FOMC days.</p>
-</section>
-<section id="understanding-dummy-variables-1" class="slide level2">
-<h2>Understanding Dummy Variables</h2>
-<div style="height: 1em;">
-
-</div>
-<p>Let also <span class="math inline">r_{SP500,t}</span> be the return on the S&amp;P 500.</p>
-<p>If we estimate</p>
-<p><span class="math display"> r_{TSX,t} = \alpha + \gamma \mathcal{1}_{FOMC,t} + \beta_1 r_{SP500,t}+ \beta_{D}  r_{SP500,t} \times \mathcal{1}_{FOMC,t} + \varepsilon_t, </span></p>
-<p>we are jointly estimating</p>
-<p><span class="math display">\begin{array}{rllll}
-r_{TSX,t} &amp;= \alpha &amp;+\beta_1 r_{SP500,t} &amp;+  \varepsilon_t &amp;\text{ on non-FOMC days}, \\
-r_{TSX,t} &amp;= (\alpha + \gamma) &amp;+ (\beta_1 + \beta_{D})  r_{SP500,t} &amp;+ \varepsilon_t &amp; \text{ on FOMC days}.
-\end{array}
-</span></p>
-<div style="height: 1em;">
-
-</div>
-<p>Thus, <span class="math inline">\beta_{D}</span> is the change in the sensitivity of TSX returns to S&amp;P 500 returns on FOMC days compared to non-FOMC days.</p>
-</section>
-<section id="dummy-variables-1" class="slide level2">
-<h2>Dummy Variables</h2>
-<div style="height: 1em;">
-
-</div>
-<p><strong>Beginner’s Mistake:</strong> Include a constant and a full set of dummy variables in a regression.</p>
-<ul>
-<li>e.g.&nbsp;<span class="math inline">D_{t}^{1}\equiv1\left(  t\in Q1\right);~D_{t}^{2}=1\left(  t\in Q2\right),\ldots,D_{t}^{4}=1\left(  t\in Q4\right)</span></li>
-</ul>
-<p>Notice that <span class="math inline">D_{t}^{1}+D_{t}^{2}+D_{t}^{3}+D_{t}^{4}=1\quad\forall t.</span></p>
-<p><span class="math inline">\therefore</span> Any <span class="math inline">X</span> with all 4 dummies and a constant will not be full rank.<br>
-<span class="math inline">\therefore \left(  \frac{X^{\prime}X}{T}\right)^{-1}</span> does not exist</p>
-<div style="height: 1em;">
-
-</div>
-<p><strong>Solution:</strong> Drop any one of the dummy variables.</p>
-<ul>
-<li>The constant in the regression gives you the effect in the periods where all dummies =0</li>
-<li>The estimated coefficients on the dummies give you the <em>difference</em> between those periods and their periods.</li>
-</ul>
-</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-baltagi_econometrics_2022" class="csl-entry" role="listitem">
 Baltagi, Badi H. 2022. <em>Econometrics</em>. 6th ed. Classroom Companion: Economics. Springer Cham. <a href="https://doi.org/10.1007/978-3-030-80149-6">https://doi.org/10.1007/978-3-030-80149-6</a>.
 </div>
-<div id="ref-fama1995size" class="csl-entry" role="listitem">
-Fama, Eugene F, and Kenneth R French. 1995. <span>“Size and Book-to-Market Factors in Earnings and Returns.”</span> <em>The Journal of Finance</em> 50 (1): 131–55.
+<div id="ref-fama1993common" class="csl-entry" role="listitem">
+Fama, Eugene F., and Kenneth R. French. 1993. <span>“Common Risk Factors in the Returns on Stocks and Bonds.”</span> <em>Journal of Financial Economics</em> 33 (1): 3–56. <a href="https://doi.org/10.1016/0304-405X(93)90023-5">https://doi.org/10.1016/0304-405X(93)90023-5</a>.
 </div>
 <div id="ref-hansen1980forward" class="csl-entry" role="listitem">
 Hansen, Lars Peter, and Robert J Hodrick. 1980. <span>“Forward Exchange Rates as Optimal Predictors of Future Spot Rates: An Econometric Analysis.”</span> <em>Journal of Political Economy</em> 88 (5): 829–53. <a href="https://www.journals.uchicago.edu/doi/abs/10.1086/260910">https://www.journals.uchicago.edu/doi/abs/10.1086/260910</a>.

@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>13&nbsp; Data Cleaning – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../data-analysis/io/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -405,7 +410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Let’s start with a simple example using stock price data:</p>
-<div id="ae76d4d3" class="cell" data-execution_count="1">
+<div id="1a229a7b" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-1-1"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="annotated-cell-1-3"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime, timedelta</span>
@@ -493,7 +498,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>Now let’s detect duplicates. The <code>duplicated()</code> method returns a boolean Series indicating which rows are duplicates:</p>
-<div id="0ef49d9d" class="cell" data-execution_count="2">
+<div id="bc56b0ed" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for complete duplicates</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>df_pd.duplicated()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
@@ -507,7 +512,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 <p>We can also check for duplicates based on specific columns:</p>
-<div id="3bd62a7c" class="cell" data-execution_count="3">
+<div id="bc0a07bf" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for duplicates based on specific columns (date and ticker)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df_pd.duplicated(subset<span class="op">=</span>[<span class="st">'date'</span>, <span class="st">'ticker'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
@@ -521,7 +526,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 <p>To see which rows are duplicates, we can filter the DataFrame:</p>
-<div id="fcce9a1a" class="cell" data-execution_count="4">
+<div id="a3c7bea5" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># See which rows are duplicates (keep=False marks all duplicates)</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_pd[df_pd.duplicated(subset<span class="op">=</span>[<span class="st">'date'</span>, <span class="st">'ticker'</span>], keep<span class="op">=</span><span class="va">False</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -566,7 +571,7 @@ dtype: bool</code></pre>
 <li><code>keep=False</code>: Mark all duplicates as <code>True</code>, including the first occurrence</li>
 </ul>
 <p>Now let’s see the same operations in Polars:</p>
-<div id="dc7431cf" class="cell" data-execution_count="5">
+<div id="763b3fd1" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df_pl <span class="op">=</span> pl.DataFrame(data)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
@@ -636,7 +641,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 <p>To find duplicates in Polars, we use <code>is_duplicated()</code>:</p>
-<div id="19b77e38" class="cell" data-execution_count="6">
+<div id="8748f1a3" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for duplicates based on date and ticker</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df_pl.<span class="bu">filter</span>(pl.struct([<span class="st">'date'</span>, <span class="st">'ticker'</span>]).is_duplicated())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -691,7 +696,7 @@ dtype: bool</code></pre>
 <li><strong>Manual investigation</strong>: For small numbers of duplicates, inspect each case individually</li>
 </ol>
 <p>Let’s see how to implement these approaches. In pandas, we use <code>drop_duplicates()</code>:</p>
-<div id="734cc982" class="cell" data-execution_count="7">
+<div id="6852a886" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas: Drop duplicates, keeping first occurrence</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df_pd_clean <span class="op">=</span> df_pd.drop_duplicates(subset<span class="op">=</span>[<span class="st">'date'</span>, <span class="st">'ticker'</span>], keep<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df_pd_clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -752,7 +757,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 <p>In Polars, we use the <code>unique()</code> method:</p>
-<div id="a4e948da" class="cell" data-execution_count="8">
+<div id="06e7f580" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars: Drop duplicates</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df_pl_clean <span class="op">=</span> df_pl.unique(subset<span class="op">=</span>[<span class="st">'date'</span>, <span class="st">'ticker'</span>], keep<span class="op">=</span><span class="st">'first'</span>)</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>df_pl_clean</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -782,22 +787,10 @@ dtype: bool</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td>2024-01-03 00:00:00</td>
+<td>2024-01-05 00:00:00</td>
 <td>"AAPL"</td>
-<td>155.0</td>
-<td>1200000</td>
-</tr>
-<tr class="even">
-<td>2024-01-04 00:00:00</td>
-<td>"AAPL"</td>
-<td>153.0</td>
-<td>950000</td>
-</tr>
-<tr class="odd">
-<td>2024-01-01 00:00:00</td>
-<td>"AAPL"</td>
-<td>150.0</td>
-<td>1000000</td>
+<td>157.0</td>
+<td>1300000</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
@@ -806,10 +799,22 @@ dtype: bool</code></pre>
 <td>1100000</td>
 </tr>
 <tr class="odd">
-<td>2024-01-05 00:00:00</td>
+<td>2024-01-03 00:00:00</td>
 <td>"AAPL"</td>
-<td>157.0</td>
-<td>1300000</td>
+<td>155.0</td>
+<td>1200000</td>
+</tr>
+<tr class="even">
+<td>2024-01-01 00:00:00</td>
+<td>"AAPL"</td>
+<td>150.0</td>
+<td>1000000</td>
+</tr>
+<tr class="odd">
+<td>2024-01-04 00:00:00</td>
+<td>"AAPL"</td>
+<td>153.0</td>
+<td>950000</td>
 </tr>
 </tbody>
 </table>
@@ -817,7 +822,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 <p>For the aggregation approach, suppose we want to take the average price and total volume when duplicates exist:</p>
-<div id="0d422b35" class="cell" data-execution_count="9">
+<div id="e85664af" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># pandas: Aggregate duplicates</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df_pd_agg <span class="op">=</span> df_pd.groupby([<span class="st">'date'</span>, <span class="st">'ticker'</span>], as_index<span class="op">=</span><span class="va">False</span>).agg({</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price'</span>: <span class="st">'mean'</span>,</span>
@@ -880,7 +885,7 @@ dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="efd37773" class="cell" data-execution_count="10">
+<div id="e70a8ab3" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars: Aggregate duplicates</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df_pl_agg <span class="op">=</span> df_pl.group_by([<span class="st">'date'</span>, <span class="st">'ticker'</span>]).agg([</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean(),</span>
@@ -919,16 +924,16 @@ dtype: bool</code></pre>
 <td>1000000</td>
 </tr>
 <tr class="even">
+<td>2024-01-04 00:00:00</td>
+<td>"AAPL"</td>
+<td>153.0</td>
+<td>950000</td>
+</tr>
+<tr class="odd">
 <td>2024-01-03 00:00:00</td>
 <td>"AAPL"</td>
 <td>155.0</td>
 <td>2400000</td>
-</tr>
-<tr class="odd">
-<td>2024-01-05 00:00:00</td>
-<td>"AAPL"</td>
-<td>157.0</td>
-<td>1300000</td>
 </tr>
 <tr class="even">
 <td>2024-01-02 00:00:00</td>
@@ -937,10 +942,10 @@ dtype: bool</code></pre>
 <td>1100000</td>
 </tr>
 <tr class="odd">
-<td>2024-01-04 00:00:00</td>
+<td>2024-01-05 00:00:00</td>
 <td>"AAPL"</td>
-<td>153.0</td>
-<td>950000</td>
+<td>157.0</td>
+<td>1300000</td>
 </tr>
 </tbody>
 </table>
@@ -969,7 +974,7 @@ dtype: bool</code></pre>
 <li><strong>Keep track of removals</strong>: Log how many duplicates you removed and their characteristics</li>
 <li><strong>Consider the source</strong>: Different data sources may have different duplicate patterns</li>
 </ol>
-<div id="428fbcf8" class="cell" data-execution_count="11">
+<div id="28cdfd79" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Comprehensive duplicate handling with logging</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> handle_duplicates(df, subset_cols, keep<span class="op">=</span><span class="st">'first'</span>, verbose<span class="op">=</span><span class="va">True</span>):</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
@@ -1077,7 +1082,7 @@ Rows removed: 1</code></pre>
 </div>
 </div>
 <p>Let’s create a dataset with missing values:</p>
-<div id="a9156775" class="cell" data-execution_count="12">
+<div id="e687957c" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>data_missing <span class="op">=</span> {</span>
@@ -1193,7 +1198,7 @@ Rows removed: 1</code></pre>
 </div>
 </div>
 <p>Now let’s detect missing values. The <code>isna()</code> method returns a boolean DataFrame indicating which values are missing:</p>
-<div id="e45b53d3" class="cell" data-execution_count="13">
+<div id="ced0455d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_missing.isna()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="13">
 <div>
@@ -1298,7 +1303,7 @@ Rows removed: 1</code></pre>
 </div>
 </div>
 <p>We can count missing values per column:</p>
-<div id="bf30d778" class="cell" data-execution_count="14">
+<div id="36ca76cd" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df_missing.isna().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="14">
 <pre><code>date        0
@@ -1310,7 +1315,7 @@ dtype: int64</code></pre>
 </div>
 </div>
 <p>Or calculate the percentage of missing values:</p>
-<div id="036bd845" class="cell" data-execution_count="15">
+<div id="5be8ee52" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df_missing.isna().mean() <span class="op">*</span> <span class="dv">100</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>date         0.0
@@ -1322,7 +1327,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>To see rows with any missing values:</p>
-<div id="ccd9bb96" class="cell" data-execution_count="16">
+<div id="dc7b1a56" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df_missing[df_missing.isna().<span class="bu">any</span>(axis<span class="op">=</span><span class="dv">1</span>)]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <div>
@@ -1395,7 +1400,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>In Polars, we use <code>null_count()</code> to count missing values:</p>
-<div id="10b6e765" class="cell" data-execution_count="17">
+<div id="ff2a3b2e" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars version - convert from pandas DataFrame</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># (Polars uses None/null for missing values, not np.nan)</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>df_missing_pl <span class="op">=</span> pl.from_pandas(df_missing)</span>
@@ -1441,7 +1446,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>We can filter rows with missing values in a specific column:</p>
-<div id="9c57c848" class="cell" data-execution_count="18">
+<div id="bffecf2b" class="cell" data-execution_count="18">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>df_missing_pl.<span class="bu">filter</span>(pl.col(<span class="st">'price'</span>).is_null())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div><style>
@@ -1462,7 +1467,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">dividend</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>f64</td>
@@ -1505,7 +1510,7 @@ dtype: float64</code></pre>
 <li><p><strong>Pairwise deletion</strong>: For each calculation or analysis (e.g., for each regression), use all observations for which we have the required variables. This approach maximizes the use of available data but can lead to different sample sizes for different analyses, making comparisons difficult.</p></li>
 </ol>
 <p>Listwise deletion removes any row with missing values:</p>
-<div id="1ee41924" class="cell" data-execution_count="19">
+<div id="6ff66677" class="cell" data-execution_count="19">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df_complete <span class="op">=</span> df_missing.dropna()</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>df_complete</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
@@ -1562,14 +1567,14 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="33f016fc" class="cell" data-execution_count="20">
+<div id="f0d97df4" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows removed: </span><span class="sc">{</span><span class="bu">len</span>(df_missing) <span class="op">-</span> <span class="bu">len</span>(df_complete)<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows removed: 6</code></pre>
 </div>
 </div>
 <p>We can also drop rows only if specific columns are missing:</p>
-<div id="9ef4a39b" class="cell" data-execution_count="21">
+<div id="10d14443" class="cell" data-execution_count="21">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>df_price_complete <span class="op">=</span> df_missing.dropna(subset<span class="op">=</span>[<span class="st">'price'</span>])</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df_price_complete</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
@@ -1651,7 +1656,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Or drop columns with any missing values:</p>
-<div id="530b67cf" class="cell" data-execution_count="22">
+<div id="65a10a9d" class="cell" data-execution_count="22">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df_no_missing_cols <span class="op">=</span> df_missing.dropna(axis<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_no_missing_cols</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
@@ -1735,7 +1740,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>In Polars, we use <code>drop_nulls()</code>:</p>
-<div id="ff06e424" class="cell" data-execution_count="23">
+<div id="b770cc23" class="cell" data-execution_count="23">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>df_complete_pl <span class="op">=</span> df_missing_pl.drop_nulls()</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>df_complete_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
@@ -1757,7 +1762,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">dividend</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>f64</td>
@@ -1798,7 +1803,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="a2a0edce" class="cell" data-execution_count="24">
+<div id="6fe49f76" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop rows with null in specific column</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>df_price_complete_pl <span class="op">=</span> df_missing_pl.drop_nulls(subset<span class="op">=</span>[<span class="st">'price'</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>df_price_complete_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1821,7 +1826,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">dividend</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>f64</td>
@@ -1916,7 +1921,7 @@ dtype: float64</code></pre>
 </ol>
 <p>In empirical finance, we usually want to avoid introducing look-ahead bias or imputing information that was not available at the time of observation. For this reason, forward fill and zero/constant imputation are the most commonly used imputation methods in financial research.</p>
 <p>Forward fill uses the last observed value:</p>
-<div id="ec35084e" class="cell" data-execution_count="25">
+<div id="5fcb7419" class="cell" data-execution_count="25">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df_ffill <span class="op">=</span> df_missing.copy()</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df_ffill[[<span class="st">'price'</span>, <span class="st">'volume'</span>]] <span class="op">=</span> df_ffill[[<span class="st">'price'</span>, <span class="st">'volume'</span>]].ffill()</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>df_ffill</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2023,7 +2028,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Backward fill uses the next observed value:</p>
-<div id="018ff113" class="cell" data-execution_count="26">
+<div id="0b2e15b0" class="cell" data-execution_count="26">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>df_bfill <span class="op">=</span> df_missing.copy()</span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>df_bfill[[<span class="st">'price'</span>, <span class="st">'volume'</span>]] <span class="op">=</span> df_bfill[[<span class="st">'price'</span>, <span class="st">'volume'</span>]].bfill()</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>df_bfill</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2130,7 +2135,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Mean imputation replaces missing values with the column mean:</p>
-<div id="5980417f" class="cell" data-execution_count="27">
+<div id="0e16c1e1" class="cell" data-execution_count="27">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df_mean <span class="op">=</span> df_missing.copy()</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df_mean[<span class="st">'price'</span>] <span class="op">=</span> df_mean[<span class="st">'price'</span>].fillna(df_mean[<span class="st">'price'</span>].mean())</span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>df_mean[<span class="st">'volume'</span>] <span class="op">=</span> df_mean[<span class="st">'volume'</span>].fillna(df_mean[<span class="st">'volume'</span>].mean())</span>
@@ -2238,7 +2243,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Median imputation is more robust to outliers:</p>
-<div id="93b68a03" class="cell" data-execution_count="28">
+<div id="7504c966" class="cell" data-execution_count="28">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>df_median <span class="op">=</span> df_missing.copy()</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>df_median[<span class="st">'price'</span>] <span class="op">=</span> df_median[<span class="st">'price'</span>].fillna(df_median[<span class="st">'price'</span>].median())</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>df_median[<span class="st">'volume'</span>] <span class="op">=</span> df_median[<span class="st">'volume'</span>].fillna(df_median[<span class="st">'volume'</span>].median())</span>
@@ -2346,7 +2351,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Constant value imputation:</p>
-<div id="409b5495" class="cell" data-execution_count="29">
+<div id="5e2c98c4" class="cell" data-execution_count="29">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>df_zero <span class="op">=</span> df_missing.copy()</span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>df_zero[<span class="st">'dividend'</span>] <span class="op">=</span> df_zero[<span class="st">'dividend'</span>].fillna(<span class="dv">0</span>)</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>df_zero</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2453,7 +2458,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>In Polars, we use <code>forward_fill()</code> and <code>fill_null()</code>:</p>
-<div id="67492b95" class="cell" data-execution_count="30">
+<div id="31a662f1" class="cell" data-execution_count="30">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>df_ffill_pl <span class="op">=</span> df_missing_pl.select([</span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'date'</span>),</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'ticker'</span>),</span>
@@ -2481,7 +2486,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">dividend</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>f64</td>
@@ -2564,7 +2569,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="448f291f" class="cell" data-execution_count="31">
+<div id="cffe608d" class="cell" data-execution_count="31">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Polars mean imputation</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>mean_price <span class="op">=</span> df_missing_pl[<span class="st">'price'</span>].mean()</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>mean_volume <span class="op">=</span> df_missing_pl[<span class="st">'volume'</span>].mean()</span>
@@ -2593,7 +2598,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">dividend</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>f64</td>
@@ -2700,7 +2705,7 @@ dtype: float64</code></pre>
 <section id="linear-interpolation" class="level4" data-number="13.2.4.2">
 <h4 data-number="13.2.4.2" class="anchored" data-anchor-id="linear-interpolation"><span class="header-section-number">13.2.4.2</span> Linear interpolation</h4>
 <p>For time series data, linear interpolation can provide more realistic estimates than simple forward/backward filling:</p>
-<div id="da3b42e5" class="cell" data-execution_count="32">
+<div id="595075d2" class="cell" data-execution_count="32">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>df_interp <span class="op">=</span> df_missing.copy()</span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>df_interp[<span class="st">'price'</span>] <span class="op">=</span> df_interp[<span class="st">'price'</span>].interpolate(method<span class="op">=</span><span class="st">'linear'</span>)</span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>df_interp[<span class="st">'volume'</span>] <span class="op">=</span> df_interp[<span class="st">'volume'</span>].interpolate(method<span class="op">=</span><span class="st">'linear'</span>)</span>
@@ -2808,7 +2813,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Time-based interpolation accounts for irregular spacing and requires a DatetimeIndex:</p>
-<div id="e6afe360" class="cell" data-execution_count="33">
+<div id="d941a2b6" class="cell" data-execution_count="33">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>df_interp_time <span class="op">=</span> df_missing.copy().set_index(<span class="st">'date'</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>df_interp_time[<span class="st">'price'</span>] <span class="op">=</span> df_interp_time[<span class="st">'price'</span>].interpolate(method<span class="op">=</span><span class="st">'time'</span>)</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>df_interp_time <span class="op">=</span> df_interp_time.reset_index()</span>
@@ -2919,7 +2924,7 @@ dtype: float64</code></pre>
 <section id="group-based-imputation" class="level4" data-number="13.2.4.3">
 <h4 data-number="13.2.4.3" class="anchored" data-anchor-id="group-based-imputation"><span class="header-section-number">13.2.4.3</span> Group-based imputation</h4>
 <p>Often, you want to impute missing values differently for different groups. For example, you might want to impute missing returns for each industry separately:</p>
-<div id="a65e3cb9" class="cell" data-execution_count="34">
+<div id="41c2d2ef" class="cell" data-execution_count="34">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data with multiple tickers</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>data_grouped <span class="op">=</span> {</span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">6</span>, freq<span class="op">=</span><span class="st">'D'</span>).tolist() <span class="op">*</span> <span class="dv">2</span>,</span>
@@ -3037,7 +3042,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Forward fill within each ticker group:</p>
-<div id="2330b58f" class="cell" data-execution_count="35">
+<div id="93e45a41" class="cell" data-execution_count="35">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df_grouped_ffill <span class="op">=</span> df_grouped.copy()</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>df_grouped_ffill[<span class="st">'price'</span>] <span class="op">=</span> df_grouped_ffill.groupby(<span class="st">'ticker'</span>)[<span class="st">'price'</span>].ffill()</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>df_grouped_ffill</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -3147,7 +3152,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>Mean imputation within each sector:</p>
-<div id="37ada4c5" class="cell" data-execution_count="36">
+<div id="89205dac" class="cell" data-execution_count="36">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>df_grouped_mean <span class="op">=</span> df_grouped.copy()</span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>df_grouped_mean[<span class="st">'price'</span>] <span class="op">=</span> df_grouped_mean.groupby(<span class="st">'sector'</span>)[<span class="st">'price'</span>].transform(</span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">lambda</span> x: x.fillna(x.mean())</span>
@@ -3259,7 +3264,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 <p>In Polars, we use the <code>over()</code> method for group-based operations:</p>
-<div id="ab32ba26" class="cell" data-execution_count="37">
+<div id="46bfdb09" class="cell" data-execution_count="37">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>df_grouped_pl <span class="op">=</span> pl.from_pandas(df_grouped)</span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Forward fill within groups</span></span>
@@ -3285,7 +3290,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">sector</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>str</td>
@@ -3363,7 +3368,7 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="4c258e66" class="cell" data-execution_count="38">
+<div id="99edd102" class="cell" data-execution_count="38">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean imputation within groups</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>df_grouped_mean_pl <span class="op">=</span> df_grouped_pl.with_columns([</span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).fill_null(pl.col(<span class="st">'price'</span>).mean()).over(<span class="st">'sector'</span>)</span>
@@ -3387,7 +3392,7 @@ dtype: float64</code></pre>
 <th data-quarto-table-cell-role="th">sector</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>str</td>
@@ -3495,7 +3500,7 @@ dtype: float64</code></pre>
 <section id="validating-data-types-and-formats" class="level3" data-number="13.3.1">
 <h3 data-number="13.3.1" class="anchored" data-anchor-id="validating-data-types-and-formats"><span class="header-section-number">13.3.1</span> Validating data types and formats</h3>
 <p>First, ensure that each column has the correct data type:</p>
-<div id="946bfd3b" class="cell" data-execution_count="39">
+<div id="70a5e831" class="cell" data-execution_count="39">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create sample data with type issues</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>data_types <span class="op">=</span> {</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: [<span class="st">'2024-01-01'</span>, <span class="st">'2024-01-02'</span>, <span class="st">'2024-01-03'</span>, <span class="st">'invalid'</span>],</span>
@@ -3555,18 +3560,18 @@ dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="b6c2b4a5" class="cell" data-execution_count="40">
+<div id="65a86bd4" class="cell" data-execution_count="40">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>df_types.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="40">
-<pre><code>date      object
-ticker    object
-price     object
-volume     int64
+<pre><code>date        str
+ticker      str
+price       str
+volume    int64
 dtype: object</code></pre>
 </div>
 </div>
 <p>Now let’s validate and fix the types. We use <code>errors='coerce'</code> to convert invalid values to <code>NaN</code> instead of raising an error:</p>
-<div id="f8a63663" class="cell" data-execution_count="41">
+<div id="986569f5" class="cell" data-execution_count="41">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert price to numeric, coercing errors to NaN</span></span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>df_types[<span class="st">'price'</span>] <span class="op">=</span> pd.to_numeric(df_types[<span class="st">'price'</span>], errors<span class="op">=</span><span class="st">'coerce'</span>)</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -3623,25 +3628,25 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div id="da0fef2b" class="cell" data-execution_count="42">
+<div id="64468efd" class="cell" data-execution_count="42">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>df_types.dtypes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
-<pre><code>date      datetime64[ns]
-ticker            object
+<pre><code>date      datetime64[us]
+ticker               str
 price            float64
 volume             int64
 dtype: object</code></pre>
 </div>
 </div>
 <p>We can identify rows with conversion errors by checking for <code>NaN</code> values:</p>
-<div id="d07e6e9b" class="cell" data-execution_count="43">
+<div id="94730039" class="cell" data-execution_count="43">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>invalid_dates <span class="op">=</span> df_types[<span class="st">'date'</span>].isna()</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Rows with invalid dates: </span><span class="sc">{</span>invalid_dates<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows with invalid dates: 1</code></pre>
 </div>
 </div>
-<div id="817aa5bb" class="cell" data-execution_count="44">
+<div id="e8214673" class="cell" data-execution_count="44">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>df_types[invalid_dates]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="44">
 <div>
@@ -3694,7 +3699,7 @@ dtype: object</code></pre>
 <section id="range-and-constraint-validation" class="level3" data-number="13.3.2">
 <h3 data-number="13.3.2" class="anchored" data-anchor-id="range-and-constraint-validation"><span class="header-section-number">13.3.2</span> Range and constraint validation</h3>
 <p>Financial data often has natural constraints. Prices must be positive, probabilities must be between 0 and 1, and returns are typically bounded (though extreme events can violate typical ranges).</p>
-<div id="6397ef01" class="cell" data-execution_count="45">
+<div id="ba66acfc" class="cell" data-execution_count="45">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create data with constraint violations</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>data_constraints <span class="op">=</span> {</span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">5</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
@@ -3806,7 +3811,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>We can identify invalid rows by combining the validation columns:</p>
-<div id="5386e9d9" class="cell" data-execution_count="46">
+<div id="1082498d" class="cell" data-execution_count="46">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>invalid_mask <span class="op">=</span> <span class="op">~</span>(df_constraints[<span class="st">'price_valid'</span>] <span class="op">&amp;</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>                 df_constraints[<span class="st">'volume_valid'</span>] <span class="op">&amp;</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>                 df_constraints[<span class="st">'return_valid'</span>])</span>
@@ -3815,7 +3820,7 @@ dtype: object</code></pre>
 <pre><code>Invalid rows: 2</code></pre>
 </div>
 </div>
-<div id="a5de4bbf" class="cell" data-execution_count="47">
+<div id="c78f9d2d" class="cell" data-execution_count="47">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a>df_constraints[invalid_mask]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="47">
 <div>
@@ -3865,7 +3870,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>In Polars, we can use expressions for validation:</p>
-<div id="01682f45" class="cell" data-execution_count="48">
+<div id="a287dda4" class="cell" data-execution_count="48">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>df_constraints_pl <span class="op">=</span> pl.DataFrame(data_constraints)</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Add validation columns</span></span>
@@ -3898,7 +3903,7 @@ dtype: object</code></pre>
 <th data-quarto-table-cell-role="th">return_valid</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>i64</td>
@@ -3964,7 +3969,7 @@ dtype: object</code></pre>
 </div>
 </div>
 </div>
-<div id="12f29d57" class="cell" data-execution_count="49">
+<div id="ae19e11c" class="cell" data-execution_count="49">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter to invalid rows</span></span>
 <span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>invalid_pl <span class="op">=</span> df_validated_pl.<span class="bu">filter</span>(</span>
 <span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">~</span>pl.col(<span class="st">'price_valid'</span>) <span class="op">|</span> <span class="op">~</span>pl.col(<span class="st">'volume_valid'</span>) <span class="op">|</span> <span class="op">~</span>pl.col(<span class="st">'return_valid'</span>)</span>
@@ -3992,7 +3997,7 @@ dtype: object</code></pre>
 <th data-quarto-table-cell-role="th">return_valid</th>
 </tr>
 <tr class="even">
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>str</td>
 <td>f64</td>
 <td>i64</td>

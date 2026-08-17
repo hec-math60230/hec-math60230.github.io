@@ -6,11 +6,10 @@
 <script src="lecture11_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture11_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture11_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture11_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="lecture11_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230: Lecture 11</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="lecture11_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture11_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +104,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -116,7 +120,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="lecture11_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture11_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -238,26 +242,14 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">MATH60230: Lecture 11</h1>
-  <p class="subtitle">IV, Bootstrap, and Randomization Inference</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -268,417 +260,19 @@ Saad Ali Khan
 </section>
 <section id="outline" class="slide level2">
 <h2>Outline</h2>
-<div style="height: 2em;">
-
-</div>
-<h3 id="collaboration-git-and-github">Collaboration: Git and GitHub</h3>
-<ul>
-<li>Git and GitHub</li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<h3 id="iv">IV</h3>
-<ul>
-<li>Instrumental Variables</li>
-<li>Potential Errors</li>
-<li>IV Example</li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<h3 id="bootstrap-and-randomization-inference">Bootstrap and Randomization Inference</h3>
-<ul>
-<li>Motivation</li>
-<li>Bootstrap Inference</li>
-<li>Randomization Inference</li>
-<li>Example in Python</li>
-</ul>
-</section>
-<section id="git" class="slide level2">
-<h2>git</h2>
-<div style="height: 2em;">
-
-</div>
-<h3 id="git-1"><a href="https://git-scm.com/">git</a></h3>
-<div style="height: 1em;">
+<div style="height: 3em;">
 
 </div>
 <ul>
-<li>A free and open source <em>distributed version control system</em>.</li>
-<li>You can think of git as adding “track changes” to your code, better.</li>
+<li>Bootstrap and randomization inference</li>
+<li>Methodological problems versus data-mining</li>
+<li>Replication and reproducibility</li>
 </ul>
-<div style="height: 1em;">
 
-</div>
-<h3 id="github"><a href="https://github.com/">GitHub</a></h3>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>A hosted solution for git, plus more.</li>
-</ul>
-</section>
-<section id="git-2" class="slide level2">
-<h2>git</h2>
-<div style="height: 2em;">
-
-</div>
-<h3 id="git-3"><a href="https://git-scm.com/">git</a></h3>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>A free and open source <em>distributed version control system</em>.</li>
-<li>You can think of git as adding “track changes” to your code, better.</li>
-<li><strong>Allows to keep track of multiple <em>working versions</em> of your code.</strong></li>
-<li><strong>Allows multiple people to collaborate on code</strong></li>
-</ul>
-</section>
-<section id="github-1" class="slide level2">
-<h2>GitHub</h2>
-<div style="height: 2em;">
-
-</div>
-<h3 id="github-2"><a href="https://github.com/">GitHub</a></h3>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>A hosted solution for git, plus more.</li>
-<li><strong>Provides a nice interface to git features</strong></li>
-<li><strong>Provides a nice set of features for open-source collaboration</strong></li>
-<li><strong>++ a lot more</strong></li>
-</ul>
-<div style="height: 2em;">
-
-</div>
-<h3 id="how-to-learn-more-about-github">How to learn more about GitHub?</h3>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li><a href="https://vincent.codes.finance/posts/github-for-research/">Using GitHub for academic research</a></li>
-</ul>
-</section>
-<section id="introduction-to-iv" class="slide level2">
-<h2>Introduction to IV</h2>
-
-<div style="height: 1em;">
-
-</div>
-<p><span class="math display">
-y = x\beta + \tilde{X}\beta_{\tilde{X}} + \varepsilon \quad \text{where} \quad E[\varepsilon|x] \neq 0 \\
-\Rightarrow \widehat{\beta}_{OLS} \overset{p}{\rightarrow} \beta + \frac{Cov[x,\varepsilon]}{Var[x]} \ne \beta \quad \text{when} \quad T \rightarrow \infty
-</span></p>
-<p>In other words, if one component <span class="math inline">X</span> is not orthogonal to <span class="math inline">\varepsilon</span>, <span class="math inline">\widehat{\beta}_{OLS}</span> is biased (note that here we care about <span class="math inline">\beta</span>, the univariate coefficient on <span class="math inline">x</span>, not the vector of all coefs.).</p>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>Assume that we can find some other (instrumental) variable that satisfies</li>
-</ul>
-<p><span class="math display">
-x = \gamma z + \tilde{X}\gamma_{\tilde{X}} + \mu \quad \text{where} \quad Cov[z,\varepsilon] = 0, \gamma \ne 0
-</span></p>
-<div style="height: 1em;">
-
-</div>
-<p>We can isolate variation in the determination of <span class="math inline">x</span> through <span class="math inline">z</span> that is unrelated to the main relationship we are studying (the effect of <span class="math inline">x</span> on <span class="math inline">y</span>).</p>
 <aside><div>
-<p>Slides on IV adapted from slides by Pat Akey (ESSEC).</p>
+<p>Readings: Ch. 6 (Sections 6.1–6.3) of <span class="citation" data-cites="ruppert2015statistics">Ruppert and Matteson (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span></p>
 </div></aside></section>
-<section id="introduction-to-iv-1" class="slide level2">
-<h2>Introduction to IV</h2>
-<div style="height: 2em;">
-
-</div>
-<ul>
-<li>We need two assumptions for a valid IV
-<ul>
-<li><strong>Relevance</strong> — There must be correlation between <span class="math inline">z</span> and <span class="math inline">x</span> <strong>conditional on all other variables in a system</strong> i.e.&nbsp;<span class="math inline">\gamma \ne 0</span></li>
-<li><strong>Exclusion</strong> — The variable can be excluded from the main equation of interest.</li>
-</ul></li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li><p>Two important parts to this assumption:</p>
-<ul>
-<li>The only relationship between <span class="math inline">z</span> and <span class="math inline">y</span> is through the first stage relationship</li>
-<li>Conditional on covariates (<span class="math inline">\tilde{X}</span>), the instrument is as good as randomly assigned</li>
-</ul></li>
-</ul>
-</section>
-<section id="iv-variation" class="slide level2" data-transition="fade-out slide-in">
-<h2>IV Variation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/IV1.png" class="quarto-figure quarto-figure-center" height="600"></p>
-</figure>
-</div>
-</section>
-<section id="iv-variation-1" class="slide level2" data-transition="fade-out fade-in">
-<h2>IV Variation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/IV2.png" class="quarto-figure quarto-figure-center" height="600"></p>
-</figure>
-</div>
-</section>
-<section id="iv-variation-2" class="slide level2" data-transition="slide-out fade-in">
-<h2>IV Variation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/IV3.png" class="quarto-figure quarto-figure-center" height="600"></p>
-</figure>
-</div>
-</section>
-<section id="how-does-this-work" class="slide level2">
-<h2>How does this work?</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>Typically done as a two stage OLS estimation
-<ul>
-<li>Estimate the relationship between <span class="math inline">z</span> and <span class="math inline">x</span> (including all other variables in the main equation)</li>
-<li>Estimate <span class="math inline">\hat{x}</span> using the estimated coefficients</li>
-<li>Estimate the second stage model with <span class="math inline">\hat{x}</span></li>
-</ul></li>
-</ul>
-<p>Can also be done as a GMM system</p>
-<div style="height: 2em;">
-
-</div>
-<p><span class="math display">
-\widehat{\beta}_{2SLS} \overset{p}{\rightarrow} \frac{Cov[z,y]}{Cov[z,x]} = \beta + \frac{Cov[\epsilon,z]}{Cov[x,z]} \quad \text{when} \quad T \rightarrow \infty
-</span></p>
-<ul>
-<li>Note that the identifying assumptions imply that the IV coefficient is asymptotically consistent</li>
-<li>The estimator is biased in finite samples, but more on this later</li>
-</ul>
-</section>
-<section id="where-do-good-instruments-come-from" class="slide level2">
-<h2>Where do good instruments come from?</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>IV originally developed as a technique to estimate systems of equations (e.g.&nbsp;supply and demand for oranges)
-<ul>
-<li>Using rainfall to instrument supply in order to isolate perturbations in quantity and price <strong>along</strong> a demand curve</li>
-</ul></li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Good instruments have credible economic link for relevance, and a logical reason for exclusion</p>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>Relevance can be tested since it is a partial correlation</li>
-<li>Exclusion cannot be tested, so it must be argued based off of logical reasoning</li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Common (good) instruments include physical events, institutional changes, etc.</p>
-<p>Common bad instruments include lagged variables and group averages excluding an individual member</p>
-</section>
-<section id="more-on-the-exclusion-restriction" class="slide level2">
-<h2>More on the Exclusion Restriction</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>The exclusion assumption cannot be tested
-<ul>
-<li>We never observe the true errors of a model, so we cannot test whether they are correlated with our instrument</li>
-<li>Moreover, the estimated residuals will always be orthogonal to all covariates in a regression, so we cannot “test” whether a potentially endogenous variable is correlated with the error of a regression</li>
-</ul></li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Researchers need to come up with supporting evidence that the exclusion restriction might hold</p>
-<div style="height: 1em;">
-
-</div>
-<p>Placebo tests can be helpful</p>
-<ul>
-<li>Maybe there is a region or time period when we think an effect shouldn’t be present</li>
-<li>Are there other <strong>outcomes</strong> where confounding stories would have implications that can be tested?</li>
-</ul>
-</section>
-<section id="more-on-iv" class="slide level2">
-<h2>More on IV</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>IV is consistent, but biased in finite samples towards the OLS estimate
-<ul>
-<li>Basically because the first stage is estimated (with noise) there is bias unless the sample is really large</li>
-</ul></li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Since (asymptotically) <span class="math inline">\widehat{\beta}_{2SLS} = \beta + \frac{Cov[\epsilon,z]}{Cov[x,z]}</span>, in finite samples, we are dividing the potential bias by the strength of the instrument, so it is really important to have a strong instrument</p>
-<ul>
-<li>Adding more weak instruments makes the problem worse</li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Several papers suggest having a first-stage F-statistic on the instrument of greater than 10 or so.</p>
-<ul>
-<li>Best practices are evolving</li>
-</ul>
-</section>
-<section id="inference-with-weak-but-valid-instruments" class="slide level2">
-<h2>Inference with weak (but valid) instruments</h2>
-<ul>
-<li>Imposing filters (like an F-statistic cutoff) can induce distortions in which specifications/magnitudes are reported
-<ul>
-<li>Weak instruments are only a problem when there is a violation of the exclusion restriction — filters will rule out cases of good instruments that have low power — would otherwise identify useful causal magnitudes</li>
-<li>Like p-value cutoffs</li>
-</ul></li>
-</ul>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/f-stat_first_AER.jpg" height="300"></p>
-<figcaption>Distribution of F-Statistics in AER publications 2014–2018</figcaption>
-</figure>
-</div>
-</section>
-<section id="over-identification" class="slide level2">
-<h2>Over-Identification</h2>
-<div style="height: 2em;">
-
-</div>
-<ul>
-<li>Consider only one endogenous variable in an equation. If there are more than one instruments for the variable, it is over-identified. In this case there is a “test” to show whether one instrument versus another instrument provides different estimates
-<ul>
-<li>BUT they could all be bad instruments…</li>
-</ul></li>
-</ul>
-</section>
-<section id="iv-example-snow-and-leverage" class="slide level2">
-<h2>IV example — Snow and Leverage</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li><span class="citation" data-cites="giroud2012snow">Giroud et al. (<a href="#/references" role="doc-biblioref" onclick="">2012</a>)</span> (GMSW) study whether reducing debt overhang increases firm performance
-<ul>
-<li>Important question, but tough to find exogenous variation in debt forgiveness</li>
-</ul></li>
-</ul>
-<p>The authors look at “unexpected” changes in snow on Austrian ski resorts</p>
-<ul>
-<li>Look <strong>within</strong> the set of firms that had a debt restructuring to try and identify those that were strategic defaulters — i.e.&nbsp;those firms that defaulted despite having “favorable” circumstances</li>
-</ul>
-<p>Economic story — those firms that had renegotiated and had <strong>unexpected</strong> good snow likely underinvested or were lazy, whereas those that had bad snow were more likely liquidity defaulters</p>
-<ul>
-<li>Possible if lenders cannot <strong>ex-ante</strong> credibly commit to <strong>ex-post</strong> inefficient liquidation</li>
-<li>Obvious alternative story is that managers who default despite good snow are bad managers. Authors attempt to address this.</li>
-</ul>
-</section>
-<section id="gmsw-iv-story" class="slide level2">
-<h2>GMSW IV story</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>Note that their story is not about the <strong>amount or level</strong> of snow, but the <strong>unexpected</strong> snow</li>
-</ul>
-<p>Economic setting argues relevance</p>
-<ul>
-<li>Exclusion restriction ((1) that conditional on covariates the variation is random and (2) that strategic debt relief is the only channel at work) relies on a few points
-<ol type="1">
-<li>Primary analysis is on restructuring firms — so this looks <strong>within the set of restructuring firms</strong> and isolates variation in how the debt was restructured, so alternate stories have to explain variation within these firms</li>
-<li>Authors control for the amount of snow (and this loads in the expected direction), so alternative explanations cannot be about the amount of snow</li>
-</ol></li>
-<li>The authors first start with OLS regressions — they find that an increase in leverage is correlated with an increase in ROA</li>
-<li>Next instrument change in leverage by abnormally high or low snowfall in recent years</li>
-<li>Finally show the second stage results</li>
-</ul>
-</section>
-<section id="iv-estimation" class="slide level2">
-<h2>IV estimation</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/snow_1ststage.png" class="quarto-figure quarto-figure-center" height="450"></p>
-</figure>
-</div>
-<ul>
-<li>Coefficient is negative — consistent with economic justification of instrument</li>
-<li>Correlation is strong — F-Stat of <span class="math inline">\beta=0</span> is 10.3 — Important to ensure relevance condition is met</li>
-</ul>
-</section>
-<section id="ols" class="slide level2" data-transition="fade-out slide-in">
-<h2>OLS</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/snow_ols.png" class="quarto-figure quarto-figure-center" height="450"></p>
-</figure>
-</div>
-</section>
-<section id="iv-second-stage" class="slide level2" data-transition="fade-in slide-out">
-<h2>IV Second Stage</h2>
-<div class="quarto-figure quarto-figure-center">
-<figure>
-<p><img data-src="figures/snow_iv.png" class="quarto-figure quarto-figure-center" height="450"></p>
-</figure>
-</div>
-<div class="fragment custom blur">
-<ul>
-<li>IV results flip sign compared to OLS results, suggesting that IV approach was important</li>
-<li>Authors interpret their findings as restructuring caused by strategic defaults leads to better ROA because managers/shareholders are better incentivized</li>
-</ul>
-</div>
-</section>
-<section id="more-on-the-exclusion-restriction-and-bias" class="slide level2">
-<h2>More on the Exclusion Restriction and bias</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>We said before that exclusion assumption cannot be tested
-<ul>
-<li>We never observe the true errors of a model, so we cannot test whether they are correlated with our instrument</li>
-<li>Moreover, the estimated residuals will always be orthogonal to all covariates in a regression, so we cannot “test” whether a potentially endogenous variable is correlated with the error of a regression</li>
-</ul></li>
-</ul>
-<div style="height: 1em;">
-
-</div>
-<p>Researchers need to come up with supporting evidence that the exclusion restriction might hold</p>
-<div style="height: 1em;">
-
-</div>
-<p>Since GMSW’s sample is small, bias could be a problem but find an IV that is opposite from the OLS, their instrument is strong this is less of a problem (recall small departures from exogeneity are a problem with small samples and weak instruments)</p>
-</section>
-<section id="last-points-about-general-iv" class="slide level2">
-<h2>Last points about general IV</h2>
-<div style="height: 1em;">
-
-</div>
-<ul>
-<li>The first stage should be linear in order to ensure consistent second stage estimates
-<ul>
-<li>Binary endogenous variables should NOT be estimated via probit/logit</li>
-</ul></li>
-<li>All variables in the second stage must be included in the first stage, otherwise estimates are inconsistent</li>
-<li>Statistical inference in the second stage must be done on actual (not estimated) data. (the <code>linearmodels</code> module does this automatically)</li>
-<li>IV can also be used to correct for measurement error if it is a problem and you have a plausible instrument</li>
-</ul>
-</section>
-<section id="bootstrap-and-randomization-inference-1" class="slide level2">
+<section id="bootstrap-and-randomization-inference" class="slide level2">
 <h2>Bootstrap and Randomization Inference</h2>
 <div style="height: 1em;">
 
@@ -773,7 +367,8 @@ x = \gamma z + \tilde{X}\gamma_{\tilde{X}} + \mu \quad \text{where} \quad Cov[z,
 <div style="height: 1em;">
 
 </div>
-<p><strong>p-value:</strong> Reject if <span class="math inline">\hat{\tau} &lt; q_{2.5\%}(\tilde{\tau})</span> or <span class="math inline">\hat{\tau} &gt; q_{97.5\%}(\tilde{\tau})</span>.</p>
+<p><strong>Decision rule (5%):</strong> Reject if <span class="math inline">\hat{\tau} &lt; q_{2.5\%}(\tilde{\tau})</span> or <span class="math inline">\hat{\tau} &gt; q_{97.5\%}(\tilde{\tau})</span>.</p>
+<p><strong>p-value (two-sided):</strong> <span class="math inline">p = \dfrac{1 + \#\{i : |\tilde{\tau}_i| \ge |\hat{\tau}|\}}{N + 1}</span></p>
 </section>
 <section id="bootstrap-vs.-randomization-inference" class="slide level2">
 <h2>Bootstrap vs.&nbsp;Randomization Inference</h2>
@@ -811,8 +406,8 @@ x = \gamma z + \tilde{X}\gamma_{\tilde{X}} + \mu \quad \text{where} \quad Cov[z,
 </tr>
 <tr class="even">
 <td><strong>Preserves</strong></td>
-<td>Marginal distributions</td>
-<td>Marginal distributions, sample size</td>
+<td>Sample size; marginals only <em>approximately</em></td>
+<td>Sample size; marginal of <span class="math inline">Y</span> <em>exactly</em></td>
 </tr>
 <tr class="odd">
 <td><strong>Breaks</strong></td>
@@ -824,7 +419,7 @@ x = \gamma z + \tilde{X}\gamma_{\tilde{X}} + \mu \quad \text{where} \quad Cov[z,
 <div style="height: 1em;">
 
 </div>
-<p>Both methods are <strong>non-parametric</strong>: they make no assumptions about the distribution of the data.</p>
+<p>Both methods are <strong>non-parametric</strong>: they do not require a parametric distribution for the data. They are <em>not</em> assumption-free — the bootstrap needs i.i.d. (or exchangeable) sampling, and the permutation test needs exchangeability under <span class="math inline">H_0</span>.</p>
 <div style="height: 1em;">
 
 </div>
@@ -836,21 +431,21 @@ x = \gamma z + \tilde{X}\gamma_{\tilde{X}} + \mu \quad \text{where} \quad Cov[z,
 
 </div>
 <p>Consider a small sample (<span class="math inline">n = 30</span>) where we estimate <span class="math inline">Y = \alpha + \beta X + \varepsilon</span>.</p>
-<div id="14bc2c4f" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href=""></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
-<span id="cb1-3"><a href=""></a></span>
-<span id="cb1-4"><a href=""></a>np.random.seed(<span class="dv">42</span>)</span>
-<span id="cb1-5"><a href=""></a>n <span class="op">=</span> <span class="dv">30</span></span>
-<span id="cb1-6"><a href=""></a>X <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, n)</span>
-<span id="cb1-7"><a href=""></a>epsilon <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">2</span>, n)</span>
-<span id="cb1-8"><a href=""></a>Y <span class="op">=</span> <span class="fl">1.0</span> <span class="op">+</span> <span class="fl">0.8</span> <span class="op">*</span> X <span class="op">+</span> epsilon  <span class="co"># True beta = 0.8</span></span>
-<span id="cb1-9"><a href=""></a></span>
-<span id="cb1-10"><a href=""></a>X_const <span class="op">=</span> sm.add_constant(X)</span>
-<span id="cb1-11"><a href=""></a>ols_result <span class="op">=</span> sm.OLS(Y, X_const).fit()</span>
-<span id="cb1-12"><a href=""></a>beta_hat <span class="op">=</span> ols_result.params[<span class="dv">1</span>]</span>
-<span id="cb1-13"><a href=""></a><span class="bu">print</span>(<span class="ss">f"OLS estimate: β̂ = </span><span class="sc">{</span>beta_hat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
-<span id="cb1-14"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Asymptotic p-value (H₀: β=0): </span><span class="sc">{</span>ols_result<span class="sc">.</span>pvalues[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="cacba6bf" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
+<span id="cb1-3"><a href="" aria-label="3"></a></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>np.random.seed(<span class="dv">42</span>)</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>n <span class="op">=</span> <span class="dv">30</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a>X <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, n)</span>
+<span id="cb1-7"><a href="" aria-label="7"></a>epsilon <span class="op">=</span> np.random.normal(<span class="dv">0</span>, <span class="dv">2</span>, n)</span>
+<span id="cb1-8"><a href="" aria-label="8"></a>Y <span class="op">=</span> <span class="fl">1.0</span> <span class="op">+</span> <span class="fl">0.8</span> <span class="op">*</span> X <span class="op">+</span> epsilon  <span class="co"># True beta = 0.8</span></span>
+<span id="cb1-9"><a href="" aria-label="9"></a></span>
+<span id="cb1-10"><a href="" aria-label="10"></a>X_const <span class="op">=</span> sm.add_constant(X)</span>
+<span id="cb1-11"><a href="" aria-label="11"></a>ols_result <span class="op">=</span> sm.OLS(Y, X_const).fit()</span>
+<span id="cb1-12"><a href="" aria-label="12"></a>beta_hat <span class="op">=</span> ols_result.params[<span class="dv">1</span>]</span>
+<span id="cb1-13"><a href="" aria-label="13"></a><span class="bu">print</span>(<span class="ss">f"OLS estimate: β̂ = </span><span class="sc">{</span>beta_hat<span class="sc">:.4f}</span><span class="ss">"</span>)</span>
+<span id="cb1-14"><a href="" aria-label="14"></a><span class="bu">print</span>(<span class="ss">f"Asymptotic p-value (H₀: β=0): </span><span class="sc">{</span>ols_result<span class="sc">.</span>pvalues[<span class="dv">1</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>OLS estimate: β̂ = 1.0045
 Asymptotic p-value (H₀: β=0): 0.0154</code></pre>
@@ -859,19 +454,19 @@ Asymptotic p-value (H₀: β=0): 0.0154</code></pre>
 </section>
 <section id="example-bootstrap-confidence-interval" class="slide level2">
 <h2>Example: Bootstrap Confidence Interval</h2>
-<div id="ca160572" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>B <span class="op">=</span> <span class="dv">10_000</span></span>
-<span id="cb3-2"><a href=""></a>boot_betas <span class="op">=</span> np.empty(B)</span>
-<span id="cb3-3"><a href=""></a></span>
-<span id="cb3-4"><a href=""></a><span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(B):</span>
-<span id="cb3-5"><a href=""></a>    idx <span class="op">=</span> np.random.choice(n, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-6"><a href=""></a>    X_b, Y_b <span class="op">=</span> X_const[idx], Y[idx]</span>
-<span id="cb3-7"><a href=""></a>    boot_betas[b] <span class="op">=</span> sm.OLS(Y_b, X_b).fit().params[<span class="dv">1</span>]</span>
-<span id="cb3-8"><a href=""></a></span>
-<span id="cb3-9"><a href=""></a>ci_lower, ci_upper <span class="op">=</span> np.percentile(boot_betas, [<span class="fl">2.5</span>, <span class="fl">97.5</span>])</span>
-<span id="cb3-10"><a href=""></a>boot_p <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(boot_betas <span class="op">-</span> beta_hat) <span class="op">&gt;=</span> np.<span class="bu">abs</span>(beta_hat))</span>
-<span id="cb3-11"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Bootstrap 95% CI: [</span><span class="sc">{</span>ci_lower<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.4f}</span><span class="ss">]"</span>)</span>
-<span id="cb3-12"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Bootstrap p-value (H₀: β=0): </span><span class="sc">{</span>boot_p<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b7fe5212" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>B <span class="op">=</span> <span class="dv">10_000</span></span>
+<span id="cb3-2"><a href="" aria-label="2"></a>boot_betas <span class="op">=</span> np.empty(B)</span>
+<span id="cb3-3"><a href="" aria-label="3"></a></span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="cf">for</span> b <span class="kw">in</span> <span class="bu">range</span>(B):</span>
+<span id="cb3-5"><a href="" aria-label="5"></a>    idx <span class="op">=</span> np.random.choice(n, size<span class="op">=</span>n, replace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-6"><a href="" aria-label="6"></a>    X_b, Y_b <span class="op">=</span> X_const[idx], Y[idx]</span>
+<span id="cb3-7"><a href="" aria-label="7"></a>    boot_betas[b] <span class="op">=</span> sm.OLS(Y_b, X_b).fit().params[<span class="dv">1</span>]</span>
+<span id="cb3-8"><a href="" aria-label="8"></a></span>
+<span id="cb3-9"><a href="" aria-label="9"></a>ci_lower, ci_upper <span class="op">=</span> np.percentile(boot_betas, [<span class="fl">2.5</span>, <span class="fl">97.5</span>])</span>
+<span id="cb3-10"><a href="" aria-label="10"></a>boot_p <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(boot_betas <span class="op">-</span> beta_hat) <span class="op">&gt;=</span> np.<span class="bu">abs</span>(beta_hat))</span>
+<span id="cb3-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Bootstrap 95% CI: [</span><span class="sc">{</span>ci_lower<span class="sc">:.4f}</span><span class="ss">, </span><span class="sc">{</span>ci_upper<span class="sc">:.4f}</span><span class="ss">]"</span>)</span>
+<span id="cb3-12"><a href="" aria-label="12"></a><span class="bu">print</span>(<span class="ss">f"Bootstrap p-value (H₀: β=0): </span><span class="sc">{</span>boot_p<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Bootstrap 95% CI: [0.2242, 1.7431]
 Bootstrap p-value (H₀: β=0): 0.0132</code></pre>
@@ -880,48 +475,751 @@ Bootstrap p-value (H₀: β=0): 0.0132</code></pre>
 </section>
 <section id="example-randomization-inference" class="slide level2">
 <h2>Example: Randomization Inference</h2>
-<div id="0c03200c" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>N_shuffles <span class="op">=</span> <span class="dv">10_000</span></span>
-<span id="cb5-2"><a href=""></a>shuffle_betas <span class="op">=</span> np.empty(N_shuffles)</span>
-<span id="cb5-3"><a href=""></a></span>
-<span id="cb5-4"><a href=""></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_shuffles):</span>
-<span id="cb5-5"><a href=""></a>    Y_shuffled <span class="op">=</span> np.random.permutation(Y)</span>
-<span id="cb5-6"><a href=""></a>    shuffle_betas[i] <span class="op">=</span> sm.OLS(Y_shuffled, X_const).fit().params[<span class="dv">1</span>]</span>
-<span id="cb5-7"><a href=""></a></span>
-<span id="cb5-8"><a href=""></a>rand_p <span class="op">=</span> np.mean(np.<span class="bu">abs</span>(shuffle_betas) <span class="op">&gt;=</span> np.<span class="bu">abs</span>(beta_hat)) <span class="op">*</span> <span class="dv">2</span></span>
-<span id="cb5-9"><a href=""></a><span class="bu">print</span>(<span class="ss">f"Randomization p-value (H₀: β=0): </span><span class="sc">{</span><span class="bu">min</span>(rand_p, <span class="fl">1.0</span>)<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="2e002ed4" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>N_shuffles <span class="op">=</span> <span class="dv">10_000</span></span>
+<span id="cb5-2"><a href="" aria-label="2"></a>shuffle_betas <span class="op">=</span> np.empty(N_shuffles)</span>
+<span id="cb5-3"><a href="" aria-label="3"></a></span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_shuffles):</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>    Y_shuffled <span class="op">=</span> np.random.permutation(Y)</span>
+<span id="cb5-6"><a href="" aria-label="6"></a>    shuffle_betas[i] <span class="op">=</span> sm.OLS(Y_shuffled, X_const).fit().params[<span class="dv">1</span>]</span>
+<span id="cb5-7"><a href="" aria-label="7"></a></span>
+<span id="cb5-8"><a href="" aria-label="8"></a><span class="co"># Two-sided: |β̃| ≥ |β̂| already counts both tails, no factor of 2</span></span>
+<span id="cb5-9"><a href="" aria-label="9"></a>n_extreme <span class="op">=</span> np.<span class="bu">sum</span>(np.<span class="bu">abs</span>(shuffle_betas) <span class="op">&gt;=</span> np.<span class="bu">abs</span>(beta_hat))</span>
+<span id="cb5-10"><a href="" aria-label="10"></a>rand_p <span class="op">=</span> (<span class="dv">1</span> <span class="op">+</span> n_extreme) <span class="op">/</span> (N_shuffles <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb5-11"><a href="" aria-label="11"></a><span class="bu">print</span>(<span class="ss">f"Randomization p-value (H₀: β=0): </span><span class="sc">{</span>rand_p<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Randomization p-value (H₀: β=0): 0.0298</code></pre>
+<pre><code>Randomization p-value (H₀: β=0): 0.0150</code></pre>
 </div>
 </div>
+<div style="height: 0.5em;">
+
+</div>
+<p>The three approaches — asymptotic, bootstrap, and randomization — give very similar p-values here.</p>
 </section>
 <section id="example-comparing-the-distributions" class="slide level2">
 <h2>Example: Comparing the Distributions</h2>
-<div id="2b727f17" class="cell" data-execution_count="4">
+<div id="6f9f6dc9" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
-<p><img data-src="lecture11_files/figure-revealjs/cell-5-output-1.png" class="quarto-figure quarto-figure-center" width="950" height="372"></p>
+<p><img data-src="lecture11_files/figure-revealjs/cell-5-output-1.png" class="quarto-figure quarto-figure-center" width="952" height="374"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
+<section id="replicable-finance-research" class="slide level2">
+<h2>Replicable Finance Research</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Idealized scientific research:</p>
+<ul>
+<li>Benefits from collaboration</li>
+<li>Benefits from openness and transparency</li>
+<li>Benefits from clear methodology</li>
+</ul>
+</section>
+<section id="replicable-finance-research-1" class="slide level2">
+<h2>Replicable Finance Research</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Empirical finance research in academia:</p>
+<ul>
+<li>Incentives not always aligned towards transparency. Publishing helps for:
+<ul>
+<li>Reputation</li>
+<li>Funding future projects.</li>
+<li>Job security.</li>
+<li>Consulting opportunities.</li>
+</ul></li>
+<li>Limited transparency is common (proprietary datasets.)</li>
+</ul>
+<div style="height: 2em;">
+
+</div>
+<p>Ideally research would involve common objectives, where conclusions can generate public goods, hence the idea behind publishing.</p>
+<div style="height: 1em;">
+
+</div>
+<p>Does this make sense in empirical finance?</p>
+</section>
+<section id="replicable-finance-research-2" class="slide level2">
+<h2>Replicable Finance Research</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Empirical finance research in industry:</p>
+<ul>
+<li>Transparency hinders profit opportunities</li>
+<li>Collaboration is limited</li>
+<li>Methodology is often idiosyncratic</li>
+</ul>
+<div style="height: 2em;">
+
+</div>
+<p>This is due to the fact that asymmetric information in markets is what creates opportunities for individuals.</p>
+<ul>
+<li>If you have multiple profit-maximizing traders with asymmetric information, you can’t have fully efficient markets <span class="citation" data-cites="grossman1980impossibility">(<a href="#/references" role="doc-biblioref" onclick="">Grossman and Stiglitz 1980</a>)</span></li>
+</ul>
+</section>
+<section id="replicable-finance-research-3" class="slide level2">
+<h2>Replicable Finance Research</h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Question:</strong> If incentives are sometimes aligned against collaborative and open-source empirical finance research, should we expect research to be replicable?</p>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Follow-up question:</strong> If incentives are that publishing is highly rewarded, can we expect published research to be “genuine” research?</p>
+<div style="height: 2em;">
+
+</div>
+<p>It is an important issue in empirical finance:</p>
+<ul>
+<li>Recent studies in empirical finance, notably in asset pricing, have taken a turn towards testing the replicability of past findings.</li>
+<li>Most journals now require code availability for replicability and sharing of non-proprietary data.</li>
+<li>Top journals in finance have retracted papers recently because of replication issues.</li>
+</ul>
+</section>
+<section id="methodological-problems-versus-data-mining" class="slide level2">
+<h2>Methodological Problems versus Data-Mining</h2>
+<div style="height: 1em;">
+
+</div>
+<p>Data mining, aka <span class="math inline">p</span>-hacking:</p>
+<ul>
+<li>Repeated testing of “random” hypotheses until you have significant results.</li>
+<li>Objective is to generate exaggerated results in line with an incentive (i.e.&nbsp;publishing)</li>
+<li>Unethical practice which must be avoided</li>
+<li>Can be intentional, but also unintentional</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>In conclusion, as good statisticians, our goal is to avoid data mining from our research methodology while limiting statistical bias when appropriate, and to recognize these issues when evaluating other researchers’ results.</p>
+</section>
+<section id="multiple-hypotheses-testing" class="slide level2">
+<h2>Multiple Hypotheses Testing</h2>
+<h3 id="literature-review---ioannidis2005most">Literature Review - <span class="citation" data-cites="ioannidis2005most">Ioannidis (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>Numerous elements can cause results to be biased and invalid:</p>
+<ul>
+<li>Studies in the field are smaller</li>
+<li>Greater number and lesser preselection of tested relationships</li>
+<li>Greater flexibility in design, definitions, outcomes and analytical modes</li>
+<li>Greater financial and other interest in prejudice</li>
+<li>More teams are involved in a scientific field in chase of statistical significance</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>He concludes that it is likely for most scientific findings to be more false than true, being accurate measures of prevailing bias rather than actual rigorous results.</p>
+<div style="height: 1em;">
+
+</div>
+<p>We have seen that in the context of empirical finance, financial incentives and flexibility in design can play a large role in driving results.</p>
+</section>
+<section id="multiple-hypotheses-testing-1" class="slide level2">
+<h2>Multiple Hypotheses Testing</h2>
+<h3 id="literature-review---ioannidis2005most-1">Literature Review - <span class="citation" data-cites="ioannidis2005most">Ioannidis (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Why are most medical findings false?</strong></p>
+<div style="height: 1em;">
+
+</div>
+<p>Definitions</p>
+<ul>
+<li><span class="math inline">H_{0}</span>: A null hypothesis either <span class="math inline">H_{0}=T</span> or <span class="math inline">H_{0}=F</span></li>
+<li><span class="math inline">S</span>: A statistical test of <span class="math inline">H_{0}</span>; either <span class="math inline">S=t</span> or <span class="math inline">S=f</span></li>
+<li><span class="math inline">\alpha</span>: <span class="math inline">\Pr\left(  S=f|H_{0}=T\right)</span> This is the type I error rate (a.k.a. significance level.) Typically 5%</li>
+<li><span class="math inline">1-\beta</span>: <span class="math inline">\Pr\left(  S=f|H_{0}=F\right)</span> This is the power of the test (i.e.&nbsp;<span class="math inline">1-</span> the Type II error rate)</li>
+<li><span class="math inline">R</span>: fraction of <span class="math inline">H_{0}</span> that are <span class="math inline">F</span> <em>relative</em> to the fraction that are <span class="math inline">T</span>. If we only test one <span class="math inline">H_{0}\Rightarrow \Pr\left(  H_{0}=F\right) =\frac{R}{R+1}</span></li>
+<li><span class="math inline">PPV</span>: Positive Predictive Value <span class="math inline">\equiv\Pr\left( H_{0}=F|S=f\right)</span></li>
+</ul>
+<p>See <a href="https://xkcd.com/1132/">xkcd</a></p>
+</section>
+<section id="ioannidis2005most" class="slide level2">
+<h2><span class="citation" data-cites="ioannidis2005most">Ioannidis (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span></h2>
+<div style="height: 2em;">
+
+</div>
+<p>Bayes Theorem implies</p>
+<p><span class="math display">\begin{align*}
+PPV  &amp; =\Pr\left(  H_{0}=F|S=f\right) =\frac{\Pr\left(  H_{0}=F,S=f\right)}{\Pr\left(  S=f\right)}\\
+&amp;=\frac{\left(  1-\beta\right)  \cdot\Pr\left(  H_{0}=F\right)}{\left(  1-\beta\right)  \cdot\Pr\left(  H_{0}=F\right)  +\alpha\cdot\Pr\left(  H_{0}=T\right)}\\
+&amp;=\frac{\left(  1-\beta\right)  \cdot R}{\left(  1-\beta\right)  \cdot R+\alpha}
+\end{align*}</span></p>
+<div style="height: 1em;">
+
+</div>
+<p><span class="math inline">\therefore</span> Research findings are more likely right than wrong</p>
+<p><span class="math display">
+\iff\left(  1-\beta\right)  \cdot R&gt;\alpha\approx0.05
+</span></p>
+</section>
+<section id="ioannidis2005most-1" class="slide level2">
+<h2><span class="citation" data-cites="ioannidis2005most">Ioannidis (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span></h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Implications</strong></p>
+<ol type="1">
+<li>Results from low power tests (i.e.&nbsp;small <span class="math inline">(1-\beta) \rightarrow 5\%</span>) are more likely to be false than true if <span class="math inline">R&lt;1</span>.
+<ul>
+<li>Beware of small samples.</li>
+</ul></li>
+<li>Theory helps if it raises <span class="math inline">R</span>.
+<ul>
+<li>Folk Theorem: Can theory justify <em>anything</em>?</li>
+</ul></li>
+</ol>
+</section>
+<section id="ioannidis2005most-2" class="slide level2">
+<h2><span class="citation" data-cites="ioannidis2005most">Ioannidis (<a href="#/references" role="doc-biblioref" onclick="">2005</a>)</span></h2>
+<div style="height: 2em;">
+
+</div>
+<p><strong>Repeated Testing</strong></p>
+<p><span class="math inline">n \equiv</span> number of <span class="math inline">H_{0}</span> tested (but not reported) to produce 1 statistically significant result that is reported</p>
+<p>Now,</p>
+<p><span class="math display">
+PPV = \frac{\left(  1-\beta^{n}\right)  \cdot R}{\left(  1-\beta^{n}\right)  \cdot R+\left[  1-\left(  1-\alpha\right)  ^{n}\right]} \approx \frac{\left(  1-\beta^{n}\right)  \cdot R}{\left(  1-\beta^{n}\right)  \cdot R+\left[  1-.95^{n}\right]}
+</span></p>
+<div style="height: 1em;">
+
+</div>
+<p>Research findings are more likely right than wrong</p>
+<p><span class="math display">
+\iff\left(  1-\beta^{n}\right)  \cdot R&gt;1-\left(  1-\alpha\right) ^{n}
+</span></p>
+<p>Raising <span class="math inline">n</span> can make it harder to satisfy this condition!</p>
+</section>
+<section id="multiple-hypotheses-testing-2" class="slide level2">
+<h2>Multiple Hypotheses Testing</h2>
+<h3 id="literature-review---chordia2020anomalies">Literature Review - <span class="citation" data-cites="chordia2020anomalies">Chordia et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></h3>
+<div style="height: 2em;">
+
+</div>
+<p>Asset pricing studies seek to answer a variety of research questions, but they usually share:</p>
+<ul>
+<li>A common question (i.e are expected stock returns predictable)</li>
+<li>At least one common dataset (i.e CRSP)</li>
+</ul>
+<div style="height: 2em;">
+
+</div>
+<p>Sufficient grounds for researchers to be concerned about MHT in financial predictability studies.</p>
+<p>Inference can only be made by making explicit assumptions about the data-generating process and the ability of researchers to filter unsound strategies.</p>
+</section>
+<section id="chordia2020anomalies" class="slide level2">
+<h2><span class="citation" data-cites="chordia2020anomalies">Chordia et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></h2>
+<div style="height: 2em;">
+
+</div>
+<p>In their study, MHT-adjusted thresholds for t-statistics of time-series alpha and cross-sectional FM regressions slopes are 3.8 and 3.4 respectively, implying 1,028 and 4,790 tests to be attempted to have a 0.50 probability of meeting the threshold.</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Important</strong> There is no absolute standard of significance for hypothesis testing, only generally accepted guidelines for statistical research.</p>
+<p><strong>Important</strong> Also consider that authors usually need a theory, motivation or story to get published. Similar in a corporate finance.</p>
+<div style="height: 1em;">
+
+</div>
+<p>➡️ This raises the <span class="math inline">R</span> in Ioannidis’s formulas.</p>
+</section>
+<section id="other-problems-in-empirical-finance" class="slide level2">
+<h2>Other Problems in Empirical Finance</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Many other potential issues are of concern in the field of empirical finance. We will discuss three:</p>
+<ul>
+<li>Data integrity and data revisions.</li>
+<li>Non-standard errors (i.e.&nbsp;researcher-level estimation uncertainty).</li>
+<li>Use of ML/AI.</li>
+</ul>
+</section>
+<section id="data-integrity-and-data-revisions" class="slide level2">
+<h2>Data integrity and data revisions</h2>
+<h3 id="noisy-factors-akey2023noisy">Noisy Factors – <span class="citation" data-cites="akey2023noisy">Akey et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>Understanding the variations between the significance of the Fama-French factors depending on the time they were downloaded.</p>
+<p>They find that factor returns differ <strong>substantially</strong> depending on factor vintage, which causes a third of the anomaly long-short portfolios to lose statistical significance.</p>
+<div style="height: 0.5em;">
+
+</div>
+<p>How is that possible?</p>
+<ul>
+<li>Small discrepancies in how the data was gathered</li>
+<li>Calculation differences in rounding effects</li>
+<li>Retroactive corrections</li>
+</ul>
+<div style="height: 0.5em;">
+
+</div>
+<p><strong>Question</strong> If such small deviations in methodology have such an important impact on study results, what other hidden issues could exist which are currently overlooked by researchers?</p>
+
+<aside><div>
+<p>Bloomberg published a <a href="https://www.bloomberg.com/news/features/2024-03-11/a-fight-over-factor-investing-tests-a-pillar-of-modern-finance">feature article</a> on this study.</p>
+</div></aside></section>
+<section id="noisy-factors-akey2023noisy-1" class="slide level2">
+<h2>Noisy Factors – <span class="citation" data-cites="akey2023noisy">Akey et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></h2>
+<h3 id="historical-data-from-the-wayback-machine">Historical data from the <a href="https://webcf.waybackmachine.org/">Wayback Machine</a>!</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/wayback.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</section>
+<section id="noisy-factors-akey2023noisy-2" class="slide level2">
+<h2>Noisy Factors – <span class="citation" data-cites="akey2023noisy">Akey et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></h2>
+<p>HML is the most affected factor</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/hml_noisy.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</section>
+<section id="noisy-factors-akey2023noisy-3" class="slide level2">
+<h2>Noisy Factors – <span class="citation" data-cites="akey2023noisy">Akey et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span></h2>
+<p>α of well-diversified portfolios are significantly affected.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/noisy_portfolios.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</section>
+<section id="non-standard-errors" class="slide level2">
+<h2>Non-Standard Errors</h2>
+<h3 id="non-standard-errors-menkveld2024nonstandard">Non-Standard Errors – <span class="citation" data-cites="menkveld2024nonstandard"><span class="nocase">Menkveld et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>The first crowd-sourced empirical paper in Economics/Finance. The project seeks to expose the variation across researchers for results they report independently testing the same hypotheses on the same sample.</p>
+<div style="height: 1em;">
+
+</div>
+<p>343 authors from 34 countries answering the same asset pricing questions:</p>
+<ul>
+<li>How large are non-standard errors in financial economics?</li>
+<li>Can NSE be “explained” in the cross-section of researchers?</li>
+<li>Does peer-feedback reduce non-standard errors?</li>
+<li>Are researchers accurately aware of the size of NSE?</li>
+</ul>
+</section>
+<section id="non-standard-errors-menkveld2024nonstandard-1" class="slide level2">
+<h2>Non-Standard Errors – <span class="citation" data-cites="menkveld2024nonstandard"><span class="nocase">Menkveld et al.</span> (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/nse_reported.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</section>
+<section id="design-choices-and-machine-learning-chen2025design" class="slide level2">
+<h2>Design Choices and Machine Learning – <span class="citation" data-cites="chen2025design">Chen et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/design_choices.png" class="quarto-figure quarto-figure-center" height="550"></p>
+</figure>
+</div>
+</section>
+<section id="additional-issues-with-llms" class="slide level2">
+<h2>Additional Issues with LLMs</h2>
+<div style="height: 2em;">
+
+</div>
+<h3 id="replicability">Replicability</h3>
+<ul>
+<li>“Closed” models (like OpenAI’s) change constantly</li>
+<li>They are probabilistic models, so results vary with each execution</li>
+</ul>
+<div style="height: 2em;">
+
+</div>
+<h3 id="researcher-degrees-of-freedom">Researcher Degrees of Freedom:</h3>
+<ul>
+<li>Even minor changes to the prompt can completely alter the results</li>
+<li>Since the models are probabilistic, simply repeating the experiment can yield different results</li>
+<li>With billions of parameters, almost anything can be achieved with some fine-tuning</li>
+</ul>
+</section>
+<section id="replication-crisis-in-finance" class="slide level2">
+<h2>Replication Crisis in Finance?</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><span class="citation" data-cites="baker2016reproducibility">Baker (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span>: 1,500 scientists lift the lid on reproducibility
+<ul>
+<li>More than 70% of researchers have tried and failed to reproduce another scientist’s experiments, and more than half have failed to reproduce their own experiments.</li>
+<li>Although 52% of those surveyed agree that there is a significant ‘crisis’ of reproducibility, less than 31% think that failure to reproduce published results means that the result is probably wrong, and most say that they still trust the published literature.</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><span class="citation" data-cites="harvey2019replication">Harvey (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span> : Replication policies at top finance journals are lagging behind economics journals.
+<ul>
+<li>Harvey was editor of the Journal of Finance and try to develop a unified policy across all top finance journals</li>
+</ul></li>
+</ul>
+</section>
+<section id="replication-crisis-in-finance-1" class="slide level2">
+<h2>Replication Crisis in Finance?</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><span class="citation" data-cites="jensen2023there">Jensen et al. (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>: Is There A Replication Crisis In Finance?
+<ul>
+<li>The majority of asset pricing factors: (1) can be replicated, (2) can be clustered into 13 themes, the majority of which are significant parts of the tangency portfolio, (3) work out-of-sample in a new large data set covering 93 countries, and (4) have evidence that is strengthened (not weakened) by the large number of observed factors.</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><span class="citation" data-cites="harvey2022pitfalls">Harvey (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>: Be Skeptical of Asset Management Research
+<ul>
+<li>Argues that economic incentives distort outcomes in both academic and practitioner finance research.</li>
+</ul></li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><span class="citation" data-cites="fivsar2024reproducibility">Fišar et al. (<a href="#/references" role="doc-biblioref" onclick="">2024</a>)</span>: Reproducibility in Management Science increased significantly following mandatory code and data sharing policies.</li>
+</ul>
+</section>
+<section id="a-problem-in-the-industry" class="slide level2">
+<h2>A Problem in the Industry?</h2>
+<div style="height: 1em;">
+
+</div>
+<p><span class="citation" data-cites="harvey2022pitfalls">Harvey (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span>: yes, but incentives make it less of a problem than in academia.</p>
+<div style="height: 1em;">
+
+</div>
+<blockquote>
+<p><strong>I believe p-hacking is less of a problem in asset management than in academia</strong>—in particular, less of a problem in the proprietary research that is the foundation for a product. The reasons are simple. First, in the presence of a performance fee, the asset management company’s research needs to be optimized in a way that maximizes the chances of repeatable performance. This means <strong>the asset manager does not choose the best-performing backtest, because it is the one that is most likely to be overfit</strong>. If the manager were to launch a backtest-overfitted strategy, it would likely fail and thereby generate no performance fees. The second reason is reputation. Academic tenure has no equivalent in asset management. <strong>If an asset manager’s products disappoint because of overfitting, the firm’s investors will flee. This market mechanism naturally minimizes the overfitting</strong>. That said, asset management companies still produce a substantial amount of low-quality research. Similar to the academic research, investors need to be skeptical.</p>
+</blockquote>
+</section>
+<section id="replication-issues" class="slide level2">
+<h2>Replication Issues</h2>
+<h3 id="literature-hou2020replicating">Literature – <span class="citation" data-cites="hou2020replicating">Hou et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>One of the groups that has attempted to measure the robustness of past asset pricing studies by re-assessing the strength of established factors.</p>
+<div style="height: 1em;">
+
+</div>
+<p>Study design:</p>
+<ul>
+<li>Controlling for micro-caps (removing their impacts)</li>
+<li>Looking for high certainty (high t-statistics)</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Conclusion</strong> Most anomalies are not replicable empirically, and those that are successfully replicated are so with magnitudes that are often lower.</p>
+</section>
+<section id="replication-issues-1" class="slide level2">
+<h2>Replication issues</h2>
+<h3 id="literature-hou2020replicating-1">Literature – <span class="citation" data-cites="hou2020replicating">Hou et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>Emphasis on the impact of controlling for micro-cap stocks:</p>
+<ul>
+<li>Account for 3% of stock market value yet 60% of stocks.</li>
+<li>By using equal weighted-returns, many studies significantly overweight their impact.</li>
+<li>In practice, the high costs of trading micro-caps can explain why anomalies deemed significant exist.</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>Is it realistic to consider strategies to be significant almost uniquely on the behavior of this (small) sub-sample of equities?</p>
+<p>Most practical implementations of researched investing strategy will not prioritize micro-caps in their design!</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Conclusion</strong> While the influence of micro-caps is overwhelming in asset pricing studies, it is almost nonexistent in actual money management.</p>
+</section>
+<section id="some-hope" class="slide level2">
+<h2>Some Hope?</h2>
+<h3 id="literature-chen2022open">Literature – <span class="citation" data-cites="chen2022open">Chen and Zimmermann (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span></h3>
+<div style="height: 1em;">
+
+</div>
+<p>For Chen and Zimmerman, past replications studies measure predictability deviating from the methods employed in original research. - If the method is different, for sure the results will be different!</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Important</strong> Replication must be undertaken with the exact same conditions as in the original study. The methodology must be followed precisely and assumptions be extremely limited.</p>
+<ul>
+<li>Many replications show a t-statistics of 6.0 or more, with a corresponding value of approximately 0.000000002, which is EXTREMELY hard to data-mine.</li>
+</ul>
+
+<aside><div>
+<p>Their code and data is available at <a href="https://www.openassetpricing.com/">Open Asset Pricing</a></p>
+</div></aside></section>
+<section id="some-hope-chen2022open" class="slide level2">
+<h2>Some Hope? <span class="citation" data-cites="chen2022open">Chen and Zimmermann (<a href="#/references" role="doc-biblioref" onclick="">2022</a>)</span></h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/fig_tstathand_vs_tstatOP-2048x1229.png" class="quarto-figure quarto-figure-center" height="600"></p>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="slide level2">
+<h2>Conclusion</h2>
+<div style="height: 2em;">
+
+</div>
+<p>Importance of ethical practices amongst scientists:</p>
+<ul>
+<li>Employing correct statistical methods</li>
+<li>Good intentions and avoiding manipulations</li>
+<li>Limiting negative incentives</li>
+<li>Promoting transparency and collaboration</li>
+</ul>
+<blockquote>
+<p>There is no escaping it, if your initial method is wrong, every conclusion that ensues is wrong.</p>
+</blockquote>
+</section>
+<section id="rampini-viswanathan-and-vuillemey-2019" class="slide level2">
+<h2>Rampini, Viswanathan, and Vuillemey (2019)</h2>
+<h3 id="retracted-risk-management-in-financial-institutions">Retracted: Risk Management in Financial Institutions</h3>
+<div style="font-size: 0.9em; margin-top: 1em;">
+<blockquote>
+<p>The authors hereby retract the above article, published in print in the April 2020 issue of <em>The Journal of Finance</em>. A replication study finds that the replication code provided in the supplementary information section of the article does not reproduce some of the central findings reported in the article. Upon reexamination of the work, the authors confirmed that the replication code does not fully reproduce the published results and were unable to provide revised code that does. Therefore, the authors conclude that the published results are not reliable and that the responsible course of action is to retract the article and return the <em>Brattle Group Distinguished Paper Prize</em> that the article received. The authors deeply regret the damage this caused to the journal and the scholarly community. The specific contributions of the authors to the article were as follows: the first and second author provided the theoretical hypothesis; all three authors jointly designed the empirical approach and identification strategy; the third author constructed and handled the data, implemented the empirical analysis, and provided the empirical results as well as the replication data and code. The third author states that the original data and code that produced the published results were lost. The first and second author were not notified of the loss of the original data and code at the time it occurred and had no prior knowledge of the issues with the replication data and code provided to the journal.</p>
+</blockquote>
+</div>
+</section>
+<section id="the-turing-way-an-ideal-research-methodology" class="slide level2">
+<h2>The Turing Way: An “ideal” research methodology</h2>
+<div style="height: 1em;">
+
+</div>
+<p>As technological advances become prevalent in corporate and academic research, scientists have the possibility of making their work fit for replication with adequate documentation and rigorous exposition.</p>
+<div style="height: 1em;">
+
+</div>
+<p>The <a href="https://book.the-turing-way.org/index.html">Turing Way</a> Project:</p>
+<ul>
+<li>Started in 2019</li>
+<li>Guide for researcher outlining the best standards in terms of scientific methodology</li>
+<li>Open-source</li>
+<li>Multi-disciplinary</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>➡️ When researchers employ transparency in their research - in other words, when they properly document and share the data and processes associated with their analyses - the broader research community is able to save valuable time when reproducing or building upon published results.</p>
+</section>
+<section id="the-turing-way-research-cycle" class="slide level2">
+<h2>The Turing Way: Research Cycle</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/research-cycle.jpg" class="quarto-figure quarto-figure-center" height="550"></p>
+</figure>
+</div>
+
+<aside><div>
+<p>The Turing Way project illustration by Scriberia. Used under a CC-BY 4.0 licence. DOI: 10.5281/zenodo.3332807.</p>
+</div></aside></section>
+<section id="the-turing-way-definitions" class="slide level2">
+<h2>The Turing Way: Definitions</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/reproducible-definition-grid.jpg" class="quarto-figure quarto-figure-center" height="550"></p>
+</figure>
+</div>
+
+<aside><div>
+<p>The Turing Way project illustration by Scriberia. Used under a CC-BY 4.0 licence. DOI: 10.5281/zenodo.3332807.</p>
+</div></aside></section>
+<section id="the-turing-way-guide-for-reproducible-research" class="slide level2">
+<h2>The Turing Way: Guide for Reproducible Research</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/reproducibility.jpg" class="quarto-figure quarto-figure-center" height="550"></p>
+</figure>
+</div>
+
+<aside><div>
+<p>The Turing Way project illustration by Scriberia. Used under a CC-BY 4.0 licence. DOI: 10.5281/zenodo.3332807.</p>
+</div></aside></section>
+<section id="the-turing-way-added-advantages" class="slide level2">
+<h2>The Turing Way: Added Advantages</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Track a complete history of your research</li>
+<li>Facilitate collaboration and review process</li>
+<li>Publish validated research and avoid misinformation</li>
+<li>Write your papers, thesis and reports efficiently</li>
+<li>Get credits for your work fairly</li>
+<li>Ensure continuity of your work</li>
+</ul>
+</section>
+<section id="the-turing-way-barriers-to-reproducibility" class="slide level2">
+<h2>The Turing Way: Barriers to reproducibility</h2>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>Limited incentives to give evidence against yourself</li>
+<li>Publication bias towards novel findings</li>
+<li>Held to higher standards than others</li>
+<li>Not considered for promotion</li>
+<li>Big data and complex computational infrastructure</li>
+<li>Being reproducible does not mean the answer is right</li>
+<li>Takes time</li>
+<li>Support additional users</li>
+<li>Requires additional skills</li>
+</ul>
+</section>
+<section id="ai-disclosure-at-the-journal-of-finance" class="slide level2">
+<h2>AI disclosure at <em>The Journal of Finance</em></h2>
+<div style="font-size: 0.9em; margin-top: 1em;">
+<blockquote>
+<p>For new datasets, data classification, or analysis where AI tools were used in their creation, the JF asks authors to: (1) either use open-source AI models or clearly time-stamped versions of proprietary models (e.g., OpenAI model “gpt-4.1-2025-10-01,” accessed October 2025; OpenAI API model “gpt-4.1-preview-2025-10-01,” accessed October 2025); and (2) provide detailed documentation of the prompts used to create the data. Disclosure of this information will ensure better replicability of research output and support the transmission of best practices in the use of AI tools in finance.</p>
+</blockquote>
+</div>
+
+<aside><div>
+<p>Source: <a href="https://afajof.org/submissions/">Journal of Finance New Artificial Intelligence Disclosure Policies</a></p>
+</div></aside></section>
+<section id="what-next" class="slide level2">
+<h2>What next?</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Browse Youtube:
+<ul>
+<li><a href="https://www.youtube.com/c/ArjanCodes">ArjanCodes</a></li>
+<li><a href="https://www.youtube.com/@Indently">Indently</a></li>
+<li><a href="https://www.youtube.com/c/PythonEngineer">Python Engineer</a></li>
+<li><a href="https://www.youtube.com/channel/UCq6XkhO5SZ66N04IcPbqNcw">Keith Galli</a></li>
+<li><a href="https://www.youtube.com/@robmulla">Rob Mulla</a></li>
+<li><a href="https://www.youtube.com/@VincentCodesFinance">Vincent Codes Finance</a></li>
+</ul></li>
+</ul>
+</section>
+<section id="what-next-2" class="slide level2">
+<h2>What next? (2)</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li>Code, code, code</li>
+<li>Go back to Excel?</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="figures/64nble.jpg" class="quarto-figure quarto-figure-center" height="650"></p>
+</figure>
+</div>
+</section>
+<section id="excel-with-python" class="slide level2">
+<h2>Excel with Python</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><p>You can read and write Excel files with pandas.</p></li>
+<li><p>You can also <strong>use</strong> Excel with Python:</p>
+<ul>
+<li><a href="https://www.xlwings.org/">xlwings</a>: Control Excel with Python</li>
+<li><a href="https://www.pyxll.com/">PyXLL</a>: Write Excell add-ins in Python. ($$$)</li>
+</ul></li>
+<li><p>Book (O’Reilly): <a href="https://learning.oreilly.com/library/view/python-for-excel/9781492080992/">Python for Excel</a></p></li>
+<li><p><a href="https://support.microsoft.com/en-us/office/introduction-to-python-in-excel-55643c2e-ff56-4168-b1ce-9428c8308545">Python official in Excel</a></p></li>
+</ul>
+</section>
+<section id="podcasts" class="slide level2">
+<h2>Podcasts</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><a href="https://rationalreminder.ca/">RationalReminder</a></li>
+<li><a href="https://www.gsb.stanford.edu/business-podcasts/all-else-equal-making-better-decisions">All Else Equal: Making Better Decisions</a></li>
+<li><a href="https://www.bloomberg.com/oddlots-podcast">Odd Lots</a></li>
+<li><a href="https://realpython.com/podcasts/rpp/">The Real Python Podcast</a></li>
+</ul>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-akey2023noisy" class="csl-entry" role="listitem">
+Akey, Pat, Adriana Robertson, and Mikhail Simutin. 2023. <span>“The Noisy Factors? <span>The</span> Retroactive Impact of Methodological Changes on the <span>Fama-French</span> Factors.”</span> <em>Review of Finance</em>.
+</div>
+<div id="ref-baker2016reproducibility" class="csl-entry" role="listitem">
+Baker, Monya. 2016. <span>“Reproducibility Crisis.”</span> <em>Nature</em> 533 (26): 353–66.
+</div>
+<div id="ref-chen2022open" class="csl-entry" role="listitem">
+Chen, Andrew Y, and Tom Zimmermann. 2022. <span>“Open Source Cross-Sectional Asset Pricing.”</span> <em>Critical Finance Review</em> 11 (02): 207–64.
+</div>
+<div id="ref-chen2025design" class="csl-entry" role="listitem">
+Chen, Minghui, Matthias X Hanauer, and Tobias Kalsbach. 2025. <span>“Design Choices, Machine Learning, and the Cross-Section of Stock Returns.”</span> <em>Available at SSRN 5031755</em>.
+</div>
+<div id="ref-chordia2020anomalies" class="csl-entry" role="listitem">
+Chordia, Tarun, Amit Goyal, and Alessio Saretto. 2020. <span>“Anomalies and False Rejections.”</span> <em>The Review of Financial Studies</em> 33 (5): 2134–79.
+</div>
 <div id="ref-efron1979bootstrap" class="csl-entry" role="listitem">
 Efron, Bradley. 1979. <span>“Bootstrap Methods: Another Look at the Jackknife.”</span> <em>The Annals of Statistics</em> 7 (1): 1–26.
 </div>
-<div id="ref-giroud2012snow" class="csl-entry" role="listitem">
-Giroud, Xavier, Holger M Mueller, Alex Stomper, and Arne Westerkamp. 2012. <span>“Snow and Leverage.”</span> <em>The Review of Financial Studies</em> 25 (3): 680–710.
+<div id="ref-fivsar2024reproducibility" class="csl-entry" role="listitem">
+Fišar, Miloš, Ben Greiner, Christoph Huber, Elena Katok, Ali I Ozkes, and Management Science Reproducibility Collaboration. 2024. <span>“Reproducibility in Management Science.”</span> <em>Management Science</em> 70 (3): 1343–56.
+</div>
+<div id="ref-grossman1980impossibility" class="csl-entry" role="listitem">
+Grossman, Sanford J, and Joseph E Stiglitz. 1980. <span>“On the Impossibility of Informationally Efficient Markets.”</span> <em>The American Economic Review</em> 70 (3): 393–408.
+</div>
+<div id="ref-harvey2019replication" class="csl-entry" role="listitem">
+Harvey, Campbell R. 2019. <span>“Replication in Financial Economics.”</span> <em>Available at SSRN 3409466</em>.
+</div>
+<div id="ref-harvey2022pitfalls" class="csl-entry" role="listitem">
+Harvey, Campbell R. 2022. <span>“The Pitfalls of Asset Management Research.”</span> <em>Journal of Systematic Investment</em> 2 (1): 9–17.
+</div>
+<div id="ref-hou2020replicating" class="csl-entry" role="listitem">
+Hou, Kewei, Chen Xue, and Lu Zhang. 2020. <span>“Replicating Anomalies.”</span> <em>The Review of Financial Studies</em> 33 (5): 2019–133.
 </div>
 <div id="ref-imbens2015causal" class="csl-entry" role="listitem">
 Imbens, Guido W, and Donald B Rubin. 2015. <em>Causal Inference in Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press.
 </div>
+<div id="ref-ioannidis2005most" class="csl-entry" role="listitem">
+Ioannidis, John PA. 2005. <span>“Why Most Published Research Findings Are False.”</span> <em>PLoS Medicine</em> 2 (8): e124.
+</div>
+<div id="ref-jensen2023there" class="csl-entry" role="listitem">
+Jensen, Theis Ingerslev, Bryan Kelly, and Lasse Heje Pedersen. 2023. <span>“Is There a Replication Crisis in Finance?”</span> <em>The Journal of Finance</em> 78 (5): 2465–518.
+</div>
+<div id="ref-menkveld2024nonstandard" class="csl-entry" role="listitem">
+<span class="nocase">Menkveld, Albert J, Anna Dreber, Felix Holzmeister, et al.</span> 2024. <span>“Nonstandard Errors.”</span> <em>The Journal of Finance</em> 79 (3): 2339–90.
+</div>
 <div id="ref-rosenbaum2010design" class="csl-entry" role="listitem">
 Rosenbaum, Paul R. 2010. <em>Design of Observational Studies</em>. Vol. 10. Springer.
+</div>
+<div id="ref-ruppert2015statistics" class="csl-entry" role="listitem">
+Ruppert, David, and David S. Matteson. 2015. <em>Statistics and Data Analysis for Financial Engineering with r Examples</em>. 2nd ed. Springer Texts in Statistics. Springer New York. <a href="https://doi.org/10.1007/978-1-4939-2614-5">https://doi.org/10.1007/978-1-4939-2614-5</a>.
 </div>
 </div>
 </section>

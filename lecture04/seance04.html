@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="fr"><head>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="seance04_files/libs/clipboard/clipboard.min.js"></script>
 <script src="seance04_files/libs/quarto-html/tabby.min.js"></script>
 <script src="seance04_files/libs/quarto-html/popper.min.js"></script>
 <script src="seance04_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="seance04_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="seance04_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="seance04_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="seance04_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Séance 4</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="seance04_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="seance04_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -96,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="seance04_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="seance04_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <link href="seance04_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="seance04_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="seance04_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -209,21 +214,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -247,13 +241,13 @@ Saad Ali Khan
 <ul>
 <li>Nous pouvons considérer un vecteur comme une colonne unique d’un Dataframe pandas</li>
 </ul>
-<div id="4cd236c2" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a><span class="im">from</span> pandas <span class="im">import</span> DataFrame</span>
-<span id="cb1-2"><a href=""></a>df <span class="op">=</span> DataFrame({</span>
-<span id="cb1-3"><a href=""></a>    <span class="st">'vecA'</span>:[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>], </span>
-<span id="cb1-4"><a href=""></a>    <span class="st">'vecB'</span>: [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>],</span>
-<span id="cb1-5"><a href=""></a>},</span>
-<span id="cb1-6"><a href=""></a>index<span class="op">=</span>[<span class="st">"row1"</span>,<span class="st">"row2"</span>,<span class="st">'row3'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4f868960" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">from</span> pandas <span class="im">import</span> DataFrame</span>
+<span id="cb1-2"><a href="" aria-label="2"></a>df <span class="op">=</span> DataFrame({</span>
+<span id="cb1-3"><a href="" aria-label="3"></a>    <span class="st">'vecA'</span>:[<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>], </span>
+<span id="cb1-4"><a href="" aria-label="4"></a>    <span class="st">'vecB'</span>: [<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>],</span>
+<span id="cb1-5"><a href="" aria-label="5"></a>},</span>
+<span id="cb1-6"><a href="" aria-label="6"></a>index<span class="op">=</span>[<span class="st">"row1"</span>,<span class="st">"row2"</span>,<span class="st">'row3'</span>])</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="vecteurs" class="slide level2">
@@ -269,8 +263,8 @@ Saad Ali Khan
 </section>
 <section id="exemple-vecteurs" class="slide level2">
 <h2>Exemple (vecteurs)</h2>
-<div id="079daaf7" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a>df[<span class="st">'vecA'</span>] <span class="op">+</span> df[<span class="st">'vecB'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="18f8e3a5" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a>df[<span class="st">'vecA'</span>] <span class="op">+</span> df[<span class="st">'vecB'</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>row1    5
 row2    7
@@ -278,8 +272,8 @@ row3    9
 dtype: int64</code></pre>
 </div>
 </div>
-<div id="06984fe8" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="dv">2</span><span class="op">*</span>df[<span class="st">'vecA'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="39a24720" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="dv">2</span><span class="op">*</span>df[<span class="st">'vecA'</span>]</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>row1    2
 row2    4
@@ -287,8 +281,8 @@ row3    6
 Name: vecA, dtype: int64</code></pre>
 </div>
 </div>
-<div id="e34a279e" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a>df[<span class="st">'vecA'</span>].mean()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="78dc7d3a" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a>df[<span class="st">'vecA'</span>].mean()</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>np.float64(2.0)</code></pre>
 </div>
@@ -299,8 +293,8 @@ Name: vecA, dtype: int64</code></pre>
 <ul>
 <li>Nous pouvons considérer une matrice comme deux colonnes d’un Dataframe pandas.</li>
 </ul>
-<div id="7632f15a" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="bu">print</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="235f4675" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="bu">print</span>(df)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      vecA  vecB
 row1     1     4
@@ -311,8 +305,8 @@ row3     3     6</code></pre>
 <ul>
 <li>Calcul des moyennes par colonnes:</li>
 </ul>
-<div id="e8cd4cb0" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a>df.mean(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="e6583514" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a>df.mean(axis<span class="op">=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>vecA    2.0
 vecB    5.0
@@ -325,8 +319,8 @@ dtype: float64</code></pre>
 <ul>
 <li>Calcul des moyennes par rangées:</li>
 </ul>
-<div id="a25f92de" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a>df.mean(axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c9c47537" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a>df.mean(axis<span class="op">=</span><span class="dv">1</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>row1    2.5
 row2    3.5
@@ -337,8 +331,8 @@ dtype: float64</code></pre>
 <ul>
 <li>En considérant le vecteur A et le vecteur B empilés comme une matrice, nous pouvons également transposer la matrice:</li>
 </ul>
-<div id="8cf5ec35" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>df.T</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="4be337d8" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>df.T</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 <style scoped="">
@@ -427,8 +421,9 @@ dtype: float64</code></pre>
 <li><strong>Right join</strong> : Conserver toutes les lignes du jeu de données de droite ; ajouter les données de gauche si disponibles.</li>
 <li><strong>Outer join</strong> : Conserver toutes les lignes des deux jeux de données.</li>
 </ul>
-<p><strong>Fonctions :</strong> <code>pd.merge()</code> ou <code>df.join()</code> en pandas, <code>df.join()</code> en Polars.</p>
+<p><strong>Fonctions :</strong> <code>pd.merge()</code> en pandas, <code>df.join()</code> en Polars.</p>
 <p>Utilisez le paramètre <code>how</code> : <code>'inner'</code>, <code>'left'</code>, <code>'right'</code>, <code>'outer'</code> (Polars utilise <code>'full'</code> pour outer).</p>
+<p>pandas offre aussi <code>df.join()</code>, mais ce n’est <strong>pas</strong> un synonyme de <code>pd.merge()</code> : il joint sur l’<strong>index</strong> et utilise <code>how='left'</code> par défaut (au lieu des colonnes et de <code>how='inner'</code>).</p>
 </section>
 <section id="jointures-asof" class="slide level2">
 <h2>Jointures Asof</h2>
@@ -445,7 +440,7 @@ dtype: float64</code></pre>
 <p><strong>Points clés :</strong></p>
 <ul>
 <li>Les données doivent être <strong>triées par date</strong> avant la jointure.</li>
-<li>Utilisez <code>direction='backward'</code> pour éviter le biais d’anticipation (<em>look-ahead bias</em>).</li>
+<li>Utilisez <code>direction='backward'</code> (pandas) / <code>strategy='backward'</code> (Polars) pour éviter le biais d’anticipation (<em>look-ahead bias</em>).</li>
 <li>Essentiel pour les données ponctuelles (comptabilité, prévisions).</li>
 </ul>
 <p><strong>Fonctions :</strong> <code>pd.merge_asof()</code> en pandas, <code>.join_asof()</code> en Polars.</p>
@@ -736,12 +731,12 @@ dtype: float64</code></pre>
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
+          button.setAttribute("title", "Copié");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
+            button.setAttribute("data-bs-title", "Copié");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en"><head>
+<html lang="fr"><head>
 <script src="seance03_files/libs/clipboard/clipboard.min.js"></script>
 <script src="seance03_files/libs/quarto-html/tabby.min.js"></script>
 <script src="seance03_files/libs/quarto-html/popper.min.js"></script>
 <script src="seance03_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="seance03_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="seance03_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="seance03_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="seance03_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <link href="seance03_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="seance03_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Séance 3</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -20,10 +19,16 @@
   <link rel="stylesheet" href="seance03_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="seance03_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -98,7 +103,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="seance03_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="seance03_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -224,21 +229,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -251,7 +245,7 @@ Saad Ali Khan
 <h2>Plan pour aujourd’hui</h2>
 <ul>
 <li>Survol des bases de données financières à HEC</li>
-<li>Analyse de données</li>
+<li>Démarche de l’empiriste</li>
 <li>Introduction à pandas</li>
 <li>Démo d’utilisaton de pandas</li>
 <li>Function lambdas</li>
@@ -302,15 +296,15 @@ Saad Ali Khan
 </ul></li>
 </ul>
 </section>
-<section id="lanalyse-de-données-1" class="slide level2">
-<h2>L’analyse de données (1)</h2>
+<section id="la-démarche-de-lempiriste-1" class="slide level2">
+<h2>La démarche de l’empiriste (1)</h2>
 <ul>
 <li><p>La première étape consiste à identifier la question de recherche et les hypothèses, puis à concevoir la méthodologie en fonction des données disponibles.</p></li>
-<li><p>La disponibilité des données est souvent contraignante pour la recherche. Nous utiliserons souvent des données provenant de sources standards (ex: WRDS), mais elles peuvent aussi provenir d’autres sources (données privées, web, etc.) —</p></li>
+<li><p>La disponibilité des données est souvent contraignante pour la recherche. Nous utiliserons souvent des données provenant de sources standards (ex: WRDS), mais elles peuvent aussi provenir d’autres sources (données privées, web, etc.)</p></li>
 </ul>
 </section>
-<section id="lanalyse-de-données-2" class="slide level2">
-<h2>L’analyse de données (2)</h2>
+<section id="la-démarche-de-lempiriste-2" class="slide level2">
+<h2>La démarche de l’empiriste (2)</h2>
 <ul>
 <li><p>Avant de faire toute analyse, nous devons connaître les données:</p>
 <ul>
@@ -325,8 +319,8 @@ Saad Ali Khan
 </ul></li>
 </ul>
 </section>
-<section id="lanalyse-de-données-3" class="slide level2">
-<h2>L’analyse de données (3)</h2>
+<section id="la-démarche-de-lempiriste-3" class="slide level2">
+<h2>La démarche de l’empiriste (3)</h2>
 <ul>
 <li>L’étape suivante est généralement le nettoyage des données.
 <ul>
@@ -337,8 +331,8 @@ Saad Ali Khan
 </ul></li>
 </ul>
 </section>
-<section id="lanalyse-de-données-4" class="slide level2">
-<h2>L’analyse de données (4)</h2>
+<section id="la-démarche-de-lempiriste-4" class="slide level2">
+<h2>La démarche de l’empiriste (4)</h2>
 <ul>
 <li>Une fois le jeu de données prêt, nous pouvons procéder à l’analyse et rapporter les résultats à l’aide de tableaux et de figures.</li>
 </ul>
@@ -366,18 +360,22 @@ Saad Ali Khan
 <li>Fonctionnalité des séries temporelles</li>
 </ul>
 </section>
-<section id="pandas-2.0" class="slide level2">
-<h2>pandas 2.0</h2>
+<section id="pandas-2.0-3.0" class="slide level2">
+<h2>pandas 2.0 → 3.0</h2>
 <ul>
-<li>Principale nouveauté: <strong>Arrow engine</strong> (en plus de numpy)</li>
-<li>Supporte les valeurs manquantes pour le type de données entier</li>
-<li>Meilleur intégration avec l’écosystème Apache Arrow:
+<li>pandas 2.0 (2023): <strong>moteur Arrow</strong> (en plus de numpy), <code>dtype_backend="pyarrow"</code></li>
+<li>Meilleure intégration avec l’écosystème Apache Arrow:
 <ul>
 <li><a href="https://www.pola.rs/">Polars</a>: Alternative à pandas, écrit en Rust.</li>
 <li><a href="https://duckdb.org/">DuckDB</a>: Base de données SQL en mémoire écrite en C++.</li>
-<li><a href="https://parquet.apache.org/">ficheirs parquet</a>: Format de stockage en colonnes. Pensez CSV, mais plus rapide et plus petit.</li>
+<li><a href="https://parquet.apache.org/">fichiers parquet</a>: Format de stockage en colonnes. Pensez CSV, mais plus rapide et plus petit.</li>
 </ul></li>
-<li><strong>Avertissement</strong> : version relativement récente (2023), pas toutes les autres bibliothèques sont compatibles avec les nouvelles fonctionnalités.</li>
+<li>pandas 3.0 (notre version) change des comportements — les vieux tutoriels et le code généré par IA peuvent briser sans le dire:
+<ul>
+<li><strong>Copie sur écriture (copy-on-write) par défaut</strong>: l’affectation chaînée (<code>df[df.a &gt; 0]["b"] = 1</code>) ne fait plus rien; le <code>SettingWithCopyWarning</code> a disparu</li>
+<li>Un type <strong><code>str</code></strong> dédié remplace <code>object</code> pour le texte</li>
+<li>La résolution des dates est inférée des données (plus toujours en nanosecondes); <code>zoneinfo</code> remplace <code>pytz</code></li>
+</ul></li>
 </ul>
 <div class="columns">
 <div class="column" style="width:33%;">
@@ -387,6 +385,9 @@ Saad Ali Khan
 </div><div class="column" style="width:33%;">
 <p><img data-src="images/DuckDB_Logo-horizontal.svg"></p>
 </div></div>
+</section>
+<section id="démonstration" class="slide level2">
+<h2>Démonstration !</h2>
 </section>
 <section id="data-wrangler-intégration-vs-code" class="slide level2">
 <h2>Data Wrangler : Intégration VS Code</h2>
@@ -398,7 +399,7 @@ Saad Ali Khan
 </ul>
 <p>Voir ma vidéo sur <a href="https://youtu.be/tSY7wXv5W-Q">Data Wrangler <i class="fa-brands fa-youtube" aria-label="youtube"></i></a> pour une démo.</p>
 </section>
-<section id="démonstration" class="slide level2">
+<section id="démonstration-1" class="slide level2">
 <h2>Démonstration !</h2>
 </section>
 <section id="format-large-vs-long" class="slide level2">
@@ -406,7 +407,7 @@ Saad Ali Khan
 <div class="columns">
 <div class="column" style="width:50%;">
 <p><strong>Format large</strong> (<em>wide</em>)</p>
-<p>Chaque entité est une ligne, chaque période est une colonne.</p>
+<p>Chaque période est une ligne, chaque entité est une colonne.</p>
 <pre><code>date        AAPL   MSFT   GOOGL
 2024-01-01  0.012  0.008  0.015
 2024-01-02 -0.005  0.003  0.002</code></pre>
@@ -468,7 +469,7 @@ Saad Ali Khan
 </section>
 <section id="détour-estimation-des-dérivées" class="slide level2">
 <h2>Détour : Estimation des dérivées</h2>
-<div id="058fbf32" class="cell" data-execution_count="1">
+<div id="17ed3670" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -480,7 +481,7 @@ Saad Ali Khan
 </section>
 <section id="estimation-des-dérivées" class="slide level2">
 <h2>Estimation des dérivées</h2>
-<div id="e85bf715" class="cell" data-execution_count="2">
+<div id="49515275" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -493,29 +494,29 @@ Saad Ali Khan
 <section id="estimer-les-dérivées-numériquement" class="slide level2">
 <h2>Estimer les dérivées numériquement</h2>
 <p>Considérons une fonction pour estimer la dérivée d’une autre fonction:</p>
-<div id="991a8eaa" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="kw">def</span> deriv(func, x, delta<span class="op">=</span><span class="fl">0.1</span>):</span>
-<span id="cb3-2"><a href=""></a>    y1 <span class="op">=</span> func(x <span class="op">+</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb3-3"><a href=""></a>    y2 <span class="op">=</span> func(x <span class="op">-</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
-<span id="cb3-4"><a href=""></a>    <span class="cf">return</span> (y1 <span class="op">-</span> y2) <span class="op">/</span> delta</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="15f9d171" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="kw">def</span> deriv(func, x, delta<span class="op">=</span><span class="fl">0.1</span>):</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>    y1 <span class="op">=</span> func(x <span class="op">+</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>    y2 <span class="op">=</span> func(x <span class="op">-</span> delta <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb3-4"><a href="" aria-label="4"></a>    <span class="cf">return</span> (y1 <span class="op">-</span> y2) <span class="op">/</span> delta</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Supposons que nous ayons une fonction qui calcule le carré d’un nombre:</p>
-<div id="92f6f647" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="kw">def</span> square(x):</span>
-<span id="cb4-2"><a href=""></a>    <span class="cf">return</span> x <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5efd6014" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="kw">def</span> square(x):</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>    <span class="cf">return</span> x <span class="op">**</span> <span class="dv">2</span></span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="exemple-2" class="slide level2">
 <h2>Exemple (2)</h2>
 <p>Vous pouvez maintenant passer <code>square</code> comme argument à <code>deriv</code>&nbsp;:</p>
-<div id="5e408107" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>deriv(square, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="88b1121c" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>deriv(square, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>7.999999999999119</code></pre>
 </div>
 </div>
-<div id="6cf9f865" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>deriv(square, <span class="dv">10</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="af1d2d88" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>deriv(square, <span class="dv">10</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <pre><code>20.000000000024443</code></pre>
 </div>
@@ -528,14 +529,14 @@ Saad Ali Khan
 <li>Pour les fonctions simples, les définir correctement avec <code>def</code> peut être exagéré.</li>
 <li>À la place, nous utilisons des fonctions <em>lambda</em> (fonctions anonymes) :</li>
 </ul>
-<div id="b9ed497a" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a9da3de5" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">2</span>, <span class="dv">4</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>7.999999999999119</code></pre>
 </div>
 </div>
-<div id="9e563032" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1d903bdd" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a>deriv(<span class="kw">lambda</span> x: x <span class="op">**</span> <span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">0.001</span>)</span></code></pre></div><button title="Copier vers le presse-papier" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>75.00000024995757</code></pre>
 </div>
@@ -778,12 +779,12 @@ Saad Ali Khan
           // flash "checked"
           button.classList.add('code-copy-button-checked');
           var currentTitle = button.getAttribute("title");
-          button.setAttribute("title", "Copied!");
+          button.setAttribute("title", "Copié");
           let tooltip;
           if (window.bootstrap) {
             button.setAttribute("data-bs-toggle", "tooltip");
             button.setAttribute("data-bs-placement", "left");
-            button.setAttribute("data-bs-title", "Copied!");
+            button.setAttribute("data-bs-title", "Copié");
             tooltip = new bootstrap.Tooltip(button, 
               { trigger: "manual", 
                 customClass: "code-copy-button-tooltip",

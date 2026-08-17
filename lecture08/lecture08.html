@@ -6,11 +6,10 @@
 <script src="lecture08_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture08_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture08_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture08_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="lecture08_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Lecture 8</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="lecture08_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture08_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -33,7 +38,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -50,7 +54,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="lecture08_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture08_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -179,21 +183,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -208,6 +201,8 @@ Saad Ali Khan
 
 </div>
 <ul>
+<li>Measurement errors</li>
+<li>Dummy variables</li>
 <li>Panel data</li>
 <li>Omitted variables bias</li>
 <li>Fixed effects</li>
@@ -217,10 +212,175 @@ Saad Ali Khan
 <aside><div>
 <p>Readings:</p>
 <ul>
-<li><span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#/further-reading" role="doc-biblioref" onclick="">2008</a>)</span></li>
+<li><span class="citation" data-cites="baltagi_econometrics_2022">Baltagi (<a href="#/further-reading" role="doc-biblioref" onclick="">2022</a>)</span> sections 4.7 (dummy variables) and 5.3 (errors in measurement)</li>
 <li><span class="citation" data-cites="baltagi_econometrics_2022">Baltagi (<a href="#/further-reading" role="doc-biblioref" onclick="">2022</a>)</span> chap.&nbsp;12 up to 12.2.1 (inclusive)</li>
+<li><span class="citation" data-cites="petersen2008estimating">Petersen (<a href="#/further-reading" role="doc-biblioref" onclick="">2008</a>)</span></li>
 </ul>
 </div></aside></section>
+<section id="measurement-errors" class="slide level2">
+<h2>Measurement Errors</h2>
+<div style="height: 1em;">
+
+</div>
+<p>Suppose that the “true” model is <span class="math display">
+y_{t}=X_{t}\cdot\beta+\varepsilon_{t} \qquad\text{where}\qquad E\left( X_{t}\cdot\varepsilon_{t}\right) =0
+</span></p>
+<p>We observe <span class="math inline">y_{t}</span>, but <span class="math inline">X_{t}</span> we only observe with error</p>
+<ul>
+<li>Instead of the true <span class="math inline">X_{t}</span>, we have <span class="math inline">\widetilde{X}_{t}=X_{t}+u_{t}</span></li>
+</ul>
+<p>If the measurement errors are “noise” in the sense that</p>
+<p><span class="math display">
+E\left[  X_{t}\cdot u_{t}\right] =E\left[  \varepsilon_{t}\cdot u_{t}\right] =0
+</span></p>
+<ul>
+<li><p><span class="math inline">\widetilde{X}_{t}=X_{t}+u_{t} \Rightarrow E\left[  \widetilde{X}_{t}\cdot u_{t}\right] \neq 0</span></p></li>
+<li><p>This is typically called a <strong><span class="primary-color">Measurement Error</span></strong> problem.</p></li>
+</ul>
+</section>
+<section id="measurement-errors-1" class="slide level2">
+<h2>Measurement Errors</h2>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>What if we now regress <span class="math inline">y_{t}</span> on <span class="math inline">\widetilde{X}_{t}</span>?</li>
+</ul>
+<p><span class="math display">
+\begin{aligned}
+y_{t}  &amp;=\widetilde{X}_{t}\cdot\beta+e_{t}\\
+&amp;= X_{t}\cdot\beta+u_{t}\cdot\beta+e_{t}\\
+&amp;= X_{t}\cdot\beta+\varepsilon_{t}
+\end{aligned}
+</span></p>
+<div style="height: 0.5em;">
+
+</div>
+<p>So obviously, <span class="math inline">e_{t}=\varepsilon_{t}-\beta\cdot u_{t}</span></p>
+<ul>
+<li>So <span class="math inline">E\left[\widetilde{X}_{t}\cdot e_{t}\right] =E\left[\widetilde{X}_{t}\cdot\left(\varepsilon_{t}-\beta\cdot u_{t}\right)\right] = -\beta\cdot E\left[\widetilde{X}_{t}\cdot u_{t}\right] \neq 0</span></li>
+</ul>
+<p><span class="math inline">\Rightarrow e_{t}</span> violates one of the Gauss-Markov Theorem’s conditions for the regression <span class="math inline">y_{t}=\widetilde{X}_{t}\beta+e_{t}</span></p>
+</section>
+<section id="measurement-errors-2" class="slide level2">
+<h2>Measurement Errors</h2>
+<div style="height: 2em;">
+
+</div>
+<ul>
+<li><span class="math inline">\Rightarrow \widehat{\beta}=\left(  \widetilde{X}^{\prime}\widetilde{X}\right)^{-1}\widetilde{X}^{\prime}\cdot y</span> will be biased</li>
+</ul>
+<p><span class="math display">
+E\left(  \widehat{\beta}\right) =\beta\frac{\sigma_{X}^{2}}{\sigma_{X}^{2}+\sigma_{u}^{2}}
+</span></p>
+<div style="height: 2em;">
+
+</div>
+<p><span class="math inline">\Rightarrow \widehat{\beta}</span> typically <em>underestimates</em> <span class="math inline">\beta</span></p>
+</section>
+<section id="measurement-errors-3" class="slide level2">
+<h2>Measurement Errors</h2>
+<p>Suppose we regress stock returns on estimated stock betas <span class="math inline">\widehat{\beta}_{i}^{\prime}s</span></p>
+<ul>
+<li>The <span class="math inline">\widehat{\beta}_{i}^{\prime}s</span> contain some estimation error</li>
+<li>We should therefore expect that the OLS coefficients from the regression will tend to be smaller than what the “true” <span class="math inline">\beta</span>’s would give.</li>
+<li>The less precise our estimator, the bigger the downward bias.</li>
+</ul>
+<p>What to do?</p>
+<ul>
+<li>Get more accurate estimates of <span class="math inline">\beta</span> to reduce the bias.</li>
+<li>Find “valid instruments”; <span class="math inline">Z_{t}</span> such that</li>
+</ul>
+<p><span class="math display">
+E\left(  Z^{\prime}\widetilde{X}\right) \neq 0\text{ and }E\left(  Z^{\prime}e_{t}\right) =0
+</span></p>
+<p>and estimate using instrumental variables (IV) or the Generalized Method of Moments (GMM)</p>
+
+<aside><div>
+<p>Instrumental variables estimation is beyond the scope of this course.</p>
+</div></aside></section>
+<section id="dummy-variables" class="slide level2">
+<h2>Dummy Variables</h2>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Definition:</strong> A dummy variable is a binary variable that we include as an independent (RHS) variable in a regression.</p>
+<p>i.e.&nbsp;<span class="math inline">D_{t}\equiv1\left(  Z_{t}\right)</span> and we model <span class="math inline">y_{t}=\begin{bmatrix} X_{t} &amp; D_{t} \end{bmatrix} \cdot\overrightarrow{\beta}+\varepsilon_{t}</span></p>
+<p>Many common uses:</p>
+<ul>
+<li><strong>Temporal Effects:</strong> <span class="math inline">D_{t}=1\left(  t&lt;t^{\ast}\right)</span> or <span class="math inline">D_{t}=1\left(  t\in\left\{  \text{January}\right\}\right)</span></li>
+<li><strong>Events:</strong> <span class="math inline">D_{t}=1\left(  t\in\left\{  \text{Dividends cut}\right\}\right)</span> or <span class="math inline">D_{t}=1\left(  t\in\left\{  r_{t}&lt;\text{VaR}_{5\%}\right\}\right)</span></li>
+<li><strong>Characteristics:</strong> <span class="math inline">D_{i}=1\left(  i\in\left\{  \text{Male}\right\}\right)</span> or <span class="math inline">D_{i}=1\left(  i\in\left\{  \text{cross-listed}\right\}\right)</span></li>
+</ul>
+<p>Testing <span class="math inline">H_{0}:\beta_{D}=0</span> tests for change in the <em>conditional</em> mean of <span class="math inline">y.</span> However, frequently we want to test for changes in <span class="math inline">\beta</span>.</p>
+<ul>
+<li>Test <span class="math inline">\beta_{D}=0</span> in</li>
+</ul>
+<p><span class="math display">y_{t}=X_{t}\cdot\beta_X+ D_{t}\cdot\beta_D+ \left(  X_{t}\cdot D_{t}\right)  \cdot\beta_{XD}+\varepsilon_{t}</span></p>
+</section>
+<section id="understanding-dummy-variables" class="slide level2">
+<h2>Understanding Dummy Variables</h2>
+<div style="height: 1em;">
+
+</div>
+<p>Let</p>
+<ul>
+<li><span class="math inline">r_{TSX,t}</span> be the return on the Toronto Stock Exchange</li>
+<li><span class="math inline">\mathcal{1}_{FOMC,t}</span> be a dummy variable that is 1 on days with Federal Open Market Committee announcements and 0 on other days.</li>
+</ul>
+<p>If we estimate</p>
+<p><span class="math display"> r_{TSX,t} = \alpha + \gamma \mathcal{1}_{FOMC,t} + \varepsilon_t, </span></p>
+<p>we are jointly estimating</p>
+<p><span class="math display">\begin{array}{rlll}
+r_{TSX,t} &amp;= \alpha &amp;+ \varepsilon_t &amp;\text{ on non-FOMC days}, \\
+r_{TSX,t} &amp;= (\alpha + \gamma) &amp;+ \varepsilon_t &amp; \text{ on FOMC days}.
+\end{array}
+</span></p>
+<div style="height: 1em;">
+
+</div>
+<p>Thus, <span class="math inline">\gamma</span> is the change in the average return on FOMC days compared to non-FOMC days.</p>
+</section>
+<section id="understanding-dummy-variables-1" class="slide level2">
+<h2>Understanding Dummy Variables</h2>
+<div style="height: 1em;">
+
+</div>
+<p>Let also <span class="math inline">r_{SP500,t}</span> be the return on the S&amp;P 500.</p>
+<p>If we estimate</p>
+<p><span class="math display"> r_{TSX,t} = \alpha + \gamma \mathcal{1}_{FOMC,t} + \beta_1 r_{SP500,t}+ \beta_{D}  r_{SP500,t} \times \mathcal{1}_{FOMC,t} + \varepsilon_t, </span></p>
+<p>we are jointly estimating</p>
+<p><span class="math display">\begin{array}{rllll}
+r_{TSX,t} &amp;= \alpha &amp;+\beta_1 r_{SP500,t} &amp;+  \varepsilon_t &amp;\text{ on non-FOMC days}, \\
+r_{TSX,t} &amp;= (\alpha + \gamma) &amp;+ (\beta_1 + \beta_{D})  r_{SP500,t} &amp;+ \varepsilon_t &amp; \text{ on FOMC days}.
+\end{array}
+</span></p>
+<div style="height: 1em;">
+
+</div>
+<p>Thus, <span class="math inline">\beta_{D}</span> is the change in the sensitivity of TSX returns to S&amp;P 500 returns on FOMC days compared to non-FOMC days.</p>
+</section>
+<section id="dummy-variables-1" class="slide level2">
+<h2>Dummy Variables</h2>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Beginner’s Mistake:</strong> Include a constant and a full set of dummy variables in a regression.</p>
+<ul>
+<li>e.g.&nbsp;<span class="math inline">D_{t}^{1}\equiv1\left(  t\in Q1\right);~D_{t}^{2}=1\left(  t\in Q2\right),\ldots,D_{t}^{4}=1\left(  t\in Q4\right)</span></li>
+</ul>
+<p>Notice that <span class="math inline">D_{t}^{1}+D_{t}^{2}+D_{t}^{3}+D_{t}^{4}=1\quad\forall t.</span></p>
+<p><span class="math inline">\therefore</span> Any <span class="math inline">X</span> with all 4 dummies and a constant will not be full rank.<br>
+<span class="math inline">\therefore \left(  \frac{X^{\prime}X}{T}\right)^{-1}</span> does not exist</p>
+<div style="height: 1em;">
+
+</div>
+<p><strong>Solution:</strong> Drop any one of the dummy variables.</p>
+<ul>
+<li>The constant in the regression gives you the effect in the periods where all dummies =0</li>
+<li>The estimated coefficients on the dummies give you the <em>difference</em> between those base periods and the periods represented by the dummy variables.</li>
+</ul>
+</section>
 <section id="panel-data" class="slide level2">
 <h2>Panel Data</h2>
 <h3 id="introduction">Introduction</h3>
@@ -244,7 +404,7 @@ for <span class="math inline">t=1,\ldots,T</span> and <span class="math inline">
 </section>
 <section id="example-sec-midas-litvol000" class="slide level2 smaller">
 <h2>Example: SEC MIDAS LitVol(’000)</h2>
-<div id="9d524dd3" class="cell" data-execution_count="1">
+<div id="244f822d" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display" data-execution_count="1">
 <div>
 <style scoped="">
@@ -640,7 +800,7 @@ For that reason, we’ll just talk about Balanced Panels.</p>
 </section>
 <section id="midas" class="slide level2 smaller">
 <h2>MIDAS</h2>
-<div id="7988b044" class="cell" data-execution_count="2">
+<div id="a377e479" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 <style scoped="">
@@ -958,7 +1118,7 @@ For that reason, we’ll just talk about Balanced Panels.</p>
 </section>
 <section id="midas-1" class="slide level2 smaller">
 <h2>MIDAS</h2>
-<div id="5fbeabec" class="cell" data-execution_count="3">
+<div id="db2ff3f9" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 <style scoped="">
@@ -1355,14 +1515,17 @@ but we omit <span class="math inline">Z_{t}</span> and instead use OLS to estima
 Will <span class="math inline">\widehat{\beta}_{X}</span> be biased?</p>
 <p><span class="math display">
 \begin{aligned}
-E(\widehat{\beta}_{X})  &amp;=\operatorname{Cov}\left(  y_{t},X_{t}\right) \cdot\operatorname{Var}\left(  X_{t}\right)^{-1}\\
+\operatorname{plim}\widehat{\beta}_{X}  &amp;=\operatorname{Cov}\left(  y_{t},X_{t}\right) \cdot\operatorname{Var}\left(  X_{t}\right)^{-1}\\
 &amp;= \operatorname{Cov}\left(  \beta_{X}\cdot X_{t}+\beta_{Z}\cdot Z_{t}+e_{t},X_{t}\right) \cdot\operatorname{Var}\left(  X_{t}\right)^{-1}\\
 &amp;= \left[  \beta_{X}\cdot\operatorname{Var}\left(  X_{t}\right) +\beta_{Z}\cdot\operatorname{Cov}\left(  Z_{t},X_{t}\right) +\operatorname{Cov}\left(  e_{t},X_{t}\right) \right] \cdot\operatorname{Var}\left( X_{t}\right)^{-1}\\
 &amp;= \beta_{X}+\beta_{Z}\cdot\operatorname{Cov}\left(  Z_{t},X_{t}\right)\cdot\operatorname{Var}\left(  X_{t}\right)^{-1}\\
 &amp;= \beta_{X}+\beta_{Z}\cdot\beta_{ZX}
 \end{aligned}
 </span></p>
-<p>Thus, Biased <span class="math inline">\iff \beta_{Z}\cdot\beta_{ZX} \neq 0</span>.</p>
+<p>Thus, Biased (and inconsistent) <span class="math inline">\iff \beta_{Z}\cdot\beta_{ZX} \neq 0</span>.</p>
+<div style="font-size: 0.7em;">
+<p>Variables are demeaned, hence no intercept. Dropping <span class="math inline">\operatorname{Cov}(e_{t},X_{t})</span> is a <em>population</em> assumption, so this is a probability limit, not a finite-sample expectation.</p>
+</div>
 </section>
 <section id="omitted-variables-bias-1" class="slide level2">
 <h2>Omitted Variables Bias</h2>
@@ -1443,7 +1606,7 @@ We call this <strong>Time Fixed Effects</strong>.</li>
 <h3 id="case-3">Case 3</h3>
 <p>Some missing variables are constant over <span class="math inline">i</span>, others over <span class="math inline">t</span>.</p>
 <ul>
-<li>We can add <span class="math inline">N+T</span> dummy variables, one for each time period <span class="math inline">t</span> <strong>and</strong> one for each value of <span class="math inline">i</span>.</li>
+<li>We can add dummy variables for each time period <span class="math inline">t</span> <strong>and</strong> for each value of <span class="math inline">i</span> — but only <span class="math inline">N+T-1</span> are estimable: each full set sums to a vector of ones, so the two sets are perfectly collinear and one dummy must be dropped.</li>
 <li>We have more than enough observations to estimate both! <span class="math inline">(N \cdot T \gg N + T)</span></li>
 </ul>
 </section>
@@ -1479,14 +1642,14 @@ where <span class="math inline">D_{j}=1</span> for firm <span class="math inline
 <div style="height: 1em;">
 
 </div>
-<h3 id="fact">Fact</h3>
 <p>That’s not the way Fixed Effects estimates are usually programmed, however.</p>
 <ul>
 <li><p>When <span class="math inline">N</span> is large, our <span class="math inline">X'X</span> matrix is large.</p></li>
 <li><p>Inverting large matrices is relatively slow.</p></li>
 <li><p>To avoid this, we replace each variable with the deviation from its average value <strong>over time</strong>.<br>
 <span class="math display">\tilde{y}_{it} \equiv y_{it} - T^{-1} \cdot \left( \sum_{t=1}^T y_{it} \right)</span></p></li>
-<li><p>OLS on <span class="math inline">\tilde{I}_{it}= \beta\cdot \tilde{CF}_{it}+e_{it}</span> will give identical <span class="math inline">\hat{\beta}, \hat{e}_{it}, etc.</span> as above, but do it much faster!</p></li>
+<li><p>OLS on <span class="math inline">\tilde{I}_{it}= \beta\cdot \tilde{CF}_{it}+e_{it}</span> will give identical <span class="math inline">\hat{\beta}</span> and <span class="math inline">\hat{e}_{it}</span> as above, but do it much faster!</p></li>
+<li><p><strong>The standard errors are not identical</strong>: OLS on the demeaned data counts <span class="math inline">NT-k</span> degrees of freedom instead of <span class="math inline">NT-N-k</span>, so <span class="math inline">\hat{\sigma}^{2}_{\varepsilon}</span>, standard errors and <span class="math inline">t</span>-statistics are all too small unless you correct the degrees of freedom yourself.</p></li>
 </ul>
 <div style="height: 2em;">
 
@@ -1507,7 +1670,7 @@ where <span class="math inline">D_{j}=1</span> for firm <span class="math inline
 <li>By <a href="https://www.kevinsheppard.com/">Kevin Sheppard</a>, University of Oxford</li>
 <li>Panel Data Models with Fixed Effects (PanelOLS)</li>
 <li>Fama-MacBeth Estimation (FamaMacBeth)</li>
-<li>Instrumental Variables models: Two-stage least squares (IV2SLS) - <em>next lecture</em></li>
+<li>Instrumental Variables models: Two-stage least squares (IV2SLS)</li>
 <li>Generalized Method of Moments (GMM, IVGMM)</li>
 <li>Asset Pricing Model Estimation and Testing - <em>next course</em></li>
 <li>➕➕➕ many more</li>
@@ -1954,7 +2117,7 @@ X_{i,t} &amp;= \alpha_i +\zeta_t + \nu_{i,t}\\
 </div>
 <h3 id="references">References</h3>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-baltagi_econometrics_2022" class="csl-entry" role="listitem">
 Baltagi, Badi H. 2022. <em>Econometrics</em>. 6th ed. Classroom Companion: Economics. Springer Cham. <a href="https://doi.org/10.1007/978-3-030-80149-6">https://doi.org/10.1007/978-3-030-80149-6</a>.
 </div>

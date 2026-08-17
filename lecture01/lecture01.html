@@ -6,14 +6,13 @@
 <script src="lecture01_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture01_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture01_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture01_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="lecture01_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="lecture01_files/libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <link href="lecture01_files/libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="lecture01_files/libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>Lecture 1: Introduction to Python</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -21,10 +20,16 @@
   <link rel="stylesheet" href="lecture01_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture01_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -33,7 +38,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="lecture01_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture01_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <link href="lecture01_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lecture01_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lecture01_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -139,26 +144,15 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Lecture 1: Introduction to Python</h1>
-  <p class="subtitle">MATH60230A - Empirical Finance</p>
+  <p class="subtitle">MATH60230 - Empirical Finance</p>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -295,7 +289,7 @@ Saad Ali Khan
 <ul>
 <li>For questions, we will use <iconify-icon role="img" inline="" icon="logos:microsoft-teams" aria-label="Icon microsoft-teams from logos Iconify.design set." title="Icon microsoft-teams from logos Iconify.design set."></iconify-icon> Microsoft Teams
 <ul>
-<li>channel <code>O365-MATH 60230A - J01 - H2026</code>.</li>
+<li>channel <code>O365-MATH 60230A - J01 - A2026</code>.</li>
 </ul></li>
 </ul>
 </section>
@@ -309,7 +303,7 @@ Saad Ali Khan
 <li>You need it for the MSc in Finance</li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn1"><p>not absolutely necessary, but it helps</p></li></ol></aside></section>
-<section id="why-python" class="slide level2">
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792064657669636f6e20707974686f6e203e7d7d-why-python" class="slide level2">
 <h2><iconify-icon role="img" inline="" icon="devicon:python" aria-label="Icon python from devicon Iconify.design set." title="Icon python from devicon Iconify.design set."></iconify-icon> Why Python?</h2>
 <ul>
 <li>General purpose programming language
@@ -321,7 +315,7 @@ Saad Ali Khan
 <li>Large community</li>
 <li>Lots of code online -&gt; LLMs know it well</li>
 </ul>
-<aside><ol class="aside-footnotes"><li id="fn2"><p>Actually, now the most popular language overall according to <a href="https://github.blog/news-insights/octoverse/octoverse-2024/">GitHub’s Octoverse</a>.</p></li></ol></aside></section>
+<aside><ol class="aside-footnotes"><li id="fn2"><p>Overall, <a href="https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/">GitHub’s Octoverse 2025</a> ranks Python second on GitHub, behind TypeScript, but “Python remains dominant for AI and data science workloads.”</p></li></ol></aside></section>
 <section class="slide level2">
 
 <h3 id="what-is-it-very-good-for">👍 What is it very good for?</h3>
@@ -345,7 +339,7 @@ Saad Ali Khan
 </ul>
 </div>
 </section>
-<section id="installing-python" class="slide level2">
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e6966792069636f6e2d7061726b2d6f75746c696e6520696e7374616c6c3e7d7d-installing-python" class="slide level2">
 <h2><iconify-icon role="img" inline="" icon="icon-park-outline:install" aria-label="Icon install from icon-park-outline Iconify.design set." title="Icon install from icon-park-outline Iconify.design set."></iconify-icon> Installing Python</h2>
 <p>To use <a href="https://www.python.org">Python</a>, you need:</p>
 <ul>
@@ -372,7 +366,7 @@ Saad Ali Khan
 </ul></li>
 </ul>
 </div><div class="column" style="width:50%;">
-<h4 id="visual-studio-code"><iconify-icon role="img" inline="" icon="vscode-icons:file-type-vscode" aria-label="Icon file-type-vscode from vscode-icons Iconify.design set." title="Icon file-type-vscode from vscode-icons Iconify.design set."></iconify-icon> <a href="https://code.visualstudio.com/">Visual Studio Code</a></h4>
+<h4 id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c2069636f6e696679207673636f64652d69636f6e732066696c652d747970652d7673636f6465203e7d7d-visual-studio-code"><iconify-icon role="img" inline="" icon="vscode-icons:file-type-vscode" aria-label="Icon file-type-vscode from vscode-icons Iconify.design set." title="Icon file-type-vscode from vscode-icons Iconify.design set."></iconify-icon> <a href="https://code.visualstudio.com/">Visual Studio Code</a></h4>
 <ul>
 <li>One of the most popular editor</li>
 <li>Free, by Microsoft, <em>open-core</em></li>
@@ -387,7 +381,7 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<h3 id="git"><i class="fa-brands fa-git-alt" aria-label="git-alt"></i> <a href="https://git-scm.com/">git</a></h3>
+<h3 id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206661206272616e6473206769742d616c74203e7d7d-git"><i class="fa-brands fa-git-alt" aria-label="git-alt"></i> <a href="https://git-scm.com/">git</a></h3>
 <ul>
 <li>A free and open source <em>distributed version control system</em>.</li>
 <li>You can think of git as adding “track changes” to your code, better.</li>
@@ -396,7 +390,7 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<h3 id="github"><i class="fa-brands fa-github" aria-label="github"></i> <a href="https://github.com/">GitHub</a></h3>
+<h3 id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206661206272616e647320676974687562203e7d7d-github"><i class="fa-brands fa-github" aria-label="github"></i> <a href="https://github.com/">GitHub</a></h3>
 <ul>
 <li>A hosted solution for git, plus more, owned by Microsoft.</li>
 <li>We will use <em>GitHub Classroom</em> for assignments.</li>
@@ -415,7 +409,7 @@ Saad Ali Khan
 </ul>
 </div>
 </section>
-<section id="in-the-cloud" class="slide level2">
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c20666120636c6f7564203e7d7d-in-the-cloud" class="slide level2">
 <h2><i class="fa-solid fa-cloud" aria-label="cloud"></i> In the cloud</h2>
 <div style="height: 2em;">
 
@@ -426,7 +420,7 @@ Saad Ali Khan
 <li>This is a good alternative solution if you can’t get Python running on your computer, or if you only have a tablet.</li>
 </ul>
 <aside><ol class="aside-footnotes"><li id="fn3"><p>There are many other services for running Python online. All assignments have been setup and tested for GH Codespaces.</p></li></ol></aside></section>
-<section id="online-resources" class="slide level2">
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206661206c696e6b203e7d7d-online-resources" class="slide level2">
 <h2><i class="fa-solid fa-link" aria-label="link"></i> Online resources</h2>
 <div style="height: 2em;">
 
@@ -440,7 +434,7 @@ Saad Ali Khan
 <li>Google / DuckDuckGo / Bing</li>
 </ul>
 </section>
-<section id="markdown" class="slide level2">
+<section id="b58fc729-690b-4000-b19f-365a4093b2ff7b7b3c206661206272616e6473206d61726b646f776e203e7d7d-markdown" class="slide level2">
 <h2><i class="fa-brands fa-markdown" aria-label="markdown"></i> Markdown</h2>
 <div style="height: 2em;">
 

@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>Python – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -34,15 +40,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="../index.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -328,21 +333,21 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="why-python-for-finance">Why Python for Finance?</h2>
 <p>Python has been widely adopted by the finance industry and finance researchers for several compelling reasons:</p>
 <p><strong>Open source</strong></p>
-<p>Python is free and open-source. Yes, that means you can use it for free, but open-source is much more than that. Python is distributed under the <a href="https://docs.python.org/3/license.html">Python Software Foundation License</a>, which is a permissive license that allows you to use, modify, and distribute the code and derived works based on it. This has led to a vibrant ecosystem of libraries and tools that are freely available to all, and to private forks of Python that are used internally by large financial institutions know collectively as <a href="https://calpaterson.com/bank-python.html">bank Python</a>.</p>
+<p>Python is free and open-source. Yes, that means you can use it for free, but open-source is much more than that. Python is distributed under the <a href="https://docs.python.org/3/license.html">Python Software Foundation License</a>, which is a permissive license that allows you to use, modify, and distribute the code and derived works based on it. This has led to a vibrant ecosystem of libraries and tools that are freely available to all, and to private forks of Python that are used internally by large financial institutions known collectively as <a href="https://calpaterson.com/bank-python.html">bank Python</a>.</p>
 <p><strong>Ease of learning</strong></p>
 <p>Python’s syntax is designed to be intuitive and human-readable, making it an accessible language for beginners and experts alike. This simplicity allows finance professionals—many of whom may not have a computer science background—to quickly learn Python and apply it to their work. Python code often reads like plain English, reducing the learning curve and enabling users to focus on problem-solving rather than struggling with the syntax.</p>
 <p>For academic researchers, this ease of learning means that Python can be introduced in undergraduate or graduate programs with minimal friction. Students can rapidly transition from learning the basics of the language to applying it in real-world financial scenarios, such as data analysis, statistical modeling, and portfolio optimization.</p>
 <p><strong>Powerful</strong></p>
 <p>Python is exceptionally powerful due to its extensive library ecosystem. Libraries like <a href="https://numpy.org/">NumPy</a>, <a href="https://scipy.org/">SciPy</a>, and <a href="https://www.statsmodels.org/stable/index.html">statsmodels</a> provide robust tools for numerical and statistical computations, while <a href="https://pandas.pydata.org/">pandas</a> and <a href="https://pola.rs/">polars</a> facilitate data manipulation and analysis. These capabilities make Python an ideal choice for tasks ranging from simple data cleaning to complex econometric modeling.</p>
-<p>In addition to its computational capabilities, Python integrates seamlessly with other programming languages and platforms, enabling finance practitioners to incorporate Python into larger, multi-language workflows. For example, it can call high-performance code written in C++ or Rust, interact with databases through SQL, or interface with scentific languages like R or Julia. This power and flexibility ensure that Python remains suitable for both small-scale analyses and enterprise-level financial systems.</p>
+<p>In addition to its computational capabilities, Python integrates seamlessly with other programming languages and platforms, enabling finance practitioners to incorporate Python into larger, multi-language workflows. For example, it can call high-performance code written in C++ or Rust, interact with databases through SQL, or interface with scientific languages like R or Julia. This power and flexibility ensure that Python remains suitable for both small-scale analyses and enterprise-level financial systems.</p>
 <p><strong>Versatile</strong></p>
 <p>Python’s versatility allows it to handle a wide range of tasks, making it a one-stop solution for financial workflows. Analysts can use Python for tasks such as data acquisition from APIs or through web scraping, performing statistical analyses, creating visualizations, and even building predictive models using machine learning libraries like <a href="https://scikit-learn.org/stable/index.html">scikit-learn</a>.</p>
 <p><strong>Widely-used</strong></p>
 <p>In 2024, Python surpassed Javascript to become the most widely used programming language in the world according to <a href="https://github.blog/news-insights/octoverse/octoverse-2024/">GitHub’s Octoverse</a>. This rise in use is attributed to the growing importance of AI and data science, for which Python is the most popular language.</p>
-<p>This popularity ensures that Python skills are highly transferable and in demand, making it a valuable asset for finance professionals. Large financial institutions, such as <a href="https://jpmorganchase.github.io/projects">JPMorgan Chase</a> and <a href="https://github.com/goldmansachs/gs-quant">Goldman Sachs</a>, use Python extensively for data analysis, trading algorithms, and risk modeling. Financial data providers such as <a href="https://www.lseg.com/en/data-analytics/products/codebook">LSEG</a> (formerly Refinitiv and Thomson Reuters) and <a href="https://wrds-www.wharton.upenn.edu/pages/classroom/using-jupyter-at-wrds-notebook/">WRDS</a>, an academinc data provider, offer Python-based platforms for accessing and analyzing financial data. Python skills are now a must-have for finance professionals, so much so that the CFA Institute has added Python practical skills to its <a href="https://www.cfainstitute.org/programs/cfa-program/candidate-resources/level-i-exam">2024 curriculum</a>.</p>
+<p>This popularity ensures that Python skills are highly transferable and in demand, making it a valuable asset for finance professionals. Large financial institutions, such as <a href="https://jpmorganchase.github.io/projects">JPMorgan Chase</a> and <a href="https://github.com/goldmansachs/gs-quant">Goldman Sachs</a>, use Python extensively for data analysis, trading algorithms, and risk modeling. Financial data providers such as <a href="https://www.lseg.com/en/data-analytics/products/codebook">LSEG</a> (formerly Refinitiv and Thomson Reuters) and <a href="https://wrds-www.wharton.upenn.edu/pages/classroom/using-jupyter-at-wrds-notebook/">WRDS</a>, an academic data provider, offer Python-based platforms for accessing and analyzing financial data. Python skills are now a must-have for finance professionals, so much so that the CFA Institute has added Python practical skills to its <a href="https://www.cfainstitute.org/programs/cfa-program/candidate-resources/level-i-exam">2024 curriculum</a>.</p>
 <section id="other-languages" class="level3">
 <h3 class="anchored" data-anchor-id="other-languages">Other languages</h3>
-<p>Python is not the only game in town. <a href="https://www.r-project.org/">R</a> and <a href="https://www.stata.com/">Stata</a> offer better capabilities for econometric and statistical modeling, and are also widely used in academic research. <a href="https://julialang.org/">Julia</a> and <a href="https://www.mathworks.com/products/matlab.html">Matlab</a> offer better performance for numerical computing, and <a href="https://isocpp.github.io/CppCoreGuidelines/">C++</a> and <a href="https://www.rust-lang.org/">Rust</a> are the languages of choice for performance-critical parts of financial applications. Finally, <a href="https://www.sas.com/en_ca/home.html">SAS</a> and <a href="https://tigerbeetle.com/">many</a> <a href="https://duckdb.org/">database</a> <a href="https://www.postgresql.org/">softwares</a> use a variant of <a href="https://www.iso.org/standard/76583.html">SQL</a>, while some use their own proprietary language like <a href="https://code.kx.com/q/learn/">q for kdb+</a> which is a staple of high-frequency trading firms. Finally, <a href="https://ocaml.org/">OCaml</a> is the language of choice at <a href="https://www.janestreet.com/technology/">Jane Street</a>, a large quantitative trading firm. Overall, each language has its strengths and weaknesses, and the choice of language depends on the specific task at hand, but Python is a very good choice for most tasks.</p>
+<p>Python is not the only game in town. <a href="https://www.r-project.org/">R</a> and <a href="https://www.stata.com/">Stata</a> offer better capabilities for econometric and statistical modeling, and are also widely used in academic research. <a href="https://julialang.org/">Julia</a> and <a href="https://www.mathworks.com/products/matlab.html">Matlab</a> offer better performance for numerical computing, and <a href="https://isocpp.github.io/CppCoreGuidelines/">C++</a> and <a href="https://www.rust-lang.org/">Rust</a> are the languages of choice for performance-critical parts of financial applications. Finally, <a href="https://www.sas.com/en_ca/home.html">SAS</a> and <a href="https://tigerbeetle.com/">many</a> <a href="https://duckdb.org/">database</a> <a href="https://www.postgresql.org/">systems</a> use a variant of <a href="https://www.iso.org/standard/76583.html">SQL</a>, while some use their own proprietary language like <a href="https://code.kx.com/q/learn/">q for kdb+</a> which is a staple of high-frequency trading firms. Finally, <a href="https://ocaml.org/">OCaml</a> is the language of choice at <a href="https://www.janestreet.com/technology/">Jane Street</a>, a large quantitative trading firm. Overall, each language has its strengths and weaknesses, and the choice of language depends on the specific task at hand, but Python is a very good choice for most tasks.</p>
 </section>
 </section>
 <section id="components-of-the-python-ecosystem" class="level2">
@@ -350,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <p>The Python ecosystem consists of various tools and components that make it a powerful platform for data analysis. This section introduces the key elements of the ecosystem and their roles in creating efficient workflows.</p>
 <section id="python-interpreter" class="level3">
 <h3 class="anchored" data-anchor-id="python-interpreter">Python interpreter</h3>
-<p>Python is an interpreted language, meaning that your code is executed by an interpreter when you run it rather than compiled ahead of time to an executable. The Python interpreter is responsiable for executing your Python code. It comes in various implementations, with the most common being <strong>CPython</strong>, the default implementation distributed with <a href="https://www.python.org/downloads/">official Python releases</a>, which is the one we will use in this book. Other variants include <a href="https://pypy.org/">PyPy</a>, a just-in-time (JIT) compiled interpreter that enhances performance for specific tasks, and <a href="https://github.com/pyodide/pyodide?tab=readme-ov-file">Pyodide</a>, a port of CPython to WebAssembly that allows Python to run in web browsers.</p>
+<p>Python is an interpreted language, meaning that your code is executed by an interpreter when you run it rather than compiled ahead of time to an executable. The Python interpreter is responsible for executing your Python code. It comes in various implementations, with the most common being <strong>CPython</strong>, the default implementation distributed with <a href="https://www.python.org/downloads/">official Python releases</a>, which is the one we will use in this book. Other variants include <a href="https://pypy.org/">PyPy</a>, a just-in-time (JIT) compiled interpreter that enhances performance for specific tasks, and <a href="https://github.com/pyodide/pyodide?tab=readme-ov-file">Pyodide</a>, a port of CPython to WebAssembly that allows Python to run in web browsers.</p>
 </section>
 <section id="python-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="python-libraries">Python libraries</h3>
@@ -373,7 +378,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Python libraries are published on <a href="https://pypi.org/">PyPI</a>, the Python Package Index. <strong>Anyone</strong> can publish a library to PyPI, so it is important to check the library’s reputation before using it. Always keep in mind that librairies contain code that will be executed on your computer, so they can contain malware. Well-known libraries are less likely to contain vulnerabilities, but, as with any unreviewed software, there is always a risk. We will discuss security best practices in more detail in future chapters.</p>
+<p>Python libraries are published on <a href="https://pypi.org/">PyPI</a>, the Python Package Index. <strong>Anyone</strong> can publish a library to PyPI, so it is important to check the library’s reputation before using it. Always keep in mind that libraries contain code that will be executed on your computer, so they can contain malware. Well-known libraries are less likely to contain vulnerabilities, but, as with any unreviewed software, there is always a risk. We will discuss security best practices in more detail in future chapters.</p>
 </div>
 </div>
 </section>
@@ -382,7 +387,7 @@ Warning
 <p>Python versions are updated frequently.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Libraries follow their own release cycles and are not always updated at the same time as the Python interpreter. Some libraries depend on specific versions of other libraries, so a chain of dependencies may need to be updated. To complicate matters, updates to libraries may break your code. This means that code that worked last month may not work this month if you always use the latest version of everything.</p>
 <p>To minimize these issues, the best practice is to create a <em>virtual environment</em> for each project. This ensures that the versions of the Python interpreter and libraries are fixed and consistent for each project, and that you can easily update the libraries for a project without affecting your other projects.</p>
 <p>There are several tools for managing Python environments. Python comes with <a href="https://docs.python.org/3/library/venv.html">venv</a>, a built-in module for creating virtual environments, and <a href="https://docs.python.org/3/installing/index.html">pip</a>, a package manager for installing and updating libraries. A popular alternative for data science projects is <a href="https://docs.conda.io/projects/conda/en/latest/user-guide/install/index.html">conda</a>, part of the <a href="https://www.anaconda.com/">Anaconda</a> distribution.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Another popular tool is <a href="https://python-poetry.org/">poetry</a>. Conda and poetry act as both environment and package manager.</p>
-<p>In this book, we will use <a href="https://docs.astral.sh/uv/">uv</a>, a tool that replaces venv, pip, and a suite of other tools. It brings a lot of modern features to the table, such as a lockfile to ensure reproducibility, ability to install and manage Python versions, and more. For me, its main advantage is its increadible speed which is in part due to an advanced caching mechanism, the use of hardlinks to avoid keeping multiple copies of each library, and a very fast dependancy resolver.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<p>In this book, we will use <a href="https://docs.astral.sh/uv/">uv</a>, a tool that replaces venv, pip, and a suite of other tools. It brings a lot of modern features to the table, such as a lockfile to ensure reproducibility, ability to install and manage Python versions, and more. For me, its main advantage is its incredible speed which is in part due to an advanced caching mechanism, the use of hardlinks to avoid keeping multiple copies of each library, and a very fast dependency resolver.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 </section>
 <section id="integrated-development-environments-ides" class="level3">
 <h3 class="anchored" data-anchor-id="integrated-development-environments-ides">Integrated Development Environments (IDEs)</h3>
@@ -391,7 +396,7 @@ Warning
 </section>
 <section id="notebooks" class="level3">
 <h3 class="anchored" data-anchor-id="notebooks">Notebooks</h3>
-<p>Notebooks, such as <a href="https://jupyter.org/">Jupyter Notebooks</a>, are interactive environments where code, text, and visualizations can coexist. They have significant drawbacks for their use in robust, replicable research, but are nonetheless very popular in data science because of their simplicity. VS Code supports Jupyter notebooks natively with an extension. We will notebooks them in more details in this book, along with their shortcomings and ways to mitigate them. <a href="https://marimo.io/">marimo</a> is a new Python notebook interface that aims to address some of the issues with Jupyter Notebooks. While it has a long way to go to overtake Jupyter in the data science community, it shows a lot of promise.</p>
+<p>Notebooks, such as <a href="https://jupyter.org/">Jupyter Notebooks</a>, are interactive environments where code, text, and visualizations can coexist. They have significant drawbacks for their use in robust, replicable research, but are nonetheless very popular in data science because of their simplicity. VS Code supports Jupyter notebooks natively with an extension. We will cover them in more detail in this book, along with their shortcomings and ways to mitigate them. <a href="https://marimo.io/">marimo</a> is a new Python notebook interface that aims to address some of the issues with Jupyter Notebooks. While it has a long way to go to overtake Jupyter in the data science community, it shows a lot of promise.</p>
 
 
 </section>
@@ -399,7 +404,7 @@ Warning
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>The latest version at the time of writing is 3.14. Since 2018, Python releases have been annual in October.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>The latest version at the time of writing is 3.14. Since Python 3.9, released in October 2020, a new feature version has come out every October, a cadence set by <a href="https://peps.python.org/pep-0602/">PEP 602</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>While conda is open-source, it uses by default the Anaconda Repository, which requires a <a href="https://www.anaconda.com/blog/update-on-anacondas-terms-of-service-for-academia-and-research">paid subscription under some conditions</a>. At the time of writing, it is free for academic use.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>The main task of a package manager is to resolve dependencies, i.e.&nbsp;to figure out which versions of libraries need to be installed to satisfy the dependencies of a project. This is a very complex task (<a href="https://en.wikipedia.org/wiki/NP-hardness">NP-hard</a>) that requires a lot of computation and heuristics.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

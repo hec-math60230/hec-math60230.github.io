@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>9&nbsp; Using AI for Coding in Empirical Research – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -34,15 +40,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../python/git/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -295,8 +300,9 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#ethical-academic-and-scientific-constraints" id="toc-ethical-academic-and-scientific-constraints" class="nav-link" data-scroll-target="#ethical-academic-and-scientific-constraints"><span class="header-section-number">9.3</span> Ethical, Academic, and Scientific Constraints</a>
   <ul class="collapse">
   <li><a href="#academic-integrity-and-authorship" id="toc-academic-integrity-and-authorship" class="nav-link" data-scroll-target="#academic-integrity-and-authorship"><span class="header-section-number">9.3.1</span> Academic integrity and authorship</a></li>
-  <li><a href="#reproducibility-and-auditability" id="toc-reproducibility-and-auditability" class="nav-link" data-scroll-target="#reproducibility-and-auditability"><span class="header-section-number">9.3.2</span> Reproducibility and auditability</a></li>
-  <li><a href="#data-confidentiality" id="toc-data-confidentiality" class="nav-link" data-scroll-target="#data-confidentiality"><span class="header-section-number">9.3.3</span> Data confidentiality</a></li>
+  <li><a href="#disclosing-ai-use" id="toc-disclosing-ai-use" class="nav-link" data-scroll-target="#disclosing-ai-use"><span class="header-section-number">9.3.2</span> Disclosing AI use</a></li>
+  <li><a href="#reproducibility-and-auditability" id="toc-reproducibility-and-auditability" class="nav-link" data-scroll-target="#reproducibility-and-auditability"><span class="header-section-number">9.3.3</span> Reproducibility and auditability</a></li>
+  <li><a href="#data-confidentiality" id="toc-data-confidentiality" class="nav-link" data-scroll-target="#data-confidentiality"><span class="header-section-number">9.3.4</span> Data confidentiality</a></li>
   </ul></li>
   <li><a href="#mental-models-for-using-ai-effectively" id="toc-mental-models-for-using-ai-effectively" class="nav-link" data-scroll-target="#mental-models-for-using-ai-effectively"><span class="header-section-number">9.4</span> Mental Models for Using AI Effectively</a>
   <ul class="collapse">
@@ -409,13 +415,54 @@ ul.task-list li input[type="checkbox"] {
 <p>The fundamental principle is simple: responsibility for correctness always lies with the researcher. When you submit code as part of a research project or assignment, you are asserting that the code correctly implements your methodology and that you understand what it does. AI assistance does not change this responsibility. If AI-generated code contains errors that invalidate your results, you bear the consequences.</p>
 <p>Different institutions and courses have different policies about AI use. Some prohibit it entirely for certain assignments. Others permit it with disclosure requirements. The specific rules vary, but the underlying principle is consistent: you must be able to explain and defend every line of code you submit. If you cannot, the work is not genuinely yours, regardless of how it was produced.</p>
 </section>
-<section id="reproducibility-and-auditability" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="reproducibility-and-auditability"><span class="header-section-number">9.3.2</span> Reproducibility and auditability</h3>
+<section id="disclosing-ai-use" class="level3" data-number="9.3.2">
+<h3 data-number="9.3.2" class="anchored" data-anchor-id="disclosing-ai-use"><span class="header-section-number">9.3.2</span> Disclosing AI use</h3>
+<p>Accountability is about who answers for the work. Disclosure is about telling your reader what happened. Both journals and instructors now expect the second as well as the first.</p>
+<p>Individual policies change often enough that the only reliable move is to read the venue’s own guidelines before you submit. What has stabilized is the shape of those guidelines rather than their wording, and three requirements now recur almost everywhere:</p>
+<ul>
+<li>AI systems cannot be listed as authors, because authorship carries an accountability that software cannot hold.</li>
+<li>Substantive use of AI in preparing a manuscript, including drafting or editing text, must be disclosed, usually at submission rather than in the paper itself.</li>
+<li>The human authors remain solely responsible for anything the AI produced and are expected to have checked it.</li>
+</ul>
+<p>Economics journals follow this pattern. The <a href="https://www.aeaweb.org/journals/aer/editorial-policy">American Economic Association’s editorial policy</a> states that “[a]rtificial intelligence (AI) software, such as chatbots or other large language models, may not be listed as an author,” that “[i]f AI software was used in the preparation of the manuscript, including drafting or editing text, this must be briefly described during the submission process,” and that “[a]uthors are solely accountable for, and must thoroughly fact-check, outputs created with the help of AI software.” Note that this is a requirement at submission, not a suggestion.</p>
+<p>The same policy also governs the other side of the review process: “[t]he reviewer’s report is expected to reflect their own careful reading and evaluation of the paper. Any use of AI during the review must be disclosed in the reviewer’s cover letter and must be limited to tools that guarantee that the manuscript will not be used for training AI models.” Journals outside economics have converged on similar language. <a href="https://www.nature.com/nature-portfolio/editorial-policies/ai">Springer Nature</a>, for instance, asks that use of a large language model be documented in the Methods section, exempts AI-assisted copy editing from disclosure, and asks peer reviewers not to upload manuscripts into generative AI tools at all.</p>
+<p>That last point generalizes beyond peer review, and it is the same confidentiality concern discussed below: a disclosure rule tells you what to report, while a confidentiality rule tells you what you may put into the tool in the first place. Someone else’s unpublished manuscript, like proprietary data, is not yours to send to an external service.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Example disclosure statements
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Disclosure should say what the AI did, not merely that it was used:</p>
+<pre><code>We used an AI coding assistant to draft portions of the Python
+code for data processing and analysis. All code was reviewed,
+tested, and validated by the authors.</code></pre>
+<pre><code>We used an AI assistant to generate initial implementations of
+the estimation functions in Section 4, which we then modified
+and validated against the analytical results in Appendix B.</code></pre>
+<p>Contrast these with “AI was used in this project,” which tells a reader nothing they can act on.</p>
+</div>
+</div>
+<p><strong>For this course</strong>, unless a specific assignment says otherwise:</p>
+<ul>
+<li>Using AI to understand concepts is encouraged.</li>
+<li>Using AI for coding assistance is permitted if you understand and can validate the code.</li>
+<li>Disclosure is required for substantial AI assistance on assignments.</li>
+<li>All submitted code must be code you could have written yourself given enough time.</li>
+</ul>
+<p>The habit that makes disclosure painless is keeping notes as you go rather than reconstructing them afterwards: a line in your project log each time AI does something non-trivial (“used an assistant to debug the merge in <code>clean_data.py</code>”; “asked for an explanation of the difference between fixed effects and first differences”). When you reach the disclosure box on a submission form, you will already have the answer. When in doubt, over-disclose — it is cheap, and it protects you from questions later.</p>
+</section>
+<section id="reproducibility-and-auditability" class="level3" data-number="9.3.3">
+<h3 data-number="9.3.3" class="anchored" data-anchor-id="reproducibility-and-auditability"><span class="header-section-number">9.3.3</span> Reproducibility and auditability</h3>
 <p>Empirical research must be reproducible. Other researchers should be able to examine your methodology, run your code, and verify your results. This requires that your code be inspectable and explainable. AI-generated code that you do not understand fails this requirement, even if it produces the correct output.</p>
 <p>When reviewers or collaborators ask about your implementation, you need to be able to explain why you made specific choices. Why did you winsorize at the 1st and 99th percentiles rather than the 5th and 95th? Why did you cluster standard errors at the firm level rather than the industry level? These questions require understanding that goes beyond the code itself to the research design it implements.</p>
 </section>
-<section id="data-confidentiality" class="level3" data-number="9.3.3">
-<h3 data-number="9.3.3" class="anchored" data-anchor-id="data-confidentiality"><span class="header-section-number">9.3.3</span> Data confidentiality</h3>
+<section id="data-confidentiality" class="level3" data-number="9.3.4">
+<h3 data-number="9.3.4" class="anchored" data-anchor-id="data-confidentiality"><span class="header-section-number">9.3.4</span> Data confidentiality</h3>
 <p>Never paste proprietary data, credentials, or restricted information into AI tools. This applies to actual data values, but also to code that reveals the structure of proprietary datasets or the logic of trading strategies. Most AI tools send your input to external servers for processing. Even tools that claim privacy protections may retain data for training or analysis.</p>
 <p>In practice, this means being careful about what you share. Error messages that include data values should be sanitized before sharing. Code that implements proprietary methodology should be described in general terms rather than pasted directly. When in doubt, assume that anything you share with an AI tool could become public.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -454,7 +501,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-iteration-loop" class="level3" data-number="9.4.3">
 <h3 data-number="9.4.3" class="anchored" data-anchor-id="the-iteration-loop"><span class="header-section-number">9.4.3</span> The iteration loop</h3>
 <p>Effective AI use follows an iteration loop: prompt, inspect, test, revise. You start with a prompt describing what you need. You inspect the output to understand what the AI produced. You test the code to verify it works correctly. You revise either the prompt or the code based on what you learned.</p>
-<div class="cell" data-format="pdf" data-fig-width="6" data-layout-align="default">
+<div class="cell" data-fig-width="6" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-ai-iteration-loop" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -557,7 +604,7 @@ Figure&nbsp;9.1: The AI-assisted coding iteration loop
 </section>
 <section id="coding-agents" class="level2" data-number="9.7">
 <h2 data-number="9.7" class="anchored" data-anchor-id="coding-agents"><span class="header-section-number">9.7</span> Coding Agents</h2>
-<p>Coding agents represent the most powerful and most dangerous category of AI coding tools. Unlike completion tools that suggest small changes, agents can make extensive modifications across multiple files. Unlike chatbots that produce isolated code snippets, agents can execute code, observe results, and iterate. The major tools in this category include <a href="https://github.com/features/copilot">GitHub Copilot</a> in agent mode, Anthropic’s <a href="https://claude.com/product/claude-code">Claude Code</a>, and <a href="https://openai.com/codex/">OpenAI Codex</a>. Both Claude Code and OpenAI Codex are available as command-line tools and as VS Code extensions. <a href="https://cursor.com/">Cursor</a> also includes deep agent integration. These tools evolve rapidly, so specific recommendations become outdated quickly, but at the time of writing, Claude Code with the Opus 4.5 model is my tool of choice.</p>
+<p>Coding agents represent the most powerful and most dangerous category of AI coding tools. Unlike completion tools that suggest small changes, agents can make extensive modifications across multiple files. Unlike chatbots that produce isolated code snippets, agents can execute code, observe results, and iterate. The major tools in this category include <a href="https://github.com/features/copilot">GitHub Copilot</a> in agent mode, Anthropic’s <a href="https://claude.com/product/claude-code">Claude Code</a>, and <a href="https://openai.com/codex/">OpenAI Codex</a>. Both Claude Code and OpenAI Codex are available as command-line tools and as VS Code extensions. <a href="https://cursor.com/">Cursor</a> also includes deep agent integration. These tools evolve rapidly, so specific recommendations become outdated quickly, but Claude Code running the current Opus model is my tool of choice.</p>
 <p>For all AI coding tools, but especially agents, reading the product documentation is essential to achieve the best results. Each tool behaves differently, with its own strengths, limitations, and recommended workflows. Adapting your approach to the specific tool you use will greatly improve the quality of the output you get. Time spent learning the tool’s features and best practices pays off quickly.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -681,7 +728,7 @@ Figure&nbsp;9.1: The AI-assisted coding iteration loop
 <p>Be especially careful with coding agents. When tests fail, agents have a tendency to modify the tests to make them pass rather than fixing the underlying code. This defeats the purpose of testing entirely. Always review diffs carefully to ensure the agent fixed the function, not the test.</p>
 </div>
 </div>
-<div class="cell" data-format="pdf" data-fig-height="8" data-layout-align="default">
+<div class="cell" data-fig-height="8" data-layout-align="default">
 <div class="cell-output-display">
 <div id="fig-ai-workflow" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">

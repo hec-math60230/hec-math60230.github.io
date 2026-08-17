@@ -6,11 +6,10 @@
 <script src="lecture02_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture02_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture02_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture02_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="lecture02_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230 - Lecture 2</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="lecture02_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture02_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -96,7 +101,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="lecture02_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture02_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <link href="lecture02_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lecture02_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lecture02_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -206,21 +211,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -284,20 +278,20 @@ Saad Ali Khan
 </section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a></span>
-<span id="cb1-2"><a href=""></a><span class="co"># This is an example of a comment</span></span>
-<span id="cb1-3"><a href=""></a><span class="im">import</span> math <span class="co">#  A comment can also appear at the end of a line.</span></span>
-<span id="cb1-4"><a href=""></a></span>
-<span id="cb1-5"><a href=""></a></span>
-<span id="cb1-6"><a href=""></a><span class="co">"""</span></span>
-<span id="cb1-7"><a href=""></a><span class="co">This is a multiline comment.</span></span>
-<span id="cb1-8"><a href=""></a></span>
-<span id="cb1-9"><a href=""></a><span class="co">It is actually a string, but since it is not assigned to any variable</span></span>
-<span id="cb1-10"><a href=""></a><span class="co">it has no effect on the code.</span></span>
-<span id="cb1-11"><a href=""></a></span>
-<span id="cb1-12"><a href=""></a><span class="co">According to PEP8, comments should not exceed 72 characters (if longer</span></span>
-<span id="cb1-13"><a href=""></a><span class="co">split on multiple lines.)</span></span>
-<span id="cb1-14"><a href=""></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a></span>
+<span id="cb1-2"><a href="" aria-label="2"></a><span class="co"># This is an example of a comment</span></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="im">import</span> math <span class="co">#  A comment can also appear at the end of a line.</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a></span>
+<span id="cb1-5"><a href="" aria-label="5"></a></span>
+<span id="cb1-6"><a href="" aria-label="6"></a><span class="co">"""</span></span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="co">This is a multiline comment.</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a></span>
+<span id="cb1-9"><a href="" aria-label="9"></a><span class="co">It is actually a string, but since it is not assigned to any variable</span></span>
+<span id="cb1-10"><a href="" aria-label="10"></a><span class="co">it has no effect on the code.</span></span>
+<span id="cb1-11"><a href="" aria-label="11"></a></span>
+<span id="cb1-12"><a href="" aria-label="12"></a><span class="co">According to PEP8, comments should not exceed 72 characters (if longer</span></span>
+<span id="cb1-13"><a href="" aria-label="13"></a><span class="co">split on multiple lines.)</span></span>
+<span id="cb1-14"><a href="" aria-label="14"></a><span class="co">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="when-to-comment" class="slide level2">
 <h2>When to comment</h2>
@@ -307,7 +301,7 @@ Saad Ali Khan
 <li>To describe algorithms to make them easier to read and understand.</li>
 <li>To add tags in the code:</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add a new cool feature here.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="co"># </span><span class="al">TODO</span><span class="co">: add a new cool feature here.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 <aside><div>
 <p><strong>Tip:</strong> The <a href="https://marketplace.visualstudio.com/items?itemName=Gruntfuggly.todo-tree">Todo Tree</a> VS Code extension can help you keep tracks of comments with special tags such as <code>TODO</code>.</p>
@@ -356,14 +350,14 @@ Saad Ali Khan
 <section id="exceptions" class="slide level2">
 <h2>Exceptions</h2>
 <p>Exceptions in Python arise when there is an error when the code is executed:</p>
-<div id="47b2f702" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="bu">print</span>(<span class="dv">5</span> <span class="op">/</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="f4dea14d" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="bu">print</span>(<span class="dv">5</span> <span class="op">/</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">ZeroDivisionError</span>                         Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[1], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span style="color:rgb(0,135,0)">print</span>(<span style="color:rgb(98,98,98)" class="ansi-yellow-bg">5</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">/</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">0</span>)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[1]</span><span class="ansi-green-fg">, line 1</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">1</span> print(<span class="ansi-green-fg">5</span> / <span class="ansi-green-fg">0</span>)
 
 <span class="ansi-red-fg">ZeroDivisionError</span>: division by zero</pre>
 </div>
@@ -373,18 +367,18 @@ Cell <span class="ansi-green-fg">In[1], line 1</span>
 <section id="exceptions-2" class="slide level2">
 <h2>Exceptions (2)</h2>
 <p>You can <code>raise</code> your own exceptions to signal errors you detect in your code:</p>
-<div id="b9fc9012" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a>error <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb4-2"><a href=""></a><span class="cf">if</span> error:</span>
-<span id="cb4-3"><a href=""></a>    <span class="cf">raise</span> <span class="pp">Exception</span>(<span class="st">"There was an error"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a2f2877f" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a>error <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb4-2"><a href="" aria-label="2"></a><span class="cf">if</span> error:</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>    <span class="cf">raise</span> <span class="pp">Exception</span>(<span class="st">"There was an error"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">Exception</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[2], line 3</span>
-<span class="ansi-green-fg ansi-bold">      1</span> error <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">True</span>
-<span class="ansi-green-fg ansi-bold">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> error:
-<span class="ansi-green-fg">----&gt; 3</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> <span style="font-weight:bold;color:rgb(215,95,95)">Exception</span>(<span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">There was an error</span><span style="color:rgb(175,0,0)">"</span>)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[2]</span><span class="ansi-green-fg">, line 3</span>
+<span class="ansi-green-fg">      1</span> error = <span style="font-weight:bold;color:rgb(0,135,0)">True</span>
+<span class="ansi-green-fg">      2</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> error:
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">3</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> Exception(<span class="ansi-yellow-fg">"There was an error"</span>)
 
 <span class="ansi-red-fg">Exception</span>: There was an error</pre>
 </div>
@@ -394,14 +388,14 @@ Cell <span class="ansi-green-fg">In[2], line 3</span>
 <section id="exceptions-3" class="slide level2">
 <h2>Exceptions (3)</h2>
 <p>Sometimes, it is useful to catch and handle exceptions:</p>
-<div id="22830310" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a>x <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb5-2"><a href=""></a><span class="cf">try</span>:</span>
-<span id="cb5-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>
-<span id="cb5-4"><a href=""></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
-<span id="cb5-5"><a href=""></a>    <span class="bu">print</span>( <span class="st">"I got an exception, but I'm not crashing."</span>)</span>
-<span id="cb5-6"><a href=""></a></span>
-<span id="cb5-7"><a href=""></a><span class="bu">print</span>(<span class="st">"All good!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="eeaec5a7" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>x <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-2"><a href="" aria-label="2"></a><span class="cf">try</span>:</span>
+<span id="cb5-3"><a href="" aria-label="3"></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb5-5"><a href="" aria-label="5"></a>    <span class="bu">print</span>( <span class="st">"I got an exception, but I'm not crashing."</span>)</span>
+<span id="cb5-6"><a href="" aria-label="6"></a></span>
+<span id="cb5-7"><a href="" aria-label="7"></a><span class="bu">print</span>(<span class="st">"All good!"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>I got an exception, but I'm not crashing.
 All good!</code></pre>
@@ -421,12 +415,12 @@ All good!</code></pre>
 <section id="exceptions-5" class="slide level2">
 <h2>Exceptions (5)</h2>
 <p>It is best to be as specific as possible when catching exceptions:</p>
-<div id="8ab9e136" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a>x <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb7-2"><a href=""></a><span class="cf">try</span>:</span>
-<span id="cb7-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>
-<span id="cb7-4"><a href=""></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
-<span id="cb7-5"><a href=""></a>    <span class="bu">print</span>(<span class="st">"I got a ZeroDivisionError"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="b1dcc076" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a>x <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb7-2"><a href="" aria-label="2"></a><span class="cf">try</span>:</span>
+<span id="cb7-3"><a href="" aria-label="3"></a>    a <span class="op">=</span> <span class="dv">5</span> <span class="op">/</span> x</span>
+<span id="cb7-4"><a href="" aria-label="4"></a><span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    <span class="bu">print</span>(<span class="st">"I got a ZeroDivisionError"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>I got a ZeroDivisionError</code></pre>
 </div>
@@ -449,17 +443,6 @@ All good!</code></pre>
 <ul>
 <li>Start broad, then narrow down.</li>
 <li>Refine based on model feedback.</li>
-</ul></li>
-</ul>
-</section>
-<section id="demo-time" class="slide level2">
-<h2>Demo time!</h2>
-<ul>
-<li><strong>Real-World Examples</strong>
-<ul>
-<li>Troubleshooting code.</li>
-<li>Brainstorming algorithms.</li>
-<li>Explaining code concepts.</li>
 </ul></li>
 </ul>
 </section>

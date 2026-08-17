@@ -6,11 +6,10 @@
 <script src="lecture10_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture10_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture10_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture10_files/libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.27">
+<link href="lecture10_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Vincent Grégoire">
-  <meta name="author" content="Saad Ali Khan">
   <title>MATH60230: Lecture 10</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,10 +17,16 @@
   <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/reveal.css">
   <style>
-    code{white-space: pre-wrap;}
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -99,7 +104,6 @@
     div.csl-bib-body { }
     div.csl-entry {
       clear: both;
-      margin-bottom: 0em;
     }
     .hanging-indent div.csl-entry {
       margin-left:2em;
@@ -116,7 +120,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/theme/quarto-ee0ad5c3108285a2bd8b3f9804cbdb13.css">
+  <link rel="stylesheet" href="lecture10_files/libs/revealjs/dist/theme/quarto-c1ca8b9d746275e3d0b0d015dc4fd638.css">
   <script>window.backupDefine = window.define; window.define = undefined;</script><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.js"></script>
   <script>document.addEventListener("DOMContentLoaded", function () {
  var mathElements = document.getElementsByClassName("math");
@@ -246,21 +250,10 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Vincent Grégoire 
+Vincent Grégoire
 </div>
 <div class="quarto-title-author-email">
 <a href="mailto:vincent.gregoire@hec.ca">vincent.gregoire@hec.ca</a>
-</div>
-        <p class="quarto-title-affiliation">
-            HEC Montréal
-          </p>
-    </div>
-<div class="quarto-title-author">
-<div class="quarto-title-author-name">
-Saad Ali Khan 
-</div>
-<div class="quarto-title-author-email">
-<a href="mailto:saad-ali.khan@hec.ca">saad-ali.khan@hec.ca</a>
 </div>
         <p class="quarto-title-affiliation">
             HEC Montréal
@@ -488,16 +481,16 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>text <span class="op">=</span> <span class="st">"Apple's Q3 revenue was $81.8 billion."</span></span>
-<span id="cb1-2"><a href=""></a></span>
-<span id="cb1-3"><a href=""></a><span class="co"># Simple whitespace tokenization</span></span>
-<span id="cb1-4"><a href=""></a>tokens <span class="op">=</span> text.split()</span>
-<span id="cb1-5"><a href=""></a><span class="co"># ['Apple's', 'Q3', 'revenue', 'was', '$81.8', 'billion.']</span></span>
-<span id="cb1-6"><a href=""></a></span>
-<span id="cb1-7"><a href=""></a><span class="co"># Better: use a tokenizer</span></span>
-<span id="cb1-8"><a href=""></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
-<span id="cb1-9"><a href=""></a>tokens <span class="op">=</span> word_tokenize(text)</span>
-<span id="cb1-10"><a href=""></a><span class="co"># ['Apple', "'s", 'Q3', 'revenue', 'was', '$', '81.8', 'billion', '.']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a>text <span class="op">=</span> <span class="st">"Apple's Q3 revenue was $81.8 billion."</span></span>
+<span id="cb1-2"><a href="" aria-label="2"></a></span>
+<span id="cb1-3"><a href="" aria-label="3"></a><span class="co"># Simple whitespace tokenization</span></span>
+<span id="cb1-4"><a href="" aria-label="4"></a>tokens <span class="op">=</span> text.split()</span>
+<span id="cb1-5"><a href="" aria-label="5"></a><span class="co"># ['Apple's', 'Q3', 'revenue', 'was', '$81.8', 'billion.']</span></span>
+<span id="cb1-6"><a href="" aria-label="6"></a></span>
+<span id="cb1-7"><a href="" aria-label="7"></a><span class="co"># Better: use a tokenizer</span></span>
+<span id="cb1-8"><a href="" aria-label="8"></a><span class="im">from</span> nltk.tokenize <span class="im">import</span> word_tokenize</span>
+<span id="cb1-9"><a href="" aria-label="9"></a>tokens <span class="op">=</span> word_tokenize(text)</span>
+<span id="cb1-10"><a href="" aria-label="10"></a><span class="co"># ['Apple', "'s", 'Q3', 'revenue', 'was', '$', '81.8', 'billion', '.']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -520,12 +513,12 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href=""></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
-<span id="cb2-2"><a href=""></a></span>
-<span id="cb2-3"><a href=""></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
-<span id="cb2-4"><a href=""></a>tokens <span class="op">=</span> [<span class="st">'the'</span>, <span class="st">'company'</span>, <span class="st">'reported'</span>, <span class="st">'strong'</span>, <span class="st">'revenue'</span>, <span class="st">'growth'</span>]</span>
-<span id="cb2-5"><a href=""></a>filtered <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> tokens <span class="cf">if</span> w.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
-<span id="cb2-6"><a href=""></a><span class="co"># ['company', 'reported', 'strong', 'revenue', 'growth']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="" aria-label="1"></a><span class="im">from</span> nltk.corpus <span class="im">import</span> stopwords</span>
+<span id="cb2-2"><a href="" aria-label="2"></a></span>
+<span id="cb2-3"><a href="" aria-label="3"></a>stop_words <span class="op">=</span> <span class="bu">set</span>(stopwords.words(<span class="st">'english'</span>))</span>
+<span id="cb2-4"><a href="" aria-label="4"></a>tokens <span class="op">=</span> [<span class="st">'the'</span>, <span class="st">'company'</span>, <span class="st">'reported'</span>, <span class="st">'strong'</span>, <span class="st">'revenue'</span>, <span class="st">'growth'</span>]</span>
+<span id="cb2-5"><a href="" aria-label="5"></a>filtered <span class="op">=</span> [w <span class="cf">for</span> w <span class="kw">in</span> tokens <span class="cf">if</span> w.lower() <span class="kw">not</span> <span class="kw">in</span> stop_words]</span>
+<span id="cb2-6"><a href="" aria-label="6"></a><span class="co"># ['company', 'reported', 'strong', 'revenue', 'growth']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -552,10 +545,10 @@ Saad Ali Khan
 <li>“running” → “run”</li>
 <li>“studies” → “studi”</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a><span class="im">from</span> nltk.stem <span class="im">import</span> PorterStemmer</span>
-<span id="cb3-2"><a href=""></a>stemmer <span class="op">=</span> PorterStemmer()</span>
-<span id="cb3-3"><a href=""></a>stemmer.stem(<span class="st">"profitable"</span>)</span>
-<span id="cb3-4"><a href=""></a><span class="co"># 'profit'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a><span class="im">from</span> nltk.stem <span class="im">import</span> PorterStemmer</span>
+<span id="cb3-2"><a href="" aria-label="2"></a>stemmer <span class="op">=</span> PorterStemmer()</span>
+<span id="cb3-3"><a href="" aria-label="3"></a>stemmer.stem(<span class="st">"profitable"</span>)</span>
+<span id="cb3-4"><a href="" aria-label="4"></a><span class="co"># 'profit'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div><div class="column" style="width:50%;">
 <h3 id="lemmatization">Lemmatization</h3>
 <ul>
@@ -564,10 +557,10 @@ Saad Ali Khan
 <li>“running” → “run”</li>
 <li>“studies” → “study”</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href=""></a><span class="im">from</span> nltk.stem <span class="im">import</span> WordNetLemmatizer</span>
-<span id="cb4-2"><a href=""></a>lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
-<span id="cb4-3"><a href=""></a>lemmatizer.lemmatize(<span class="st">"profitable"</span>, pos<span class="op">=</span><span class="st">'a'</span>)</span>
-<span id="cb4-4"><a href=""></a><span class="co"># 'profitable'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="" aria-label="1"></a><span class="im">from</span> nltk.stem <span class="im">import</span> WordNetLemmatizer</span>
+<span id="cb4-2"><a href="" aria-label="2"></a>lemmatizer <span class="op">=</span> WordNetLemmatizer()</span>
+<span id="cb4-3"><a href="" aria-label="3"></a>lemmatizer.lemmatize(<span class="st">"profitable"</span>, pos<span class="op">=</span><span class="st">'a'</span>)</span>
+<span id="cb4-4"><a href="" aria-label="4"></a><span class="co"># 'profitable'</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div></div>
 </section>
 <section id="n-grams" class="slide level2">
@@ -587,11 +580,11 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href=""></a><span class="im">from</span> nltk <span class="im">import</span> ngrams</span>
-<span id="cb5-2"><a href=""></a></span>
-<span id="cb5-3"><a href=""></a>text <span class="op">=</span> [<span class="st">"interest"</span>, <span class="st">"rate"</span>, <span class="st">"hike"</span>, <span class="st">"expected"</span>]</span>
-<span id="cb5-4"><a href=""></a><span class="bu">list</span>(ngrams(text, <span class="dv">2</span>))</span>
-<span id="cb5-5"><a href=""></a><span class="co"># [('interest', 'rate'), ('rate', 'hike'), ('hike', 'expected')]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a><span class="im">from</span> nltk <span class="im">import</span> ngrams</span>
+<span id="cb5-2"><a href="" aria-label="2"></a></span>
+<span id="cb5-3"><a href="" aria-label="3"></a>text <span class="op">=</span> [<span class="st">"interest"</span>, <span class="st">"rate"</span>, <span class="st">"hike"</span>, <span class="st">"expected"</span>]</span>
+<span id="cb5-4"><a href="" aria-label="4"></a><span class="bu">list</span>(ngrams(text, <span class="dv">2</span>))</span>
+<span id="cb5-5"><a href="" aria-label="5"></a><span class="co"># [('interest', 'rate'), ('rate', 'hike'), ('hike', 'expected')]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -609,19 +602,19 @@ Saad Ali Khan
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href=""></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
-<span id="cb6-2"><a href=""></a></span>
-<span id="cb6-3"><a href=""></a>docs <span class="op">=</span> [</span>
-<span id="cb6-4"><a href=""></a>    <span class="st">"revenue increased significantly"</span>,</span>
-<span id="cb6-5"><a href=""></a>    <span class="st">"profit margins decreased"</span>,</span>
-<span id="cb6-6"><a href=""></a>    <span class="st">"revenue and profit both increased"</span></span>
-<span id="cb6-7"><a href=""></a>]</span>
-<span id="cb6-8"><a href=""></a></span>
-<span id="cb6-9"><a href=""></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
-<span id="cb6-10"><a href=""></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
-<span id="cb6-11"><a href=""></a><span class="bu">print</span>(vectorizer.get_feature_names_out())</span>
-<span id="cb6-12"><a href=""></a><span class="co"># ['and', 'both', 'decreased', 'increased', 'margins',</span></span>
-<span id="cb6-13"><a href=""></a><span class="co">#  'profit', 'revenue', 'significantly']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> CountVectorizer</span>
+<span id="cb6-2"><a href="" aria-label="2"></a></span>
+<span id="cb6-3"><a href="" aria-label="3"></a>docs <span class="op">=</span> [</span>
+<span id="cb6-4"><a href="" aria-label="4"></a>    <span class="st">"revenue increased significantly"</span>,</span>
+<span id="cb6-5"><a href="" aria-label="5"></a>    <span class="st">"profit margins decreased"</span>,</span>
+<span id="cb6-6"><a href="" aria-label="6"></a>    <span class="st">"revenue and profit both increased"</span></span>
+<span id="cb6-7"><a href="" aria-label="7"></a>]</span>
+<span id="cb6-8"><a href="" aria-label="8"></a></span>
+<span id="cb6-9"><a href="" aria-label="9"></a>vectorizer <span class="op">=</span> CountVectorizer()</span>
+<span id="cb6-10"><a href="" aria-label="10"></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
+<span id="cb6-11"><a href="" aria-label="11"></a><span class="bu">print</span>(vectorizer.get_feature_names_out())</span>
+<span id="cb6-12"><a href="" aria-label="12"></a><span class="co"># ['and', 'both', 'decreased', 'increased', 'margins',</span></span>
+<span id="cb6-13"><a href="" aria-label="13"></a><span class="co">#  'profit', 'revenue', 'significantly']</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -654,6 +647,7 @@ Saad Ali Khan
 <li>Words that appear frequently in one document but rarely overall get <strong>high</strong> scores</li>
 <li>Common words across all documents get <strong>low</strong> scores</li>
 <li>Better than raw counts for identifying distinctive terms</li>
+<li>Note: scikit-learn smooths the IDF, <span class="math inline">\ln\left(\frac{1+N}{1+\text{DF}(t)}\right) + 1</span>, and L2-normalizes each row (<code>norm='l2'</code>), so its values differ from the formula above</li>
 </ul>
 </section>
 <section id="tf-idf-in-python" class="slide level2">
@@ -661,19 +655,19 @@ Saad Ali Khan
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href=""></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
-<span id="cb7-2"><a href=""></a></span>
-<span id="cb7-3"><a href=""></a>docs <span class="op">=</span> [</span>
-<span id="cb7-4"><a href=""></a>    <span class="st">"The company reported strong revenue growth in Q3"</span>,</span>
-<span id="cb7-5"><a href=""></a>    <span class="st">"Revenue declined due to market conditions"</span>,</span>
-<span id="cb7-6"><a href=""></a>    <span class="st">"Strong earnings beat analyst expectations"</span></span>
-<span id="cb7-7"><a href=""></a>]</span>
-<span id="cb7-8"><a href=""></a></span>
-<span id="cb7-9"><a href=""></a>vectorizer <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
-<span id="cb7-10"><a href=""></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
-<span id="cb7-11"><a href=""></a></span>
-<span id="cb7-12"><a href=""></a><span class="co"># X is now a sparse matrix of TF-IDF features</span></span>
-<span id="cb7-13"><a href=""></a><span class="bu">print</span>(X.shape)  <span class="co"># (3 documents, n features)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="" aria-label="1"></a><span class="im">from</span> sklearn.feature_extraction.text <span class="im">import</span> TfidfVectorizer</span>
+<span id="cb7-2"><a href="" aria-label="2"></a></span>
+<span id="cb7-3"><a href="" aria-label="3"></a>docs <span class="op">=</span> [</span>
+<span id="cb7-4"><a href="" aria-label="4"></a>    <span class="st">"The company reported strong revenue growth in Q3"</span>,</span>
+<span id="cb7-5"><a href="" aria-label="5"></a>    <span class="st">"Revenue declined due to market conditions"</span>,</span>
+<span id="cb7-6"><a href="" aria-label="6"></a>    <span class="st">"Strong earnings beat analyst expectations"</span></span>
+<span id="cb7-7"><a href="" aria-label="7"></a>]</span>
+<span id="cb7-8"><a href="" aria-label="8"></a></span>
+<span id="cb7-9"><a href="" aria-label="9"></a>vectorizer <span class="op">=</span> TfidfVectorizer(stop_words<span class="op">=</span><span class="st">'english'</span>)</span>
+<span id="cb7-10"><a href="" aria-label="10"></a>X <span class="op">=</span> vectorizer.fit_transform(docs)</span>
+<span id="cb7-11"><a href="" aria-label="11"></a></span>
+<span id="cb7-12"><a href="" aria-label="12"></a><span class="co"># X is now a sparse matrix of TF-IDF features</span></span>
+<span id="cb7-13"><a href="" aria-label="13"></a><span class="bu">print</span>(X.shape)  <span class="co"># (3 documents, n features)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -757,27 +751,30 @@ Saad Ali Khan
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href=""></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb8-2"><a href=""></a></span>
-<span id="cb8-3"><a href=""></a><span class="co"># Load the dictionary</span></span>
-<span id="cb8-4"><a href=""></a>lm_dict <span class="op">=</span> pd.read_csv(<span class="st">'LoughranMcDonald_MasterDictionary.csv'</span>)</span>
-<span id="cb8-5"><a href=""></a></span>
-<span id="cb8-6"><a href=""></a><span class="co"># Get negative words</span></span>
-<span id="cb8-7"><a href=""></a>negative_words <span class="op">=</span> <span class="bu">set</span>(</span>
-<span id="cb8-8"><a href=""></a>    lm_dict[lm_dict[<span class="st">'Negative'</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">'Word'</span>].<span class="bu">str</span>.lower()</span>
-<span id="cb8-9"><a href=""></a>)</span>
-<span id="cb8-10"><a href=""></a></span>
-<span id="cb8-11"><a href=""></a><span class="co"># Count negative words in text</span></span>
-<span id="cb8-12"><a href=""></a><span class="kw">def</span> count_negative(text):</span>
-<span id="cb8-13"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
-<span id="cb8-14"><a href=""></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
-<span id="cb8-15"><a href=""></a></span>
-<span id="cb8-16"><a href=""></a><span class="co"># Compute sentiment score</span></span>
-<span id="cb8-17"><a href=""></a><span class="kw">def</span> sentiment_score(text):</span>
-<span id="cb8-18"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
-<span id="cb8-19"><a href=""></a>    n_neg <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
-<span id="cb8-20"><a href=""></a>    n_pos <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> positive_words)</span>
-<span id="cb8-21"><a href=""></a>    <span class="cf">return</span> (n_pos <span class="op">-</span> n_neg) <span class="op">/</span> <span class="bu">len</span>(words)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="" aria-label="1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb8-2"><a href="" aria-label="2"></a></span>
+<span id="cb8-3"><a href="" aria-label="3"></a><span class="co"># Load the dictionary</span></span>
+<span id="cb8-4"><a href="" aria-label="4"></a>lm_dict <span class="op">=</span> pd.read_csv(<span class="st">'LoughranMcDonald_MasterDictionary.csv'</span>)</span>
+<span id="cb8-5"><a href="" aria-label="5"></a></span>
+<span id="cb8-6"><a href="" aria-label="6"></a><span class="co"># Get negative and positive words</span></span>
+<span id="cb8-7"><a href="" aria-label="7"></a>negative_words <span class="op">=</span> <span class="bu">set</span>(</span>
+<span id="cb8-8"><a href="" aria-label="8"></a>    lm_dict[lm_dict[<span class="st">'Negative'</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">'Word'</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb8-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb8-10"><a href="" aria-label="10"></a>positive_words <span class="op">=</span> <span class="bu">set</span>(</span>
+<span id="cb8-11"><a href="" aria-label="11"></a>    lm_dict[lm_dict[<span class="st">'Positive'</span>] <span class="op">&gt;</span> <span class="dv">0</span>][<span class="st">'Word'</span>].<span class="bu">str</span>.lower()</span>
+<span id="cb8-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb8-13"><a href="" aria-label="13"></a></span>
+<span id="cb8-14"><a href="" aria-label="14"></a><span class="co"># Count negative words in text</span></span>
+<span id="cb8-15"><a href="" aria-label="15"></a><span class="kw">def</span> count_negative(text):</span>
+<span id="cb8-16"><a href="" aria-label="16"></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb8-17"><a href="" aria-label="17"></a>    <span class="cf">return</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
+<span id="cb8-18"><a href="" aria-label="18"></a></span>
+<span id="cb8-19"><a href="" aria-label="19"></a><span class="co"># Compute sentiment score</span></span>
+<span id="cb8-20"><a href="" aria-label="20"></a><span class="kw">def</span> sentiment_score(text):</span>
+<span id="cb8-21"><a href="" aria-label="21"></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb8-22"><a href="" aria-label="22"></a>    n_neg <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> negative_words)</span>
+<span id="cb8-23"><a href="" aria-label="23"></a>    n_pos <span class="op">=</span> <span class="bu">sum</span>(<span class="dv">1</span> <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> positive_words)</span>
+<span id="cb8-24"><a href="" aria-label="24"></a>    <span class="cf">return</span> (n_pos <span class="op">-</span> n_neg) <span class="op">/</span> <span class="bu">len</span>(words)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="limitations-of-bowtf-idf" class="slide level2">
 <h2>Limitations of BoW/TF-IDF</h2>
@@ -895,21 +892,21 @@ flowchart LR
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href=""></a><span class="im">import</span> gensim.downloader <span class="im">as</span> api</span>
-<span id="cb9-2"><a href=""></a></span>
-<span id="cb9-3"><a href=""></a><span class="co"># Load pre-trained Word2Vec embeddings</span></span>
-<span id="cb9-4"><a href=""></a>model <span class="op">=</span> api.load(<span class="st">'word2vec-google-news-300'</span>)</span>
-<span id="cb9-5"><a href=""></a></span>
-<span id="cb9-6"><a href=""></a><span class="co"># Find similar words</span></span>
-<span id="cb9-7"><a href=""></a>model.most_similar(<span class="st">'profit'</span>)</span>
-<span id="cb9-8"><a href=""></a><span class="co"># [('profits', 0.82), ('earnings', 0.71), ('revenue', 0.65), ...]</span></span>
-<span id="cb9-9"><a href=""></a></span>
-<span id="cb9-10"><a href=""></a><span class="co"># Word arithmetic</span></span>
-<span id="cb9-11"><a href=""></a>model.most_similar(positive<span class="op">=</span>[<span class="st">'ceo'</span>, <span class="st">'woman'</span>], negative<span class="op">=</span>[<span class="st">'man'</span>])</span>
-<span id="cb9-12"><a href=""></a><span class="co"># [('chairwoman', 0.71), ('executive', 0.69), ...]</span></span>
-<span id="cb9-13"><a href=""></a></span>
-<span id="cb9-14"><a href=""></a><span class="co"># Get embedding vector</span></span>
-<span id="cb9-15"><a href=""></a>vector <span class="op">=</span> model[<span class="st">'stock'</span>]  <span class="co"># 300-dimensional vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="" aria-label="1"></a><span class="im">import</span> gensim.downloader <span class="im">as</span> api</span>
+<span id="cb9-2"><a href="" aria-label="2"></a></span>
+<span id="cb9-3"><a href="" aria-label="3"></a><span class="co"># Load pre-trained Word2Vec embeddings</span></span>
+<span id="cb9-4"><a href="" aria-label="4"></a>model <span class="op">=</span> api.load(<span class="st">'word2vec-google-news-300'</span>)</span>
+<span id="cb9-5"><a href="" aria-label="5"></a></span>
+<span id="cb9-6"><a href="" aria-label="6"></a><span class="co"># Find similar words</span></span>
+<span id="cb9-7"><a href="" aria-label="7"></a>model.most_similar(<span class="st">'profit'</span>)</span>
+<span id="cb9-8"><a href="" aria-label="8"></a><span class="co"># [('profits', 0.82), ('earnings', 0.71), ('revenue', 0.65), ...]</span></span>
+<span id="cb9-9"><a href="" aria-label="9"></a></span>
+<span id="cb9-10"><a href="" aria-label="10"></a><span class="co"># Word arithmetic</span></span>
+<span id="cb9-11"><a href="" aria-label="11"></a>model.most_similar(positive<span class="op">=</span>[<span class="st">'ceo'</span>, <span class="st">'woman'</span>], negative<span class="op">=</span>[<span class="st">'man'</span>])</span>
+<span id="cb9-12"><a href="" aria-label="12"></a><span class="co"># [('chairwoman', 0.71), ('executive', 0.69), ...]</span></span>
+<span id="cb9-13"><a href="" aria-label="13"></a></span>
+<span id="cb9-14"><a href="" aria-label="14"></a><span class="co"># Get embedding vector</span></span>
+<span id="cb9-15"><a href="" aria-label="15"></a>vector <span class="op">=</span> model[<span class="st">'stock'</span>]  <span class="co"># 300-dimensional vector</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -927,14 +924,14 @@ flowchart LR
 
 </div>
 <p><strong>Simple approach</strong>: average word embeddings</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href=""></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb10-2"><a href=""></a></span>
-<span id="cb10-3"><a href=""></a><span class="kw">def</span> document_embedding(text, model):</span>
-<span id="cb10-4"><a href=""></a>    words <span class="op">=</span> text.lower().split()</span>
-<span id="cb10-5"><a href=""></a>    vectors <span class="op">=</span> [model[w] <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> model]</span>
-<span id="cb10-6"><a href=""></a>    <span class="cf">if</span> vectors:</span>
-<span id="cb10-7"><a href=""></a>        <span class="cf">return</span> np.mean(vectors, axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb10-8"><a href=""></a>    <span class="cf">return</span> np.zeros(model.vector_size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb10-2"><a href="" aria-label="2"></a></span>
+<span id="cb10-3"><a href="" aria-label="3"></a><span class="kw">def</span> document_embedding(text, model):</span>
+<span id="cb10-4"><a href="" aria-label="4"></a>    words <span class="op">=</span> text.lower().split()</span>
+<span id="cb10-5"><a href="" aria-label="5"></a>    vectors <span class="op">=</span> [model[w] <span class="cf">for</span> w <span class="kw">in</span> words <span class="cf">if</span> w <span class="kw">in</span> model]</span>
+<span id="cb10-6"><a href="" aria-label="6"></a>    <span class="cf">if</span> vectors:</span>
+<span id="cb10-7"><a href="" aria-label="7"></a>        <span class="cf">return</span> np.mean(vectors, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb10-8"><a href="" aria-label="8"></a>    <span class="cf">return</span> np.zeros(model.vector_size)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -1064,36 +1061,36 @@ flowchart LR
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href=""></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
-<span id="cb11-2"><a href=""></a></span>
-<span id="cb11-3"><a href=""></a>classifier <span class="op">=</span> pipeline(<span class="st">"sentiment-analysis"</span>,</span>
-<span id="cb11-4"><a href=""></a>                      model<span class="op">=</span><span class="st">"ProsusAI/finbert"</span>)</span>
-<span id="cb11-5"><a href=""></a></span>
-<span id="cb11-6"><a href=""></a>classifier(<span class="st">"Revenue growth exceeded expectations"</span>)</span>
-<span id="cb11-7"><a href=""></a><span class="co"># [{'label': 'positive', 'score': 0.94}]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="" aria-label="1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb11-2"><a href="" aria-label="2"></a></span>
+<span id="cb11-3"><a href="" aria-label="3"></a>classifier <span class="op">=</span> pipeline(<span class="st">"sentiment-analysis"</span>,</span>
+<span id="cb11-4"><a href="" aria-label="4"></a>                      model<span class="op">=</span><span class="st">"ProsusAI/finbert"</span>)</span>
+<span id="cb11-5"><a href="" aria-label="5"></a></span>
+<span id="cb11-6"><a href="" aria-label="6"></a>classifier(<span class="st">"Revenue growth exceeded expectations"</span>)</span>
+<span id="cb11-7"><a href="" aria-label="7"></a><span class="co"># [{'label': 'positive', 'score': 0.94}]</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="using-transformers-for-embeddings" class="slide level2">
 <h2>Using Transformers for Embeddings</h2>
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href=""></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
-<span id="cb12-2"><a href=""></a></span>
-<span id="cb12-3"><a href=""></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'all-MiniLM-L6-v2'</span>)</span>
-<span id="cb12-4"><a href=""></a></span>
-<span id="cb12-5"><a href=""></a>sentences <span class="op">=</span> [</span>
-<span id="cb12-6"><a href=""></a>    <span class="st">"The company reported strong earnings"</span>,</span>
-<span id="cb12-7"><a href=""></a>    <span class="st">"Profits exceeded analyst expectations"</span>,</span>
-<span id="cb12-8"><a href=""></a>    <span class="st">"The weather was sunny today"</span></span>
-<span id="cb12-9"><a href=""></a>]</span>
-<span id="cb12-10"><a href=""></a></span>
-<span id="cb12-11"><a href=""></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
-<span id="cb12-12"><a href=""></a><span class="co"># embeddings.shape: (3, 384)</span></span>
-<span id="cb12-13"><a href=""></a></span>
-<span id="cb12-14"><a href=""></a><span class="co"># Compute similarity</span></span>
-<span id="cb12-15"><a href=""></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
-<span id="cb12-16"><a href=""></a>similarity <span class="op">=</span> cosine_similarity(embeddings)</span>
-<span id="cb12-17"><a href=""></a><span class="co"># sentences 0 and 1 will have high similarity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="" aria-label="1"></a><span class="im">from</span> sentence_transformers <span class="im">import</span> SentenceTransformer</span>
+<span id="cb12-2"><a href="" aria-label="2"></a></span>
+<span id="cb12-3"><a href="" aria-label="3"></a>model <span class="op">=</span> SentenceTransformer(<span class="st">'all-MiniLM-L6-v2'</span>)</span>
+<span id="cb12-4"><a href="" aria-label="4"></a></span>
+<span id="cb12-5"><a href="" aria-label="5"></a>sentences <span class="op">=</span> [</span>
+<span id="cb12-6"><a href="" aria-label="6"></a>    <span class="st">"The company reported strong earnings"</span>,</span>
+<span id="cb12-7"><a href="" aria-label="7"></a>    <span class="st">"Profits exceeded analyst expectations"</span>,</span>
+<span id="cb12-8"><a href="" aria-label="8"></a>    <span class="st">"The weather was sunny today"</span></span>
+<span id="cb12-9"><a href="" aria-label="9"></a>]</span>
+<span id="cb12-10"><a href="" aria-label="10"></a></span>
+<span id="cb12-11"><a href="" aria-label="11"></a>embeddings <span class="op">=</span> model.encode(sentences)</span>
+<span id="cb12-12"><a href="" aria-label="12"></a><span class="co"># embeddings.shape: (3, 384)</span></span>
+<span id="cb12-13"><a href="" aria-label="13"></a></span>
+<span id="cb12-14"><a href="" aria-label="14"></a><span class="co"># Compute similarity</span></span>
+<span id="cb12-15"><a href="" aria-label="15"></a><span class="im">from</span> sklearn.metrics.pairwise <span class="im">import</span> cosine_similarity</span>
+<span id="cb12-16"><a href="" aria-label="16"></a>similarity <span class="op">=</span> cosine_similarity(embeddings)</span>
+<span id="cb12-17"><a href="" aria-label="17"></a><span class="co"># sentences 0 and 1 will have high similarity</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -1111,8 +1108,8 @@ flowchart LR
 
 </div>
 <ul>
-<li>GPT-4, Claude, Llama, Gemini, Mistral…</li>
-<li>Billions of parameters</li>
+<li>GPT, Claude, Gemini, Kimi, Grok…</li>
+<li>Billions to trillions of parameters</li>
 <li>Trained on internet-scale data</li>
 </ul>
 <div style="height: 1em;">
@@ -1184,26 +1181,26 @@ flowchart LR
 <div style="height: 2em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href=""></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb13-2"><a href=""></a></span>
-<span id="cb13-3"><a href=""></a>client <span class="op">=</span> OpenAI()  <span class="co"># Uses OPENAI_API_KEY env variable</span></span>
-<span id="cb13-4"><a href=""></a></span>
-<span id="cb13-5"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb13-6"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
-<span id="cb13-7"><a href=""></a>    messages<span class="op">=</span>[</span>
-<span id="cb13-8"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a financial analyst."</span>},</span>
-<span id="cb13-9"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"""</span></span>
-<span id="cb13-10"><a href=""></a><span class="st">            Classify the sentiment of this text as</span></span>
-<span id="cb13-11"><a href=""></a><span class="st">            positive, negative, or neutral:</span></span>
-<span id="cb13-12"><a href=""></a></span>
-<span id="cb13-13"><a href=""></a><span class="st">            "Despite challenging market conditions,</span></span>
-<span id="cb13-14"><a href=""></a><span class="st">            the company achieved record revenue growth."</span></span>
-<span id="cb13-15"><a href=""></a><span class="st">        """</span>}</span>
-<span id="cb13-16"><a href=""></a>    ]</span>
-<span id="cb13-17"><a href=""></a>)</span>
-<span id="cb13-18"><a href=""></a></span>
-<span id="cb13-19"><a href=""></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span>
-<span id="cb13-20"><a href=""></a><span class="co"># "positive"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="" aria-label="1"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb13-2"><a href="" aria-label="2"></a></span>
+<span id="cb13-3"><a href="" aria-label="3"></a>client <span class="op">=</span> OpenAI()  <span class="co"># Uses OPENAI_API_KEY env variable</span></span>
+<span id="cb13-4"><a href="" aria-label="4"></a></span>
+<span id="cb13-5"><a href="" aria-label="5"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb13-6"><a href="" aria-label="6"></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb13-7"><a href="" aria-label="7"></a>    messages<span class="op">=</span>[</span>
+<span id="cb13-8"><a href="" aria-label="8"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"You are a financial analyst."</span>},</span>
+<span id="cb13-9"><a href="" aria-label="9"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"""</span></span>
+<span id="cb13-10"><a href="" aria-label="10"></a><span class="st">            Classify the sentiment of this text as</span></span>
+<span id="cb13-11"><a href="" aria-label="11"></a><span class="st">            positive, negative, or neutral:</span></span>
+<span id="cb13-12"><a href="" aria-label="12"></a></span>
+<span id="cb13-13"><a href="" aria-label="13"></a><span class="st">            "Despite challenging market conditions,</span></span>
+<span id="cb13-14"><a href="" aria-label="14"></a><span class="st">            the company achieved record revenue growth."</span></span>
+<span id="cb13-15"><a href="" aria-label="15"></a><span class="st">        """</span>}</span>
+<span id="cb13-16"><a href="" aria-label="16"></a>    ]</span>
+<span id="cb13-17"><a href="" aria-label="17"></a>)</span>
+<span id="cb13-18"><a href="" aria-label="18"></a></span>
+<span id="cb13-19"><a href="" aria-label="19"></a><span class="bu">print</span>(response.choices[<span class="dv">0</span>].message.content)</span>
+<span id="cb13-20"><a href="" aria-label="20"></a><span class="co"># "positive"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="prompt-engineering" class="slide level2">
 <h2>Prompt Engineering</h2>
@@ -1223,16 +1220,16 @@ flowchart LR
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href=""></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb14-2"><a href=""></a><span class="st">You are a financial sentiment analyst. Classify the following</span></span>
-<span id="cb14-3"><a href=""></a><span class="st">text as exactly one of: POSITIVE, NEGATIVE, NEUTRAL.</span></span>
-<span id="cb14-4"><a href=""></a></span>
-<span id="cb14-5"><a href=""></a><span class="st">Example: "Revenue increased 15%" -&gt; POSITIVE</span></span>
-<span id="cb14-6"><a href=""></a><span class="st">Example: "We face significant headwinds" -&gt; NEGATIVE</span></span>
-<span id="cb14-7"><a href=""></a></span>
-<span id="cb14-8"><a href=""></a><span class="st">Text: "</span><span class="sc">{text}</span><span class="st">"</span></span>
-<span id="cb14-9"><a href=""></a><span class="st">Classification:</span></span>
-<span id="cb14-10"><a href=""></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="" aria-label="1"></a>prompt <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb14-2"><a href="" aria-label="2"></a><span class="st">You are a financial sentiment analyst. Classify the following</span></span>
+<span id="cb14-3"><a href="" aria-label="3"></a><span class="st">text as exactly one of: POSITIVE, NEGATIVE, NEUTRAL.</span></span>
+<span id="cb14-4"><a href="" aria-label="4"></a></span>
+<span id="cb14-5"><a href="" aria-label="5"></a><span class="st">Example: "Revenue increased 15%" -&gt; POSITIVE</span></span>
+<span id="cb14-6"><a href="" aria-label="6"></a><span class="st">Example: "We face significant headwinds" -&gt; NEGATIVE</span></span>
+<span id="cb14-7"><a href="" aria-label="7"></a></span>
+<span id="cb14-8"><a href="" aria-label="8"></a><span class="st">Text: "</span><span class="sc">{text}</span><span class="st">"</span></span>
+<span id="cb14-9"><a href="" aria-label="9"></a><span class="st">Classification:</span></span>
+<span id="cb14-10"><a href="" aria-label="10"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="local-llms" class="slide level2">
 <h2>Local LLMs</h2>
@@ -1243,24 +1240,24 @@ flowchart LR
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href=""></a><span class="im">import</span> ollama</span>
-<span id="cb15-2"><a href=""></a></span>
-<span id="cb15-3"><a href=""></a>response <span class="op">=</span> ollama.chat(</span>
-<span id="cb15-4"><a href=""></a>    model<span class="op">=</span><span class="st">'llama3.2'</span>,</span>
-<span id="cb15-5"><a href=""></a>    messages<span class="op">=</span>[{</span>
-<span id="cb15-6"><a href=""></a>        <span class="st">'role'</span>: <span class="st">'user'</span>,</span>
-<span id="cb15-7"><a href=""></a>        <span class="st">'content'</span>: <span class="st">'Summarize this earnings report in one sentence: ...'</span></span>
-<span id="cb15-8"><a href=""></a>    }]</span>
-<span id="cb15-9"><a href=""></a>)</span>
-<span id="cb15-10"><a href=""></a></span>
-<span id="cb15-11"><a href=""></a><span class="bu">print</span>(response[<span class="st">'message'</span>][<span class="st">'content'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="" aria-label="1"></a><span class="im">import</span> ollama</span>
+<span id="cb15-2"><a href="" aria-label="2"></a></span>
+<span id="cb15-3"><a href="" aria-label="3"></a>response <span class="op">=</span> ollama.chat(</span>
+<span id="cb15-4"><a href="" aria-label="4"></a>    model<span class="op">=</span><span class="st">'qwen3.6'</span>,</span>
+<span id="cb15-5"><a href="" aria-label="5"></a>    messages<span class="op">=</span>[{</span>
+<span id="cb15-6"><a href="" aria-label="6"></a>        <span class="st">'role'</span>: <span class="st">'user'</span>,</span>
+<span id="cb15-7"><a href="" aria-label="7"></a>        <span class="st">'content'</span>: <span class="st">'Summarize this earnings report in one sentence: ...'</span></span>
+<span id="cb15-8"><a href="" aria-label="8"></a>    }]</span>
+<span id="cb15-9"><a href="" aria-label="9"></a>)</span>
+<span id="cb15-10"><a href="" aria-label="10"></a></span>
+<span id="cb15-11"><a href="" aria-label="11"></a><span class="bu">print</span>(response[<span class="st">'message'</span>][<span class="st">'content'</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
 <ul>
 <li><a href="https://ollama.com/">Ollama</a>: command-line tool for local LLM deployment</li>
 <li><a href="https://lmstudio.ai/">LM Studio</a>: GUI application for running local LLMs</li>
-<li>Models: Llama 3, Mistral, Phi, Gemma, Qwen, etc.</li>
+<li>Models: Gemma, Qwen, Muse, Nemotron, etc.</li>
 <li>Trade-off: smaller models = less capable but free and private</li>
 </ul>
 </section>
@@ -1278,7 +1275,7 @@ flowchart LR
 
 </div>
 <ol type="1">
-<li><strong>Model training data</strong>: GPT-4 was trained on data up to a cutoff date
+<li><strong>Model training data</strong>: <code>gpt-5-mini</code> was trained on data up to a cutoff date
 <ul>
 <li>Using it to “predict” events before that date is cheating</li>
 </ul></li>
@@ -1287,7 +1284,7 @@ flowchart LR
 
 </div>
 <ol start="2" type="1">
-<li><strong>Model release dates</strong>: Can’t use GPT-4 for 2020 predictions
+<li><strong>Model release dates</strong>: Can’t use <code>gpt-5-mini-2025-08-07</code> for 2020 predictions
 <ul>
 <li>Document which model version you used</li>
 </ul></li>
@@ -1314,7 +1311,7 @@ flowchart LR
 <ul>
 <li><strong>Model versioning</strong>: APIs update silently
 <ul>
-<li>Document exact model name: <code>gpt-4-0613</code> not just <code>gpt-4</code></li>
+<li>Pin the exact snapshot: <code>gpt-5-mini-2025-08-07</code>, not <code>gpt-5-mini</code></li>
 </ul></li>
 </ul>
 <div style="height: 1em;">
@@ -1332,8 +1329,8 @@ flowchart LR
 <ul>
 <li><strong>Stochastic outputs</strong>: same prompt → different answers
 <ul>
-<li>Set <code>temperature=0</code> for deterministic outputs</li>
-<li>Save all raw outputs</li>
+<li>Save all raw outputs, not just the parsed labels</li>
+<li>Re-run a subsample to measure how stable your results are</li>
 </ul></li>
 </ul>
 </section>
@@ -1349,20 +1346,41 @@ flowchart LR
 <ul>
 <li><code>temperature=0</code>: deterministic, always pick most likely token</li>
 <li><code>temperature=1</code>: sample according to model probabilities</li>
-<li><code>temperature&gt;1</code>: more random/creative</li>
+<li><code>temperature&gt;1</code>: more random/creative — for open-ended generation, not for extraction or classification</li>
 </ul>
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb16-2"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
-<span id="cb16-3"><a href=""></a>    temperature<span class="op">=</span><span class="dv">0</span>,  <span class="co"># Reproducible outputs</span></span>
-<span id="cb16-4"><a href=""></a>    messages<span class="op">=</span>[...]</span>
-<span id="cb16-5"><a href=""></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Reasoning models (the GPT-5 family) do not expose it</strong>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="" aria-label="1"></a><span class="co"># 400: 'temperature' does not support 0 with this model.</span></span>
+<span id="cb16-2"><a href="" aria-label="2"></a><span class="co">#      Only the default (1) value is supported.</span></span>
+<span id="cb16-3"><a href="" aria-label="3"></a>client.chat.completions.create(</span>
+<span id="cb16-4"><a href="" aria-label="4"></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>, temperature<span class="op">=</span><span class="dv">0</span>, messages<span class="op">=</span>[...]</span>
+<span id="cb16-5"><a href="" aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
-<p><strong>For research</strong>: use <code>temperature=0</code> for reproducibility, but note that most models perform best at higher temperatures (typically 0.7-1.0)</p>
+<p><code>temperature</code>, <code>top_p</code>, <code>logprobs</code> and <code>logit_bias</code> are all rejected — tune <code>reasoning_effort</code> and <code>verbosity</code> instead</p>
+</section>
+<section id="reproducibility-without-temperature" class="slide level2">
+<h2>Reproducibility Without Temperature</h2>
+<div style="height: 2em;">
+
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="" aria-label="1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb17-2"><a href="" aria-label="2"></a>    model<span class="op">=</span><span class="st">"gpt-5-mini-2025-08-07"</span>,  <span class="co"># pin the exact snapshot</span></span>
+<span id="cb17-3"><a href="" aria-label="3"></a>    reasoning_effort<span class="op">=</span><span class="st">"low"</span>,         <span class="co"># tune effort, not temperature</span></span>
+<span id="cb17-4"><a href="" aria-label="4"></a>    messages<span class="op">=</span>[...]</span>
+<span id="cb17-5"><a href="" aria-label="5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li><strong>Pin a dated snapshot</strong>, never the floating alias</li>
+<li><strong>Save every raw response</strong>, not just the parsed label</li>
+<li><strong>Re-run a random subsample</strong> and report the disagreement rate</li>
+<li><code>seed</code> is best-effort only: determinism is never guaranteed</li>
+</ul>
 </section>
 <section id="structured-output" class="slide level2">
 <h2>Structured Output</h2>
@@ -1373,20 +1391,20 @@ flowchart LR
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href=""></a>response <span class="op">=</span> client.chat.completions.create(</span>
-<span id="cb17-2"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
-<span id="cb17-3"><a href=""></a>    response_format<span class="op">=</span>{<span class="st">"type"</span>: <span class="st">"json_object"</span>},</span>
-<span id="cb17-4"><a href=""></a>    messages<span class="op">=</span>[{</span>
-<span id="cb17-5"><a href=""></a>        <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
-<span id="cb17-6"><a href=""></a>        <span class="st">"content"</span>: <span class="st">"""Extract financial data as JSON:</span></span>
-<span id="cb17-7"><a href=""></a><span class="st">        {"revenue": number, "net_income": number, "sentiment": string}</span></span>
-<span id="cb17-8"><a href=""></a></span>
-<span id="cb17-9"><a href=""></a><span class="st">        Text: Revenue was $5.2B, net income $800M.</span></span>
-<span id="cb17-10"><a href=""></a><span class="st">        Management expressed cautious optimism."""</span></span>
-<span id="cb17-11"><a href=""></a>    }]</span>
-<span id="cb17-12"><a href=""></a>)</span>
-<span id="cb17-13"><a href=""></a><span class="co"># {"revenue": 5200000000, "net_income": 800000000,</span></span>
-<span id="cb17-14"><a href=""></a><span class="co">#  "sentiment": "cautiously positive"}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="" aria-label="1"></a>response <span class="op">=</span> client.chat.completions.create(</span>
+<span id="cb18-2"><a href="" aria-label="2"></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb18-3"><a href="" aria-label="3"></a>    response_format<span class="op">=</span>{<span class="st">"type"</span>: <span class="st">"json_object"</span>},</span>
+<span id="cb18-4"><a href="" aria-label="4"></a>    messages<span class="op">=</span>[{</span>
+<span id="cb18-5"><a href="" aria-label="5"></a>        <span class="st">"role"</span>: <span class="st">"user"</span>,</span>
+<span id="cb18-6"><a href="" aria-label="6"></a>        <span class="st">"content"</span>: <span class="st">"""Extract financial data as JSON:</span></span>
+<span id="cb18-7"><a href="" aria-label="7"></a><span class="st">        {"revenue": number, "net_income": number, "sentiment": string}</span></span>
+<span id="cb18-8"><a href="" aria-label="8"></a></span>
+<span id="cb18-9"><a href="" aria-label="9"></a><span class="st">        Text: Revenue was $5.2B, net income $800M.</span></span>
+<span id="cb18-10"><a href="" aria-label="10"></a><span class="st">        Management expressed cautious optimism."""</span></span>
+<span id="cb18-11"><a href="" aria-label="11"></a>    }]</span>
+<span id="cb18-12"><a href="" aria-label="12"></a>)</span>
+<span id="cb18-13"><a href="" aria-label="13"></a><span class="co"># {"revenue": 5200000000, "net_income": 800000000,</span></span>
+<span id="cb18-14"><a href="" aria-label="14"></a><span class="co">#  "sentiment": "cautiously positive"}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div style="height: 1em;">
 
 </div>
@@ -1400,27 +1418,27 @@ flowchart LR
 <div style="height: 1em;">
 
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href=""></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
-<span id="cb18-2"><a href=""></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
-<span id="cb18-3"><a href=""></a></span>
-<span id="cb18-4"><a href=""></a><span class="kw">class</span> FinancialExtraction(BaseModel):</span>
-<span id="cb18-5"><a href=""></a>    revenue: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
-<span id="cb18-6"><a href=""></a>    net_income: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
-<span id="cb18-7"><a href=""></a>    sentiment: <span class="bu">str</span></span>
-<span id="cb18-8"><a href=""></a>    confidence: <span class="bu">float</span></span>
-<span id="cb18-9"><a href=""></a></span>
-<span id="cb18-10"><a href=""></a>client <span class="op">=</span> OpenAI()</span>
-<span id="cb18-11"><a href=""></a>completion <span class="op">=</span> client.beta.chat.completions.parse(</span>
-<span id="cb18-12"><a href=""></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
-<span id="cb18-13"><a href=""></a>    messages<span class="op">=</span>[</span>
-<span id="cb18-14"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Extract financial information."</span>},</span>
-<span id="cb18-15"><a href=""></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Revenue grew 15% to $5.2B..."</span>}</span>
-<span id="cb18-16"><a href=""></a>    ],</span>
-<span id="cb18-17"><a href=""></a>    response_format<span class="op">=</span>FinancialExtraction,</span>
-<span id="cb18-18"><a href=""></a>)</span>
-<span id="cb18-19"><a href=""></a></span>
-<span id="cb18-20"><a href=""></a>result <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.parsed</span>
-<span id="cb18-21"><a href=""></a><span class="bu">print</span>(result.revenue)  <span class="co"># 5200000000.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="" aria-label="1"></a><span class="im">from</span> pydantic <span class="im">import</span> BaseModel</span>
+<span id="cb19-2"><a href="" aria-label="2"></a><span class="im">from</span> openai <span class="im">import</span> OpenAI</span>
+<span id="cb19-3"><a href="" aria-label="3"></a></span>
+<span id="cb19-4"><a href="" aria-label="4"></a><span class="kw">class</span> FinancialExtraction(BaseModel):</span>
+<span id="cb19-5"><a href="" aria-label="5"></a>    revenue: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
+<span id="cb19-6"><a href="" aria-label="6"></a>    net_income: <span class="bu">float</span> <span class="op">|</span> <span class="va">None</span></span>
+<span id="cb19-7"><a href="" aria-label="7"></a>    sentiment: <span class="bu">str</span></span>
+<span id="cb19-8"><a href="" aria-label="8"></a>    confidence: <span class="bu">float</span></span>
+<span id="cb19-9"><a href="" aria-label="9"></a></span>
+<span id="cb19-10"><a href="" aria-label="10"></a>client <span class="op">=</span> OpenAI()</span>
+<span id="cb19-11"><a href="" aria-label="11"></a>completion <span class="op">=</span> client.beta.chat.completions.parse(</span>
+<span id="cb19-12"><a href="" aria-label="12"></a>    model<span class="op">=</span><span class="st">"gpt-5-mini"</span>,</span>
+<span id="cb19-13"><a href="" aria-label="13"></a>    messages<span class="op">=</span>[</span>
+<span id="cb19-14"><a href="" aria-label="14"></a>        {<span class="st">"role"</span>: <span class="st">"system"</span>, <span class="st">"content"</span>: <span class="st">"Extract financial information."</span>},</span>
+<span id="cb19-15"><a href="" aria-label="15"></a>        {<span class="st">"role"</span>: <span class="st">"user"</span>, <span class="st">"content"</span>: <span class="st">"Revenue grew 15% to $5.2B..."</span>}</span>
+<span id="cb19-16"><a href="" aria-label="16"></a>    ],</span>
+<span id="cb19-17"><a href="" aria-label="17"></a>    response_format<span class="op">=</span>FinancialExtraction,</span>
+<span id="cb19-18"><a href="" aria-label="18"></a>)</span>
+<span id="cb19-19"><a href="" aria-label="19"></a></span>
+<span id="cb19-20"><a href="" aria-label="20"></a>result <span class="op">=</span> completion.choices[<span class="dv">0</span>].message.parsed</span>
+<span id="cb19-21"><a href="" aria-label="21"></a><span class="bu">print</span>(result.revenue)  <span class="co"># 5200000000.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="llm-workflow-for-research" class="slide level2">
 <h2>LLM Workflow for Research</h2>
@@ -1479,9 +1497,9 @@ flowchart LR
 </thead>
 <tbody>
 <tr class="odd">
-<td>GPT-5.2 (OpenAI)</td>
-<td>$1.75/1M tokens</td>
-<td>$14/1M tokens</td>
+<td>GPT-5.5 (OpenAI)</td>
+<td>$5/1M tokens</td>
+<td>$30/1M tokens</td>
 </tr>
 <tr class="even">
 <td>GPT-5 mini (OpenAI)</td>
@@ -1489,14 +1507,19 @@ flowchart LR
 <td>$2/1M tokens</td>
 </tr>
 <tr class="odd">
-<td>Claude Sonnet 4.5 (Anthropic)</td>
-<td>$3/1M tokens</td>
-<td>$15/1M tokens</td>
+<td>Claude Opus 5 (Anthropic)</td>
+<td>$5/1M tokens</td>
+<td>$25/1M tokens</td>
 </tr>
 <tr class="even">
 <td>Claude Haiku 4.5 (Anthropic)</td>
 <td>$1/1M tokens</td>
 <td>$5/1M tokens</td>
+</tr>
+<tr class="odd">
+<td>Gemini 3.7 Flash (Google)</td>
+<td>$0.75/1M tokens</td>
+<td>$3.75/1M tokens</td>
 </tr>
 </tbody>
 </table>
@@ -1504,8 +1527,9 @@ flowchart LR
 
 </div>
 <ul>
-<li>10,000 documents × 1,000 tokens each = 10M tokens</li>
-<li>With GPT-5 mini: ~$22.50 for processing</li>
+<li>10,000 documents × 1,000 tokens each = 10M input tokens</li>
+<li>Classification adds ~5 output tokens per document = 0.05M output tokens</li>
+<li>With GPT-5 mini: (10 × $0.25) + (0.05 × $2) ≈ <strong>$2.60</strong></li>
 </ul>
 <div style="height: 1em;">
 
@@ -1587,7 +1611,7 @@ flowchart LR
 
 </div>
 <ol start="4" type="1">
-<li><strong>Set temperature=0</strong>: for reproducible research</li>
+<li><strong>Pin model snapshots</strong>: reproducibility comes from versioning, not <code>temperature</code></li>
 </ol>
 <div style="height: 0.5em;">
 
@@ -1615,7 +1639,7 @@ flowchart LR
 </div>
 <p><strong>Essential reading</strong>:</p>
 <ul>
-<li><span class="citation" data-cites="gentzkow2019text">Gentzkow, Kelly, and Taddy (<a href="#/references-1" role="doc-biblioref" onclick="">2019</a>)</span> - comprehensive survey of text analysis in economics</li>
+<li><span class="citation" data-cites="gentzkow2019text">Gentzkow et al. (<a href="#/references-1" role="doc-biblioref" onclick="">2019</a>)</span> - comprehensive survey of text analysis in economics</li>
 <li><span class="citation" data-cites="jurafsky2025speech">Jurafsky and Martin (<a href="#/references-1" role="doc-biblioref" onclick="">2025</a>)</span> - free online textbook: <a href="https://web.stanford.edu/~jurafsky/slp3/">web.stanford.edu/~jurafsky/slp3</a></li>
 </ul>
 <div style="height: 1em;">
@@ -1634,7 +1658,7 @@ flowchart LR
 <section id="references-1" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-araci2019finbert" class="csl-entry" role="listitem">
 Araci, Dogu. 2019. <span>“FinBERT: Financial Sentiment Analysis with Pre-Trained Language Models.”</span> <em>arXiv Preprint arXiv:1908.10063</em>.
 </div>
@@ -1654,7 +1678,7 @@ Loughran, Tim, and Bill McDonald. 2011. <span>“When Is a Liability Not a Liabi
 Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space.”</span> <em>arXiv Preprint arXiv:1301.3781</em>.
 </div>
 <div id="ref-vaswani2017attention" class="csl-entry" role="listitem">
-Vaswani, Ashish, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N Gomez, Łukasz Kaiser, and Illia Polosukhin. 2017. <span>“Attention Is All You Need.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
+Vaswani, Ashish, Noam Shazeer, Niki Parmar, et al. 2017. <span>“Attention Is All You Need.”</span> <em>Advances in Neural Information Processing Systems</em> 30.
 </div>
 </div>
 </section>

@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>5&nbsp; Error Handling and Testing – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../python/code-quality/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/all.min.css" rel="stylesheet">
 <link href="../../site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -345,7 +350,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#benefits-of-tdd-for-research" id="toc-benefits-of-tdd-for-research" class="nav-link" data-scroll-target="#benefits-of-tdd-for-research"><span class="header-section-number">5.3.2</span> Benefits of TDD for Research</a></li>
   <li><a href="#when-not-to-use-tdd" id="toc-when-not-to-use-tdd" class="nav-link" data-scroll-target="#when-not-to-use-tdd"><span class="header-section-number">5.3.3</span> When Not to Use TDD</a></li>
   </ul></li>
-  <li><a href="#testing-floating-point-calculations" id="toc-testing-floating-point-calculations" class="nav-link" data-scroll-target="#testing-floating-point-calculations"><span class="header-section-number">5.4</span> Testing Floating-Point Calculations</a></li>
+  <li><a href="#sec-testing-floating-point" id="toc-sec-testing-floating-point" class="nav-link" data-scroll-target="#sec-testing-floating-point"><span class="header-section-number">5.4</span> Testing Floating-Point Calculations</a>
+  <ul class="collapse">
+  <li><a href="#absolute-vs.-relative-tolerance" id="toc-absolute-vs.-relative-tolerance" class="nav-link" data-scroll-target="#absolute-vs.-relative-tolerance"><span class="header-section-number">5.4.1</span> Absolute vs.&nbsp;relative tolerance</a></li>
+  <li><a href="#math.isclose-and-np.isclose" id="toc-math.isclose-and-np.isclose" class="nav-link" data-scroll-target="#math.isclose-and-np.isclose"><span class="header-section-number">5.4.2</span> math.isclose and np.isclose</a></li>
+  <li><a href="#pytest.approx" id="toc-pytest.approx" class="nav-link" data-scroll-target="#pytest.approx"><span class="header-section-number">5.4.3</span> pytest.approx</a></li>
+  </ul></li>
   <li><a href="#best-practices-summary" id="toc-best-practices-summary" class="nav-link" data-scroll-target="#best-practices-summary"><span class="header-section-number">5.5</span> Best Practices Summary</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.6</span> Conclusion</a></li>
   </ul>
@@ -430,7 +440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (return_dollars <span class="op">/</span> portfolio_value) <span class="op">*</span> <span class="dv">100</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Warning: Cannot calculate return for portfolio with zero value"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Warning: Cannot calculate return for portfolio with zero value"</span>)</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>While <code>print()</code> statements are commonly used to log errors and warnings, there are better ways to handle logging in production code. We introduce proper logging techniques in <a href="../logging/index.html" class="quarto-xref"><span>Chapter 6</span></a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -715,17 +725,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="getting-started-with-pytest" class="level3" data-number="5.2.2">
 <h3 data-number="5.2.2" class="anchored" data-anchor-id="getting-started-with-pytest"><span class="header-section-number">5.2.2</span> Getting Started with pytest</h3>
-<p>pytest is Python’s most popular testing framework. It’s simple to use but powerful enough for complex projects. The easiest way to run pytest is using <code>uvx</code>, which runs the tool without requiring explicit installation:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest test_math.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>If you’re working on a project and want pytest available as a development dependency, add it to your project’s dev group:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add <span class="at">--dev</span> pytest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>pytest is Python’s most popular testing framework. It’s simple to use but powerful enough for complex projects. Add it to your project as a development dependency:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> add <span class="at">--dev</span> pytest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Then run it with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>uv run</code> executes pytest inside your project’s virtual environment, so your tests can import your project’s dependencies (numpy, pandas, statsmodels) as well as your own modules. This is how the assignments in this course are set up, and it’s the command you’ll use throughout.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>uvx pytest and the missing-dependency trap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You will sometimes see <code>uvx pytest</code> suggested as a way to run pytest without installing it. <code>uvx</code> runs a tool in an isolated, throwaway environment that contains that tool and nothing else. Your project’s dependencies are not there. A test file that only uses the standard library passes, but the moment a test does <code>import numpy</code> you get:</p>
+<pre><code>E   ModuleNotFoundError: No module named 'numpy'
+!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!</code></pre>
+<p>Note that this is a collection error, not a test failure: pytest never even runs the test. <code>uvx</code> also picks its own Python version rather than your project’s, so results can differ from what you get locally.</p>
+<p>Reserve <code>uvx pytest</code> for throwaway snippets that depend on nothing but the standard library. For anything that touches numpy, pandas, or your own code, use <code>uv run pytest</code>.</p>
+</div>
+</div>
 <p>A pytest test is just a function whose name starts with <code>test_</code>. Here’s the simplest possible test:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple():</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">2</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Save this in a file called <code>test_math.py</code> and run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest test_math.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest test_math.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You’ll see output indicating the test passed. The <code>assert</code> statement is the heart of testing. If the expression after <code>assert</code> is <code>True</code>, the test passes. If it’s <code>False</code>, the test fails.</p>
 </section>
 <section id="testing-a-real-function" class="level3" data-number="5.2.3">
@@ -752,31 +778,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> returns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now write tests:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test_finance_utils.py</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> finance_utils <span class="im">import</span> calculate_simple_returns</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_basic():</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test simple returns calculation with known values."""</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">121</span>]</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Expected: (110-100)/100 = 0.10, (121-110)/110 = 0.10</span></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(returns[<span class="dv">0</span>] <span class="op">-</span> <span class="fl">0.10</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(returns[<span class="dv">1</span>] <span class="op">-</span> <span class="fl">0.10</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_length():</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test that output length is correct."""</span></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">121</span>, <span class="fl">133.1</span>]</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(returns) <span class="op">==</span> <span class="bu">len</span>(prices) <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_constant_prices():</span>
-<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with constant prices (zero returns)."""</span></span>
-<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">100</span>]</span>
-<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
-<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> returns <span class="op">==</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> finance_utils <span class="im">import</span> calculate_simple_returns</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_basic():</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test simple returns calculation with known values."""</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">121</span>]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Expected: (110-100)/100 = 0.10, (121-110)/110 = 0.10</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(returns[<span class="dv">0</span>], <span class="fl">0.10</span>)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(returns[<span class="dv">1</span>], <span class="fl">0.10</span>)</span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_length():</span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test that output length is correct."""</span></span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">121</span>, <span class="fl">133.1</span>]</span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(returns) <span class="op">==</span> <span class="bu">len</span>(prices) <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_returns_constant_prices():</span>
+<span id="cb19-22"><a href="#cb19-22" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with constant prices (zero returns)."""</span></span>
+<span id="cb19-23"><a href="#cb19-23" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">100</span>]</span>
+<span id="cb19-24"><a href="#cb19-24" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
+<span id="cb19-25"><a href="#cb19-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> returns <span class="op">==</span> [<span class="dv">0</span>, <span class="dv">0</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run the tests:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest test_finance_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest test_finance_utils.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Each test function checks a different aspect of the behavior. This is much more thorough than running the function once and eyeballing the output.</p>
+<p>Notice that the first test compares floats with <code>math.isclose()</code> rather than <code>==</code>. Floating-point arithmetic almost never produces the exact value you wrote down by hand, so float comparisons need a tolerance. We come back to this in <a href="#sec-testing-floating-point" class="quarto-xref"><span>Section 5.4</span></a>.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -817,62 +846,64 @@ test_finance_utils.py:8: AssertionError</code></pre>
 <section id="testing-with-fixtures" class="level3" data-number="5.2.5">
 <h3 data-number="5.2.5" class="anchored" data-anchor-id="testing-with-fixtures"><span class="header-section-number">5.2.5</span> Testing with Fixtures</h3>
 <p>Often, you need the same data for multiple tests. pytest fixtures let you set up reusable test data:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_prices():</span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create sample price data for testing."""</span></span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="dv">100</span>, <span class="dv">105</span>, <span class="dv">103</span>, <span class="dv">108</span>, <span class="dv">112</span>, <span class="dv">110</span>, <span class="dv">115</span>]</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_returns_are_correct(sample_prices):</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test returns calculation using fixture."""</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(sample_prices)</span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First return: (105-100)/100 = 0.05</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(returns[<span class="dv">0</span>] <span class="op">-</span> <span class="fl">0.05</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_data_has_correct_length(sample_prices):</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test using the same fixture."""</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(sample_prices) <span class="op">==</span> <span class="dv">7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sample_prices():</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create sample price data for testing."""</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="dv">100</span>, <span class="dv">105</span>, <span class="dv">103</span>, <span class="dv">108</span>, <span class="dv">112</span>, <span class="dv">110</span>, <span class="dv">115</span>]</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_returns_are_correct(sample_prices):</span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test returns calculation using fixture."""</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(sample_prices)</span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># First return: (105-100)/100 = 0.05</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(returns[<span class="dv">0</span>], <span class="fl">0.05</span>)</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_data_has_correct_length(sample_prices):</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test using the same fixture."""</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(sample_prices) <span class="op">==</span> <span class="dv">7</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>@pytest.fixture</code> decorator marks a function as a fixture. When you include the fixture name as a test function parameter, pytest automatically calls the fixture and passes its return value to your test.</p>
 <p>Fixtures can also handle setup and teardown:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-24"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-24-1"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
-<span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
-<span id="annotated-cell-24-3"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="annotated-cell-24-4"><a href="#annotated-cell-24-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="annotated-cell-24-5"><a href="#annotated-cell-24-5" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
-<span id="annotated-cell-24-6"><a href="#annotated-cell-24-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temp_data_file():</span>
-<span id="annotated-cell-24-7"><a href="#annotated-cell-24-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a temporary file with test data."""</span></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-8" class="code-annotation-target"><a href="#annotated-cell-24-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tempfile.NamedTemporaryFile(mode<span class="op">=</span><span class="st">'w'</span>, delete<span class="op">=</span><span class="va">False</span>, suffix<span class="op">=</span><span class="st">'.csv'</span>) <span class="im">as</span> f:</span>
-<span id="annotated-cell-24-9"><a href="#annotated-cell-24-9" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'date,close</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="annotated-cell-24-10"><a href="#annotated-cell-24-10" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'2020-01-01,100</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="annotated-cell-24-11"><a href="#annotated-cell-24-11" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'2020-01-02,110</span><span class="ch">\n</span><span class="st">'</span>)</span>
-<span id="annotated-cell-24-12"><a href="#annotated-cell-24-12" aria-hidden="true" tabindex="-1"></a>        temp_path <span class="op">=</span> f.name</span>
-<span id="annotated-cell-24-13"><a href="#annotated-cell-24-13" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="2">2</button><span id="annotated-cell-24-14" class="code-annotation-target"><a href="#annotated-cell-24-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> temp_path</span>
-<span id="annotated-cell-24-15"><a href="#annotated-cell-24-15" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="3">3</button><span id="annotated-cell-24-16" class="code-annotation-target"><a href="#annotated-cell-24-16" aria-hidden="true" tabindex="-1"></a>    os.unlink(temp_path)</span>
-<span id="annotated-cell-24-17"><a href="#annotated-cell-24-17" aria-hidden="true" tabindex="-1"></a></span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="4">4</button><span id="annotated-cell-24-18" class="code-annotation-target"><a href="#annotated-cell-24-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_load_data_from_file(temp_data_file):</span>
-<span id="annotated-cell-24-19"><a href="#annotated-cell-24-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test loading data from a CSV file."""</span></span>
-<span id="annotated-cell-24-20"><a href="#annotated-cell-24-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(temp_data_file) <span class="im">as</span> f:</span>
-<span id="annotated-cell-24-21"><a href="#annotated-cell-24-21" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
-<span id="annotated-cell-24-22"><a href="#annotated-cell-24-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(lines) <span class="op">==</span> <span class="dv">3</span>  <span class="co"># Header + 2 data rows</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-23"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-23-1"><a href="#annotated-cell-23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="annotated-cell-23-2"><a href="#annotated-cell-23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> tempfile</span>
+<span id="annotated-cell-23-3"><a href="#annotated-cell-23-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="annotated-cell-23-4"><a href="#annotated-cell-23-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-23-5"><a href="#annotated-cell-23-5" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="annotated-cell-23-6"><a href="#annotated-cell-23-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> temp_data_file():</span>
+<span id="annotated-cell-23-7"><a href="#annotated-cell-23-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Create a temporary file with test data."""</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="1">1</button><span id="annotated-cell-23-8" class="code-annotation-target"><a href="#annotated-cell-23-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> tempfile.NamedTemporaryFile(mode<span class="op">=</span><span class="st">'w'</span>, delete<span class="op">=</span><span class="va">False</span>, suffix<span class="op">=</span><span class="st">'.csv'</span>) <span class="im">as</span> f:</span>
+<span id="annotated-cell-23-9"><a href="#annotated-cell-23-9" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'date,close</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="annotated-cell-23-10"><a href="#annotated-cell-23-10" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'2020-01-01,100</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="annotated-cell-23-11"><a href="#annotated-cell-23-11" aria-hidden="true" tabindex="-1"></a>        f.write(<span class="st">'2020-01-02,110</span><span class="ch">\n</span><span class="st">'</span>)</span>
+<span id="annotated-cell-23-12"><a href="#annotated-cell-23-12" aria-hidden="true" tabindex="-1"></a>        temp_path <span class="op">=</span> f.name</span>
+<span id="annotated-cell-23-13"><a href="#annotated-cell-23-13" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="2">2</button><span id="annotated-cell-23-14" class="code-annotation-target"><a href="#annotated-cell-23-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">yield</span> temp_path</span>
+<span id="annotated-cell-23-15"><a href="#annotated-cell-23-15" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="3">3</button><span id="annotated-cell-23-16" class="code-annotation-target"><a href="#annotated-cell-23-16" aria-hidden="true" tabindex="-1"></a>    os.unlink(temp_path)</span>
+<span id="annotated-cell-23-17"><a href="#annotated-cell-23-17" aria-hidden="true" tabindex="-1"></a></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-23" data-target-annotation="4">4</button><span id="annotated-cell-23-18" class="code-annotation-target"><a href="#annotated-cell-23-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_load_data_from_file(temp_data_file):</span>
+<span id="annotated-cell-23-19"><a href="#annotated-cell-23-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test loading data from a CSV file."""</span></span>
+<span id="annotated-cell-23-20"><a href="#annotated-cell-23-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(temp_data_file) <span class="im">as</span> f:</span>
+<span id="annotated-cell-23-21"><a href="#annotated-cell-23-21" aria-hidden="true" tabindex="-1"></a>        lines <span class="op">=</span> f.readlines()</span>
+<span id="annotated-cell-23-22"><a href="#annotated-cell-23-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(lines) <span class="op">==</span> <span class="dv">3</span>  <span class="co"># Header + 2 data rows</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <dl class="code-annotation-container-hidden code-annotation-container-grid">
-<dt data-target-cell="annotated-cell-24" data-target-annotation="1">1</dt>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="1">1</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="8" data-code-annotation="1"><strong>Setup</strong>: Create temporary file with test data.</span>
+<span data-code-cell="annotated-cell-23" data-code-lines="8" data-code-annotation="1"><strong>Setup</strong>: Create temporary file with test data.</span>
 </dd>
-<dt data-target-cell="annotated-cell-24" data-target-annotation="2">2</dt>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="2">2</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="14" data-code-annotation="2"><strong>Yield</strong>: Provide the file path to the test.</span>
+<span data-code-cell="annotated-cell-23" data-code-lines="14" data-code-annotation="2"><strong>Yield</strong>: Provide the file path to the test.</span>
 </dd>
-<dt data-target-cell="annotated-cell-24" data-target-annotation="3">3</dt>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="3">3</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="16" data-code-annotation="3"><strong>Teardown</strong>: Clean up the file after the test completes.</span>
+<span data-code-cell="annotated-cell-23" data-code-lines="16" data-code-annotation="3"><strong>Teardown</strong>: Clean up the file after the test completes.</span>
 </dd>
-<dt data-target-cell="annotated-cell-24" data-target-annotation="4">4</dt>
+<dt data-target-cell="annotated-cell-23" data-target-annotation="4">4</dt>
 <dd>
-<span data-code-cell="annotated-cell-24" data-code-lines="18" data-code-annotation="4">The fixture name as a parameter tells pytest to inject the fixture’s return value.</span>
+<span data-code-cell="annotated-cell-23" data-code-lines="18" data-code-annotation="4">The fixture name as a parameter tells pytest to inject the fixture’s return value.</span>
 </dd>
 </dl>
 <p>The <code>yield</code> statement separates setup from teardown. Everything before <code>yield</code> runs before the test, and everything after runs after the test (even if the test fails).</p>
@@ -894,37 +925,45 @@ test_finance_utils.py:8: AssertionError</code></pre>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(returns) <span class="op">==</span> expected_length</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>This creates four separate tests, one for each parameter set. This is cleaner than writing four separate test functions and makes the pattern clear.</p>
 <p>You can parametrize multiple arguments:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.mark.parametrize</span>(<span class="st">"initial_price,final_price,expected_return"</span>, [</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">110</span>, <span class="fl">0.10</span>),   <span class="co"># 10% price increase</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">90</span>, <span class="op">-</span><span class="fl">0.10</span>),   <span class="co"># 10% price decrease</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>),      <span class="co"># No change</span></span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">50</span>, <span class="dv">100</span>, <span class="fl">1.0</span>),     <span class="co"># 100% increase</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_return_calculation(initial_price, final_price, expected_return):</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test simple return calculation with various price changes."""</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns([initial_price, final_price])</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(returns[<span class="dv">0</span>] <span class="op">-</span> expected_return) <span class="op">&lt;</span> <span class="fl">1e-10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-25"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-25-1"><a href="#annotated-cell-25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="annotated-cell-25-2"><a href="#annotated-cell-25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-25-3"><a href="#annotated-cell-25-3" aria-hidden="true" tabindex="-1"></a><span class="at">@pytest.mark.parametrize</span>(<span class="st">"initial_price,final_price,expected_return"</span>, [</span>
+<span id="annotated-cell-25-4"><a href="#annotated-cell-25-4" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">110</span>, <span class="fl">0.10</span>),   <span class="co"># 10% price increase</span></span>
+<span id="annotated-cell-25-5"><a href="#annotated-cell-25-5" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">90</span>, <span class="op">-</span><span class="fl">0.10</span>),   <span class="co"># 10% price decrease</span></span>
+<span id="annotated-cell-25-6"><a href="#annotated-cell-25-6" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">100</span>, <span class="dv">100</span>, <span class="dv">0</span>),      <span class="co"># No change</span></span>
+<span id="annotated-cell-25-7"><a href="#annotated-cell-25-7" aria-hidden="true" tabindex="-1"></a>    (<span class="dv">50</span>, <span class="dv">100</span>, <span class="fl">1.0</span>),     <span class="co"># 100% increase</span></span>
+<span id="annotated-cell-25-8"><a href="#annotated-cell-25-8" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="annotated-cell-25-9"><a href="#annotated-cell-25-9" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_simple_return_calculation(initial_price, final_price, expected_return):</span>
+<span id="annotated-cell-25-10"><a href="#annotated-cell-25-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test simple return calculation with various price changes."""</span></span>
+<span id="annotated-cell-25-11"><a href="#annotated-cell-25-11" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns([initial_price, final_price])</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-25" data-target-annotation="1">1</button><span id="annotated-cell-25-12" class="code-annotation-target"><a href="#annotated-cell-25-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(returns[<span class="dv">0</span>], expected_return, abs_tol<span class="op">=</span><span class="fl">1e-12</span>)</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-25" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-25" data-code-lines="12" data-code-annotation="1"><code>abs_tol</code> is needed here because one of the expected values is exactly <code>0</code>, and a purely relative tolerance can never accept a comparison against zero. See <a href="#sec-testing-floating-point" class="quarto-xref"><span>Section 5.4</span></a>.</span>
+</dd>
+</dl>
 </section>
 <section id="testing-for-exceptions" class="level3" data-number="5.2.7">
 <h3 data-number="5.2.7" class="anchored" data-anchor-id="testing-for-exceptions"><span class="header-section-number">5.2.7</span> Testing for Exceptions</h3>
 <p>Sometimes you want to verify that your code raises an exception in certain situations:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_mean_return(returns):</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mean return."""</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(returns) <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Returns list cannot be empty"</span>)</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(returns) <span class="op">/</span> <span class="bu">len</span>(returns)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mean_return_empty_raises():</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test that empty returns raise ValueError."""</span></span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>, match<span class="op">=</span><span class="st">"cannot be empty"</span>):</span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>        calculate_mean_return([])</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mean_return_with_data():</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test normal mean return calculation."""</span></span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> calculate_mean_return(returns)</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(mean <span class="op">-</span> <span class="fl">0.0125</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_mean_return(returns):</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate mean return."""</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(returns) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Returns list cannot be empty"</span>)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">sum</span>(returns) <span class="op">/</span> <span class="bu">len</span>(returns)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mean_return_empty_raises():</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test that empty returns raise ValueError."""</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>, match<span class="op">=</span><span class="st">"cannot be empty"</span>):</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>        calculate_mean_return([])</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mean_return_with_data():</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test normal mean return calculation."""</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> [<span class="fl">0.01</span>, <span class="fl">0.02</span>, <span class="op">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>]</span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    mean <span class="op">=</span> calculate_mean_return(returns)</span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(mean, <span class="fl">0.0125</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>pytest.raises()</code> context manager asserts that the code block raises the specified exception. The <code>match</code> parameter checks that the exception message matches a pattern (using regular expressions).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -955,29 +994,34 @@ test_finance_utils.py:8: AssertionError</code></pre>
     ├── test_risk.py
     └── test_portfolio.py</code></pre>
 <p>Run all tests with:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Or if pytest is installed in your project:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run specific tests:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest tests/test_returns.py</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uvx</span> pytest tests/test_returns.py::test_simple_returns_basic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/test_returns.py</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run pytest tests/test_returns.py::test_simple_returns_basic</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Configuration with pytest.ini
+<span class="screen-reader-only">Note</span>configuring pytest in pyproject.toml
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Create a <code>pytest.ini</code> file in your project root to configure pytest:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.pytest.ini_options]</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="dt">testpaths </span><span class="ot">=</span><span class="st"> tests</span></span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="dt">python_files </span><span class="ot">=</span><span class="st"> test_*.py</span></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="dt">python_functions </span><span class="ot">=</span><span class="st"> test_*</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="dt">addopts </span><span class="ot">=</span><span class="st"> -v --strict-markers</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>This specifies where to find tests and how to run them.</p>
+<p>Configure pytest in the <code>[tool.pytest.ini_options]</code> table of your project’s <code>pyproject.toml</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode toml code-with-copy"><code class="sourceCode toml"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[tool.pytest.ini_options]</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="dt">testpaths</span> <span class="op">=</span> <span class="op">[</span><span class="st">"tests"</span><span class="op">]</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="dt">python_files</span> <span class="op">=</span> <span class="op">[</span><span class="st">"test_*.py"</span><span class="op">]</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="dt">python_functions</span> <span class="op">=</span> <span class="op">[</span><span class="st">"test_*"</span><span class="op">]</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="dt">addopts</span> <span class="op">=</span> <span class="st">"-v --strict-markers"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>This specifies where to find tests and how to run them. The values are TOML, so lists are bracketed and <code>addopts</code> is a single string. When pytest picks the settings up, its header reports <code>configfile: pyproject.toml</code>.</p>
+<p>pytest also reads a standalone <code>pytest.ini</code> file, but that file uses INI syntax and its section header must be <code>[pytest]</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb30"><pre class="sourceCode ini code-with-copy"><code class="sourceCode ini"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">[pytest]</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="dt">testpaths </span><span class="ot">=</span><span class="st"> tests</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="dt">python_files </span><span class="ot">=</span><span class="st"> test_*.py</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="dt">python_functions </span><span class="ot">=</span><span class="st"> test_*</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="dt">addopts </span><span class="ot">=</span><span class="st"> -v --strict-markers</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Be careful here. A <code>pytest.ini</code> headed <code>[tool.pytest.ini_options]</code> (the <code>pyproject.toml</code> table name) is still reported as <code>configfile: pytest.ini</code>, so it looks like it worked, but every setting in it is silently ignored and there is no error to debug. Since you already have a <code>pyproject.toml</code>, keep your pytest configuration there and avoid the trap entirely.</p>
 </div>
 </div>
 </section>
@@ -1009,43 +1053,51 @@ test_finance_utils.py:8: AssertionError</code></pre>
 </ol>
 <p>Let’s walk through an example. Suppose you need to calculate the maximum drawdown of a price series.</p>
 <p><strong>Step 1: Write failing tests, including edge cases</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test_risk.py</span></span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> risk <span class="im">import</span> calculate_max_drawdown</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_simple():</span>
-<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test max drawdown with simple price series."""</span></span>
-<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">105</span>, <span class="dv">115</span>, <span class="dv">90</span>, <span class="dv">95</span>]</span>
-<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Peak is 115, trough is 90, drawdown is (90-115)/115 ≈ -0.217</span></span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(calculate_max_drawdown(prices) <span class="op">-</span> (<span class="op">-</span><span class="fl">0.217</span>)) <span class="op">&lt;</span> <span class="fl">0.001</span></span>
-<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_no_drawdown():</span>
-<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with monotonically increasing prices (no drawdown)."""</span></span>
-<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">120</span>, <span class="dv">130</span>]</span>
-<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> calculate_max_drawdown(prices) <span class="op">==</span> <span class="dv">0</span></span>
-<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-15"><a href="#cb32-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_single_price():</span>
-<span id="cb32-16"><a href="#cb32-16" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with single price."""</span></span>
-<span id="cb32-17"><a href="#cb32-17" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>]</span>
-<span id="cb32-18"><a href="#cb32-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> calculate_max_drawdown(prices) <span class="op">==</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="annotated-cell-30"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-30-1"><a href="#annotated-cell-30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># test_risk.py</span></span>
+<span id="annotated-cell-30-2"><a href="#annotated-cell-30-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="annotated-cell-30-3"><a href="#annotated-cell-30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-30-4"><a href="#annotated-cell-30-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> risk <span class="im">import</span> calculate_max_drawdown</span>
+<span id="annotated-cell-30-5"><a href="#annotated-cell-30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-30-6"><a href="#annotated-cell-30-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_simple():</span>
+<span id="annotated-cell-30-7"><a href="#annotated-cell-30-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test max drawdown with simple price series."""</span></span>
+<span id="annotated-cell-30-8"><a href="#annotated-cell-30-8" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">105</span>, <span class="dv">115</span>, <span class="dv">90</span>, <span class="dv">95</span>]</span>
+<span id="annotated-cell-30-9"><a href="#annotated-cell-30-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Peak is 115, trough is 90, drawdown is (90-115)/115 ≈ -0.217</span></span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-30" data-target-annotation="1">1</button><span id="annotated-cell-30-10" class="code-annotation-target"><a href="#annotated-cell-30-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> math.isclose(calculate_max_drawdown(prices), <span class="op">-</span><span class="fl">0.217</span>, abs_tol<span class="op">=</span><span class="fl">0.001</span>)</span>
+<span id="annotated-cell-30-11"><a href="#annotated-cell-30-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-30-12"><a href="#annotated-cell-30-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_no_drawdown():</span>
+<span id="annotated-cell-30-13"><a href="#annotated-cell-30-13" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with monotonically increasing prices (no drawdown)."""</span></span>
+<span id="annotated-cell-30-14"><a href="#annotated-cell-30-14" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">110</span>, <span class="dv">120</span>, <span class="dv">130</span>]</span>
+<span id="annotated-cell-30-15"><a href="#annotated-cell-30-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> calculate_max_drawdown(prices) <span class="op">==</span> <span class="dv">0</span></span>
+<span id="annotated-cell-30-16"><a href="#annotated-cell-30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="annotated-cell-30-17"><a href="#annotated-cell-30-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_max_drawdown_single_price():</span>
+<span id="annotated-cell-30-18"><a href="#annotated-cell-30-18" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test with single price."""</span></span>
+<span id="annotated-cell-30-19"><a href="#annotated-cell-30-19" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>]</span>
+<span id="annotated-cell-30-20"><a href="#annotated-cell-30-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> calculate_max_drawdown(prices) <span class="op">==</span> <span class="dv">0</span></span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<dl class="code-annotation-container-hidden code-annotation-container-grid">
+<dt data-target-cell="annotated-cell-30" data-target-annotation="1">1</dt>
+<dd>
+<span data-code-cell="annotated-cell-30" data-code-lines="10" data-code-annotation="1">We only wrote the expected value to three decimals, so an <code>abs_tol</code> matching that precision is the right choice here. See <a href="#sec-testing-floating-point" class="quarto-xref"><span>Section 5.4</span></a>.</span>
+</dd>
+</dl>
 <p>Run these tests. They will all fail because <code>calculate_max_drawdown</code> doesn’t exist yet.</p>
 <p><strong>Step 2: Write minimal code to pass</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># risk.py</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_max_drawdown(prices):</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate maximum drawdown from a price series."""</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(prices) <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    max_drawdown <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    peak <span class="op">=</span> prices[<span class="dv">0</span>]</span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> price <span class="kw">in</span> prices:</span>
-<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> price <span class="op">&gt;</span> peak:</span>
-<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>            peak <span class="op">=</span> price</span>
-<span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a>        drawdown <span class="op">=</span> (price <span class="op">-</span> peak) <span class="op">/</span> peak</span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> drawdown <span class="op">&lt;</span> max_drawdown:</span>
-<span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>            max_drawdown <span class="op">=</span> drawdown</span>
-<span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_drawdown</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># risk.py</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_max_drawdown(prices):</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Calculate maximum drawdown from a price series."""</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(prices) <span class="op">&lt;=</span> <span class="dv">1</span>:</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="dv">0</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>    max_drawdown <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    peak <span class="op">=</span> prices[<span class="dv">0</span>]</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> price <span class="kw">in</span> prices:</span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> price <span class="op">&gt;</span> peak:</span>
+<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>            peak <span class="op">=</span> price</span>
+<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>        drawdown <span class="op">=</span> (price <span class="op">-</span> peak) <span class="op">/</span> peak</span>
+<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> drawdown <span class="op">&lt;</span> max_drawdown:</span>
+<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>            max_drawdown <span class="op">=</span> drawdown</span>
+<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> max_drawdown</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run the tests again. They should all pass.</p>
 <p><strong>Step 3: Refactor if needed</strong></p>
 <p>The code is clean and handles all edge cases. We can now move on, or improve our function to make it more efficient.</p>
@@ -1092,28 +1144,91 @@ test_finance_utils.py:8: AssertionError</code></pre>
 <p>But for any code you’ll reuse or that’s critical to your results, testing (whether test-first or test-after) is essential.</p>
 </section>
 </section>
-<section id="testing-floating-point-calculations" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="testing-floating-point-calculations"><span class="header-section-number">5.4</span> Testing Floating-Point Calculations</h2>
-<p>Financial calculations often involve floating-point arithmetic, which has quirks:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_floating_point_comparison():</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Demonstrate floating-point comparison issues."""</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This might fail due to floating-point precision</span></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Don't do this:</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assert result == 0.3  # Might fail!</span></span>
+<section id="sec-testing-floating-point" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="sec-testing-floating-point"><span class="header-section-number">5.4</span> Testing Floating-Point Calculations</h2>
+<p>Financial calculations run on floating-point arithmetic, which does not behave like the arithmetic you did on paper:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_floating_point_comparison():</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Demonstrate floating-point comparison issues."""</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> <span class="fl">0.1</span> <span class="op">+</span> <span class="fl">0.2</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Don't do this - result is actually 0.30000000000000004:</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># assert result == 0.3  # Fails!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>So float comparisons always need a tolerance. The question is <em>which kind</em> of tolerance, and this is where a lot of tests go quietly wrong.</p>
+<section id="absolute-vs.-relative-tolerance" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="absolute-vs.-relative-tolerance"><span class="header-section-number">5.4.1</span> Absolute vs.&nbsp;relative tolerance</h3>
+<p>An <strong>absolute</strong> tolerance asks “are these two numbers within a fixed distance of each other?”:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">abs</span>(computed <span class="op">-</span> expected) <span class="op">&lt;</span> <span class="fl">1e-10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>A <strong>relative</strong> tolerance asks “do these two numbers agree to within a fixed <em>fraction</em> of their size?” That distinction matters enormously in finance, because our quantities span many orders of magnitude. A daily return is around 0.001; a fund’s assets under management are around 10,000,000,000. A tolerance of <code>1e-10</code> is generous for the first and impossibly strict for the second.</p>
+<p>Here is a concrete case. Suppose you sum a portfolio of 1,000 positions, each one 100 shares at a price of 123.4567, and compare the total against the value you worked out by hand:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> portfolio_value(positions):</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Sum the market value of every position."""</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> shares, price <span class="kw">in</span> positions:</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>        total <span class="op">+=</span> shares <span class="op">*</span> price</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> total</span>
 <span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Do this instead:</span></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(result <span class="op">-</span> <span class="fl">0.3</span>) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Or use pytest's approximate comparison:</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> result <span class="op">==</span> pytest.approx(<span class="fl">0.3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Always use tolerance-based comparisons for floating-point numbers. The <code>pytest.approx()</code> function is particularly nice because it chooses sensible default tolerances:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_returns_calculation():</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test returns calculation with approximate comparison."""</span></span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">105</span>, <span class="fl">110.25</span>]</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.05</span>]</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb35-7"><a href="#cb35-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> returns <span class="op">==</span> pytest.approx(expected, rel<span class="op">=</span><span class="fl">1e-6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>positions <span class="op">=</span> [(<span class="fl">100.0</span>, <span class="fl">123.4567</span>)] <span class="op">*</span> <span class="dv">1_000</span></span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>total <span class="op">=</span> portfolio_value(positions)</span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>expected <span class="op">=</span> <span class="dv">100_000</span> <span class="op">*</span> <span class="fl">123.4567</span>   <span class="co"># 12,345,670.0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The accumulated rounding error over 1,000 additions gives <code>total == 12345669.999999935</code>, which differs from <code>expected</code> by about <code>6.5e-08</code>. In relative terms that error is <code>5.3e-15</code>, a few parts in a quadrillion, which is far below any precision that could possibly matter for a portfolio worth over 12 million. Yet the absolute-tolerance assertion rejects it:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="bu">abs</span>(total <span class="op">-</span> expected) <span class="op">&lt;</span> <span class="fl">1e-10</span>   <span class="co"># FAILS: 6.5e-08 is not &lt; 1e-10</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>There is nothing wrong with the calculation. The test is simply asking for more precision than a 64-bit float can carry at that magnitude.</p>
+</section>
+<section id="math.isclose-and-np.isclose" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="math.isclose-and-np.isclose"><span class="header-section-number">5.4.2</span> math.isclose and np.isclose</h3>
+<p>Python’s standard library gives you a comparison that gets this right. <code>math.isclose()</code> defaults to a <strong>relative</strong> tolerance of <code>rel_tol=1e-9</code>, so it scales with the size of the numbers:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> math.isclose(total, expected)   <span class="co"># passes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>For NumPy arrays and pandas Series, <code>np.isclose()</code> does the same thing element by element (defaults <code>rtol=1e-05</code>, <code>atol=1e-08</code>), and <code>np.allclose()</code> collapses the result to a single boolean:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>weights <span class="op">=</span> np.array([<span class="fl">0.25</span>, <span class="fl">0.25</span>, <span class="fl">0.30</span>, <span class="fl">0.20</span>])</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.isclose(weights.<span class="bu">sum</span>(), <span class="fl">1.0</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.allclose(weights <span class="op">*</span> <span class="dv">2</span>, np.array([<span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.6</span>, <span class="fl">0.4</span>]))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Both take explicit tolerances when the defaults are wrong for your problem. Loosen them when you’re comparing against a number someone rounded for publication:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only trust the reference value to 4 decimal places</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> math.isclose(computed_yield, <span class="fl">0.0599507</span>, abs_tol<span class="op">=</span><span class="fl">0.0001</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Model fit that depends on a random split: agree to within 10%</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> np.isclose(mse, <span class="fl">422207.8755900299</span>, rtol<span class="op">=</span><span class="fl">0.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>There is one case where a relative tolerance alone cannot work: comparing against exactly zero. Nothing is within <code>1e-9</code> <em>relative</em> of <code>0.0</code> except <code>0.0</code> itself, so you must supply an absolute tolerance:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> <span class="kw">not</span> math.isclose(<span class="fl">0.0</span>, <span class="fl">1e-12</span>)                  <span class="co"># relative tolerance can't help</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> math.isclose(<span class="fl">0.0</span>, <span class="fl">1e-12</span>, abs_tol<span class="op">=</span><span class="fl">1e-9</span>)        <span class="co"># passes</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>this is what the course’s tests use
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The graded assignments in this course are checked with <code>math.isclose()</code> and <code>np.isclose()</code>. For example, <code>test_q0.py</code> in Assignment 1 contains <code>assert math.isclose(test1, 4286.69410)</code>, and <code>test_q1.py</code> in Assignment 7 contains <code>assert np.isclose(mean_test(x1), 0.5908352847357897)</code>. Get comfortable with these two functions and their tolerance arguments: they are how your code will be evaluated.</p>
+</div>
+</div>
+</section>
+<section id="pytest.approx" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="pytest.approx"><span class="header-section-number">5.4.3</span> pytest.approx</h3>
+<p>pytest ships its own comparison helper, <code>pytest.approx()</code>, which is genuinely convenient because it reads like an equality and works on plain numbers, lists, dicts, and arrays alike:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_returns_calculation():</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Test returns calculation with approximate comparison."""</span></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> [<span class="dv">100</span>, <span class="dv">105</span>, <span class="fl">110.25</span>]</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>    returns <span class="op">=</span> calculate_simple_returns(prices)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> [<span class="fl">0.05</span>, <span class="fl">0.05</span>]</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> returns <span class="op">==</span> pytest.approx(expected, rel<span class="op">=</span><span class="fl">1e-6</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>pytest.approx()</code> combines both kinds of tolerance: it defaults to <code>rel=1e-6</code> with a floor of <code>abs=1e-12</code>, so it handles the compare-against-zero case for you. Its failure messages are also better than a bare <code>assert</code>, since it reports the expected value and the tolerance band.</p>
+<p>The three functions do the same job, so pick by context rather than agonizing over it:</p>
+<ul>
+<li><code>math.isclose()</code> for individual Python floats.</li>
+<li><code>np.isclose()</code> / <code>np.allclose()</code> for NumPy arrays and pandas objects.</li>
+<li><code>pytest.approx()</code> inside pytest when you want the nicer failure output and don’t mind the pytest dependency.</li>
+</ul>
+<p>What you should <em>not</em> do is reach for a bare <code>abs(x - y) &lt; 1e-10</code>. It is an absolute tolerance in disguise, and it will fail on exactly the large-magnitude quantities that empirical finance is full of.</p>
+</section>
 </section>
 <section id="best-practices-summary" class="level2" data-number="5.5">
 <h2 data-number="5.5" class="anchored" data-anchor-id="best-practices-summary"><span class="header-section-number">5.5</span> Best Practices Summary</h2>
@@ -1133,6 +1248,8 @@ test_finance_utils.py:8: AssertionError</code></pre>
 <li>One assertion per test when possible</li>
 <li>Use fixtures for reusable test data</li>
 <li>Use parametrization to test multiple scenarios</li>
+<li>Compare floats with <code>math.isclose()</code>, <code>np.isclose()</code>, or <code>pytest.approx()</code>, never <code>==</code> or a bare <code>abs(x - y) &lt; 1e-10</code></li>
+<li>Run tests with <code>uv run pytest</code> so your project’s dependencies are available</li>
 <li>Run tests frequently during development</li>
 </ul>
 <p><strong>General:</strong></p>

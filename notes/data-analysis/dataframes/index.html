@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>11&nbsp; Introduction to DataFrames – Empirical Finance</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -69,15 +75,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../../data-analysis/index.html" rel="prev">
 <script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-a074a9bc3144aa89f5d2a8631a82ff09.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-2a1a1914d861ccdc16544b75d36f383a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -458,12 +463,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="basic-operations" class="level3" data-number="11.3.1">
 <h3 data-number="11.3.1" class="anchored" data-anchor-id="basic-operations"><span class="header-section-number">11.3.1</span> Basic Operations</h3>
 <p>Let’s start with creating and manipulating a simple DataFrame:</p>
-<div id="9978bcf6" class="cell" data-execution_count="1">
+<div id="8ad8979a" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-1"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="1">1</button><span id="annotated-cell-1-1" class="code-annotation-target"><a href="#annotated-cell-1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="annotated-cell-1-2"><a href="#annotated-cell-1-2" aria-hidden="true" tabindex="-1"></a></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="2">2</button><span id="annotated-cell-1-3" class="code-annotation-target"><a href="#annotated-cell-1-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame({</span>
 <span id="annotated-cell-1-4"><a href="#annotated-cell-1-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'ticker'</span>: [<span class="st">'AAPL'</span>, <span class="st">'AAPL'</span>, <span class="st">'MSFT'</span>, <span class="st">'MSFT'</span>, <span class="st">'GOOG'</span>, <span class="st">'GOOG'</span>],</span>
-<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">6</span>, freq<span class="op">=</span><span class="st">'D'</span>)[:<span class="dv">6</span>],</span>
+<button class="code-annotation-anchor" data-target-cell="annotated-cell-1" data-target-annotation="3">3</button><span id="annotated-cell-1-5" class="code-annotation-target"><a href="#annotated-cell-1-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'date'</span>: pd.date_range(<span class="st">'2024-01-01'</span>, periods<span class="op">=</span><span class="dv">6</span>, freq<span class="op">=</span><span class="st">'D'</span>),</span>
 <span id="annotated-cell-1-6"><a href="#annotated-cell-1-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'price'</span>: [<span class="fl">150.5</span>, <span class="fl">152.3</span>, <span class="fl">380.2</span>, <span class="fl">378.9</span>, <span class="fl">140.1</span>, <span class="fl">142.5</span>],</span>
 <span id="annotated-cell-1-7"><a href="#annotated-cell-1-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'volume'</span>: [<span class="dv">1000000</span>, <span class="dv">1050000</span>, <span class="dv">800000</span>, <span class="dv">820000</span>, <span class="dv">950000</span>, <span class="dv">980000</span>]</span>
 <span id="annotated-cell-1-8"><a href="#annotated-cell-1-8" aria-hidden="true" tabindex="-1"></a>})</span>
@@ -555,16 +560,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Key characteristics of this DataFrame:</p>
 <ul>
 <li><strong>Index</strong>: Automatically created as integers (0-5)</li>
-<li><strong>Columns</strong>: Four columns with mixed types (object, datetime64, float64, int64)</li>
+<li><strong>Columns</strong>: Four columns with mixed types (<code>str</code> for the tickers, <code>datetime64[us]</code> for the dates, <code>float64</code> for the prices, <code>int64</code> for the volumes)</li>
 <li><strong>Shape</strong>: 6 rows × 4 columns</li>
 </ul>
+<p>Two of those dtypes changed in pandas 3.0. Text columns now get a dedicated <code>str</code> dtype instead of the catch-all <code>object</code> dtype, and the resolution of a datetime column is inferred from the data (microseconds here) rather than always forced to nanoseconds. Older tutorials, books, and Stack Overflow answers will show <code>object</code> and <code>datetime64[ns]</code> for exactly this DataFrame—that description is now stale, but you will meet both conventions in the wild, so it is worth recognizing them.</p>
 </section>
 <section id="indexing-and-selection" class="level3" data-number="11.3.2">
 <h3 data-number="11.3.2" class="anchored" data-anchor-id="indexing-and-selection"><span class="header-section-number">11.3.2</span> Indexing and Selection</h3>
 <p>pandas provides multiple ways to select data, which can be confusing at first but powerful once mastered. pandas is somewhat unique in this regard: Polars and DuckDB don’t rely on indexing the same way pandas does—they basically treat all columns the same. In pandas, the index column (or columns, if there’s a multi-index) has a special status that affects how the DataFrame behaves.</p>
 <section id="column-selection" class="level4" data-number="11.3.2.1">
 <h4 data-number="11.3.2.1" class="anchored" data-anchor-id="column-selection"><span class="header-section-number">11.3.2.1</span> Column Selection</h4>
-<div id="f7106091" class="cell" data-execution_count="2">
+<div id="9797b326" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select a single column (returns a Series)</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>prices <span class="op">=</span> df[<span class="st">'price'</span>]</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>prices</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -578,7 +584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Name: price, dtype: float64</code></pre>
 </div>
 </div>
-<div id="452b8433" class="cell" data-execution_count="3">
+<div id="9790a7ec" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select multiple columns (returns a DataFrame)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>subset <span class="op">=</span> df[[<span class="st">'ticker'</span>, <span class="st">'price'</span>]]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>subset</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -636,7 +642,7 @@ Name: price, dtype: float64</code></pre>
 <section id="row-selection-with-.loc-and-.iloc" class="level4" data-number="11.3.2.2">
 <h4 data-number="11.3.2.2" class="anchored" data-anchor-id="row-selection-with-.loc-and-.iloc"><span class="header-section-number">11.3.2.2</span> Row Selection with .loc and .iloc</h4>
 <p>pandas distinguishes between label-based indexing (<code>.loc</code>) and position-based indexing (<code>.iloc</code>):</p>
-<div id="c5ef8106" class="cell" data-execution_count="4">
+<div id="ed073424" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows 0-2 by position</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df.iloc[<span class="dv">0</span>:<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
@@ -681,7 +687,7 @@ Name: price, dtype: float64</code></pre>
 </div>
 </div>
 </div>
-<div id="3acaa61f" class="cell" data-execution_count="5">
+<div id="be23eded" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If we set an index, we can use .loc with labels</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df_indexed <span class="op">=</span> df.set_index(<span class="st">'date'</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df_indexed.loc[<span class="st">'2024-01-01'</span>:<span class="st">'2024-01-03'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -744,17 +750,35 @@ Name: price, dtype: float64</code></pre>
 <li>Use <code>.iloc[row_positions, column_positions]</code> for integer position-based indexing</li>
 <li>Use <code>[]</code> for simple column selection or boolean masking</li>
 </ul>
-<p>The distinction prevents ambiguity: <code>df[0]</code> is an error (is it column 0 or row 0?), but <code>df.iloc[0]</code> and <code>df['column_0']</code> are clear.</p>
+<p>The distinction removes the ambiguity of a bare <code>[]</code>. With our string column names, <code>df[0]</code> raises a <code>KeyError</code>: <code>[]</code> looks for a <em>column</em> labelled <code>0</code>, and there isn’t one—it never falls back to row 0. If the columns happened to be labelled with integers, <code>df[0]</code> would silently succeed and hand you column <code>0</code>, which is exactly the sort of surprise you want to avoid. <code>df.iloc[0]</code> is unambiguously the first row by position, and <code>df.loc[:, 0]</code> is unambiguously the column labelled <code>0</code>.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Copy-on-write: every selection is a copy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since pandas 3.0, <em>copy-on-write</em> is the default: anything you get back from indexing—<code>df['price']</code>, <code>df[['ticker', 'price']]</code>, <code>df.iloc[0:3]</code>, <code>df.loc[...]</code>, a Boolean filter—behaves as an independent copy. Modifying it never reaches back into the original DataFrame.</p>
+<p>The consequence that bites people is <strong>chained assignment</strong>, where you index twice and then assign:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>][<span class="st">'price'</span>] <span class="op">=</span> <span class="dv">0</span>    <span class="co"># does nothing at all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Read it left to right: <code>df[df['price'] &gt; 150]</code> builds a temporary copy of the matching rows, the assignment dutifully updates that temporary copy, and then the temporary copy is discarded because nothing refers to it. <code>df</code> never changes, and no exception is raised—which is why this is so hard to spot. Do the selection and the assignment in a single step with <code>.loc</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>, <span class="st">'price'</span>] <span class="op">=</span> <span class="dv">0</span>    <span class="co"># works</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>pandas can usually detect the one-line version above and emit a <code>ChainedAssignmentError</code> warning, but the two-line spelling (<code>subset = df[mask]</code>, then <code>subset['price'] = 0</code>) is completely silent—it just modifies <code>subset</code> and leaves <code>df</code> alone. If you find older code or Stack Overflow answers discussing <code>SettingWithCopyWarning</code>, that warning no longer exists in pandas 3; <code>.loc</code> is the fix.</p>
 </div>
 </div>
 </section>
 <section id="boolean-indexing" class="level4" data-number="11.3.2.3">
 <h4 data-number="11.3.2.3" class="anchored" data-anchor-id="boolean-indexing"><span class="header-section-number">11.3.2.3</span> Boolean Indexing</h4>
 <p>Filtering data is a core operation in empirical finance:</p>
-<div id="9dc11559" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows where price &gt; 150</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>high_price <span class="op">=</span> df[df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>high_price</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="2989127a" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select rows where price &gt; 150</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>high_price <span class="op">=</span> df[df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>]</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>high_price</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
@@ -805,9 +829,9 @@ Name: price, dtype: float64</code></pre>
 </div>
 </div>
 <p>The expression inside the square brackets (<code>df['price'] &gt; 150</code>) is itself a Series of Boolean values. Let’s look at what it produces:</p>
-<div id="f8e6b2e1" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The condition produces a Boolean Series</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="81d1d3d1" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The condition produces a Boolean Series</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>0     True
 1     True
@@ -819,10 +843,10 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 <p>The rows that get selected are those where the Boolean value is <code>True</code>.</p>
-<div id="519be440" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple conditions: AAPL stocks with price &gt; 150</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>aapl_high <span class="op">=</span> df[(df[<span class="st">'ticker'</span>] <span class="op">==</span> <span class="st">'AAPL'</span>) <span class="op">&amp;</span> (df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>)]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>aapl_high</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ed816c9d" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiple conditions: AAPL stocks with price &gt; 150</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>aapl_high <span class="op">=</span> df[(df[<span class="st">'ticker'</span>] <span class="op">==</span> <span class="st">'AAPL'</span>) <span class="op">&amp;</span> (df[<span class="st">'price'</span>] <span class="op">&gt;</span> <span class="dv">150</span>)]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>aapl_high</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
@@ -858,10 +882,10 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="e8e4fa5d" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using query method for more readable syntax</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df.query(<span class="st">'ticker == "AAPL" and price &gt; 150'</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="d9621e96" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using query method for more readable syntax</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df.query(<span class="st">'ticker == "AAPL" and price &gt; 150'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>result</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
@@ -902,7 +926,7 @@ Name: price, dtype: bool</code></pre>
 <section id="creating-new-columns" class="level3" data-number="11.3.3">
 <h3 data-number="11.3.3" class="anchored" data-anchor-id="creating-new-columns"><span class="header-section-number">11.3.3</span> Creating New Columns</h3>
 <p>A common operation is creating new columns from existing ones. When you perform arithmetic operations between columns, pandas aligns them by index and applies the operation element by element:</p>
-<div id="0cecb916" class="cell" data-execution_count="10">
+<div id="e615c36d" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-10"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-10-1"><a href="#annotated-cell-10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new column by multiplying two existing columns</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-10" data-target-annotation="1">1</button><span id="annotated-cell-10-2" class="code-annotation-target"><a href="#annotated-cell-10-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'dollar_volume'</span>] <span class="op">=</span> df[<span class="st">'price'</span>] <span class="op">*</span> df[<span class="st">'volume'</span>]</span>
 <span id="annotated-cell-10-3"><a href="#annotated-cell-10-3" aria-hidden="true" tabindex="-1"></a>df</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -985,7 +1009,7 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 <p>When you multiply or add a scalar, it applies to all elements in the column:</p>
-<div id="88b4ae34" class="cell" data-execution_count="11">
+<div id="e58e6f97" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-11"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-11-1"><a href="#annotated-cell-11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Multiply a column by a scalar</span></span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-11" data-target-annotation="1">1</button><span id="annotated-cell-11-2" class="code-annotation-target"><a href="#annotated-cell-11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'price_cents'</span>] <span class="op">=</span> df[<span class="st">'price'</span>] <span class="op">*</span> <span class="dv">100</span></span>
 <span id="annotated-cell-11-3"><a href="#annotated-cell-11-3" aria-hidden="true" tabindex="-1"></a>df</span><div class="code-annotation-gutter-bg"></div><div class="code-annotation-gutter"></div></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1075,10 +1099,10 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 <p>You can also combine columns with different operations:</p>
-<div id="8f5cf1a2" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining columns with arithmetic</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'avg_price_per_share'</span>] <span class="op">=</span> df[<span class="st">'dollar_volume'</span>] <span class="op">/</span> df[<span class="st">'volume'</span>]</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'ticker'</span>, <span class="st">'price'</span>, <span class="st">'avg_price_per_share'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="88877ae9" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combining columns with arithmetic</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'avg_price_per_share'</span>] <span class="op">=</span> df[<span class="st">'dollar_volume'</span>] <span class="op">/</span> df[<span class="st">'volume'</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'ticker'</span>, <span class="st">'price'</span>, <span class="st">'avg_price_per_share'</span>]]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <div>
 
@@ -1162,7 +1186,7 @@ Name: price, dtype: bool</code></pre>
 <p><strong>Limitations</strong>:</p>
 <ul>
 <li>Performance can degrade with multi-gigabyte datasets, depending on available RAM</li>
-<li>Memory usage is higher than necessary due to row-based implementation details</li>
+<li>Memory usage can be higher than necessary: legacy <code>object</code>-dtype columns store every string as a separate Python object rather than packed bytes, and pandas periodically consolidates columns into larger internal blocks, which copies data</li>
 <li>API inconsistencies accumulated over 15+ years of development</li>
 <li>Single-threaded execution for most operations</li>
 <li>String operations are particularly slow</li>
@@ -1179,7 +1203,7 @@ Name: price, dtype: bool</code></pre>
 <p><strong>The expression API</strong> provides a composable syntax for data transformations that is not identical to pandas. Users coming from the R tidyverse may find it feels more familiar than pandas’ approach. Expressions can be combined and optimized together, leading to more efficient execution.</p>
 <section id="basic-operations-1" class="level3" data-number="11.4.1">
 <h3 data-number="11.4.1" class="anchored" data-anchor-id="basic-operations-1"><span class="header-section-number">11.4.1</span> Basic Operations</h3>
-<div id="359894a5" class="cell" data-execution_count="13">
+<div id="9af089a2" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-13"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-13" data-target-annotation="1">1</button><span id="annotated-cell-13-1" class="code-annotation-target"><a href="#annotated-cell-13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
 <span id="annotated-cell-13-2"><a href="#annotated-cell-13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-13-3"><a href="#annotated-cell-13-3" aria-hidden="true" tabindex="-1"></a>df_pl <span class="op">=</span> pl.DataFrame({</span>
@@ -1217,7 +1241,7 @@ Name: price, dtype: bool</code></pre>
 </tr>
 <tr class="even">
 <td>str</td>
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>f64</td>
 <td>i64</td>
 </tr>
@@ -1268,7 +1292,7 @@ Name: price, dtype: bool</code></pre>
 <section id="the-expression-api" class="level3" data-number="11.4.2">
 <h3 data-number="11.4.2" class="anchored" data-anchor-id="the-expression-api"><span class="header-section-number">11.4.2</span> The Expression API</h3>
 <p>Polars introduces an expression-based API that is more composable than pandas:</p>
-<div id="ea176f94" class="cell" data-execution_count="14">
+<div id="3a64dff5" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-14"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-14-1"><a href="#annotated-cell-14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select and transform columns</span></span>
 <span id="annotated-cell-14-2"><a href="#annotated-cell-14-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> df_pl.select([</span>
 <button class="code-annotation-anchor" data-target-cell="annotated-cell-14" data-target-annotation="1">1</button><span id="annotated-cell-14-3" class="code-annotation-target"><a href="#annotated-cell-14-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'ticker'</span>),</span>
@@ -1346,10 +1370,10 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="3c2ad913" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering with expressions</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>high_price_pl <span class="op">=</span> df_pl.<span class="bu">filter</span>(pl.col(<span class="st">'price'</span>) <span class="op">&gt;</span> <span class="dv">150</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>high_price_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="dd29c6bb" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filtering with expressions</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>high_price_pl <span class="op">=</span> df_pl.<span class="bu">filter</span>(pl.col(<span class="st">'price'</span>) <span class="op">&gt;</span> <span class="dv">150</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>high_price_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="15">
 <div><style>
 .dataframe > thead > tr,
@@ -1369,7 +1393,7 @@ Name: price, dtype: bool</code></pre>
 </tr>
 <tr class="even">
 <td>str</td>
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>f64</td>
 <td>i64</td>
 </tr>
@@ -1404,7 +1428,7 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="d3970885" class="cell" data-execution_count="16">
+<div id="85b9d200" class="cell" data-execution_count="16">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-16"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-16-1"><a href="#annotated-cell-16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Chaining operations</span></span>
 <span id="annotated-cell-16-2"><a href="#annotated-cell-16-2" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> (</span>
 <span id="annotated-cell-16-3"><a href="#annotated-cell-16-3" aria-hidden="true" tabindex="-1"></a>    df_pl</span>
@@ -1440,7 +1464,7 @@ Name: price, dtype: bool</code></pre>
 </tr>
 <tr class="even">
 <td>str</td>
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>f64</td>
 <td>f64</td>
 </tr>
@@ -1467,7 +1491,7 @@ Name: price, dtype: bool</code></pre>
 <section id="lazy-evaluation" class="level3" data-number="11.4.3">
 <h3 data-number="11.4.3" class="anchored" data-anchor-id="lazy-evaluation"><span class="header-section-number">11.4.3</span> Lazy Evaluation</h3>
 <p>Polars’ lazy API builds a query plan and optimizes it before execution:</p>
-<div id="0056fdb3" class="cell" data-execution_count="17">
+<div id="bdcc1325" class="cell" data-execution_count="17">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-17"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-17" data-target-annotation="1">1</button><span id="annotated-cell-17-1" class="code-annotation-target"><a href="#annotated-cell-17-1" aria-hidden="true" tabindex="-1"></a>lazy_df <span class="op">=</span> df_pl.lazy()</span>
 <span id="annotated-cell-17-2"><a href="#annotated-cell-17-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-17-3"><a href="#annotated-cell-17-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Build a query (nothing executes yet)</span></span>
@@ -1556,14 +1580,14 @@ Name: price, dtype: bool</code></pre>
 </section>
 <section id="grouping-and-aggregation" class="level3" data-number="11.4.4">
 <h3 data-number="11.4.4" class="anchored" data-anchor-id="grouping-and-aggregation"><span class="header-section-number">11.4.4</span> Grouping and Aggregation</h3>
-<div id="355da469" class="cell" data-execution_count="18">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by with multiple aggregations</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>summary_pl <span class="op">=</span> df_pl.group_by(<span class="st">'ticker'</span>).agg([</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'avg_price'</span>),</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).std().alias(<span class="st">'std_price'</span>),</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).<span class="bu">sum</span>().alias(<span class="st">'total_volume'</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>summary_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1ade088b" class="cell" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by with multiple aggregations</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>summary_pl <span class="op">=</span> df_pl.group_by(<span class="st">'ticker'</span>).agg([</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).mean().alias(<span class="st">'avg_price'</span>),</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).std().alias(<span class="st">'std_price'</span>),</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).<span class="bu">sum</span>().alias(<span class="st">'total_volume'</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>summary_pl</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="18">
 <div><style>
 .dataframe > thead > tr,
@@ -1596,29 +1620,29 @@ Name: price, dtype: bool</code></pre>
 <td>1620000</td>
 </tr>
 <tr class="even">
-<td>"GOOG"</td>
-<td>141.3</td>
-<td>1.697056</td>
-<td>1930000</td>
-</tr>
-<tr class="odd">
 <td>"AAPL"</td>
 <td>151.4</td>
 <td>1.272792</td>
 <td>2050000</td>
+</tr>
+<tr class="odd">
+<td>"GOOG"</td>
+<td>141.3</td>
+<td>1.697056</td>
+<td>1930000</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 </div>
-<div id="02735759" class="cell" data-execution_count="19">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns calculation</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>df_pl_sorted <span class="op">=</span> df_pl.sort([<span class="st">'ticker'</span>, <span class="st">'date'</span>])</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>df_with_returns <span class="op">=</span> df_pl_sorted.with_columns(</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>df_with_returns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="71cbf9dd" class="cell" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns calculation</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df_pl_sorted <span class="op">=</span> df_pl.sort([<span class="st">'ticker'</span>, <span class="st">'date'</span>])</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df_with_returns <span class="op">=</span> df_pl_sorted.with_columns(</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>df_with_returns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="19">
 <div><style>
 .dataframe > thead > tr,
@@ -1639,7 +1663,7 @@ Name: price, dtype: bool</code></pre>
 </tr>
 <tr class="even">
 <td>str</td>
-<td>datetime[ns]</td>
+<td>datetime[μs]</td>
 <td>f64</td>
 <td>i64</td>
 <td>f64</td>
@@ -1731,7 +1755,7 @@ Name: price, dtype: bool</code></pre>
 </section>
 <section id="basic-usage" class="level3" data-number="11.5.2">
 <h3 data-number="11.5.2" class="anchored" data-anchor-id="basic-usage"><span class="header-section-number">11.5.2</span> Basic Usage</h3>
-<div id="a3e8a90b" class="cell" data-execution_count="20">
+<div id="3e1eec36" class="cell" data-execution_count="20">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-20"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><span id="annotated-cell-20-1"><a href="#annotated-cell-20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> duckdb</span>
 <span id="annotated-cell-20-2"><a href="#annotated-cell-20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-20-3"><a href="#annotated-cell-20-3" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
@@ -1794,18 +1818,18 @@ Name: price, dtype: bool</code></pre>
 </section>
 <section id="advanced-sql-operations" class="level3" data-number="11.5.3">
 <h3 data-number="11.5.3" class="anchored" data-anchor-id="advanced-sql-operations"><span class="header-section-number">11.5.3</span> Advanced SQL Operations</h3>
-<div id="4ac1388d" class="cell" data-execution_count="21">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>returns_sql <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker,</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="st">           date,</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="st">           price,</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="st">           price / LAG(price) OVER (PARTITION BY ticker ORDER BY date) - 1 as return</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM df</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ORDER BY ticker, date</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>returns_sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="5d84d463" class="cell" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Window functions for returns</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>returns_sql <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker,</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">           date,</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">           price,</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">           price / LAG(price) OVER (PARTITION BY ticker ORDER BY date) - 1 as return</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM df</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">    ORDER BY ticker, date</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>returns_sql</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <div>
 
@@ -1869,23 +1893,23 @@ Name: price, dtype: bool</code></pre>
 </div>
 </div>
 </div>
-<div id="1256aece" class="cell" data-execution_count="22">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complex filtering and aggregation</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="st">    WITH high_volume AS (</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT *</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM df</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE volume &gt; 900000</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ticker,</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) as n_high_volume_days,</span></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="st">        AVG(price) as avg_price_on_high_volume</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM high_volume</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY ticker</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>analysis</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6bda092e" class="cell" data-execution_count="22">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Complex filtering and aggregation</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>analysis <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">    WITH high_volume AS (</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">        SELECT *</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">        FROM df</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">        WHERE volume &gt; 900000</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ticker,</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="st">        COUNT(*) as n_high_volume_days,</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="st">        AVG(price) as avg_price_on_high_volume</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM high_volume</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="st">    GROUP BY ticker</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>analysis</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="22">
 <div>
 
@@ -1922,19 +1946,19 @@ Name: price, dtype: bool</code></pre>
 <section id="integration-with-multiple-sources" class="level3" data-number="11.5.4">
 <h3 data-number="11.5.4" class="anchored" data-anchor-id="integration-with-multiple-sources"><span class="header-section-number">11.5.4</span> Integration with Multiple Sources</h3>
 <p>DuckDB can query multiple DataFrame types simultaneously:</p>
-<div id="1c622280" class="cell" data-execution_count="23">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Query both pandas and Polars DataFrames in one query</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="st">        p.ticker,</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="st">        p.avg_price as pandas_avg,</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="st">        pl.avg_price as polars_avg</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM (SELECT ticker, AVG(price) as avg_price FROM df GROUP BY ticker) p</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN (SELECT ticker, AVG(price) as avg_price FROM df_pl GROUP BY ticker) pl</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ON p.ticker = pl.ticker</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ac850cb0" class="cell" data-execution_count="23">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Query both pandas and Polars DataFrames in one query</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>combined <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">        p.ticker,</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="st">        p.avg_price as pandas_avg,</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="st">        pl.avg_price as polars_avg</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM (SELECT ticker, AVG(price) as avg_price FROM df GROUP BY ticker) p</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="st">    JOIN (SELECT ticker, AVG(price) as avg_price FROM df_pl GROUP BY ticker) pl</span></span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a><span class="st">        ON p.ticker = pl.ticker</span></span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>).df()</span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>combined</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="23">
 <div>
 
@@ -1957,15 +1981,15 @@ Name: price, dtype: bool</code></pre>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>AAPL</td>
-<td>151.40</td>
-<td>151.40</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
 <td>MSFT</td>
 <td>379.55</td>
 <td>379.55</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>AAPL</td>
+<td>151.40</td>
+<td>151.40</td>
 </tr>
 </tbody>
 </table>
@@ -1977,7 +2001,7 @@ Name: price, dtype: bool</code></pre>
 <section id="duckdb-relations-api" class="level3" data-number="11.5.5">
 <h3 data-number="11.5.5" class="anchored" data-anchor-id="duckdb-relations-api"><span class="header-section-number">11.5.5</span> DuckDB Relations API</h3>
 <p>For a more programmatic interface, DuckDB provides a relational API:</p>
-<div id="564fb3ce" class="cell" data-execution_count="24">
+<div id="0348b3f8" class="cell" data-execution_count="24">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="annotated-cell-24"><pre class="sourceCode python code-annotation-code code-with-copy code-annotated"><code class="sourceCode python"><button class="code-annotation-anchor" data-target-cell="annotated-cell-24" data-target-annotation="1">1</button><span id="annotated-cell-24-1" class="code-annotation-target"><a href="#annotated-cell-24-1" aria-hidden="true" tabindex="-1"></a>rel <span class="op">=</span> duckdb.sql(<span class="st">"SELECT * FROM df"</span>)</span>
 <span id="annotated-cell-24-2"><a href="#annotated-cell-24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="annotated-cell-24-3"><a href="#annotated-cell-24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Chain operations</span></span>
@@ -2090,31 +2114,31 @@ Name: price, dtype: bool</code></pre>
 <section id="hybrid-approaches" class="level3" data-number="11.6.4">
 <h3 data-number="11.6.4" class="anchored" data-anchor-id="hybrid-approaches"><span class="header-section-number">11.6.4</span> Hybrid Approaches</h3>
 <p>You don’t need to choose just one. Modern workflows often combine tools:</p>
-<div id="2a31a8ae" class="cell" data-execution_count="25">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read large file with DuckDB</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>duckdb_result <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker, date, price, volume</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM 'large_dataset.parquet'</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE date &gt;= '2020-01-01'</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="st">    AND ticker IN ('AAPL', 'MSFT', 'GOOG')</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to Polars for further processing</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>df_polars <span class="op">=</span> pl.from_arrow(duckdb_result.arrow())</span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Do complex feature engineering in Polars</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> df_polars.with_columns([</span>
-<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>),</span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).rolling_mean(<span class="dv">20</span>).over(<span class="st">'ticker'</span>).alias(<span class="st">'avg_volume_20d'</span>)</span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>])</span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to pandas for sklearn</span></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>df_pandas <span class="op">=</span> features.to_pandas()</span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Use in machine learning pipeline</span></span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="co"># from sklearn.ensemble import RandomForestRegressor</span></span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="co"># model = RandomForestRegressor()</span></span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="1b32692f" class="cell" data-execution_count="25">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read large file with DuckDB</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>duckdb_result <span class="op">=</span> duckdb.sql(<span class="st">"""</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="st">    SELECT ticker, date, price, volume</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="st">    FROM 'large_dataset.parquet'</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="st">    WHERE date &gt;= '2020-01-01'</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="st">    AND ticker IN ('AAPL', 'MSFT', 'GOOG')</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span>)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to Polars for further processing</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>df_polars <span class="op">=</span> pl.from_arrow(duckdb_result.arrow())</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Do complex feature engineering in Polars</span></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>features <span class="op">=</span> df_polars.with_columns([</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'price'</span>).pct_change().over(<span class="st">'ticker'</span>).alias(<span class="st">'return'</span>),</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    pl.col(<span class="st">'volume'</span>).rolling_mean(<span class="dv">20</span>).over(<span class="st">'ticker'</span>).alias(<span class="st">'avg_volume_20d'</span>)</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>])</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to pandas for sklearn</span></span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>df_pandas <span class="op">=</span> features.to_pandas()</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Use in machine learning pipeline</span></span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a><span class="co"># from sklearn.ensemble import RandomForestRegressor</span></span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a><span class="co"># model = RandomForestRegressor()</span></span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a><span class="co"># ...</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -2145,7 +2169,7 @@ Name: price, dtype: bool</code></pre>
 <p><strong>Polars</strong>: A modern, high-performance alternative with lazy evaluation and automatic parallelization. Best for large datasets and performance-critical applications.</p>
 <p><strong>DuckDB</strong>: SQL interface for analytical queries on DataFrames and files. Best for complex joins, aggregations, and data pipeline work.</p>
 <p>The key insight is that these tools are complementary. Understanding when to use each—and how to combine them—will make you significantly more productive in empirical finance research.</p>
-<p>In the next chapters, we’ll dive deeper into specific operations: data cleaning, merging and joining, time-series operations, and efficient computation with large datasets.</p>
+<p>In the next chapters, we’ll dive deeper into specific operations: reading and writing data in the formats you’ll actually encounter, cleaning messy datasets, structuring and reshaping tables, and merging and joining data from multiple sources.</p>
 </section>
 <section id="further-reading" class="level2" data-number="11.8">
 <h2 data-number="11.8" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">11.8</span> Further Reading</h2>
