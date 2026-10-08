@@ -6,8 +6,8 @@
 <script src="lecture11_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lecture11_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lecture11_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lecture11_files/libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.10.18">
+<link href="lecture11_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Vincent Grégoire">
   <title>MATH60230: Lecture 11</title>
@@ -431,7 +431,7 @@ Vincent Grégoire
 
 </div>
 <p>Consider a small sample (<span class="math inline">n = 30</span>) where we estimate <span class="math inline">Y = \alpha + \beta X + \varepsilon</span>.</p>
-<div id="cacba6bf" class="cell" data-execution_count="1">
+<div id="5c78c4d4" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="" aria-label="1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="" aria-label="2"></a><span class="im">import</span> statsmodels.api <span class="im">as</span> sm</span>
 <span id="cb1-3"><a href="" aria-label="3"></a></span>
@@ -454,7 +454,7 @@ Asymptotic p-value (H₀: β=0): 0.0154</code></pre>
 </section>
 <section id="example-bootstrap-confidence-interval" class="slide level2">
 <h2>Example: Bootstrap Confidence Interval</h2>
-<div id="b7fe5212" class="cell" data-execution_count="2">
+<div id="32c3ab41" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="" aria-label="1"></a>B <span class="op">=</span> <span class="dv">10_000</span></span>
 <span id="cb3-2"><a href="" aria-label="2"></a>boot_betas <span class="op">=</span> np.empty(B)</span>
 <span id="cb3-3"><a href="" aria-label="3"></a></span>
@@ -475,7 +475,7 @@ Bootstrap p-value (H₀: β=0): 0.0132</code></pre>
 </section>
 <section id="example-randomization-inference" class="slide level2">
 <h2>Example: Randomization Inference</h2>
-<div id="2e002ed4" class="cell" data-execution_count="3">
+<div id="d7506471" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="" aria-label="1"></a>N_shuffles <span class="op">=</span> <span class="dv">10_000</span></span>
 <span id="cb5-2"><a href="" aria-label="2"></a>shuffle_betas <span class="op">=</span> np.empty(N_shuffles)</span>
 <span id="cb5-3"><a href="" aria-label="3"></a></span>
@@ -498,7 +498,7 @@ Bootstrap p-value (H₀: β=0): 0.0132</code></pre>
 </section>
 <section id="example-comparing-the-distributions" class="slide level2">
 <h2>Example: Comparing the Distributions</h2>
-<div id="6f9f6dc9" class="cell" data-execution_count="4">
+<div id="42cd6b98" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure>
@@ -508,81 +508,49 @@ Bootstrap p-value (H₀: β=0): 0.0132</code></pre>
 </div>
 </div>
 </section>
-<section id="replicable-finance-research" class="slide level2">
-<h2>Replicable Finance Research</h2>
+<section id="why-replicability-matters" class="slide level2">
+<h2>Why Replicability Matters</h2>
 <div style="height: 2em;">
 
 </div>
-<p>Idealized scientific research:</p>
-<ul>
-<li>Benefits from collaboration</li>
-<li>Benefits from openness and transparency</li>
-<li>Benefits from clear methodology</li>
-</ul>
-</section>
-<section id="replicable-finance-research-1" class="slide level2">
-<h2>Replicable Finance Research</h2>
-<div style="height: 2em;">
-
-</div>
-<p>Empirical finance research in academia:</p>
-<ul>
-<li>Incentives not always aligned towards transparency. Publishing helps for:
-<ul>
-<li>Reputation</li>
-<li>Funding future projects.</li>
-<li>Job security.</li>
-<li>Consulting opportunities.</li>
-</ul></li>
-<li>Limited transparency is common (proprietary datasets.)</li>
-</ul>
-<div style="height: 2em;">
-
-</div>
-<p>Ideally research would involve common objectives, where conclusions can generate public goods, hence the idea behind publishing.</p>
+<p>A research finding is only useful if others can verify it and build on it.</p>
 <div style="height: 1em;">
 
 </div>
-<p>Does this make sense in empirical finance?</p>
+<ul>
+<li>Reproducibility: same data and same code give the same numbers</li>
+<li>Replicability: new data or a reasonable alternative method give the same conclusion</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>In finance, the stakes are concrete: published results become trading strategies, risk models, and inputs to regulation. A false positive is not just an academic mistake, it is money allocated on the basis of noise.</p>
 </section>
-<section id="replicable-finance-research-2" class="slide level2">
-<h2>Replicable Finance Research</h2>
-<div style="height: 2em;">
+<section id="forces-pushing-against-it" class="slide level2">
+<h2>Forces Pushing Against It</h2>
+<div style="height: 1em;">
 
 </div>
-<p>Empirical finance research in industry:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="in-academia">In academia</h3>
 <ul>
-<li>Transparency hinders profit opportunities</li>
-<li>Collaboration is limited</li>
-<li>Methodology is often idiosyncratic</li>
+<li>Careers run on publications: tenure, funding, reputation</li>
+<li>Journals favor new, significant results over replications and null results</li>
+<li>Proprietary data and unshared code make verification hard</li>
 </ul>
-<div style="height: 2em;">
-
-</div>
-<p>This is due to the fact that asymmetric information in markets is what creates opportunities for individuals.</p>
+</div><div class="column" style="width:50%;">
+<h3 id="in-industry">In industry</h3>
 <ul>
-<li>If you have multiple profit-maximizing traders with asymmetric information, you can’t have fully efficient markets <span class="citation" data-cites="grossman1980impossibility">(<a href="#/references" role="doc-biblioref" onclick="">Grossman and Stiglitz 1980</a>)</span></li>
+<li>An edge only pays while it stays private <span class="citation" data-cites="grossman1980impossibility">(<a href="#/references" role="doc-biblioref" onclick="">Grossman and Stiglitz 1980</a>)</span></li>
+<li>Code, data, and methods are trade secrets</li>
+<li>Backtests face little outside scrutiny</li>
 </ul>
-</section>
-<section id="replicable-finance-research-3" class="slide level2">
-<h2>Replicable Finance Research</h2>
-<div style="height: 2em;">
+</div></div>
+<div style="height: 1em;">
 
 </div>
-<p><strong>Question:</strong> If incentives are sometimes aligned against collaborative and open-source empirical finance research, should we expect research to be replicable?</p>
-<div style="height: 2em;">
-
-</div>
-<p><strong>Follow-up question:</strong> If incentives are that publishing is highly rewarded, can we expect published research to be “genuine” research?</p>
-<div style="height: 2em;">
-
-</div>
-<p>It is an important issue in empirical finance:</p>
-<ul>
-<li>Recent studies in empirical finance, notably in asset pricing, have taken a turn towards testing the replicability of past findings.</li>
-<li>Most journals now require code availability for replicability and sharing of non-proprietary data.</li>
-<li>Top journals in finance have retracted papers recently because of replication issues.</li>
-</ul>
+<p>Both sets of incentives reward finding <em>something</em> and do little to reward checking it. We should therefore expect some published (and backtested) results not to hold up. The rest of this lecture looks at how this happens, how much it matters, and how the field is responding.</p>
 </section>
 <section id="methodological-problems-versus-data-mining" class="slide level2">
 <h2>Methodological Problems versus Data-Mining</h2>
@@ -824,6 +792,26 @@ PPV = \frac{\left(  1-\beta^{n}\right)  \cdot R}{\left(  1-\beta^{n}\right)  \cd
 </figure>
 </div>
 </section>
+<section id="ai-errors-huang2026ai" class="slide level2">
+<h2>AI “Errors” – <span class="citation" data-cites="huang2026ai">Huang et al. (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span></h2>
+<div style="height: 1em;">
+
+</div>
+<p>Follow-up question: what happens when AI models do the empirical research instead of humans?</p>
+<div style="height: 1em;">
+
+</div>
+<p>Three frontier AI models repeat the experiment that was run with 164 human teams:</p>
+<ul>
+<li>The AIs concentrate on a narrow set of analysis paths, so their estimates are less dispersed than the human ones for most hypotheses</li>
+<li>For complex tasks, their estimates are systematically shifted relative to the human benchmark</li>
+<li>The authors trace these shifts mostly to two decisions on the analysis path: the frequency of the analysis and the statistical model</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>Lower dispersion is not the same as being right: the AIs agree with each other, but they do not always land where careful humans do.</p>
+</section>
 <section id="design-choices-and-machine-learning-chen2025design" class="slide level2">
 <h2>Design Choices and Machine Learning – <span class="citation" data-cites="chen2025design">Chen et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span></h2>
 <div class="quarto-figure quarto-figure-center">
@@ -851,6 +839,29 @@ PPV = \frac{\left(  1-\beta^{n}\right)  \cdot R}{\left(  1-\beta^{n}\right)  \cd
 <li>Since the models are probabilistic, simply repeating the experiment can yield different results</li>
 <li>With billions of parameters, almost anything can be achieved with some fine-tuning</li>
 </ul>
+</section>
+<section id="llms-as-theorists-lopezlira2026can" class="slide level2">
+<h2>LLMs as Theorists – <span class="citation" data-cites="lopezlira2026can">Lopez-Lira et al. (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span></h2>
+<div style="height: 1em;">
+
+</div>
+<p>AutoTheory: LLMs combined with evolutionary search to generate, derive, code, calibrate, and verify economic theories.</p>
+<ul>
+<li>Diversity comes from varying both the LLM and the expert perspective used to generate ideas</li>
+<li>Promising theories are revised, or combined with elements from other theories</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>Applied to three asset-pricing puzzles:</p>
+<ul>
+<li>Scaling of price multipliers: two distinct verified equilibrium mechanisms</li>
+<li>Equity term structure and currency premium: promising candidates, with apparent solutions flagged when they rely on target-specific calibration parameters</li>
+</ul>
+<div style="height: 1em;">
+
+</div>
+<p>The same flexibility that makes LLMs risky for replicability can be put to work in the other direction: the authors argue the system helps distinguish genuine theoretical explanations from sophisticated curve fitting. Or maybe it is simply data mining theory. It’s not clear yet what the implications are.</p>
 </section>
 <section id="replication-crisis-in-finance" class="slide level2">
 <h2>Replication Crisis in Finance?</h2>
@@ -981,6 +992,47 @@ PPV = \frac{\left(  1-\beta^{n}\right)  \cdot R}{\left(  1-\beta^{n}\right)  \cd
 <p><img data-src="figures/fig_tstathand_vs_tstatOP-2048x1229.png" class="quarto-figure quarto-figure-center" height="600"></p>
 </figure>
 </div>
+</section>
+<section id="does-empirical-finance-replicate-muravyev2026does" class="slide level2">
+<h2>Does Empirical Finance Replicate? – <span class="citation" data-cites="muravyev2026does">Muravyev (<a href="#/references" role="doc-biblioref" onclick="">2026</a>)</span></h2>
+<div style="height: 1em;">
+
+</div>
+<p>An autonomous LLM pipeline attempts to reproduce the main result of 5,430 empirical papers published in the JF, JFE, and RFS from 2000 to 2020, with an independent audit of every replication. Data availability limits the sample to:</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>In sample</th>
+<th>Out of sample</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Replications</td>
+<td>1,328</td>
+<td>1,005</td>
+</tr>
+<tr class="even">
+<td>Same sign and significance</td>
+<td>75%</td>
+<td>42%</td>
+</tr>
+<tr class="odd">
+<td>Median ratio of replicated to published coefficient</td>
+<td>0.93</td>
+<td>0.45</td>
+</tr>
+</tbody>
+</table>
+<div style="height: 1em;">
+
+</div>
+<ul>
+<li>The coefficient ratio drops sharply when the original sample ends and is flat on either side, consistent with data snooping rather than investor learning or gradual market change</li>
+<li>Standard models of publication selection explain only about one-fifth of the decay</li>
+</ul>
+<p>Published finance is largely reproducible in its original samples, but much less durable in later data.</p>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
@@ -1203,6 +1255,9 @@ Harvey, Campbell R. 2022. <span>“The Pitfalls of Asset Management Research.”
 <div id="ref-hou2020replicating" class="csl-entry" role="listitem">
 Hou, Kewei, Chen Xue, and Lu Zhang. 2020. <span>“Replicating Anomalies.”</span> <em>The Review of Financial Studies</em> 33 (5): 2019–133.
 </div>
+<div id="ref-huang2026ai" class="csl-entry" role="listitem">
+Huang, Wenqian, Albert J. Menkveld, and Shihao Yu. 2026. <span>“<span>AI</span> <span>‘Errors’</span>.”</span> September. <a href="https://doi.org/10.2139/ssrn.6408138">https://doi.org/10.2139/ssrn.6408138</a>.
+</div>
 <div id="ref-imbens2015causal" class="csl-entry" role="listitem">
 Imbens, Guido W, and Donald B Rubin. 2015. <em>Causal Inference in Statistics, Social, and Biomedical Sciences</em>. Cambridge University Press.
 </div>
@@ -1212,8 +1267,14 @@ Ioannidis, John PA. 2005. <span>“Why Most Published Research Findings Are Fals
 <div id="ref-jensen2023there" class="csl-entry" role="listitem">
 Jensen, Theis Ingerslev, Bryan Kelly, and Lasse Heje Pedersen. 2023. <span>“Is There a Replication Crisis in Finance?”</span> <em>The Journal of Finance</em> 78 (5): 2465–518.
 </div>
+<div id="ref-lopezlira2026can" class="csl-entry" role="listitem">
+Lopez-Lira, Alejandro, Seyed Mohammad Sina Seyfi, and Yuehua Tang. 2026. <span>“Can <span>LLMs</span> Discover Novel Economic Theories?”</span> March. <a href="https://doi.org/10.2139/ssrn.6464059">https://doi.org/10.2139/ssrn.6464059</a>.
+</div>
 <div id="ref-menkveld2024nonstandard" class="csl-entry" role="listitem">
 <span class="nocase">Menkveld, Albert J, Anna Dreber, Felix Holzmeister, et al.</span> 2024. <span>“Nonstandard Errors.”</span> <em>The Journal of Finance</em> 79 (3): 2339–90.
+</div>
+<div id="ref-muravyev2026does" class="csl-entry" role="listitem">
+Muravyev, Dmitriy. 2026. <span>“Does Empirical Finance Replicate?”</span> August. <a href="https://doi.org/10.2139/ssrn.7439099">https://doi.org/10.2139/ssrn.7439099</a>.
 </div>
 <div id="ref-rosenbaum2010design" class="csl-entry" role="listitem">
 Rosenbaum, Paul R. 2010. <em>Design of Observational Studies</em>. Vol. 10. Springer.
